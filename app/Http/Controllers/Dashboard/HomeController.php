@@ -13,8 +13,8 @@ use App\Http\Controllers\Controller;
 class HomeController extends Controller
 {
   public function index(){
-    $title  = "Dashboard";
-    return view('administrator.dashboard.pages.v_index', compact('title'));
+    // $title  = "Dashboard";
+    return view('administrator.dashboard.pages.v_index');
   }
 
 
