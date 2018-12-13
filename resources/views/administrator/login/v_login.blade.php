@@ -103,8 +103,18 @@
                   timer   : 3000
                 });
               }
-              else{
-                // console.log(data);
+              else if(data.response == "success"){
+                // console.log(data.level);
+                switch (data.level) {
+                  case "Super Admin": window.location = "{{ url('backend/pages/home')}}";break;
+                  // case "Participant": "{{ url('') }}";break;
+                  default:swal({
+                    type    : "error",
+                    title   : "Error",
+                    text    : "Oops, something is wrong",
+                    timer   : 3000
+                  });break;
+                }
               }
             },
             error:function(data){

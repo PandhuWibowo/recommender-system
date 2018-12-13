@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 
 /**
- *
+ *  HomeController
  */
 class HomeController extends Controller
 {
   public function index(){
-    return view('administrator.dashboard.pages.v_index');
+    $title  = "Dashboard";
+    return view('administrator.dashboard.pages.v_index', compact('title'));
   }
+
+
 }

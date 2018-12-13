@@ -7,7 +7,21 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Autho
 // auth
 //Administrator Routing
 Route::prefix('backend/pages')->group(function () {
+
+    //Login Page
     Route::get("routing/signin","Login\LoginController@index");
     Route::get("signin","Login\LoginController@auth");
     Route::post("auth/process","Login\LoginController@auth_process");
+    Route::get("signout","Login\LoginController@mm_logout");
+
+    //Dashboard Page
+    Route::resource('home', "Dashboard\HomeController", ["only" =>
+        ["index"]
+    ]);
+
 });
+
+
+// Auth::routes();
+//
+// Route::get('/home', 'HomeController@index')->name('home');

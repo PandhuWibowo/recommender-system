@@ -21,7 +21,7 @@ class LoginController extends Controller
       Session::flash('must-login', 'You have sign in first!');
       return redirect('backend/pages/signin');
     }else{
-      echo "Berhasil";
+      return redirect('backend/pages/home');
     }
   }
 
@@ -48,7 +48,12 @@ class LoginController extends Controller
         Session::put('active', $data->active);
         Session::put('image', $data->image);
         Session::put('login', TRUE);
-        return redirect("");
+        return response()->json(
+          array(
+            "response"  => "success",
+            "level"     => $data->level,
+          )
+        );
       }else{
         return response()->json(
           array(
@@ -65,9 +70,9 @@ class LoginController extends Controller
     }
   }
 
-  public function logout(){
-    Session::flush();
-    Session::flash('logout','You are already out');
-    return redirect('backend/pages/signin');
+  public function mm_logout(){
+      Session::flush();
+      Session::flash('logout','You are already out');
+      return redirect('backend/pages/signin');
   }
 }
