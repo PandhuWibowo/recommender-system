@@ -66,6 +66,29 @@
 <script src="{!! asset('assets/assets_admin/js/chart/peity-active.js') !!}"></script>
 <script src="{!! asset('assets/assets_admin/js/tab.js') !!}"></script>
 
+<!-- data table JS
+		============================================ -->
+<script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-table.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/data-table/tableExport.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/data-table/data-table-active.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-table-editable.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-editable.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-table-resizable.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/data-table/colResizable-1.5.source.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-table-export.js') !!}"></script>
+
+<!--  editable JS
+		============================================ -->
+<script src="{!! asset('assets/assets_admin/js/editable/jquery.mockjax.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/editable/mock-active.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/editable/select2.js') !!}"></script>
+<!-- <script src="js/editable/moment.min.js"></script> -->
+<script src="{!! asset('assets/assets_admin/js/editable/bootstrap-datetimepicker.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/editable/bootstrap-editable.js') !!}"></script>
+<script src="{!! asset('assets/assets_admin/js/editable/xediable-active.js') !!}"></script>
+
+
+
 </body>
 
 </html>

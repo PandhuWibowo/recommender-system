@@ -19,6 +19,11 @@ Route::prefix('backend/pages')->group(function () {
         ["index"]
     ]);
 
+    //Administrators Page
+    Route::resource('administrator',"Dashboard\AdministratorController", ["only" =>
+        ["index"]
+    ]);
+
 });
 
 

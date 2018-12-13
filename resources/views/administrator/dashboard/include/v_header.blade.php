@@ -53,6 +53,17 @@
 		============================================ -->
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/calendar/fullcalendar.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/calendar/fullcalendar.print.min.css') !!}">
+    <!-- x-editor CSS
+		============================================ -->
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/editor/select2.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/editor/datetimepicker.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/editor/bootstrap-editable.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/editor/x-editor-style.css') !!}">
+    <!-- normalize CSS
+		============================================ -->
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/data-table/bootstrap-table.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/data-table/bootstrap-editable.css') !!}">
+
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/style.css') !!}">

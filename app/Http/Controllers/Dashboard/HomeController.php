@@ -12,6 +12,11 @@ use App\Http\Controllers\Controller;
  */
 class HomeController extends Controller
 {
+  // public function __construct()
+  // {
+  //     $this->middleware('auth');
+  // }
+
   public function index(){
     // $title  = "Dashboard";
     return view('administrator.dashboard.pages.v_index');
