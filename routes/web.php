@@ -23,8 +23,8 @@ Route::prefix('backend/pages')->group(function () {
     Route::resource('administrator',"Dashboard\AdministratorController", ["only" =>
         ["index","show"]
     ]);
-
-    // Route::resource('administrator/{id}/edit',"Dashboard\AdministratorController")
+    Route::match(array('PUT', 'PATCH'), 'administrator/update',"Dashboard\AdministratorController@update");
+    Route::delete('administrator/delete',"Dashboard\AdministratorController@destroy");
 });
 
 

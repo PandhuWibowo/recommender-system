@@ -63,9 +63,11 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/responsive.css') !!}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.32.2/sweetalert2.min.css">
     <!-- modernizr JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
+    @include("items.meta")
 </head>
 
 <body>
@@ -132,6 +134,17 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(Session::has('success'))
+                              <div class="alert alert-info alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh yeaahh!</strong> {{Session::get('success')}}
+                              </div>
+                            @elseif(Session::has('error'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{Session::get('error')}}
+                              </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -146,6 +159,7 @@
                             <div class="profile-img">
                                 @if($detailAdministrator->image != "")
                                   <!-- Masih belum disetting -->
+                                  <img src="{!! asset('images/images-admin/'.$detailAdministrator->image) !!}" alt="{{$detailAdministrator->image}}" />
                                 @else
                                   <img src="{!! asset('assets/assets_admin/img/profile/pp.png') !!}" alt="{{$detailAdministrator->image}}" />
                                 @endif
@@ -215,6 +229,14 @@
                                           </div>
                                       </div>
                                   </div>
+                                  <div class="row">
+                                      <div class="col-lg-12">
+                                          <div class="address-hr">
+                                              <p><b>Delete Account</b></p>
+                                              <button id="btn_delete" data-id="{{Crypt::encrypt($detailAdministrator->id)}}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                          </div>
+                                      </div>
+                                  </div>
                                   @include("administrator.dashboard.include.v_sosmed")
                               </div>
                         </div>
@@ -226,6 +248,7 @@
                                 <li class="active"><a href="#reviews"> Biography</a></li>
                                 <li><a href="#INFORMATION">Update Details</a></li>
                             </ul>
+
                             <div id="myTabContent" class="tab-content custom-product-edit">
 
                                 <div class="product-tab-list tab-pane fade active in" id="reviews">
@@ -371,6 +394,25 @@
                                                         <div class="row">
                                                             <div class="col-lg-12">
                                                                 <div class="skill-title">
+                                                                    <h2>Join</h2>
+                                                                    <hr />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ex-pro">
+                                                          @if($detailAdministrator->created_at != "")
+                                                            {{Carbon::parse($detailAdministrator->created_at)->formatLocalized('%A, %d %B %Y')}} - {{$detailAdministrator->created_at->diffForHumans()}}
+                                                          @else
+                                                            <span class="badge"><i class="fa fa-question"></i></span>
+                                                          @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="skill-title">
                                                                     <h2>Status</h2>
                                                                     <hr />
                                                                 </div>
@@ -385,6 +427,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -393,95 +436,63 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="review-content-section">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
+                                                <form class="" action="{{ url('backend/pages/administrator/update') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                                                  {{ csrf_field() }}
+                                                  {{ method_field('PUT') }}
+                                                  <div class="row">
+                                                      <div class="col-lg-6">
+                                                          <div class="form-group">
+                                                              <input name="id_admin" type="hidden" readonly class="form-control" placeholder="Id" value="{{Crypt::encrypt($detailAdministrator->id)}}">
+                                                          </div>
+                                                          <div class="form-group">
+                                                              <input name="first_name" type="text" class="form-control" placeholder="First Name" value="{{$detailAdministrator->firstname}}">
+                                                          </div>
+                                                          <div class="form-group">
+                                                              <input name="last_name" type="text" class="form-control" placeholder="Last Name" value="{{$detailAdministrator->lastname}}">
+                                                          </div>
+                                                          <div class="form-group">
+                                                              <input name="nick_name" type="text" class="form-control" placeholder="Nick Name" value="{{$detailAdministrator->nickname}}">
+                                                          </div>
+                                                          <div class="form-group">
+                                                              <input name="address" type="text" class="form-control" placeholder="Address" value="{{$detailAdministrator->address}}">
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <input name="number" type="text" class="form-control" placeholder="First Name">
+                                                            <input name="email" type="email" class="form-control" placeholder="Email" value="{{$detailAdministrator->email}}" readonly>
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Last Name">
+                                                            <input name="username" type="text" class="form-control" placeholder="Username" value="{{$detailAdministrator->username}}">
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address">
+                                                            <input name="phone" type="text" class="form-control" placeholder="Phone" value="{{$detailAdministrator->phone}}">
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Date of Birth">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Department">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="number" class="form-control" placeholder="Pincode">
+                                                          <input name="level" type="text" class="form-control" placeholder="Level" value="{{$detailAdministrator->level}}" readonly>
                                                         </div>
                                                         <div class="file-upload-inner ts-forms">
                                                             <div class="input prepend-big-btn">
-                                                                <label class="icon-right" for="prepend-big-btn">
-																		<i class="fa fa-download"></i>
-																	</label>
+                                                                <!-- <label class="icon-right" for="prepend-big-btn">
+                                                                  <i class="fa fa-download"></i>
+                                                                </label> -->
                                                                 <div class="file-button">
                                                                     Browse
-                                                                    <input type="file" onchange="document.getElementById('prepend-big-btn').value = this.value;">
+                                                                    <input name="image" type="file" onchange="document.getElementById('prepend-big-btn').value = this.value;">
                                                                 </div>
-                                                                <input type="text" id="prepend-big-btn" placeholder="no file selected">
+                                                                <input type="text" id="prepend-big-btn" placeholder="no file selected" value="{{$detailAdministrator->image}}">
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group sm-res-mg-15 tbpf-res-mg-15">
-                                                            <input type="text" class="form-control" placeholder="Description">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select class="form-control">
-																<option>Select Gender</option>
-																<option>Male</option>
-																<option>Female</option>
-															</select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select class="form-control">
-																	<option>Select country</option>
-																	<option>India</option>
-																	<option>Pakistan</option>
-																	<option>Amerika</option>
-																	<option>China</option>
-																	<option>Dubai</option>
-																	<option>Nepal</option>
-																</select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select class="form-control">
-																	<option>Select state</option>
-																	<option>Gujarat</option>
-																	<option>Maharastra</option>
-																	<option>Rajastan</option>
-																	<option>Maharastra</option>
-																	<option>Rajastan</option>
-																	<option>Gujarat</option>
-																</select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select class="form-control">
-																	<option>Select city</option>
-																	<option>Surat</option>
-																	<option>Baroda</option>
-																	<option>Navsari</option>
-																	<option>Baroda</option>
-																	<option>Surat</option>
-																</select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Website URL">
-                                                        </div>
-                                                        <input type="number" class="form-control" placeholder="Mobile no.">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="payment-adress mg-t-15">
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light mg-b-15">Submit</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                      </div>
+                                                  </div>
+                                                  <br />
+                                                  <div class="row">
+                                                      <div class="col-lg-12">
+                                                          <div class="payment-adress mg-t-15">
+                                                              <button type="submit" class="btn btn-primary waves-effect waves-light mg-b-15">Save</button>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -558,6 +569,62 @@
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.32.2/sweetalert2.min.js" charset="utf-8"></script>
 </body>
 
 </html>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#btn_delete").on("click", function(){
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      var varId     = $(this).data("id");
+      try {
+        swal({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          $.ajax({
+            type      : "DELETE",
+            url       : "{{ url('backend/pages/administrator/delete') }}",
+            async     : true,
+            dataType  : "JSON",
+            data      : {
+              id      : varId
+            },
+            success:function(data){
+              // console.log(data);
+              if(data.response == "success"){
+                swal(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success'
+                ).then(function(){
+                  window.location = "{{ url('backend/pages/administrator') }}";
+                });
+              }
+
+            },
+            error:function(data){
+              console.log(data);
+            }
+          });
+        })
+      } catch (e) {
+        console.log(e);
+      } finally {
+
+      }
+    })
+  })
+</script>
