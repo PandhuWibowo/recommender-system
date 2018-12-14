@@ -86,9 +86,11 @@
 <script src="{!! asset('assets/assets_admin/js/editable/bootstrap-datetimepicker.js') !!}"></script>
 <script src="{!! asset('assets/assets_admin/js/editable/bootstrap-editable.js') !!}"></script>
 <script src="{!! asset('assets/assets_admin/js/editable/xediable-active.js') !!}"></script>
+<!--
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" charset="utf-8"></script> -->
 
-
-
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" charset="utf-8"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js" charset="utf-8"></script>
 </body>
 
 </html>
