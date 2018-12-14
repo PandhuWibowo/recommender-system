@@ -22,7 +22,9 @@ class AdministratorController extends Controller
 
     public function show($id){
       $decryptId            = Crypt::decrypt($id);
-      $detailAdministrator  = LoginAuth::where('level','Super Admin')->where('active','1')->where('id',$decryptId)->first();
+      $detailAdministrator  = LoginAuth::where('level','Super Admin')->where('id',$decryptId)->first();
+      // echo response()->json($detailAdministrator);
       return view("administrator.dashboard.pages.admin-page.detail.v_view", compact('detailAdministrator'));
+      // echo $decryptId;
     }
 }

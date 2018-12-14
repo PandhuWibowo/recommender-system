@@ -64,6 +64,10 @@
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/data-table/bootstrap-table.css') !!}">
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/data-table/bootstrap-editable.css') !!}">
 
+    <!-- forms CSS
+		============================================ -->
+    <!-- <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/form/all-type-forms.css') !!}"> -->
+
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/style.css') !!}">
