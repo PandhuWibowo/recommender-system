@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -594,37 +593,38 @@
           cancelButtonColor: '#d33',
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
-          $.ajax({
-            type      : "DELETE",
-            url       : "{{ url('backend/pages/administrator/delete') }}",
-            async     : true,
-            dataType  : "JSON",
-            data      : {
-              id      : varId
-            },
-            success:function(data){
-              // console.log(data);
-              if(data.response == "success"){
-                swal(
-                  'Deleted!',
-                  'Your file has been deleted.',
-                  'success'
-                ).then(function(){
-                  window.location = "{{ url('backend/pages/administrator') }}";
-                });
+          if(result.value){
+            $.ajax({
+              type      : "DELETE",
+              url       : "{{ url('backend/pages/administrator/delete') }}",
+              async     : true,
+              dataType  : "JSON",
+              data      : {
+                id      : varId
+              },
+              success:function(data){
+                // console.log(data);
+                if(data.response == "success"){
+                  swal(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                  ).then(function(){
+                    window.location = "{{ url('backend/pages/administrator') }}";
+                  });
+                }
+              },
+              error:function(data){
+                console.log(data);
               }
-
-            },
-            error:function(data){
-              console.log(data);
-            }
-          });
-        })
+            });
+          }
+        });
       } catch (e) {
         console.log(e);
       } finally {
 
       }
-    })
-  })
+    });
+  });
 </script>

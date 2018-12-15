@@ -29,6 +29,14 @@ class AdministratorController extends Controller
       // echo $decryptId;
     }
 
+    public function add(){
+      return view("administrator.dashboard.pages.admin-page.v_add_admin");
+    }
+
+    public function store(Request $request){
+
+    }
+
     public function update(Request $request){
       $txtIdAdmin           = $request->id_admin;
       $decryptId            = trim(Crypt::decrypt($txtIdAdmin));
