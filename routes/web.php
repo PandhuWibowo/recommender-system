@@ -27,8 +27,8 @@ Route::prefix('backend/pages')->group(function () {
 
     Route::match(array('PUT', 'PATCH'), 'administrator/update',"Dashboard\AdministratorController@update");
     Route::delete('administrator/delete',"Dashboard\AdministratorController@destroy");
+    Route::post("administrator/store","Dashboard\AdministratorController@store");
 
-    
 });
 
 

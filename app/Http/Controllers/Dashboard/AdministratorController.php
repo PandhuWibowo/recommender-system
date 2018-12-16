@@ -10,6 +10,7 @@ use App\Http\Models\LoginAuth;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Webpatser\Uuid\Uuid;
 /**
  * AdministratorController
  */
@@ -34,7 +35,24 @@ class AdministratorController extends Controller
     }
 
     public function store(Request $request){
+      // echo Uuid::generate()->string;
+      $request->validate([
+        'firstname' => 'required',
+        'lastname'  => 'required'
+      ]);
 
+      $users = new LoginAuth([
+        'id'        => Uuid::generate()->string,
+        'firstname' => $request->firstname,
+        'lastname'  => $request->lastname,
+      ]);
+
+      $result = $users->save();
+      if($result){
+        echo "Berhasil";
+      }else{
+        echo "Gagal";
+      }
     }
 
     public function update(Request $request){
