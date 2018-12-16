@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 /**
  * AdministratorController
  */
@@ -36,22 +38,49 @@ class AdministratorController extends Controller
 
     public function store(Request $request){
       // echo Uuid::generate()->string;
-      $request->validate([
-        'firstname' => 'required',
-        'lastname'  => 'required'
-      ]);
+      $rules = array(
+        'firstname'         => 'required',
+        'lastname'          => 'required',
+        'email'             => 'required|email|unique:users',
+        'username'          => 'required',
+        'phone'             => 'required|numeric',
+        'level'             => 'required',
+        'address'           => 'required|max:300',
+        'password'          => 'required|min:6|max:30',
+        'confirm_password'  => 'required|same:password'
+      );
 
-      $users = new LoginAuth([
-        'id'        => Uuid::generate()->string,
-        'firstname' => $request->firstname,
-        'lastname'  => $request->lastname,
-      ]);
+      $validator = Validator::make(Input::all(), $rules);
 
-      $result = $users->save();
-      if($result){
-        echo "Berhasil";
-      }else{
-        echo "Gagal";
+      if ($validator->fails()) {
+        //Rumus Session
+        // Session::put('st_firstname', $request->firstname);
+        $messages = $validator->messages();
+        return Redirect::to('backend/pages/administrator/add')
+          ->withErrors($validator);
+      }
+      else{
+        $users = new LoginAuth([
+          'id'        => Uuid::generate()->string,
+          'firstname' => ucfirst(trim($request->firstname)),
+          'lastname'  => ucfirst(trim($request->lastname)),
+          'email'     => trim($request->email),
+          'username'  => ucfirst(trim($request->username)),
+          'phone'     => trim($request->phone),
+          'level'     => trim($request->level),
+          'address'   => ucfirst(trim($request->address)),
+          'password'  => Hash::make($request->password),
+          'active'    => '1'
+        ]);
+
+        $result = $users->save();
+        if($result){
+          Session::flash("success","Anda berhasil menyimpan data administrator yang baru");
+          return redirect("backend/pages/administrator");
+        }else{
+          Session::flash("error","Anda gagal menyimpan data administrator yang baru");
+          return redirect("backend/pages/administrator");
+        }
       }
     }
 

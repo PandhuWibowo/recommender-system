@@ -135,6 +135,84 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(Session::has('success'))
+                              <div class="alert alert-primary alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh yeaahh!</strong> {{Session::get('success')}}
+                              </div>
+                            @elseif(Session::has('error'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{Session::get('error')}}
+                              </div>
+                            @endif
+
+                            @if($errors->has('firstname'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{$errors->first('firstname')}}
+                              </div>
+                            @endif
+                            @if($errors->has('lastname'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{$errors->first('lastname')}}
+                              </div>
+                            @endif
+                            @if($errors->has('email'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{$errors->first('email')}}
+                              </div>
+                            @endif
+                            @if($errors->has('username'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{$errors->first('username')}}
+                              </div>
+                            @endif
+                            @if($errors->has('phone'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{$errors->first('phone')}}
+                              </div>
+                            @endif
+                            @if($errors->has('level'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{$errors->first('level')}}
+                              </div>
+                            @endif
+                            @if($errors->has('address'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{$errors->first('address')}}
+                              </div>
+                            @endif
+                            @if($errors->has('password'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{$errors->first('password')}}
+                              </div>
+                            @endif
+                            @if($errors->has('confirm_password'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{$errors->first('confirm_password')}}
+                              </div>
+                            @endif
+
+                            <!-- @if(Session::has('success'))
+                              <div class="alert alert-info alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh yeaahh!</strong> {{Session::get('success')}}
+                              </div>
+                            @elseif(Session::has('error'))
+                              <div class="alert alert-danger alert-dismissable">
+                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                  <strong>Oh snap!</strong> {{Session::get('error')}}
+                              </div>
+                            @endif -->
                         </div>
                     </div>
                 </div>
@@ -157,7 +235,7 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="review-content-section">
                                                 <div id="dropzone1" class="pro-ad">
-                                                    <form action="{{ url('backend/pages/administrator/store') }}" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{ url('backend/pages/administrator/store') }}" autocomplete="off" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload" method="POST" enctype="multipart/form-data">
                                                       {{ csrf_field() }}
                                                       {{ method_field('POST') }}
                                                         <div class="row">
@@ -175,8 +253,12 @@
                                                                     <input name="email" type="email" class="form-control" placeholder="Email" required />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input name="username" type="text" class="form-control" placeholder="Phone" required />
+                                                                    <input name="username" type="text" class="form-control" placeholder="Username" required />
                                                                 </div>
+                                                                <div class="form-group">
+                                                                    <input name="phone" type="text" class="form-control" placeholder="Phone" required />
+                                                                </div>
+
                                                                 <!-- <div class="form-group">
                                                                     <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
                                                                 </div> -->
