@@ -24,10 +24,18 @@ Route::prefix('backend/pages')->group(function () {
     Route::resource('administrator',"Dashboard\AdministratorController", ["only" =>
         ["index","show"]
     ]);
-
     Route::match(array('PUT', 'PATCH'), 'administrator/update',"Dashboard\AdministratorController@update");
     Route::delete('administrator/delete',"Dashboard\AdministratorController@destroy");
     Route::post("administrator/store","Dashboard\AdministratorController@store");
+
+    //Users Page
+    Route::get("users/add","Dashboard\UserController@add");
+    Route::resource("users","Dashboard\UserController", ["only" =>
+        ["index","show"]
+    ]);
+    Route::match(array('PUT', 'PATCH'), 'users/update',"Dashboard\UserController@update");
+    Route::delete('users/delete',"Dashboard\UserController@destroy");
+    Route::post("users/store","Dashboard\UserController@store");
 
 });
 

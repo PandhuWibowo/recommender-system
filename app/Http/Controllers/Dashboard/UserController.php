@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
-use App\Http\Models\LoginAuth;
+use App\Http\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -16,24 +16,24 @@ use Illuminate\Support\Facades\Hash;
 /**
  * AdministratorController
  */
-class AdministratorController extends Controller
+class UserController extends Controller
 {
 
     public function index(){
-      $dataAdministrator = LoginAuth::where('level', 'Super Admin')->where('active','1')->orderBy('firstname', 'desc')->get();
-      return view("administrator.dashboard.pages.admin-page.v_index", compact('dataAdministrator'));
+      $dataUsers = User::where('level', 'Participant')->orderBy('firstname', 'desc')->get();
+      return view("administrator.dashboard.pages.user-master-page.v_index", compact('dataUsers'));
     }
 
     public function show($id){
       $decryptId            = Crypt::decrypt($id);
-      $detailAdministrator  = LoginAuth::where('level','Super Admin')->where('id',$decryptId)->first();
+      $dataUsers            = User::where('level','Participant')->where('id',$decryptId)->first();
       // echo response()->json($detailAdministrator);
-      return view("administrator.dashboard.pages.admin-page.detail.v_view", compact('detailAdministrator'));
+      return view("administrator.dashboard.pages.user-master-page.detail.v_view", compact('dataUsers'));
       // echo $decryptId;
     }
 
     public function add(){
-      return view("administrator.dashboard.pages.admin-page.v_add_admin");
+      return view("administrator.dashboard.pages.user-master-page.v_add_user");
     }
 
     public function store(Request $request){
@@ -60,7 +60,7 @@ class AdministratorController extends Controller
         //Rumus Session
         // Session::put('st_firstname', $request->firstname);
         $messages = $validator->messages();
-        return Redirect::to('backend/pages/administrator/add')
+        return Redirect::to('backend/pages/users/add')
           ->withErrors($validator);
       }
       else{
@@ -68,7 +68,7 @@ class AdministratorController extends Controller
           $txtImage     = $request->file('image');
           $txtImageName = "PA-".time().'.'.$txtImage->getClientOriginalExtension();
 
-          $users = new LoginAuth([
+          $users = new User([
             'id'        => Uuid::generate()->string,
             'firstname' => ucfirst(trim($request->firstname)),
             'lastname'  => ucfirst(trim($request->lastname)),
@@ -84,12 +84,12 @@ class AdministratorController extends Controller
 
           $result = $users->save();
           if($result){
-            request()->image->move(public_path('images/images-admin'), $txtImageName);
-            Session::flash("success","Anda berhasil menyimpan data administrator yang baru");
-            return redirect("backend/pages/administrator");
+            request()->image->move(public_path('images/images-users'), $txtImageName);
+            Session::flash("success","Anda berhasil menyimpan data user yang baru");
+            return redirect("backend/pages/users");
           }else{
-            Session::flash("error","Anda gagal menyimpan data administrator yang baru");
-            return redirect("backend/pages/administrator/add");
+            Session::flash("error","Anda gagal menyimpan data user yang baru");
+            return redirect("backend/pages/users/add");
           }
         }
       }
@@ -115,7 +115,7 @@ class AdministratorController extends Controller
       // $txtOriginalExtension = $txtImage->getClientOriginalExtension();
       $txtImageName             = "PA-".time().'.'.request()->image->getClientOriginalExtension();
       if(!$request->hasFile('image')){
-        $updateUsers            = LoginAuth::findOrFail($decryptId);
+        $updateUsers            = User::findOrFail($decryptId);
 
         $updateUsers->firstname = $txtFirstName;
         $updateUsers->lastname  = $txtLastName;
@@ -127,16 +127,16 @@ class AdministratorController extends Controller
         if($updateUsers->save()){
           // request()->image->move(public_path('images/images-admin'), $txtImageName);
           Session::flash("success","Anda telah berhasil mengubah datanya.");
-          return redirect("backend/pages/administrator/".$txtIdAdmin);
+          return redirect("backend/pages/users/".$txtIdAdmin);
           exit();
         }
         else{
           Session::flash("error","Gagal mengubah.");
-          return redirect("backend/pages/administrator/".$txtIdAdmin);
+          return redirect("backend/pages/users/".$txtIdAdmin);
           exit();
         }
       }else{
-        $updateUsers            = LoginAuth::findOrFail($decryptId);
+        $updateUsers            = User::findOrFail($decryptId);
         $updateUsers->firstname = $txtFirstName;
         $updateUsers->lastname  = $txtLastName;
         $updateUsers->nickname  = $txtNickName;
@@ -147,14 +147,14 @@ class AdministratorController extends Controller
         $updateUsers->image     = $txtImageName;
 
         if($updateUsers->save()){
-          request()->image->move(public_path('images/images-admin'), $txtImageName);
+          request()->image->move(public_path('images/images-users'), $txtImageName);
           Session::flash("success","Anda telah berhasil mengubah datanya.");
-          return redirect("backend/pages/administrator/".$txtIdAdmin);
+          return redirect("backend/pages/users/".$txtIdAdmin);
           exit();
         }
         else{
           Session::flash("error","Gagal mengubah.");
-          return redirect("backend/pages/administrator/".$txtIdAdmin);
+          return redirect("backend/pages/users/".$txtIdAdmin);
           exit();
         }
       }
@@ -162,7 +162,7 @@ class AdministratorController extends Controller
 
     public function destroy(Request $request){
       $txtId    = Crypt::decrypt($request->id);
-      LoginAuth::where('id',$txtId)->delete();
+      User::where('id',$txtId)->delete();
       return response()->json(
         array(
           'response'  => "success"

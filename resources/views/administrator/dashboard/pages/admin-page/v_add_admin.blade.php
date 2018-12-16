@@ -253,10 +253,10 @@
                                                                     <input name="email" type="email" class="form-control" placeholder="Email" required />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input name="username" type="text" class="form-control" placeholder="Username" required />
+                                                                    <input name="username" type="text" class="form-control" maxlength="20" placeholder="Username" required />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input name="phone" type="text" class="form-control" placeholder="Phone" required />
+                                                                    <input name="phone" type="text" class="form-control" placeholder="Phone" maxlength="15" required />
                                                                 </div>
 
                                                                 <!-- <div class="form-group">
@@ -265,17 +265,21 @@
                                                                 <!-- <div class="form-group">
                                                                     <input name="postcode" id="postcode" type="text" class="form-control" placeholder="Postcode">
                                                                 </div> -->
-                                                                <!-- <div class="form-group alert-up-pd">
-                                                                    <div class="dz-message needsclick download-custom">
-                                                                        <i class="fa fa-download edudropnone" aria-hidden="true"></i>
-                                                                        <h2 class="edudropnone">Drop image here or click to upload.</h2>
-                                                                        <p class="edudropnone"><span class="note needsclick">(This is just a demo dropzone. Selected image is <strong>not</strong> actually uploaded.)</span>
-                                                                        </p>
-                                                                        <input name="imageico" class="hd-pro-img" type="text" />
-                                                                    </div>
-                                                                </div> -->
+
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                <div class="file-upload-inner ts-forms">
+                                                                    <div class="input prepend-big-btn">
+                                                                        <!-- <label class="icon-right" for="prepend-big-btn">
+                                                                          <i class="fa fa-download"></i>
+                                                                        </label> -->
+                                                                        <div class="file-button">
+                                                                            Browse
+                                                                            <input name="image" type="file" onchange="document.getElementById('prepend-big-btn').value = this.value;">
+                                                                        </div>
+                                                                        <input type="text" id="prepend-big-btn" placeholder="no file selected" required>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="form-group">
                                                                     <input name="level" type="text" class="form-control" placeholder="Level" value="Super Admin" required readonly/>
                                                                 </div>

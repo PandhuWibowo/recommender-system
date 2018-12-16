@@ -187,7 +187,7 @@
                                               <td>{{ $row->lastname }}</td>
                                               <td>{{ $row->email }}</td>
                                               <td>
-                                                @if(Session::get('first_name') == $row->firstname)
+                                                @if(Session::get('email') == $row->email)
                                                   <a href="{{ url('backend/pages/administrator/'.Crypt::encrypt($row->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                                 @else
                                                   <p class="badge badge-warning">
