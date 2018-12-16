@@ -72,6 +72,7 @@ class UserController extends Controller
             'id'        => Uuid::generate()->string,
             'firstname' => ucfirst(trim($request->firstname)),
             'lastname'  => ucfirst(trim($request->lastname)),
+            'nickname'  => ucfirst(trim($request->nickname)),
             'email'     => trim($request->email),
             'username'  => ucfirst(trim($request->username)),
             'phone'     => trim($request->phone),
@@ -79,7 +80,7 @@ class UserController extends Controller
             'address'   => ucfirst(trim($request->address)),
             'password'  => Hash::make($request->password),
             'image'     => $txtImageName,
-            'active'    => '1'
+            'active'    => '0'
           ]);
 
           $result = $users->save();

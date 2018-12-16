@@ -72,6 +72,7 @@ class AdministratorController extends Controller
             'id'        => Uuid::generate()->string,
             'firstname' => ucfirst(trim($request->firstname)),
             'lastname'  => ucfirst(trim($request->lastname)),
+            'nickname'  => ucfirst(trim($request->nickname)),
             'email'     => trim($request->email),
             'username'  => ucfirst(trim($request->username)),
             'phone'     => trim($request->phone),
