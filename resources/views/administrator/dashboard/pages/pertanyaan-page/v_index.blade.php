@@ -460,9 +460,10 @@
           var varQuestion     = $(this).data("pertanyaan");
           try {
             $("#edit_id_pertanyaan").val(varId);
-            $("#edit_assesment_id").val(varAssesmentId);
-            $("#edit_kompetensi_id").val(varKompetensiId);
-            $("#edit_rowscore_id").val(varRowScoreId);
+            // $("#edit_assesment_id").val(varAssesmentId);
+            $("#edit_assesment_id").select2("val",varAssesmentId);
+            $("#edit_kompetensi_id").select2("val",varKompetensiId);
+            $("#edit_rowscore_id").select2("val",varRowScoreId);
             $("#edit_question").val(varQuestion);
             $("#editModal").modal("show");
           } catch (e) {
@@ -565,10 +566,10 @@
               }
           });
           var varId             = $("#edit_id_pertanyaan").val();
-          var varAssesmentId    = $("#assesment_id").val();
-          var varKompetensiId   = $("#kompetensi_id").val();
-          var varRowScoreId     = $("#rowscore_id").val();
-          var varQuestion       = $("#question").val();
+          var varAssesmentId    = $("#edit_assesment_id").val();
+          var varKompetensiId   = $("#edit_kompetensi_id").val();
+          var varRowScoreId     = $("#edit_rowscore_id").val();
+          var varQuestion       = $("#edit_question").val();
           try {
             if(varAssesmentId == ""){
               swal({
