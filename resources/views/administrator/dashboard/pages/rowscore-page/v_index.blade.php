@@ -379,10 +379,16 @@
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myCompetencies').DataTable({
-          dom: 'Bfrtip',
-          buttons: [
-              'copy', 'csv', 'excel', 'pdf', 'print'
-          ]
+          "dom": 'Bfrtip',
+          "buttons": {
+             "dom": {
+                "button": {
+                  "tag": "button",
+                  "className": "waves-effect waves-light btn btn-info"
+                }
+             },
+             "buttons": [ 'copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+          }
         });
       });
     </script>
