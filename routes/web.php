@@ -19,6 +19,7 @@ Route::prefix('backend/pages')->group(function () {
         ["index"]
     ]);
 
+
     //Administrators Page
     Route::get("administrator/add","Dashboard\AdministratorController@add");
     Route::resource('administrator',"Dashboard\AdministratorController", ["only" =>
@@ -42,6 +43,8 @@ Route::prefix('backend/pages')->group(function () {
     Route::resource("assesments","Dashboard\JenisAssesmentController", ["only" =>
       ["index","show"]
     ]);
+    Route::post("assesments/store","Dashboard\JenisAssesmentController@store");
+    Route::delete("assesments/delete","Dashboard\JenisAssesmentController@destroy");
 
 });
 

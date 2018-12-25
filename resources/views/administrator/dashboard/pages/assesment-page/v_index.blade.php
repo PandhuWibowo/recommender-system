@@ -76,6 +76,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body>
@@ -144,7 +146,7 @@
                                                 <div class="modal-body">
                                                   <div class="form-group">
                                                     <label for="usr">Name of Assesments</label>
-                                                    <input type="text" class="form-control" id="jenis_assesments" required>
+                                                    <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required>
                                                   </div>
                                                 </div>
                                                 <div class="modal-footer">
@@ -207,7 +209,7 @@
                                           <tr>
                                             <td>{{ $row->nama }}</td>
                                             <td>
-                                                <a href="{{ url('backend/pages/assesments/'.Crypt::encrypt($row->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-nama="{{$row->nama}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -219,6 +221,33 @@
                                           </tr>
                                       </tfoot>
                                     </table>
+                                    <!-- Modal -->
+                                    <div id="editModal" class="modal fade" role="dialog">
+                                      <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">New Type of Assesments</h4>
+                                            <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="form-group">
+                                              <input type="hidden" class="form-control" autocomplete="off" id="id_jenis_assesments" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="usr">Name of Assesments</label>
+                                              <input type="text" class="form-control" autocomplete="off" id="name_jenis_assesments" required>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -330,7 +359,25 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
+        $(".btn_edit").on("click", function(){
+          var varId   = $(this).data("id");
+          var varName = $(this).data("nama");
+          try {
+            $("#id_jenis_assesments").val(varId);
+            $("#name_jenis_assesments").val(varName);
+            $("#editModal").modal("show");
+          } catch (e) {
+            console.log(e);
+          } finally {
+
+          }
+        });
         $("#btn_save").on("click", function(){
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
           var varName = $("#jenis_assesments").val();
           try {
             if(varName == ""){
@@ -351,13 +398,82 @@
                   nama  : varName
                 },
                 success:function(data){
-                  console.log(data);
+                  $("#myModal").modal("hide");
+                  if(data.response == "success"){
+                    swal({
+                      type : "success",
+                      title: "Success",
+                      text : "Name of Assesment has been saved",
+                      timer: 3000
+                    }).then(function(){
+                      window.location = "{{ url('backend/pages/assesments') }}";
+                    })
+                  }else{
+                    swal({
+                      type : "error",
+                      title: "Error",
+                      text : "Failed saving the data",
+                      timer: 3000
+                    })
+                  }
                 },
                 error:function(data){
                   console.log(data);
                 }
               });
             }
+          } catch (e) {
+            console.log(e);
+          } finally {
+
+          }
+        });
+
+        $("#btn_hps").on("click", function(){
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+          var varId = $("#id_jenis_assesments").val(varId);
+          try {
+            swal({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if(result.value){
+                $.ajax({
+                  type      : "DELETE",
+                  url       : "{{ url('backend/pages/assesments/delete') }}",
+                  async     : true,
+                  dataType  : "JSON",
+                  data      : {
+                    id      : varId
+                  },
+                  success:function(data){
+                    // console.log(data);
+                    $("#editModal").modal("hide")
+                    if(data.response == "success"){
+                      swal(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      ).then(function(){
+                        window.location = "{{ url('backend/pages/assesments') }}";
+                      });
+                    }
+                  },
+                  error:function(data){
+                    console.log(data);
+                  }
+                });
+              }
+            });
           } catch (e) {
             console.log(e);
           } finally {

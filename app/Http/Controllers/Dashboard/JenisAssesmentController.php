@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
 /**
  * JenisAssesmentController
  */
@@ -23,6 +24,40 @@ class JenisAssesmentController extends Controller
   }
 
   public function store(Request $request){
-    
+    $rules = array(
+      'nama'  => 'required'
+    );
+    $validator = Validator::make(Input::all(), $rules);
+
+    if ($validator->fails()) {
+      $messages = $validator->messages();
+      return response()->json(
+        array(
+          'error' => $validator
+        )
+      );
+    }
+    else{
+      $assesment = new JenisAssesment([
+        'id'        => Uuid::generate()->string,
+        'nama' => ucfirst(trim($request->nama)),
+      ]);
+      $assesment->save();
+      return response()->json(
+          array(
+            'response' => "success"
+          )
+      );
+    }
+  }
+
+  public function destroy(Request $request){
+    $txtId    = Crypt::decrypt($request->id);
+    JenisAssesment::where('id',$txtId)->delete();
+    return response()->json(
+      array(
+        'response'  => "success"
+      )
+    );
   }
 }
