@@ -46,6 +46,15 @@ Route::prefix('backend/pages')->group(function () {
     Route::post("assesments/store","Dashboard\JenisAssesmentController@store");
     Route::delete("assesments/delete","Dashboard\JenisAssesmentController@destroy");
     Route::put("assesments/update","Dashboard\JenisAssesmentController@update");
+
+    //Competencies Page
+    Route::resource("competencies","Dashboard\KompetensiController", ["only" =>
+      ["index","show"]
+    ]);
+    Route::post("competencies/store","Dashboard\KompetensiController@store");
+    Route::delete("competencies/delete","Dashboard\KompetensiController@destroy");
+    Route::put("competencies/update","Dashboard\KompetensiController@update");
+
 });
 
 
