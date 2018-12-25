@@ -21,7 +21,7 @@
                             <a title="Landing Page" href="events.html" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Event</span></a>
                         </li> -->
                         <li>
-                            <a class="has-arrow" href="all-professors.html" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Administrators</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Administrators</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a title="All Administrators" href="{{ url('backend/pages/administrator') }}"><span class="mini-sub-pro">All Administrators</span></a></li>
                                 <!-- <li><a title="Add Professor" href="add-professor.html"><span class="mini-sub-pro">Add Professor</span></a></li>
@@ -30,7 +30,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="all-students.html" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Users</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Users</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a title="All Users" href="{{ url('backend/pages/users') }}"><span class="mini-sub-pro">All Users</span></a></li>
                                 <!-- <li><a title="Add Students" href="add-student.html"><span class="mini-sub-pro">Add Student</span></a></li>
@@ -39,7 +39,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Assesments</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Assesments</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a title="All Jenis Assesments" href="{{ url('backend/pages/assesments') }}"><span class="mini-sub-pro">Type of Assesments</span></a></li>
                                 <!-- <li><a title="Add Courses" href="add-course.html"><span class="mini-sub-pro">Add Course</span></a></li>
@@ -49,7 +49,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Competencies</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Competencies</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a title="All Jenis Competencies" href="{{ url('backend/pages/competencies') }}"><span class="mini-sub-pro">Type of Competencies</span></a></li>
                                 <!-- <li><a title="Add Courses" href="add-course.html"><span class="mini-sub-pro">Add Course</span></a></li>
@@ -59,7 +59,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Row Scores</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Row Scores</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li><a title="All Jenis Row Scores" href="{{ url('backend/pages/rowscores') }}"><span class="mini-sub-pro">Row Scores</span></a></li>
                                 <!-- <li><a title="Add Courses" href="add-course.html"><span class="mini-sub-pro">Add Course</span></a></li>
@@ -69,11 +69,13 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="mailbox.html" aria-expanded="false"><span class="educate-icon educate-message icon-wrap"></span> <span class="mini-click-non">Mailbox</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Questions</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="Inbox" href="mailbox.html"><span class="mini-sub-pro">Inbox</span></a></li>
-                                <li><a title="View Mail" href="mailbox-view.html"><span class="mini-sub-pro">View Mail</span></a></li>
-                                <li><a title="Compose Mail" href="mailbox-compose.html"><span class="mini-sub-pro">Compose Mail</span></a></li>
+                                <li><a title="All Questions" href="{{ url('backend/pages/questions') }}"><span class="mini-sub-pro">Questions</span></a></li>
+                                <!-- <li><a title="Add Courses" href="add-course.html"><span class="mini-sub-pro">Add Course</span></a></li>
+                                <li><a title="Edit Courses" href="edit-course.html"><span class="mini-sub-pro">Edit Course</span></a></li>
+                                <li><a title="Courses Profile" href="course-info.html"><span class="mini-sub-pro">Courses Info</span></a></li>
+                                <li><a title="Product Payment" href="course-payment.html"><span class="mini-sub-pro">Courses Payment</span></a></li> -->
                             </ul>
                         </li>
                         <li>

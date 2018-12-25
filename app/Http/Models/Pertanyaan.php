@@ -11,7 +11,15 @@ class Pertanyaan extends Model{
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
-  public function get_event(){
-      return $this->belongsTo(Event::class,'event_id');
+  public function get_assesment(){
+      return $this->belongsTo(JenisAssesment::class,'assesment_id');
+  }
+
+  public function get_kompetensi(){
+    return $this->belongsTo(Kompetensi::class, 'kompetensi_id');
+  }
+
+  public function get_rowscore(){
+    return $this->belongsTo(RowScore::class, 'rowscore_id');
   }
 }

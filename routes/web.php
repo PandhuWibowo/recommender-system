@@ -62,6 +62,14 @@ Route::prefix('backend/pages')->group(function () {
     Route::post("rowscores/store","Dashboard\RowScoreController@store");
     Route::delete("rowscores/delete","Dashboard\RowScoreController@destroy");
     Route::put("rowscores/update","Dashboard\RowScoreController@update");
+
+    //Pertanyaan Page
+    Route::resource("questions","Dashboard\PertanyaanController", ["only" =>
+      ["index","show"]
+    ]);
+    Route::post("questions/store","Dashboard\PertanyaanController@store");
+    Route::delete("questions/delete","Dashboard\PertanyaanController@destroy");
+    Route::put("questions/update","Dashboard\PertanyaanController@update");
 });
 
 

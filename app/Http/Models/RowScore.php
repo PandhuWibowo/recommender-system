@@ -10,4 +10,8 @@ class RowScore extends Model{
   protected $table = "rowscores";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
+
+  public function data_pertanyaan(){
+    return $this->hasMany('App\Http\Models\Pertanyaan');
+  }
 }

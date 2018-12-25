@@ -10,4 +10,8 @@ class JenisAssesment extends Model{
   protected $table = "jenis_assesments";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
+
+  public function data_pertanyaan(){
+    return $this->hasMany('App\Http\Models\Pertanyaan');
+  }
 }
