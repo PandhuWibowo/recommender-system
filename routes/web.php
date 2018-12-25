@@ -45,7 +45,7 @@ Route::prefix('backend/pages')->group(function () {
     ]);
     Route::post("assesments/store","Dashboard\JenisAssesmentController@store");
     Route::delete("assesments/delete","Dashboard\JenisAssesmentController@destroy");
-
+    Route::put("assesments/update","Dashboard\JenisAssesmentController@update");
 });
 
 

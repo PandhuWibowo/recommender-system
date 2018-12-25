@@ -430,7 +430,52 @@
         });
 
         $("#btn_edit").on("click", function(){
-          
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+          var varId   = $("#id_jenis_assesments").val();
+          var varName = $("#name_jenis_assesments").val();
+          try {
+            $.ajax({
+              type    : "PUT",
+              url     : "{{ url('backend/pages/assesments/update') }}",
+              async   : true,
+              dataType: "JSON",
+              data    : {
+                id    : varId,
+                nama  : varName
+              },
+              success:function(data){
+                $("#editModal").modal("hide");
+                if(data.response == "success"){
+                  swal({
+                    type : "success",
+                    title: "Success",
+                    text : "Name of Assesment has been updated",
+                    timer: 3000
+                  }).then(function(){
+                    window.location = "{{ url('backend/pages/assesments') }}";
+                  })
+                }else{
+                  swal({
+                    type : "error",
+                    title: "Error",
+                    text : "Failed updaing the data",
+                    timer: 3000
+                  })
+                }
+              },
+              error:function(data){
+                console.log(data);
+              }
+            })
+          } catch (e) {
+            console.log(e);
+          } finally {
+
+          }
         });
 
         $("#btn_hps").on("click", function(){

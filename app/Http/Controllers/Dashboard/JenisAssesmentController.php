@@ -51,6 +51,32 @@ class JenisAssesmentController extends Controller
     }
   }
 
+  public function update(Request $request){
+    $rules = array(
+      'id'    => 'required',
+      'nama'  => 'required'
+    );
+    $validator = Validator::make(Input::all(), $rules);
+
+    if ($validator->fails()) {
+      $messages = $validator->messages();
+      return response()->json(
+        array(
+          'error' => $validator
+        )
+      );
+    }
+    else{
+      $assesment        = JenisAssesment::findOrFail(Crypt::decrypt($request->id));
+      $assesment->nama  = $request->nama;
+      $assesment->save();
+      return response()->json(
+          array(
+            'response' => "success"
+          )
+      );
+    }
+  }
   public function destroy(Request $request){
     $txtId    = Crypt::decrypt($request->id);
     JenisAssesment::where('id',$txtId)->delete();
