@@ -55,6 +55,13 @@ Route::prefix('backend/pages')->group(function () {
     Route::delete("competencies/delete","Dashboard\KompetensiController@destroy");
     Route::put("competencies/update","Dashboard\KompetensiController@update");
 
+    //Row Score Page
+    Route::resource("rowscores","Dashboard\RowScoreController", ["only" =>
+      ["index","show"]
+    ]);
+    Route::post("rowscores/store","Dashboard\RowScoreController@store");
+    Route::delete("rowscores/delete","Dashboard\RowScoreController@destroy");
+    Route::put("rowscores/update","Dashboard\RowScoreController@update");
 });
 
 
