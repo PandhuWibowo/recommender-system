@@ -429,13 +429,17 @@
           }
         });
 
+        $("#btn_edit").on("click", function(){
+          
+        });
+
         $("#btn_hps").on("click", function(){
           $.ajaxSetup({
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
           });
-          var varId = $("#id_jenis_assesments").val(varId);
+          var varId = $("#id_jenis_assesments").val();
           try {
             swal({
               title: 'Are you sure?',
