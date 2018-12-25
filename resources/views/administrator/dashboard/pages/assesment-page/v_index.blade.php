@@ -75,7 +75,7 @@
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
 </head>
 
 <body>
@@ -128,9 +128,32 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                          <a href="{{ url('backend/pages/administrator/add') }}" class="btn btn-primary">
+                                          <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
                                             Add New
                                           </a>
+                                          <!-- Modal -->
+                                          <div id="myModal" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                              <!-- Modal content-->
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                  <h4 class="modal-title">New Type of Assesments</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                  <div class="form-group">
+                                                    <label for="usr">Name of Assesments</label>
+                                                    <input type="text" class="form-control" id="jenis_assesments" required>
+                                                  </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                  <button type="button" id="btn_save" class="btn btn-primary">Save</button>
+                                                </div>
+                                              </div>
+
+                                            </div>
+                                          </div>
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
@@ -141,7 +164,7 @@
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">All Users</span>
+                                            <li><span class="bread-blod">All Type of Assesments</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -160,7 +183,7 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Users <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Type of Assesments <span class="table-project-n">Data</span> Table</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
@@ -172,38 +195,26 @@
                     											<option value="selected">Export Selected</option>
                     										</select>
                                     </div> -->
-                                    <table id="myAdministrator" class="table table-striped table-bordered" style="width:100%">
+                                    <table id="myAssesments" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
-                                              <th>First Name</th>
-                                              <th>Last Name</th>
-                                              <th>Email</th>
+                                              <th>Name of Assesment</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
                                       <tbody>
-                                          @foreach($dataAdministrator as $key=>$row)
-                                            <tr>
-                                              <td>{{ $row->firstname }}</td>
-                                              <td>{{ $row->lastname }}</td>
-                                              <td>{{ $row->email }}</td>
-                                              <td>
-                                                @if(Session::get('email') == $row->email)
-                                                  <a href="{{ url('backend/pages/administrator/'.Crypt::encrypt($row->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                                @else
-                                                  <p class="badge badge-warning">
-                                                    Cannot change or delete other administrator data
-                                                  </p>
-                                                @endif
-                                              </td>
-                                            </tr>
-                                          @endforeach
+                                        @foreach($dataAssesments as $key=>$row)
+                                          <tr>
+                                            <td>{{ $row->nama }}</td>
+                                            <td>
+                                                <a href="{{ url('backend/pages/assesments/'.Crypt::encrypt($row->id))}}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                            </td>
+                                          </tr>
+                                        @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Email</th>
+                                            <th>Name of Assesment</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -305,17 +316,55 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js" charset="utf-8"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" charset="utf-8"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script type="text/javascript">
       $(document).ready( function () {
-        $('#myAdministrator').DataTable(
-          {
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
+        $('#myAssesments').DataTable({
+          dom: 'Bfrtip',
+          buttons: [
+              'copy', 'csv', 'excel', 'pdf', 'print'
+          ]
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#btn_save").on("click", function(){
+          var varName = $("#jenis_assesments").val();
+          try {
+            if(varName == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Type of Assesment is required",
+                timer   : 3000
+              });
+            }
+            else{
+              $.ajax({
+                type    : "POST",
+                url     : "{{ url('backend/pages/assesments/store') }}",
+                async   : true,
+                dataType: "JSON",
+                data    : {
+                  nama  : varName
+                },
+                success:function(data){
+                  console.log(data);
+                },
+                error:function(data){
+                  console.log(data);
+                }
+              });
+            }
+          } catch (e) {
+            console.log(e);
+          } finally {
+
           }
-        );
-      } );
+        });
+      });
     </script>
 </body>
 

@@ -37,6 +37,12 @@ Route::prefix('backend/pages')->group(function () {
     Route::delete('users/delete',"Dashboard\UserController@destroy");
     Route::post("users/store","Dashboard\UserController@store");
 
+    //Assesments Page
+    // Route::get("assesments/add","Dashboard\JenisAssesmentController@add");
+    Route::resource("assesments","Dashboard\JenisAssesmentController", ["only" =>
+      ["index","show"]
+    ]);
+
 });
 
 
