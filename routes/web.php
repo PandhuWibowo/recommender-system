@@ -70,6 +70,14 @@ Route::prefix('backend/pages')->group(function () {
     Route::post("questions/store","Dashboard\PertanyaanController@store");
     Route::delete("questions/delete","Dashboard\PertanyaanController@destroy");
     Route::put("questions/update","Dashboard\PertanyaanController@update");
+
+    //Pertanyaan Page
+    // Route::resource("answers","Dashboard\JawabanController", ["only" =>
+    //   ["index","show"]
+    // ]);
+    // Route::post("answers/store","Dashboard\JawabanController@store");
+    // Route::delete("answers/delete","Dashboard\JawabanController@destroy");
+    // Route::put("answers/update","Dashboard\JawabanController@update");
 });
 
 

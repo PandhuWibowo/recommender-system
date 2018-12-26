@@ -181,6 +181,16 @@
                                                     <label for="usr">Question</label>
                                                     <textarea class="form-control" rows="5" id="question" style="height: 150px;" name="question" required placeholder="Question"></textarea>
                                                   </div>
+
+                                                  <div class="form-group">
+                                                    <label for="usr">Answer</label>
+                                                    <textarea class="form-control" rows="5" id="answer" style="height: 150px;" name="answer" required placeholder="Answer"></textarea>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                    <label for="usr">Score</label>
+                                                    <input type="number" min="0" class="form-control" id="score" name="score" required placeholder="Score">
+                                                  </div>
                                                 </div>
 
                                                 <div class="modal-footer">
@@ -242,6 +252,7 @@
                                           </tr>
                                       </thead>
                                       <tbody>
+
                                         @foreach($pertanyaan as $key=>$row)
                                           <tr>
                                             <td>{{ $row->pertanyaan }}</td>
@@ -249,7 +260,7 @@
                                             <td>{{ $row->get_kompetensi->kompetensi }}</td>
                                             <td>{{ $row->get_rowscore->nama_rowscore }}</td>
                                             <td>
-                                              <a class="btn btn-warning btn_edit" data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                              <a class="btn btn-warning btn_edit" <?php foreach($row->data_jawabans as $row2): ;?>data-nilai="{{$row2->nilai}}" data-jawaban="{{$row2->jawaban}}" data-jawaban_id="{{Crypt::encrypt($row2->id)}}"<?php endforeach;?>data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -278,6 +289,9 @@
                                           <div class="modal-body">
                                             <div class="form-group">
                                               <input type="hidden" class="form-control" autocomplete="off" id="edit_id_pertanyaan" required readonly>
+                                            </div>
+                                            <div class="form-group">
+                                              <input type="hidden" name="edit_jawaban_id" id="edit_jawaban_id" class="form-control" autocomplete="off" required readonly>
                                             </div>
                                             <div class="form-group">
                                               <label for="usr">Type of Assesments</label>
@@ -316,6 +330,16 @@
                                             <div class="form-group">
                                               <label for="usr">Question</label>
                                               <textarea class="form-control" rows="5" id="edit_question" name="question" required placeholder="Question"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label for="usr">Answer</label>
+                                              <textarea class="form-control" rows="5" id="edit_answer" style="height: 150px;" name="edit_answer" required placeholder="Answer"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label for="usr">Score</label>
+                                              <input type="number" min="0" class="form-control" id="edit_score" name="edit_score" required placeholder="Score">
                                             </div>
                                           </div>
                                           <div class="modal-footer">
@@ -464,6 +488,10 @@
           var varKompetensiId = $(this).data("kompetensi_id");
           var varRowScoreId   = $(this).data("rowscore_id");
           var varQuestion     = $(this).data("pertanyaan");
+          var varScore        = $(this).data("nilai");
+          var varAnswer       = $(this).data("jawaban")
+          var varJawabanId    = $(this).data("jawaban_id");
+
           try {
             $("#edit_id_pertanyaan").val(varId);
             // $("#edit_assesment_id").val(varAssesmentId);
@@ -471,6 +499,9 @@
             $("#edit_kompetensi_id").select2("val",varKompetensiId);
             $("#edit_rowscore_id").select2("val",varRowScoreId);
             $("#edit_question").val(varQuestion);
+            $("#edit_score").val(varScore);
+            $("#edit_answer").val(varAnswer);
+            $("#edit_jawaban_id").val(varJawabanId);
             $("#editModal").modal("show");
           } catch (e) {
             console.log(e);
@@ -488,6 +519,8 @@
           var varKompetensiId   = $("#kompetensi_id").val();
           var varRowScoreId     = $("#rowscore_id").val();
           var varQuestion       = $("#question").val();
+          var varAnswer         = $("#answer").val();
+          var varScore          = $("#score").val();
           try {
             if(varAssesmentId == ""){
               swal({
@@ -521,6 +554,22 @@
                 timer   : 3000
               });
             }
+            else if(varAnswer == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Answer is required",
+                timer   : 3000
+              });
+            }
+            else if(varScore == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Score is required",
+                timer   : 3000
+              });
+            }
             else{
               $.ajax({
                 type    : "POST",
@@ -528,10 +577,12 @@
                 async   : true,
                 dataType: "JSON",
                 data    : {
-                  assesment_id     : varAssesmentId,
-                  kompetensi_id    : varKompetensiId,
-                  rowscore_id      : varRowScoreId,
-                  pertanyaan       : varQuestion
+                  assesment_id      : varAssesmentId,
+                  kompetensi_id     : varKompetensiId,
+                  rowscore_id       : varRowScoreId,
+                  pertanyaan        : varQuestion,
+                  jawaban           : varAnswer,
+                  nilai             : varScore
                 },
                 success:function(data){
                   $("#myModal").modal("hide");
@@ -576,7 +627,11 @@
           var varKompetensiId   = $("#edit_kompetensi_id").val();
           var varRowScoreId     = $("#edit_rowscore_id").val();
           var varQuestion       = $("#edit_question").val();
+          var varAnswer         = $("#edit_answer").val();
+          var varScore          = $("#edit_score").val();
+          var varJawabanId      = $("#edit_jawaban_id").val();
           try {
+
             if(varAssesmentId == ""){
               swal({
                 type    : "info",
@@ -609,6 +664,30 @@
                 timer   : 3000
               });
             }
+            else if(varAnswer == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Answer is required",
+                timer   : 3000
+              });
+            }
+            else if(varScore == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Score is required",
+                timer   : 3000
+              });
+            }
+            else if(varJawabanId == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Question Id is required",
+                timer   : 3000
+              });
+            }
             else{
               $.ajax({
                 type    : "PUT",
@@ -620,7 +699,10 @@
                   pertanyaan    : varQuestion,
                   assesment_id  : varAssesmentId,
                   kompetensi_id : varKompetensiId,
-                  rowscore_id   : varRowScoreId
+                  rowscore_id   : varRowScoreId,
+                  jawaban       : varAnswer,
+                  nilai         : varScore,
+                  jawaban_id    : varJawabanId
                 },
                 success:function(data){
                   $("#editModal").modal("hide");

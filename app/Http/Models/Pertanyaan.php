@@ -22,4 +22,8 @@ class Pertanyaan extends Model{
   public function get_rowscore(){
     return $this->belongsTo(RowScore::class, 'rowscore_id');
   }
+
+  public function data_jawabans(){
+    return $this->hasMany('App\Http\Models\Jawaban');
+  }
 }

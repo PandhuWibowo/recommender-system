@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Pertanyaan;
+use App\Http\Models\Jawaban;
 use App\Http\Models\JenisAssesment;
 use App\Http\Models\Kompetensi;
 use App\Http\Models\RowScore;
@@ -36,7 +37,9 @@ class PertanyaanController extends Controller
       'pertanyaan'    => 'required',
       'assesment_id'  => 'required',
       'kompetensi_id' => 'required',
-      'rowscore_id'   => 'required'
+      'rowscore_id'   => 'required',
+      'jawaban'       => 'required',
+      'nilai'         => 'required'
     );
 
     $validator = Validator::make(Input::all(), $rules);
@@ -55,9 +58,21 @@ class PertanyaanController extends Controller
         'pertanyaan'    => ucfirst(trim($request->pertanyaan)),
         'assesment_id'  => trim($request->assesment_id),
         'kompetensi_id' => trim($request->kompetensi_id),
-        'rowscore_id'   => trim($request->rowscore_id)
+        'rowscore_id'   => trim($request->rowscore_id),
       ]);
       $pertanyaan->save();
+
+      $pertanyaan->id;
+
+      $jawaban  = new Jawaban([
+        'id'            => Uuid::generate()->string,
+        'pertanyaan_id' => $pertanyaan->id,
+        'jawaban'       => $request->jawaban,
+        'nilai'         => $request->nilai
+      ]);
+
+      $jawaban->save();
+
       return response()->json(
           array(
             'response' => "success"
@@ -72,7 +87,9 @@ class PertanyaanController extends Controller
       'pertanyaan'    => 'required',
       'assesment_id'  => 'required',
       'kompetensi_id' => 'required',
-      'rowscore_id'   => 'required'
+      'rowscore_id'   => 'required',
+      'jawaban'       => 'required',
+      'nilai'         => 'required'
     );
 
     $validator = Validator::make(Input::all(), $rules);
@@ -91,6 +108,13 @@ class PertanyaanController extends Controller
       $rowscore->assesment_id = $request->assesment_id;
       $rowscore->kompetensi_id= $request->kompetensi_id;
       $rowscore->rowscore_id  = $request->rowscore_id;
+
+      $jawaban                = Jawaban::findOrFail(Crypt::decrypt($request->jawaban_id));
+      $jawaban->jawaban       = $request->jawaban;
+      $jawaban->nilai         = $request->nilai;
+
+      $jawaban->save();
+
       $rowscore->save();
       return response()->json(
           array(
