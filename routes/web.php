@@ -80,6 +80,12 @@ Route::prefix('backend/pages')->group(function () {
     // Route::put("answers/update","Dashboard\JawabanController@update");
 });
 
+Route::prefix('user/pages')->group(function () {
+
+    Route::get("register","Dashboard\User\Register\RegisterController@index");
+    Route::post("register/store","Dashboard\User\Register\RegisterController@store");
+
+});
 
 // Auth::routes();
 //
