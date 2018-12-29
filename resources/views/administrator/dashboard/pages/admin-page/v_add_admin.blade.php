@@ -201,18 +201,6 @@
                                   <strong>Oh snap!</strong> {{$errors->first('confirm_password')}}
                               </div>
                             @endif
-
-                            <!-- @if(Session::has('success'))
-                              <div class="alert alert-info alert-dismissable">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                  <strong>Oh yeaahh!</strong> {{Session::get('success')}}
-                              </div>
-                            @elseif(Session::has('error'))
-                              <div class="alert alert-danger alert-dismissable">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                  <strong>Oh snap!</strong> {{Session::get('error')}}
-                              </div>
-                            @endif -->
                         </div>
                     </div>
                 </div>

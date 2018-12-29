@@ -138,88 +138,123 @@
 
                                               <!-- Modal content-->
                                               <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                  <h4 class="modal-title">New Question</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <div class="form-group">
-                                                    <label for="usr">Type of Assesments</label>
-                                                    <!-- <input type="text" class="form-control" autofocus="on" autocomplete="off" id="nama_rowscore" required> -->
-                                                    <select class="form-control assesment_id" name="assesment_id" id="assesment_id">
-                                                        <option></option>
-                                                      @foreach($assesments as $row)
-                                                        <option value="{{$row->id}}">{{$row->nama}}</option>
-                                                      @endforeach
-                                                    </select>
+                                                @if($errors->has('pertanyaan'))
+                                                  <div class="alert alert-danger alert-dismissable">
+                                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                      <strong>Oh snap!</strong> {{$errors->first('pertanyaan')}}
                                                   </div>
-
-                                                  <div class="form-group">
-                                                    <label for="usr">Type of Competencies</label>
-                                                    <!-- <input type="text" class="form-control" autofocus="on" autocomplete="off" id="nama_rowscore" required> -->
-                                                    <select class="form-control kompetensi_id" name="kompetensi_id" id="kompetensi_id">
-                                                        <option></option>
-                                                      @foreach($kompetensi as $row)
-                                                        <option value="{{$row->id}}">{{$row->kompetensi}}</option>
-                                                      @endforeach
-                                                    </select>
+                                                @endif
+                                                @if($errors->has('assesment_id'))
+                                                  <div class="alert alert-danger alert-dismissable">
+                                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                      <strong>Oh snap!</strong> {{$errors->first('assesment_id')}}
                                                   </div>
-
-
-                                                  <div class="form-group">
-                                                    <label for="usr">Row Scores</label>
-                                                    <!-- <input type="text" class="form-control" autofocus="on" autocomplete="off" id="nama_rowscore" required> -->
-                                                    <select class="form-control rowscore_id" name="rowscore_id" id="rowscore_id">
-                                                        <option></option>
-                                                      @foreach($rowscore as $row)
-                                                        <option value="{{$row->id}}">{{$row->nama_rowscore}}</option>
-                                                      @endforeach
-                                                    </select>
+                                                @endif
+                                                @if($errors->has('kompetensi_id'))
+                                                  <div class="alert alert-danger alert-dismissable">
+                                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                      <strong>Oh snap!</strong> {{$errors->first('kompetensi_id')}}
                                                   </div>
-
-                                                  <div class="form-group">
-                                                    <label for="usr">Question</label>
-                                                    <textarea class="form-control" rows="5" id="question" style="height: 150px;" name="question" required placeholder="Question"></textarea>
+                                                @endif
+                                                @if($errors->has('rowscore_id'))
+                                                  <div class="alert alert-danger alert-dismissable">
+                                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                      <strong>Oh snap!</strong> {{$errors->first('rowscore_id')}}
                                                   </div>
-
-                                                  <div class="input-group-btn">
-                                                      <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                                @endif
+                                                @if($errors->has('success'))
+                                                  <div class="alert alert-danger alert-dismissable">
+                                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                      <strong>Oh snap!</strong> {{$errors->first('success')}}
                                                   </div>
+                                                @endif
+                                                <form action="{{ url('backend/pages/questions/store') }}" method="post" autocomplete="off">
+                                                  {{ csrf_field() }}
+                                                  {{ method_field('POST') }}
+                                                  <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">New Question</h4>
+                                                  </div>
+                                                  <div class="modal-body">
 
-                                                  <div class="input-group control-group after-add-more">
                                                     <div class="form-group">
-                                                      <label for="usr">Answer</label>
-                                                      <textarea class="form-control" rows="5" id="answer" style="height: 150px;" name="answer" required placeholder="Answer"></textarea>
+                                                      <label for="usr">Type of Assesments</label>
+                                                      <!-- <input type="text" class="form-control" autofocus="on" autocomplete="off" id="nama_rowscore" required> -->
+                                                      <select class="form-control assesment_id" name="assesment_id" id="assesment_id">
+                                                          <option></option>
+                                                        @foreach($assesments as $row)
+                                                          <option value="{{$row->id}}">{{$row->nama}}</option>
+                                                        @endforeach
+                                                      </select>
                                                     </div>
 
                                                     <div class="form-group">
-                                                      <label for="usr">Score</label>
-                                                      <input type="number" min="0" class="form-control" id="score" name="score" required placeholder="Score">
+                                                      <label for="usr">Type of Competencies</label>
+                                                      <!-- <input type="text" class="form-control" autofocus="on" autocomplete="off" id="nama_rowscore" required> -->
+                                                      <select class="form-control kompetensi_id" name="kompetensi_id" id="kompetensi_id">
+                                                          <option></option>
+                                                        @foreach($kompetensi as $row)
+                                                          <option value="{{$row->id}}">{{$row->kompetensi}}</option>
+                                                        @endforeach
+                                                      </select>
                                                     </div>
-                                                  </div>
 
-                                                  <div class="copy hide">
-                                                    <div class="control-group input-group" style="margin-top:10px">
+
+                                                    <div class="form-group">
+                                                      <label for="usr">Row Scores</label>
+                                                      <!-- <input type="text" class="form-control" autofocus="on" autocomplete="off" id="nama_rowscore" required> -->
+                                                      <select class="form-control rowscore_id" name="rowscore_id" id="rowscore_id">
+                                                          <option></option>
+                                                        @foreach($rowscore as $row)
+                                                          <option value="{{$row->id}}">{{$row->nama_rowscore}}</option>
+                                                        @endforeach
+                                                      </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                      <label for="usr">Question</label>
+                                                      <textarea class="form-control" rows="5" id="pertanyaan" style="height: 150px;" name="pertanyaan" placeholder="Question"></textarea>
+                                                    </div>
+
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                                    </div>
+
+                                                    <div class="input-group control-group after-add-more">
                                                       <div class="form-group">
                                                         <label for="usr">Answer</label>
-                                                        <textarea class="form-control" rows="5" id="answer" style="height: 150px;" name="answer" required placeholder="Answer"></textarea>
+                                                        <textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
                                                       </div>
 
                                                       <div class="form-group">
                                                         <label for="usr">Score</label>
-                                                        <input type="number" min="0" class="form-control" id="score" name="score" required placeholder="Score">
-                                                      </div>
-                                                      <div class="input-group-btn">
-                                                          <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                        <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
                                                       </div>
                                                     </div>
+
+                                                    <div class="copy hide">
+                                                      <div class="control-group input-group" style="margin-top:10px">
+                                                        <div class="form-group">
+                                                          <label for="usr">Answer</label>
+                                                          <textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                          <label for="usr">Score</label>
+                                                          <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
+                                                        </div>
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+
                                                   </div>
 
-                                                </div>
-
-                                                <div class="modal-footer">
-                                                  <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                                </div>
+                                                  <div class="modal-footer">
+                                                    <button type="submit" id="btn_save" class="btn btn-primary">Save</button>
+                                                  </div>
+                                                </form>
                                               </div>
 
                                             </div>
@@ -284,7 +319,7 @@
                                             <td>{{ $row->get_kompetensi->kompetensi }}</td>
                                             <td>{{ $row->get_rowscore->nama_rowscore }}</td>
                                             <td>
-                                              <a class="btn btn-warning btn_edit" <?php foreach($row->data_jawabans as $row2): ;?>data-nilai="{{$row2->nilai}}" data-jawaban="{{$row2->jawaban}}" data-jawaban_id="{{Crypt::encrypt($row2->id)}}"<?php endforeach;?>data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                              <a class="btn btn-warning btn_edit" <?php foreach($row->data_jawabans as $key=>$row2): ;?>data-nilai<?php echo $key;?>="{{$row2->nilai}}" data-jawaban<?php echo $key;?>="{{$row2->jawaban}}" data-jawaban_id<?php echo $key;?>="{{Crypt::encrypt($row2->id)}}"<?php endforeach;?>data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -515,130 +550,132 @@
           var varScore        = $(this).data("nilai");
           var varAnswer       = $(this).data("jawaban")
           var varJawabanId    = $(this).data("jawaban_id");
-
-          try {
-            $("#edit_id_pertanyaan").val(varId);
-            // $("#edit_assesment_id").val(varAssesmentId);
-            $("#edit_assesment_id").select2("val",varAssesmentId);
-            $("#edit_kompetensi_id").select2("val",varKompetensiId);
-            $("#edit_rowscore_id").select2("val",varRowScoreId);
-            $("#edit_question").val(varQuestion);
-            $("#edit_score").val(varScore);
-            $("#edit_answer").val(varAnswer);
-            $("#edit_jawaban_id").val(varJawabanId);
-            $("#editModal").modal("show");
-          } catch (e) {
-            console.log(e);
-          } finally {
-
-          }
+          
+          // try {
+          //   $("#edit_id_pertanyaan").val(varId);
+          //   // $("#edit_assesment_id").val(varAssesmentId);
+          //   $("#edit_assesment_id").select2("val",varAssesmentId);
+          //   $("#edit_kompetensi_id").select2("val",varKompetensiId);
+          //   $("#edit_rowscore_id").select2("val",varRowScoreId);
+          //   $("#edit_question").val(varQuestion);
+          //   $("#edit_score").val(varScore);
+          //   $("#edit_answer").val(varAnswer);
+          //   $("#edit_jawaban_id").val(varJawabanId);
+          //   $("#editModal").modal("show");
+          // } catch (e) {
+          //   console.log(e);
+          // } finally {
+          //
+          // }
         });
-        $("#btn_save").on("click", function(){
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-          });
-          var varAssesmentId    = $("#assesment_id").val();
-          var varKompetensiId   = $("#kompetensi_id").val();
-          var varRowScoreId     = $("#rowscore_id").val();
-          var varQuestion       = $("#question").val();
-          var varAnswer         = $("#answer").val();
-          var varScore          = $("#score").val();
-          try {
-            if(varAssesmentId == ""){
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Name of Assesment is required",
-                timer   : 3000
-              });
-            }
-            else if(varKompetensiId == ""){
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Competency is required",
-                timer   : 3000
-              });
-            }
-            else if(varRowScoreId == ""){
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Row Score is required",
-                timer   : 3000
-              });
-            }
-            else if(varQuestion == ""){
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Question is required",
-                timer   : 3000
-              });
-            }
-            else if(varAnswer == ""){
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Answer is required",
-                timer   : 3000
-              });
-            }
-            else if(varScore == ""){
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Score is required",
-                timer   : 3000
-              });
-            }
-            else{
-              $.ajax({
-                type    : "POST",
-                url     : "{{ url('backend/pages/questions/store') }}",
-                async   : true,
-                dataType: "JSON",
-                data    : {
-                  assesment_id      : varAssesmentId,
-                  kompetensi_id     : varKompetensiId,
-                  rowscore_id       : varRowScoreId,
-                  pertanyaan        : varQuestion,
-                  jawaban           : varAnswer,
-                  nilai             : varScore
-                },
-                success:function(data){
-                  $("#myModal").modal("hide");
-                  if(data.response == "success"){
-                    swal({
-                      type : "success",
-                      title: "Success",
-                      text : "Data has been saved",
-                      timer: 3000
-                    }).then(function(){
-                      window.location = "{{ url('backend/pages/questions') }}";
-                    })
-                  }else{
-                    swal({
-                      type : "error",
-                      title: "Error",
-                      text : "Failed saving the data",
-                      timer: 3000
-                    })
-                  }
-                },
-                error:function(data){
-                  console.log(data);
-                }
-              });
-            }
-          } catch (e) {
-            console.log(e);
-          } finally {
-
-          }
-        });
+        // $("#btn_save").on("click", function(){
+        //   $.ajaxSetup({
+        //       headers: {
+        //           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //       }
+        //   });
+        //   var varAssesmentId    = $("#assesment_id").val();
+        //   var varKompetensiId   = $("#kompetensi_id").val();
+        //   var varRowScoreId     = $("#rowscore_id").val();
+        //   var varQuestion       = $("#question").val();
+        //   var varAnswer         = $("[name='answer[]']").val();
+        //   var varScore          = $("[name='score[]']").val();
+        //
+        //   try {
+        //     if(varAssesmentId == ""){
+        //       swal({
+        //         type    : "info",
+        //         title   : "Empty",
+        //         text    : "Name of Assesment is required",
+        //         timer   : 3000
+        //       });
+        //     }
+        //     else if(varKompetensiId == ""){
+        //       swal({
+        //         type    : "info",
+        //         title   : "Empty",
+        //         text    : "Competency is required",
+        //         timer   : 3000
+        //       });
+        //     }
+        //     else if(varRowScoreId == ""){
+        //       swal({
+        //         type    : "info",
+        //         title   : "Empty",
+        //         text    : "Row Score is required",
+        //         timer   : 3000
+        //       });
+        //     }
+        //     else if(varQuestion == ""){
+        //       swal({
+        //         type    : "info",
+        //         title   : "Empty",
+        //         text    : "Question is required",
+        //         timer   : 3000
+        //       });
+        //     }
+        //     else if(varAnswer == ""){
+        //       swal({
+        //         type    : "info",
+        //         title   : "Empty",
+        //         text    : "Answer is required",
+        //         timer   : 3000
+        //       });
+        //     }
+        //     else if(varScore == ""){
+        //       swal({
+        //         type    : "info",
+        //         title   : "Empty",
+        //         text    : "Score is required",
+        //         timer   : 3000
+        //       });
+        //     }
+        //     else{
+        //       $.ajax({
+        //         type    : "POST",
+        //         url     : "{{ url('backend/pages/questions/store') }}",
+        //         async   : true,
+        //         dataType: "JSON",
+        //         data    : {
+        //           assesment_id      : varAssesmentId,
+        //           kompetensi_id     : varKompetensiId,
+        //           rowscore_id       : varRowScoreId,
+        //           pertanyaan        : varQuestion,
+        //           "jawaban[]"           : varAnswer,
+        //           "nilai[]"             : varScore
+        //         },
+        //         success:function(data){
+        //           console.log(data);
+        //           // $("#myModal").modal("hide");
+        //           // if(data.response == "success"){
+        //           //   swal({
+        //           //     type : "success",
+        //           //     title: "Success",
+        //           //     text : "Data has been saved",
+        //           //     timer: 3000
+        //           //   }).then(function(){
+        //           //     window.location = "{{ url('backend/pages/questions') }}";
+        //           //   })
+        //           // }else{
+        //           //   swal({
+        //           //     type : "error",
+        //           //     title: "Error",
+        //           //     text : "Failed saving the data",
+        //           //     timer: 3000
+        //           //   })
+        //           // }
+        //         },
+        //         error:function(data){
+        //           console.log(data);
+        //         }
+        //       });
+        //     }
+        //   } catch (e) {
+        //     console.log(e);
+        //   } finally {
+        //
+        //   }
+        // });
 
         $("#btn_edit").on("click", function(){
           $.ajaxSetup({

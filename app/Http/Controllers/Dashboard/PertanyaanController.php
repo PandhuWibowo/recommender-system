@@ -38,21 +38,18 @@ class PertanyaanController extends Controller
       'assesment_id'  => 'required',
       'kompetensi_id' => 'required',
       'rowscore_id'   => 'required',
-      'jawaban'       => 'required',
-      'nilai'         => 'required'
     );
 
     $validator = Validator::make(Input::all(), $rules);
 
     if ($validator->fails()) {
       $messages = $validator->messages();
-      return response()->json(
-        array(
-          'error' => $validator
-        )
-      );
+      return Redirect::to('backend/pages/questions')
+        ->withErrors($validator);
+        exit();
     }
     else{
+
       $pertanyaan = new Pertanyaan([
         'id'            => Uuid::generate()->string,
         'pertanyaan'    => ucfirst(trim($request->pertanyaan)),
@@ -64,20 +61,22 @@ class PertanyaanController extends Controller
 
       $pertanyaan->id;
 
-      $jawaban  = new Jawaban([
-        'id'            => Uuid::generate()->string,
-        'pertanyaan_id' => $pertanyaan->id,
-        'jawaban'       => $request->jawaban,
-        'nilai'         => $request->nilai
-      ]);
+      for($i=0;$i<count($request->jawaban);$i++){
+        if($request->jawaban[$i] == "" && $request->nilai[$i] == ""){
+          continue;
+        }else{
+          $jawaban  = new Jawaban([
+            'id'            => Uuid::generate()->string,
+            'pertanyaan_id' => $pertanyaan->id,
+            'jawaban'       => $request->jawaban[$i],
+            'nilai'         => $request->nilai[$i]
+          ]);
 
-      $jawaban->save();
-
-      return response()->json(
-          array(
-            'response' => "success"
-          )
-      );
+          $jawaban->save();
+        }
+      }
+      Session::flash("success","Your question has been saved");
+      return Redirect::to('backend/pages/questions');
     }
   }
 
