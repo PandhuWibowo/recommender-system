@@ -182,15 +182,39 @@
                                                     <textarea class="form-control" rows="5" id="question" style="height: 150px;" name="question" required placeholder="Question"></textarea>
                                                   </div>
 
-                                                  <div class="form-group">
-                                                    <label for="usr">Answer</label>
-                                                    <textarea class="form-control" rows="5" id="answer" style="height: 150px;" name="answer" required placeholder="Answer"></textarea>
+                                                  <div class="input-group-btn">
+                                                      <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                                   </div>
 
-                                                  <div class="form-group">
-                                                    <label for="usr">Score</label>
-                                                    <input type="number" min="0" class="form-control" id="score" name="score" required placeholder="Score">
+                                                  <div class="input-group control-group after-add-more">
+                                                    <div class="form-group">
+                                                      <label for="usr">Answer</label>
+                                                      <textarea class="form-control" rows="5" id="answer" style="height: 150px;" name="answer" required placeholder="Answer"></textarea>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                      <label for="usr">Score</label>
+                                                      <input type="number" min="0" class="form-control" id="score" name="score" required placeholder="Score">
+                                                    </div>
                                                   </div>
+
+                                                  <div class="copy hide">
+                                                    <div class="control-group input-group" style="margin-top:10px">
+                                                      <div class="form-group">
+                                                        <label for="usr">Answer</label>
+                                                        <textarea class="form-control" rows="5" id="answer" style="height: 150px;" name="answer" required placeholder="Answer"></textarea>
+                                                      </div>
+
+                                                      <div class="form-group">
+                                                        <label for="usr">Score</label>
+                                                        <input type="number" min="0" class="form-control" id="score" name="score" required placeholder="Score">
+                                                      </div>
+                                                      <div class="input-group-btn">
+                                                          <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
                                                 </div>
 
                                                 <div class="modal-footer">
@@ -788,6 +812,18 @@
           }
         });
       });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $(".add-more").click(function(){
+              var html = $(".copy").html();
+              $(".after-add-more").after(html);
+          });
+          $("body").on("click",".remove",function(){
+              $(this).parents(".control-group").remove();
+          });
+        });
     </script>
 </body>
 
