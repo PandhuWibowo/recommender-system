@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\LoginAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+// use Auth;
 /**
  * Login Controller
  */

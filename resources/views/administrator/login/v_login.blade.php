@@ -16,7 +16,12 @@
                   <p style="color:red">
                     {{ Session::get('logout') }}
                   </p>
+								@elseif(Session::has("message"))
+								<p style="color:blue">
+									{{ Session::get('message') }}
+								</p>
                 @endif
+
                 <form action="#" id="loginForm" autocomplete="off">
                     <div class="form-group">
                         <label class="control-label" for="username">Email</label>
@@ -34,7 +39,10 @@
                         <p class="help-block small">(if this is a private computer)</p>
                     </div> -->
                     <button class="btn btn-success btn-block loginbtn" id="btn-login" type="button">Login</button>
-                    <!-- <a class="btn btn-default btn-block" href="#">Register</a> -->
+										<br>
+										<button id="btn_register" class="btn btn-success btn-block loginbtn">Doesn't have an account? Register</button>
+
+										<!-- <a class="btn btn-default btn-block" href="#">Register</a> -->
                 </form>
             </div>
         </div>
@@ -49,7 +57,10 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-
+		$("#btn_register").on("click", function(e){
+			e.preventDefault();
+			window.location = "{{ url('user/pages/register') }}";
+		});
     $("#btn-login").on("click", function(){
       $.ajaxSetup({
         headers: {
@@ -107,7 +118,7 @@
                 // console.log(data.level);
                 switch (data.level) {
                   case "Super Admin": window.location = "{{ url('backend/pages/home')}}";break;
-                  // case "Participant": "{{ url('') }}";break;
+                  case "Participant": window.location = "{{ url('user/pages/home') }}";break;
                   default:swal({
                     type    : "error",
                     title   : "Error",

@@ -60,6 +60,7 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -108,7 +109,7 @@
                             </div>
                             <div class="text-center">
                                 <button id="btn_register" class="btn btn-success loginbtn">Register</button>
-                                <!-- <button class="btn btn-default">Cancel</button> -->
+                                <button id="btn_signin" class="btn btn-primary">Have an account? Sign In</button>
                             </div>
                         </form>
                     </div>
@@ -171,8 +172,18 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
+        $("#btn_signin").on("click", function(e){
+          e.preventDefault();
+          window.location="{{ url('backend/pages/signin') }}";
+        });
+        
         $("#btn_register").on("click", function(e){
           e.preventDefault();
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
           var varFirstname        = $("#firstname").val();
           var varLastname         = $("#lastname").val();
           var varUsername         = $("#username").val();
@@ -238,7 +249,7 @@
                 timer     : 3000
               });
             }else{
-              if(varPassword == varPasswordConfirm){
+              if(varPassword != varPasswordConfirm){
                 swal({
                   type      : "info",
                   title     : "Warning",
@@ -261,7 +272,31 @@
                     phone             : varPhone
                   },
                   success:function(data){
-
+                    $("#firstname").val("");
+                    $("#lastname").val("");
+                    $("#username").val("");
+                    $("#password").val("");
+                    $("#confirm_password").val("");
+                    $("#email").val("");
+                    $("#phone").val("");
+                    if(data.response == "success"){
+                      swal({
+                        type      : "success",
+                        title     : "Saved",
+                        text      : "Please check your email first for activation your account",
+                        timer     : 3000
+                      }).then(function(){
+                        window.location = "{{ url('user/pages/register') }}";
+                      });
+                    }
+                    else{
+                      swal({
+                        type      : "error",
+                        title     : "Error",
+                        text      : "Oops, Cannot be saved your data",
+                        timer     : 3000
+                      });
+                    }
                   },
                   error:function(data){
                     console.log(data);

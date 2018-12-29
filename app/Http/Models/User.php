@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Model{
   use SoftDeletes;
-  protected $fillable = ['id','email','username','password','firstname','lastname','nickname','phone','address','image','level','active'];
+  protected $fillable = ['id','email','username','password','firstname','lastname','nickname','phone','address','image','level','active','confirmation_code'];
   protected $table = "users";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;

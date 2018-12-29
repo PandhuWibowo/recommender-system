@@ -81,12 +81,19 @@ Route::prefix('backend/pages')->group(function () {
 });
 
 Route::prefix('user/pages')->group(function () {
-
+    //Registration
     Route::get("register","Dashboard\User\Register\RegisterController@index");
     Route::post("register/store","Dashboard\User\Register\RegisterController@store");
+    Route::get('register/verify/{id}', 'Dashboard\User\Register\RegisterController@confirm');
 
+    //Sign In
+    // Route::get("signin","Dashboard\User\Login\LoginController@index");
 });
 
 // Auth::routes();
 //
 // Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
