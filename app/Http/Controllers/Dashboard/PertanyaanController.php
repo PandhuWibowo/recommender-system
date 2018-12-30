@@ -17,19 +17,32 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
+use DB;
 /**
  * JenisAssesmentController
  */
 class PertanyaanController extends Controller
 {
   public function index(){
+    $pertanyaan = Pertanyaan::all();
+    // $pertanyaan = Pertanyaan::with("get_assesment")->with("get_kompetensi")->with("get_rowscore");
+    return view("administrator.dashboard.pages.pertanyaan-page.v_index", compact("pertanyaan"));
+    // echo dd($pertanyaan);
+  }
+// ,compact("assesments","kompetensi","rowscore")
+  public function add(){
     $assesments = JenisAssesment::all();
     $kompetensi = Kompetensi::all();
     $rowscore   = RowScore::all();
-    $pertanyaan = Pertanyaan::all();
-    // $pertanyaan = Pertanyaan::with("get_assesment")->with("get_kompetensi")->with("get_rowscore");
-    return view("administrator.dashboard.pages.pertanyaan-page.v_index", compact("pertanyaan","assesments","kompetensi","rowscore"));
-    // echo dd($pertanyaan);
+    return view("administrator.dashboard.pages.pertanyaan-page.add-pertanyaan",compact("assesments","kompetensi","rowscore"));
+  }
+
+  public function show($id){
+    $assesments = JenisAssesment::all();
+    $kompetensi = Kompetensi::all();
+    $rowscore   = RowScore::all();
+    $pertanyaan = Pertanyaan::findOrFail(Crypt::decrypt($id));
+    return view("administrator.dashboard.pages.pertanyaan-page.edit-pertanyaan",compact("pertanyaan","assesments","kompetensi","rowscore"));
   }
 
   public function store(Request $request){
@@ -87,44 +100,78 @@ class PertanyaanController extends Controller
       'assesment_id'  => 'required',
       'kompetensi_id' => 'required',
       'rowscore_id'   => 'required',
-      'jawaban'       => 'required',
-      'nilai'         => 'required'
     );
 
     $validator = Validator::make(Input::all(), $rules);
 
     if ($validator->fails()) {
       $messages = $validator->messages();
-      return response()->json(
-        array(
-          'error' => $validator
-        )
-      );
+      return Redirect::to('backend/pages/questions'.$request->id)
+        ->withErrors($validator);
+        exit();
     }
     else{
-      $rowscore               = Pertanyaan::findOrFail(Crypt::decrypt($request->id));
+      $rowscore               = Pertanyaan::find(Crypt::decrypt($request->id));
       $rowscore->pertanyaan   = $request->pertanyaan;
       $rowscore->assesment_id = $request->assesment_id;
       $rowscore->kompetensi_id= $request->kompetensi_id;
       $rowscore->rowscore_id  = $request->rowscore_id;
-
-      $jawaban                = Jawaban::findOrFail(Crypt::decrypt($request->jawaban_id));
-      $jawaban->jawaban       = $request->jawaban;
-      $jawaban->nilai         = $request->nilai;
-
-      $jawaban->save();
-
       $rowscore->save();
-      return response()->json(
-          array(
-            'response' => "success"
-          )
-      );
+
+      $pertanyaanId           = Crypt::decrypt($request->id);
+
+      $hapusIdPertanyaan      = DB::table("jawabans as j")
+                                  ->join("pertanyaans as q","q.id","=","j.pertanyaan_id")
+                                  ->where("j.pertanyaan_id", $pertanyaanId)
+                                  ->where("j.deleted_at", null)
+                                  ->pluck("j.pertanyaan_id");
+
+      DB::table("jawabans")->where("pertanyaan_id",$hapusIdPertanyaan)->where("deleted_at", null)->delete();
+
+      for($i=0;$i<count($request->jawaban);$i++){
+        if($request->jawaban[$i] == "" && $request->nilai[$i] == ""){
+          continue;
+        }else{
+          $jawaban  = new Jawaban([
+            'id'            => Uuid::generate()->string,
+            'pertanyaan_id' => $pertanyaanId,
+            'jawaban'       => $request->jawaban[$i],
+            'nilai'         => $request->nilai[$i]
+          ]);
+
+          $jawaban->save();
+        }
+      }
+      Session::flash("success","Your question has been saved");
+      return Redirect::to('backend/pages/questions');
+      // $jawaban                = Jawaban::findOrFail(Crypt::decrypt($request->jawaban_id));
+      // $jawaban->jawaban       = $request->jawaban;
+      // $jawaban->nilai         = $request->nilai;
+
+      // $jawaban->save();
+      //
+      // $rowscore->save();
+      // return response()->json(
+      //     array(
+      //       'response' => "success"
+      //     )
+      // );
     }
   }
+
   public function destroy(Request $request){
     $txtId    = Crypt::decrypt($request->id);
     Pertanyaan::where('id',$txtId)->delete();
+    return response()->json(
+      array(
+        'response'  => "success"
+      )
+    );
+  }
+
+  public function destroyAnswer(Request $request){
+    $txtId    = Crypt::decrypt($request->id);
+    Jawaban::where('id',$txtId)->delete();
     return response()->json(
       array(
         'response'  => "success"

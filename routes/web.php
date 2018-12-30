@@ -64,11 +64,13 @@ Route::prefix('backend/pages')->group(function () {
     Route::put("rowscores/update","Dashboard\RowScoreController@update");
 
     //Pertanyaan Page
+    Route::get("questions/add","Dashboard\PertanyaanController@add");
     Route::resource("questions","Dashboard\PertanyaanController", ["only" =>
       ["index","show"]
     ]);
     Route::post("questions/store","Dashboard\PertanyaanController@store");
     Route::delete("questions/delete","Dashboard\PertanyaanController@destroy");
+    Route::delete("answers/delete","Dashboard\PertanyaanController@destroyAnswer");
     Route::put("questions/update","Dashboard\PertanyaanController@update");
 
     //Pertanyaan Page
