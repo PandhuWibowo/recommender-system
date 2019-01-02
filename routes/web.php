@@ -88,8 +88,16 @@ Route::prefix('user/pages')->group(function () {
     Route::post("register/store","Dashboard\User\Register\RegisterController@store");
     Route::get('register/verify/{id}', 'Dashboard\User\Register\RegisterController@confirm');
 
-    //Sign In
-    // Route::get("signin","Dashboard\User\Login\LoginController@index");
+    //Home
+    Route::get("home","Dashboard\User\DashboardUser\HomeController@index");
+
+    //Users Page
+    // Route::get("users/add","Dashboard\UserController@add");
+    Route::resource("profiles","Dashboard\User\DashboardUser\UserController", ["only" =>
+        ["show"]
+    ]);
+    Route::match(array('PUT', 'PATCH'), 'profiles/update',"Dashboard\User\DashboardUser\UserController@update");
+    Route::delete('profiles/delete',"Dashboard\User\DashboardUser\UserController@destroy");
 });
 
 // Auth::routes();

@@ -48,6 +48,7 @@ class LoginController extends Controller
         Session::put('level', $data->level);
         Session::put('active', $data->active);
         Session::put('image', $data->image);
+        Session::put('id', $data->id);
         Session::put('login', TRUE);
         return response()->json(
           array(
