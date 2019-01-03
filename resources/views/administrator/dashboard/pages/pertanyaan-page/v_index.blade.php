@@ -177,6 +177,7 @@
                                     <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
+                                              <th>#</th>
                                               <th>Questions</th>
                                               <th>Name of Assesments</th>
                                               <th>Competencies</th>
@@ -185,10 +186,11 @@
                                           </tr>
                                       </thead>
                                       <tbody>
-
+                                        <?php $no=1;?>
                                         @foreach($pertanyaan as $key=>$row)
                                           <tr>
-                                            <td>{{ $row->pertanyaan }}</td>
+                                            <td>{{$no}}</td>
+                                            <td>{{ substr($row->pertanyaan, 0, 50)."..." }}</td>
                                             <td>{{ $row->get_assesment->nama }}</td>
                                             <td>{{ $row->get_kompetensi->kompetensi }}</td>
                                             <td>{{ $row->get_rowscore->nama_rowscore }}</td>
@@ -196,10 +198,12 @@
                                               <a href="{{ url('backend/pages/questions/'.Crypt::encrypt($row->id)) }}" class="btn btn-warning btn_edit" <?php foreach($row->data_jawabans as $key=>$row2): ;?>data-nilai<?php echo $key;?>="{{$row2->nilai}}" data-jawaban<?php echo $key;?>="{{$row2->jawaban}}" data-jawaban_id<?php echo $key;?>="{{Crypt::encrypt($row2->id)}}"<?php endforeach;?>data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
+                                          <?php $no++;?>
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
+                                            <th>#</th>
                                             <th>Questions</th>
                                             <th>Name of Assesments</th>
                                             <th>Competencies</th>

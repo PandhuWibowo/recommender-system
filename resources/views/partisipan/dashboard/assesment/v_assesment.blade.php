@@ -69,6 +69,7 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
     @include("items.meta")
 </head>
 
@@ -264,7 +265,7 @@
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script type="text/javascript">
       $(document).ready(function(){
         $("#btn_save").on("click", function(){
@@ -276,28 +277,37 @@
 
           var varJenisAssesment = $("input[name=jenis_assesment]:checked").val();
 
-          try {
-            $.ajax({
-              type      : "POST",
-              url       : "{{ url('user/pages/assesments/store') }}",
-              async     : true,
-              dataType  : "JSON",
-              data      : {
-                id      : varJenisAssesment
-              },
-              success:function(data){
-                if(data.response == "success"){
-                  window.location.href="{{ url('user/pages/assesments') }}"+"/"+data.id;
-                }
-              },
-              error:function(data){
-                console.log(data);
-              }
+          if(varJenisAssesment == "" || varJenisAssesment == null){
+            swal({
+              type      : "info",
+              title     : "Empty",
+              text      : "Assessment type is required",
+              timer     : 3000
             });
-          } catch (e) {
-            console.log(e);
-          } finally {
+          }else{
+            try {
+              $.ajax({
+                type      : "POST",
+                url       : "{{ url('user/pages/assesments/store') }}",
+                async     : true,
+                dataType  : "JSON",
+                data      : {
+                  id      : varJenisAssesment
+                },
+                success:function(data){
+                  if(data.response == "success"){
+                    window.location.href="{{ url('user/pages/assesments') }}"+"/"+data.id;
+                  }
+                },
+                error:function(data){
+                  console.log(data);
+                }
+              });
+            } catch (e) {
+              console.log(e);
+            } finally {
 
+            }
           }
         });
       });

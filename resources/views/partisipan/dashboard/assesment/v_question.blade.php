@@ -149,7 +149,7 @@
                         <div class="sparkline12-list">
                             <div class="sparkline12-hd">
                                 <div class="main-sparkline12-hd">
-                                    <h1>Questions</h1>
+                                    <h1>Questionnaire</h1>
                                 </div>
                             </div>
                             <div class="sparkline12-graph">
@@ -157,7 +157,7 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="all-form-element-inner">
-                                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                   <div class="sparkline8-list">
                                                       <div class="sparkline8-graph">
                                                           <div class="static-table-list">
@@ -165,30 +165,23 @@
                                                                   <thead>
                                                                       <tr>
                                                                           <th>#</th>
-                                                                          <th>First Name</th>
-                                                                          <th>Last Name</th>
-                                                                          <th>Username</th>
+                                                                          <th>Competencies</th>
+                                                                          <th>Situation</th>
+                                                                          <th>Response</th>
+                                                                          <th>Score</th>
                                                                       </tr>
                                                                   </thead>
                                                                   <tbody>
-                                                                      <tr>
-                                                                          <td>1</td>
-                                                                          <td>Mamun</td>
-                                                                          <td>Roshid</td>
-                                                                          <td>@Facebook</td>
-                                                                      </tr>
-                                                                      <tr>
-                                                                          <td>2</td>
-                                                                          <td>Suhag</td>
-                                                                          <td>Khan</td>
-                                                                          <td>@Twitter</td>
-                                                                      </tr>
-                                                                      <tr>
-                                                                          <td>3</td>
-                                                                          <td>Sakil</td>
-                                                                          <td>Shak</td>
-                                                                          <td>@Linkedin</td>
-                                                                      </tr>
+                                                                      <?php $no = 1;?>
+                                                                      @foreach($questions as $row)
+                                                                        <tr>
+                                                                            <td>{{$no}}</td>
+                                                                            <td>{{$row->get_kompetensi->kompetensi}}</td>
+                                                                            <td>{{$row->pertanyaan}}</td>
+
+                                                                        </tr>
+                                                                        <?php $no++;?>
+                                                                      @endforeach
                                                                   </tbody>
                                                               </table>
                                                           </div>
