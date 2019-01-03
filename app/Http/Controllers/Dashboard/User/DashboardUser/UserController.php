@@ -14,7 +14,7 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 /**
- * AdministratorController
+ * UserController
  */
 class UserController extends Controller
 {

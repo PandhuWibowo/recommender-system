@@ -91,13 +91,18 @@ Route::prefix('user/pages')->group(function () {
     //Home
     Route::get("home","Dashboard\User\DashboardUser\HomeController@index");
 
-    //Users Page
+    //Profile Page
     // Route::get("users/add","Dashboard\UserController@add");
     Route::resource("profiles","Dashboard\User\DashboardUser\UserController", ["only" =>
         ["show"]
     ]);
     Route::match(array('PUT', 'PATCH'), 'profiles/update',"Dashboard\User\DashboardUser\UserController@update");
     Route::delete('profiles/delete',"Dashboard\User\DashboardUser\UserController@destroy");
+
+    //Assesments Page
+    Route::get("assesments","Dashboard\User\DashboardUser\AssesmentController@index");
+    Route::post("assesments/store","Dashboard\User\DashboardUser\AssesmentController@store");
+    Route::get("assesments/{id}","Dashboard\User\DashboardUser\AssesmentController@show");
 });
 
 // Auth::routes();

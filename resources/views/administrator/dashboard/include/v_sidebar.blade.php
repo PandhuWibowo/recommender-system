@@ -136,18 +136,18 @@
                             <a title="Landing Page" href="events.html" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Event</span></a>
                         </li> -->
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Administrators</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Assesments</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Administrators" href="{{ url('backend/pages/administrator') }}"><span class="mini-sub-pro">All Administrators</span></a></li>
+                                <li><a title="All Assesments" href="{{ url('user/pages/assesments') }}"><span class="mini-sub-pro">Assesments</span></a></li>
                                 <!-- <li><a title="Add Professor" href="add-professor.html"><span class="mini-sub-pro">Add Professor</span></a></li>
                                 <li><a title="Edit Professor" href="edit-professor.html"><span class="mini-sub-pro">Edit Professor</span></a></li>
                                 <li><a title="Professor Profile" href="professor-profile.html"><span class="mini-sub-pro">Professor Profile</span></a></li> -->
                             </ul>
                         </li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Users</span></a>
+                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Histories</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Users" href="{{ url('backend/pages/users') }}"><span class="mini-sub-pro">All Users</span></a></li>
+                                <li><a title="All Histories" href="{{ url('user/pages/histories') }}"><span class="mini-sub-pro">Log Histories</span></a></li>
                                 <!-- <li><a title="Add Students" href="add-student.html"><span class="mini-sub-pro">Add Student</span></a></li>
                                 <li><a title="Edit Students" href="edit-student.html"><span class="mini-sub-pro">Edit Student</span></a></li>
                                 <li><a title="Students Profile" href="student-profile.html"><span class="mini-sub-pro">Student Profile</span></a></li> -->

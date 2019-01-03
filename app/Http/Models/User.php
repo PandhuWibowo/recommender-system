@@ -10,4 +10,8 @@ class User extends Model{
   protected $table = "users";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
+
+  public function data_pertanyaan(){
+      return $this->hasMany("App\Http\Models\Pertanyaan");
+  }
 }
