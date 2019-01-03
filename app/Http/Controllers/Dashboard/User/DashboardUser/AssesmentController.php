@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\User;
 use App\Http\Models\JenisAssesment;
 use App\Http\Models\Assesment;
+use App\Http\Models\Pertanyaan;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -42,6 +43,7 @@ class AssesmentController extends Controller
 
   public function show($id){
     $decryptId    = Crypt::decrypt($id);
-    
+    $questions    = Pertanyaan::where("assesment_id", $decryptId)->get();
+    return view("partisipan.dashboard.assesment.v_question", compact("questions"));
   }
 }
