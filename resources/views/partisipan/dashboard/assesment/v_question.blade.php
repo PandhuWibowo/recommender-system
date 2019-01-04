@@ -69,6 +69,7 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     @include("items.meta")
 </head>
 
@@ -287,7 +288,7 @@
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script type="text/javascript">
       $(document).ready(function(){
         $("#btn_save").on("click", function(){
@@ -295,10 +296,26 @@
           var varParseCount = parseInt(varCount)-1;
           var i;
           var varNilai;
+          var varSum;
           for (i = 1; i <= varParseCount; i++) {
-            varNilai = $("#nilai"+i).val();
-            console.log(varNilai);
+            // varNilai = $("#nilai"+i).val();
+            var varNilai  = $("input[name=nilai"+i+"]:checked").val();
+            if(varNilai == "" || varNilai == undefined){
+              swal({
+                type      : "info",
+                title     : "Null",
+                text      : "Answer is still empty",
+                timer     : 3000,
+              });
+            }else{
+              varNilai = varNilai + varNilai;
+            }
+            // console.log("Nilai"+i+": "+varNilai);
+
+            // console.log(varSum);
           }
+          varSum = parseInt(varNilai);
+
         });
       });
     </script>
