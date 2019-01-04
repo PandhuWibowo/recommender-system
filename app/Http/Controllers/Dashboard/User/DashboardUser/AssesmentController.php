@@ -43,12 +43,13 @@ class AssesmentController extends Controller
 
   public function show($id){
     $decryptId    = Crypt::decrypt($id);
-    $questions    = Pertanyaan::with("get_kompetensi")->with("get_assesment")->with("get_rowscore")
-                              ->join("kompetensis","pertanyaans.kompetensi_id","=","kompetensis.id")
-                              ->where("assesment_id", $decryptId)
-                              ->orderBy("kompetensis.id","asc")
-                              ->distinct("pertanyaans.pertanyaan")
-                              ->get();
+    $questions    = Pertanyaan::with(array('get_kompetensi' => function($query) {
+        $query->orderBy('kompetensi', 'asc');
+    }))->with("get_assesment")->with("get_rowscore")->get();
+
+
+
+
     return view("partisipan.dashboard.assesment.v_question", compact("questions"));
   }
 }

@@ -164,11 +164,11 @@
                                                               <table class="table">
                                                                   <thead>
                                                                       <tr>
-                                                                          <th>#</th>
-                                                                          <th>Competencies</th>
-                                                                          <th>Situation</th>
-                                                                          <th>Response</th>
-                                                                          <th>Score</th>
+                                                                          <th style="text-align:center;">#</th>
+                                                                          <th style="text-align:center;">Competencies</th>
+                                                                          <th style="text-align:center;">Situation</th>
+                                                                          <th style="text-align:center;">Response</th>
+                                                                          <!-- <th style="text-align:center;">Score</th> -->
                                                                       </tr>
                                                                   </thead>
                                                                   <tbody>
@@ -178,7 +178,11 @@
                                                                             <td>{{$no}}</td>
                                                                             <td>{{$row->get_kompetensi->kompetensi}}</td>
                                                                             <td>{{$row->pertanyaan}}</td>
-
+                                                                            <td>
+                                                                              @foreach($row->get_jawaban as $row2)
+                                                                                <p>{{$row2->jawaban}}</p>
+                                                                              @endforeach
+                                                                            </td>
                                                                         </tr>
                                                                         <?php $no++;?>
                                                                       @endforeach

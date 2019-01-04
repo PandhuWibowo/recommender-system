@@ -26,4 +26,8 @@ class Pertanyaan extends Model{
   public function data_jawabans(){
     return $this->hasMany('App\Http\Models\Jawaban');
   }
+
+  public function get_jawaban(){
+    return $this->hasMany(Jawaban::class);
+  }
 }
