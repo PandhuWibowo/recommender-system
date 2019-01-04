@@ -172,6 +172,7 @@
                                                                       </tr>
                                                                   </thead>
                                                                   <tbody>
+                                                                      <?php $x = 1;?>
                                                                       <?php $no = 1;?>
                                                                       @foreach($questions as $row)
                                                                         <tr>
@@ -179,15 +180,37 @@
                                                                             <td>{{$row->get_kompetensi->kompetensi}}</td>
                                                                             <td>{{$row->pertanyaan}}</td>
                                                                             <td>
-                                                                              @foreach($row->get_jawaban as $row2)
-                                                                                <p>{{$row2->jawaban}}</p>
-                                                                              @endforeach
+                                                                                <div class="form-group-inner">
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                            <div class="bt-df-checkbox pull-left">
+                                                                                                @foreach($row->get_jawaban as $key2=>$row2)
+                                                                                                  <div class="row">
+                                                                                                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                                          <div class="i-checks pull-left">
+                                                                                                              <p style="text-align:justify;">
+                                                                                                                <input type="radio" value="{{$row2->nilai}}" name="nilai{{$x}}" id="nilai{{$x}}" required>
+                                                                                                                {{$row2->jawaban}}
+                                                                                                              </p>
+                                                                                                          </div>
+                                                                                                      </div>
+                                                                                                  </div>
+                                                                                                @endforeach
+                                                                                                <input type="text" name="count" id="count" value="{{$x}}">
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
                                                                             </td>
                                                                         </tr>
                                                                         <?php $no++;?>
+                                                                        <?php $x++;?>
                                                                       @endforeach
                                                                   </tbody>
                                                               </table>
+                                                              <button type="button" class="btn btn-primary" id="btn_save" name="button">Save</button>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -264,6 +287,15 @@
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#btn_save").on("click", function(){
+          var varCount = $("#count").val();
+          
+        });
+      });
+    </script>
 </body>
 
 </html>
