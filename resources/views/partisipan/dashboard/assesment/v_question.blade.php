@@ -196,7 +196,7 @@
                                                                                                       </div>
                                                                                                   </div>
                                                                                                 @endforeach
-                                                                                                <input type="text" name="count" id="count" value="{{$x}}">
+                                                                                                <!-- <input type="text" name="count" id="count" value="{{$x}}"> -->
 
                                                                                             </div>
                                                                                         </div>
@@ -210,7 +210,7 @@
                                                                       @endforeach
                                                                   </tbody>
                                                               </table>
-                                                              <button type="button" class="btn btn-primary" id="btn_save" name="button">Save</button>
+                                                              <button type="button" class="btn btn-primary" id="btn_save" data-count="{{$x}}">Save</button>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -291,8 +291,14 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $("#btn_save").on("click", function(){
-          var varCount = $("#count").val();
-          
+          var varCount = $(this).data("count");
+          var varParseCount = parseInt(varCount)-1;
+          var i;
+          var varNilai;
+          for (i = 1; i <= varParseCount; i++) {
+            varNilai = $("#nilai"+i).val();
+            console.log(varNilai);
+          }
         });
       });
     </script>
