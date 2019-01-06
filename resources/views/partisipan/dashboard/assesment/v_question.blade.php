@@ -179,7 +179,7 @@
                                                                         <tr>
                                                                             <td>{{$no}}</td>
                                                                             <td>{{$row->get_kompetensi->kompetensi}}</td>
-                                                                            <td>{{$row->pertanyaan}}</td>
+                                                                            <td style="text-align:justify;">{{ucfirst($row->pertanyaan)}}</td>
                                                                             <td>
                                                                                 <div class="form-group-inner">
                                                                                     <div class="row">
@@ -190,15 +190,17 @@
                                                                                                       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                                           <div class="i-checks pull-left">
                                                                                                               <p style="text-align:justify;">
+                                                                                                                <input type="hidden" value="{{$decryptAssId}}" name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
+                                                                                                                <input type="hidden" value="{{$row2->pertanyaan_id}}" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
+                                                                                                                <input type="hidden" value="{{$row2->id}}" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
                                                                                                                 <input type="radio" value="{{$row2->nilai}}" name="nilai{{$x}}" id="nilai{{$x}}" required>
-                                                                                                                {{$row2->jawaban}}
+                                                                                                                {{ucfirst($row2->jawaban)}}
                                                                                                               </p>
                                                                                                           </div>
                                                                                                       </div>
                                                                                                   </div>
                                                                                                 @endforeach
                                                                                                 <!-- <input type="text" name="count" id="count" value="{{$x}}"> -->
-
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -292,14 +294,26 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $("#btn_save").on("click", function(){
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
           var varCount = $(this).data("count");
           var varParseCount = parseInt(varCount)-1;
           var i;
           var varNilai;
           var varSum;
+          var arrNilai        = [];
+          var arrAssesmentId  = [];
+          var arrPertanyaanId = [];
+          var arrJawabanId    = [];
           for (i = 1; i <= varParseCount; i++) {
             // varNilai = $("#nilai"+i).val();
-            var varNilai  = $("input[name=nilai"+i+"]:checked").val();
+            var varJenisAssesmentId  = $("input[name=assessmentid"+i+"]").val();
+            var varPertanyaanId      = $("input[name=pertanyaanid"+i+"]").val();
+            var varJawabanId         = $("input[name=jawabanid"+i+"]").val();
+            var varNilai             = $("input[name=nilai"+i+"]:checked").val();
             if(varNilai == "" || varNilai == undefined){
               swal({
                 type      : "info",
@@ -308,14 +322,58 @@
                 timer     : 3000,
               });
             }else{
-              varNilai = varNilai + varNilai;
+              // varNilai = varNilai + varNilai;
+                  arrNilai[i-1]       = varNilai;
+                  arrAssesmentId[i-1] = varJenisAssesmentId;
+                  arrPertanyaanId[i-1]= varPertanyaanId;
+                  arrJawabanId[i-1]   = varJawabanId;
             }
             // console.log("Nilai"+i+": "+varNilai);
 
             // console.log(varSum);
           }
-          varSum = parseInt(varNilai);
+          // varSum = parseInt(varNilai);
+          // console.log(arrAssesmentId);
+          if(varParseCount != arrNilai.push()){
+            swal({
+              type      : "info",
+              title     : "Null",
+              text      : "Answers are still empty",
+              timer     : 3000,
+            });
+          }else{
+            try {
+              $.ajax({
+                type      : "POST",
+                url       : "{{ url('user/pages/questions/store') }}",
+                async     : true,
+                dataType  : "JSON",
+                data      : {
+                  "ass_id[]"        : arrAssesmentId,
+                  "pertanyaan_id[]" : arrPertanyaanId,
+                  "jawaban_id[]"    : arrJawabanId,
+                  "nilai[]"         : arrNilai
+                },
+                success:function(data){
+                  // console.log(data);
+                  if(data.response == "success"){
+                    swal({
+                      type      : "info",
+                      title     : "Success",
+                      timer     : 3000,
+                    });
+                  }
+                },
+                error:function(data){
+                  console.log(data);
+                }
+              });
+            } catch (e) {
+              console.log(e);
+            } finally {
 
+            }
+          }
         });
       });
     </script>

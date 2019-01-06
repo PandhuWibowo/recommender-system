@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Http\Controllers\Dashboard\User\DashboardUser;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Controller;
+use App\Http\Models\User;
+use App\Http\Models\JenisAssesment;
+use App\Http\Models\Assesment;
+use App\Http\Models\Pertanyaan;
+use App\Http\Models\PertanyaanAssesment;
+use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
+use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+/**
+ * UserController
+ */
+class QuestionController extends Controller
+{
+  public function store(Request $request){
+    $assesmentId = $request->ass_id; $pertanyaanId = $request->pertanyaan_id;
+    $jawabanId  = $request->jawaban_id; $nilai = $request->nilai;
+    for($i=0;$i<count($nilai);$i++){
+      $pertanyaanAssesment  = new PertanyaanAssesment([
+        "id"            => Uuid::generate()->string,
+        "ass_id"        => $assesmentId[$i],
+        "pertanyaan_id" => $pertanyaanId[$i],
+        "jawaban_id"    => $jawabanId[$i],
+        "nilai"         => $nilai[$i]
+      ]);
+
+      $pertanyaanAssesment->save();
+    }
+
+    return response()->json(
+        array(
+          'response'  => "success"
+          // 'id'        => $request->id
+        )
+    );
+  }
+}

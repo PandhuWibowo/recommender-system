@@ -102,7 +102,9 @@ Route::prefix('user/pages')->group(function () {
     //Assesments Page
     Route::get("assesments","Dashboard\User\DashboardUser\AssesmentController@index");
     Route::post("assesments/store","Dashboard\User\DashboardUser\AssesmentController@store");
-    Route::get("assesments/{id}","Dashboard\User\DashboardUser\AssesmentController@show");
+    Route::get("assesments/{id}/{assId}","Dashboard\User\DashboardUser\AssesmentController@show");
+
+    Route::post("questions/store","Dashboard\User\DashboardUser\QuestionController@store");
 });
 
 // Auth::routes();
