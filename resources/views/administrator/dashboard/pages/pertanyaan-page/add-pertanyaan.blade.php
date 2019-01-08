@@ -212,7 +212,7 @@
                                                   <label>Assesment Type</label>
                                                   <select data-placeholder="Choose Assesment Type" id="assesment_id" name="assesment_id" class="chosen-select" tabindex="-1">
                                                     @foreach($assesments as $row)
-                                                      <option value="{{$row->id}}">{{$row->nama}}</option>
+                                                      <option value="{{$row->id}}" <?php echo (Session::get("assesment_id") == $row->id) ? "selected" : "";?>>{{$row->nama}}</option>
                                                     @endforeach
                         													</select>
                                               </div>
@@ -220,7 +220,7 @@
                                                   <label>Competencies Type</label>
                                                   <select data-placeholder="Choose Competency Type" id="kompetensi_id" name="kompetensi_id" class="chosen-select" tabindex="-1">
                                                     @foreach($kompetensi as $row)
-                                                      <option value="{{$row->id}}">{{$row->kompetensi}}</option>
+                                                      <option value="{{$row->id}}" <?php echo (Session::get("kompetensi_id") == $row->id) ? "selected" : "";?>>{{$row->kompetensi}}</option>
                                                     @endforeach
                         													</select>
                                               </div>
@@ -229,7 +229,7 @@
                                                   <label>RowScores Type</label>
                                                   <select data-placeholder="Choose Competency Type" id="rowscore_id" name="rowscore_id" class="chosen-select" tabindex="-1">
                                                     @foreach($rowscore as $row)
-                                                      <option value="{{$row->id}}">{{$row->nama_rowscore}}</option>
+                                                      <option value="{{$row->id}}" <?php echo (Session::get("rowscore_id") == $row->id) ? "selected" : "";?>>{{$row->nama_rowscore}}</option>
                                                     @endforeach
                         													</select>
                                               </div>
@@ -415,6 +415,7 @@
           });
         });
     </script>
+
 </body>
 
 </html>

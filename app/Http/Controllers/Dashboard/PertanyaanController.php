@@ -64,7 +64,9 @@ class PertanyaanController extends Controller
         exit();
     }
     else{
-
+      Session::put('assesment_id', $request->assesment_id);
+      Session::put('kompetensi_id', $request->kompetensi_id);
+      Session::put('rowscore_id', $request->rowscore_id);
       $pertanyaan = new Pertanyaan([
         'id'                => Uuid::generate()->string,
         'pertanyaan'        => ucfirst(trim($request->pertanyaan)),
