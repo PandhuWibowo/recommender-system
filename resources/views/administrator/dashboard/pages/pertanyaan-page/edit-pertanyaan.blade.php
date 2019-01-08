@@ -167,6 +167,7 @@
                         <div class="sparkline10-list mg-tb-30 responsive-mg-t-0 table-mg-t-pro-n dk-res-t-pro-0 nk-ds-n-pro-t-0">
                             <div class="sparkline10-hd">
                                 <div class="main-sparkline10-hd">
+                                    <button type="button" class="btn btn-danger" id="btn_delete_pertanyaan" data-id="{{Crypt::encrypt($pertanyaan->id)}}">Delete Question</button>
                                     <h1>Add Question</h1>
                                 </div>
                             </div>
@@ -202,7 +203,7 @@
                                                     <strong>Oh snap!</strong> {{$errors->first('rowscore_id')}}
                                                 </div>
                                               @endif
-                                              
+
                                               <div class="chosen-select-single mg-b-20">
                                                   <input type="hidden" class="form-control" id="id" name="id" placeholder="Id" value="{{Crypt::encrypt($pertanyaan->id)}}" readonly>
 
@@ -237,6 +238,11 @@
                                               <div class="chosen-select-single mg-b-20">
                                                   <label>Question</label>
                                                   <textarea class="form-control" rows="5" id="pertanyaan" style="height: 150px;" name="pertanyaan" placeholder="Question">{{$pertanyaan->pertanyaan}}</textarea>
+                                              </div>
+
+                                              <div class="chosen-select-single mg-b-20">
+                                                  <label>Sequence Number to</label>
+                                                  <input class="form-control" type="number" min="1" id="no_urut_pertanyaan" name="no_urut_pertanyaan" placeholder="Sequence Number to" value="{{$pertanyaan->no_urut_pertanyaan}}">
                                               </div>
 
                                               <div class="input-group-btn">
@@ -427,6 +433,67 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
+        $("#btn_delete_pertanyaan").on("click", function(){
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+
+          var varPertanyaanId = $(this).data("id");
+
+          try {
+            swal({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if(result.value){
+                $.ajax({
+                  type      : "DELETE",
+                  url       : "{{ url('backend/pages/questions/delete') }}",
+                  async     : true,
+                  dataType  : "JSON",
+                  data      : {
+                    id      : varPertanyaanId
+                  },
+                  success:function(data){
+                    console.log(data);
+                    if(data.response == "success"){
+                      swal(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      ).then(function(){
+                        window.location = "{{ url('backend/pages/questions') }}"+"/"+varPertanyaanId;
+                      });
+                    }
+                    else if (data.response == "failed") {
+                      swal(
+                        'Failed!',
+                        'The question failed to be deleted.',
+                        'error'
+                      );
+                    }
+                  },
+                  error:function(data){
+                    console.log(data);
+                  }
+                });
+              }
+            });
+          } catch (e) {
+            console.log(e);
+          } finally {
+
+          }
+        });
+
+
         $(".btn_delete").on("click", function(){
           $.ajaxSetup({
             headers: {
@@ -435,7 +502,6 @@
           });
           var varId           = $(this).data("jawaban_id");
           var varPertanyaanId = $("#id").val();
-
 
           try {
             swal({

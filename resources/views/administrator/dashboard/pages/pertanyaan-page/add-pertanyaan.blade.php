@@ -239,6 +239,11 @@
                                                   <textarea class="form-control" rows="5" id="pertanyaan" style="height: 150px;" name="pertanyaan" placeholder="Question"></textarea>
                                               </div>
 
+                                              <div class="chosen-select-single mg-b-20">
+                                                  <label>Sequence Number to</label>
+                                                  <input class="form-control" type="number" min="1" id="no_urut_pertanyaan" name="no_urut_pertanyaan" placeholder="Sequence Number to">
+                                              </div>
+
                                               <div class="input-group-btn">
                                                   <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                               </div>

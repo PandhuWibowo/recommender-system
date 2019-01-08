@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\Pertanyaan;
 use App\Http\Models\Jawaban;
 use App\Http\Models\JenisAssesment;
+use App\Http\Models\PertanyaanAssesment;
 use App\Http\Models\Kompetensi;
 use App\Http\Models\RowScore;
 use Illuminate\Support\Facades\Crypt;
@@ -47,10 +48,11 @@ class PertanyaanController extends Controller
 
   public function store(Request $request){
     $rules = array(
-      'pertanyaan'    => 'required',
-      'assesment_id'  => 'required',
-      'kompetensi_id' => 'required',
-      'rowscore_id'   => 'required',
+      'pertanyaan'        => 'required',
+      'assesment_id'      => 'required',
+      'kompetensi_id'     => 'required',
+      'rowscore_id'       => 'required',
+      'no_urut_pertanyaan'=> 'required'
     );
 
     $validator = Validator::make(Input::all(), $rules);
@@ -64,11 +66,12 @@ class PertanyaanController extends Controller
     else{
 
       $pertanyaan = new Pertanyaan([
-        'id'            => Uuid::generate()->string,
-        'pertanyaan'    => ucfirst(trim($request->pertanyaan)),
-        'assesment_id'  => trim($request->assesment_id),
-        'kompetensi_id' => trim($request->kompetensi_id),
-        'rowscore_id'   => trim($request->rowscore_id),
+        'id'                => Uuid::generate()->string,
+        'pertanyaan'        => ucfirst(trim($request->pertanyaan)),
+        'assesment_id'      => trim($request->assesment_id),
+        'kompetensi_id'     => trim($request->kompetensi_id),
+        'rowscore_id'       => trim($request->rowscore_id),
+        'no_urut_pertanyaan'=> trim($request->no_urut_pertanyaan)
       ]);
       $pertanyaan->save();
 
@@ -95,11 +98,12 @@ class PertanyaanController extends Controller
 
   public function update(Request $request){
     $rules = array(
-      'id'            => 'required',
-      'pertanyaan'    => 'required',
-      'assesment_id'  => 'required',
-      'kompetensi_id' => 'required',
-      'rowscore_id'   => 'required',
+      'id'                => 'required',
+      'pertanyaan'        => 'required',
+      'assesment_id'      => 'required',
+      'kompetensi_id'     => 'required',
+      'rowscore_id'       => 'required',
+      'no_urut_pertanyaan'=> 'required'
     );
 
     $validator = Validator::make(Input::all(), $rules);
@@ -111,11 +115,12 @@ class PertanyaanController extends Controller
         exit();
     }
     else{
-      $rowscore               = Pertanyaan::find(Crypt::decrypt($request->id));
-      $rowscore->pertanyaan   = $request->pertanyaan;
-      $rowscore->assesment_id = $request->assesment_id;
-      $rowscore->kompetensi_id= $request->kompetensi_id;
-      $rowscore->rowscore_id  = $request->rowscore_id;
+      $rowscore                     = Pertanyaan::find(Crypt::decrypt($request->id));
+      $rowscore->pertanyaan         = $request->pertanyaan;
+      $rowscore->assesment_id       = $request->assesment_id;
+      $rowscore->kompetensi_id      = $request->kompetensi_id;
+      $rowscore->rowscore_id        = $request->rowscore_id;
+      $rowscore->no_urut_pertanyaan = $request->no_urut_pertanyaan;
       $rowscore->save();
 
       $pertanyaanId           = Crypt::decrypt($request->id);
@@ -161,12 +166,23 @@ class PertanyaanController extends Controller
 
   public function destroy(Request $request){
     $txtId    = Crypt::decrypt($request->id);
-    Pertanyaan::where('id',$txtId)->delete();
-    return response()->json(
-      array(
-        'response'  => "success"
-      )
-    );
+    $checkId  = Jawaban::where("pertanyaan_id", $txtId)->pluck("pertanyaan_id");
+    if(count($checkId) > 0){
+      return response()->json(
+        array(
+          'response'  => "failed"
+          // 'response'  => "success"
+        )
+      );
+    }else{
+      Pertanyaan::where('id',$txtId)->delete();
+      return response()->json(
+        array(
+          'response'  => "success"
+        )
+      );
+    }
+
   }
 
   public function destroyAnswer(Request $request){
