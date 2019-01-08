@@ -73,13 +73,13 @@ Route::prefix('backend/pages')->group(function () {
     Route::delete("answers/delete","Dashboard\PertanyaanController@destroyAnswer");
     Route::put("questions/update","Dashboard\PertanyaanController@update");
 
-    //Pertanyaan Page
-    // Route::resource("answers","Dashboard\JawabanController", ["only" =>
-    //   ["index","show"]
-    // ]);
-    // Route::post("answers/store","Dashboard\JawabanController@store");
-    // Route::delete("answers/delete","Dashboard\JawabanController@destroy");
-    // Route::put("answers/update","Dashboard\JawabanController@update");
+    //KeteranganNilai Page
+    Route::resource("scoredescriptions","Dashboard\KeteranganNilaiController", ["only" =>
+      ["index"]
+    ]);
+    Route::post("scoredescriptions/store","Dashboard\KeteranganNilaiController@store");
+    Route::delete("scoredescriptions/delete","Dashboard\KeteranganNilaiController@destroy");
+    Route::put("scoredescriptions/update","Dashboard\KeteranganNilaiController@update");
 });
 
 Route::prefix('user/pages')->group(function () {
