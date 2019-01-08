@@ -148,6 +148,10 @@
                                                     <label for="usr">Name of Assesments</label>
                                                     <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required>
                                                   </div>
+                                                  <div class="form-group">
+                                                    <label for="usr">Number to</label>
+                                                    <input type="number" min="1" class="form-control" autocomplete="off" id="nomor_urut" required>
+                                                  </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                   <button type="button" id="btn_save" class="btn btn-primary">Save</button>
@@ -201,6 +205,7 @@
                                       <thead>
                                           <tr>
                                               <th>Name of Assesment</th>
+                                              <th>Sequence Number to</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -208,8 +213,9 @@
                                         @foreach($dataAssesments as $key=>$row)
                                           <tr>
                                             <td>{{ $row->nama }}</td>
+                                            <td>{{ $row->no_urut_assesment }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-nama="{{$row->nama}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-no="{{ $row->no_urut_assesment }}" data-nama="{{$row->nama}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -217,6 +223,7 @@
                                       <tfoot>
                                           <tr>
                                             <th>Name of Assesment</th>
+                                            <th>Sequence Number to</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -229,7 +236,7 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">New Type of Assesments</h4>
+                                            <h4 class="modal-title">Edit Type of Assesments</h4>
                                             <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
                                           <div class="modal-body">
@@ -239,6 +246,11 @@
                                             <div class="form-group">
                                               <label for="usr">Name of Assesments</label>
                                               <input type="text" class="form-control" autocomplete="off" id="name_jenis_assesments" required>
+                                            </div>
+                                            <!-- no_urut_assesment -->
+                                            <div class="form-group">
+                                              <label for="usr">Sequence Number to</label>
+                                              <input type="number" min="1" class="form-control" autocomplete="off" id="no_urut_assesment" required>
                                             </div>
                                           </div>
                                           <div class="modal-footer">
@@ -366,11 +378,13 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $(".btn_edit").on("click", function(){
-          var varId   = $(this).data("id");
-          var varName = $(this).data("nama");
+          var varId     = $(this).data("id");
+          var varName   = $(this).data("nama");
+          var varNoUrut = $(this).data("no");
           try {
             $("#id_jenis_assesments").val(varId);
             $("#name_jenis_assesments").val(varName);
+            $("#no_urut_assesment").val(varNoUrut);
             $("#editModal").modal("show");
           } catch (e) {
             console.log(e);
@@ -384,13 +398,22 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varName = $("#jenis_assesments").val();
+          var varName   = $("#jenis_assesments").val();
+          var varNoUrut = $("#nomor_urut").val();
           try {
             if(varName == ""){
               swal({
                 type    : "info",
                 title   : "Empty",
                 text    : "Type of Assesment is required",
+                timer   : 3000
+              });
+            }
+            else if(varNoUrut == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Sequence Number to is required",
                 timer   : 3000
               });
             }
@@ -401,7 +424,8 @@
                 async   : true,
                 dataType: "JSON",
                 data    : {
-                  nama  : varName
+                  nama              : varName,
+                  no_urut_assesment : varNoUrut
                 },
                 success:function(data){
                   $("#myModal").modal("hide");
@@ -409,7 +433,7 @@
                     swal({
                       type : "success",
                       title: "Success",
-                      text : "Name of Assesment has been saved",
+                      text : "Data's has been saved",
                       timer: 3000
                     }).then(function(){
                       window.location = "{{ url('backend/pages/assesments') }}";
@@ -441,8 +465,9 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varId   = $("#id_jenis_assesments").val();
-          var varName = $("#name_jenis_assesments").val();
+          var varId     = $("#id_jenis_assesments").val();
+          var varName   = $("#name_jenis_assesments").val();
+          var varNoUrut = $("#no_urut_assesment").val();
           try {
             $.ajax({
               type    : "PUT",
@@ -450,8 +475,9 @@
               async   : true,
               dataType: "JSON",
               data    : {
-                id    : varId,
-                nama  : varName
+                id                : varId,
+                nama              : varName,
+                no_urut_assesment : varNoUrut
               },
               success:function(data){
                 $("#editModal").modal("hide");

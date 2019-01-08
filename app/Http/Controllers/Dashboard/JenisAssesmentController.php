@@ -39,8 +39,9 @@ class JenisAssesmentController extends Controller
     }
     else{
       $assesment = new JenisAssesment([
-        'id'        => Uuid::generate()->string,
-        'nama' => ucfirst(trim($request->nama)),
+        'id'                => Uuid::generate()->string,
+        'nama'              => ucfirst(trim($request->nama)),
+        'no_urut_assesment' => trim($request->no_urut_assesment)
       ]);
       $assesment->save();
       return response()->json(
@@ -67,8 +68,9 @@ class JenisAssesmentController extends Controller
       );
     }
     else{
-      $assesment        = JenisAssesment::findOrFail(Crypt::decrypt($request->id));
-      $assesment->nama  = $request->nama;
+      $assesment                    = JenisAssesment::findOrFail(Crypt::decrypt($request->id));
+      $assesment->nama              = $request->nama;
+      $assesment->no_urut_assesment = $request->no_urut_assesment;
       $assesment->save();
       return response()->json(
           array(
