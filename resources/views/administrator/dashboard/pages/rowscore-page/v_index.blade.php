@@ -147,18 +147,21 @@
                                                     <label for="usr">Name of Row Scores</label>
                                                     <input type="text" class="form-control" autofocus="on" autocomplete="off" id="nama_rowscore" required>
                                                   </div>
-                                                </div>
-                                                <div class="modal-body">
+
                                                   <div class="form-group">
                                                     <label for="usr">Name of Abbreviation</label>
                                                     <input type="text" class="form-control" autocomplete="off" id="nama_singkat" required>
                                                   </div>
-                                                </div>
-                                                <div class="modal-body">
                                                   <div class="form-group">
                                                     <label for="usr">Precentage</label>
                                                     <input type="text" class="form-control" autocomplete="off" id="precentage" required>
                                                   </div>
+
+                                                  <div class="form-group">
+                                                    <label for="usr">Sequence Number to</label>
+                                                    <input type="number" min="1" class="form-control" autocomplete="off" id="no_urut_rowscore" required>
+                                                  </div>
+                                                  <!-- no_urut_rowscore -->
                                                 </div>
                                                 <div class="modal-footer">
                                                   <button type="button" id="btn_save" class="btn btn-primary">Save</button>
@@ -214,6 +217,7 @@
                                               <th>Name of Competencies</th>
                                               <th>Abbreviation</th>
                                               <th>Percentage</th>
+                                              <th>Sequence Number to</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -223,8 +227,9 @@
                                             <td>{{ $row->nama_rowscore }}</td>
                                             <td>{{ $row->nama_singkat }}</td>
                                             <td>{{ $row->presentase }}</td>
+                                            <td>{{ $row->no_urut_rowscore }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-presentase="{{$row->presentase}}" data-nama_rowscore="{{ $row->nama_rowscore }}" data-nama_singkat="{{$row->nama_singkat}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-no="{{ $row->no_urut_rowscore }}" data-presentase="{{$row->presentase}}" data-nama_rowscore="{{ $row->nama_rowscore }}" data-nama_singkat="{{$row->nama_singkat}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -234,6 +239,7 @@
                                             <th>Name of Competencies</th>
                                             <th>Abbreviation</th>
                                             <th>Percentage</th>
+                                            <th>Sequence Number to</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -257,19 +263,25 @@
                                               <label for="usr">Name of Row Scores</label>
                                               <input type="text" class="form-control" autocomplete="off" id="edit_nama_rowscore" required>
                                             </div>
-                                          </div>
 
-                                          <div class="modal-body">
+
+
                                             <div class="form-group">
                                               <label for="usr">Name of Abbreviation</label>
                                               <input type="text" class="form-control" autocomplete="off" id="edit_nama_singkat" required>
                                             </div>
-                                          </div>
-                                          <div class="modal-body">
+
+
                                             <div class="form-group">
                                               <label for="usr">Precentage</label>
                                               <input type="text" class="form-control" autocomplete="off" id="edit_precentage" required>
                                             </div>
+
+                                            <div class="form-group">
+                                              <label for="usr">Sequence Number to</label>
+                                              <input type="number" min="1" class="form-control" autocomplete="off" id="edit_no_urut_rowscore" required>
+                                            </div>
+                                            <!-- edit_no_urut_rowscore -->
                                           </div>
                                           <div class="modal-footer">
                                             <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
@@ -400,12 +412,15 @@
           var varPresentase = $(this).data("presentase");
           var varRowScore   = $(this).data("nama_rowscore");
           var varNamaSingkat= $(this).data("nama_singkat");
+          var varNoUrut     = $(this).data("no");
 
           try {
             $("#edit_id_row_score").val(varId);
             $("#edit_nama_rowscore").val(varRowScore);
             $("#edit_nama_singkat").val(varNamaSingkat);
             $("#edit_precentage").val(varPresentase);
+            $("#edit_no_urut_rowscore").val(varNoUrut);
+
             $("#editModal").modal("show");
           } catch (e) {
             console.log(e);
@@ -422,6 +437,7 @@
           var varRowScore   = $("#nama_rowscore").val();
           var varNamaSingkat= $("#nama_singkat").val();
           var varPresentase = $("#precentage").val();
+          var varNoUrut     = $("#no_urut_rowscore").val();
           try {
             if(varRowScore == ""){
               swal({
@@ -447,6 +463,14 @@
                 timer   : 3000
               });
             }
+            else if(varNoUrut == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Sequence Number is required",
+                timer   : 3000
+              });
+            }
             else{
               $.ajax({
                 type    : "POST",
@@ -456,7 +480,8 @@
                 data    : {
                   nama_rowscore   : varRowScore,
                   nama_singkat    : varNamaSingkat,
-                  presentase      : varPresentase
+                  presentase      : varPresentase,
+                  no_urut_rowscore: varNoUrut
                 },
                 success:function(data){
                   $("#myModal").modal("hide");
@@ -500,7 +525,7 @@
           var varRowScore   = $("#edit_nama_rowscore").val();
           var varNamaSingkat= $("#edit_nama_singkat").val();
           var varPresentase = $("#edit_precentage").val();
-
+          var varNoUrut     = $("#edit_no_urut_rowscore").val();
           try {
             if(varRowScore == ""){
               swal({
@@ -526,6 +551,14 @@
                 timer   : 3000
               });
             }
+            else if(varNoUrut == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Sequence Number is required",
+                timer   : 3000
+              });
+            }
             else{
               $.ajax({
                 type    : "PUT",
@@ -533,10 +566,11 @@
                 async   : true,
                 dataType: "JSON",
                 data    : {
-                  id              : varId,
-                  nama_rowscore   : varRowScore,
-                  nama_singkat    : varNamaSingkat,
-                  presentase      : varPresentase
+                  id                    : varId,
+                  nama_rowscore         : varRowScore,
+                  nama_singkat          : varNamaSingkat,
+                  presentase            : varPresentase,
+                  no_urut_rowscore      : varNoUrut
                 },
                 success:function(data){
                   $("#editModal").modal("hide");

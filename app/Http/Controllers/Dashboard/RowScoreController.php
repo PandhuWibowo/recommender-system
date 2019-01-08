@@ -42,9 +42,10 @@ class RowScoreController extends Controller
     else{
       $rowscore = new RowScore([
         'id'        => Uuid::generate()->string,
-        'nama_rowscore' => ucfirst(trim($request->nama_rowscore)),
-        'nama_singkat'  => ucfirst(trim($request->nama_singkat)),
-        'presentase'    => trim($request->presentase)
+        'nama_rowscore'   => ucfirst(trim($request->nama_rowscore)),
+        'nama_singkat'    => ucfirst(trim($request->nama_singkat)),
+        'presentase'      => trim($request->presentase),
+        'no_urut_rowscore'=> trim($request->no_urut_rowscore)
       ]);
       $rowscore->save();
       return response()->json(
@@ -74,9 +75,10 @@ class RowScoreController extends Controller
     }
     else{
       $rowscore        = RowScore::findOrFail(Crypt::decrypt($request->id));
-      $rowscore->nama_rowscore  = $request->nama_rowscore;
-      $rowscore->nama_singkat   = $request->nama_singkat;
-      $rowscore->presentase     = $request->presentase;
+      $rowscore->nama_rowscore    = $request->nama_rowscore;
+      $rowscore->nama_singkat     = $request->nama_singkat;
+      $rowscore->presentase       = $request->presentase;
+      $rowscore->no_urut_rowscore = $request->no_urut_rowscore;
       $rowscore->save();
       return response()->json(
           array(
