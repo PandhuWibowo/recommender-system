@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Kompetensi extends Model{
   use SoftDeletes;
-  protected $fillable = ['id','kompetensi'];
+  protected $fillable = ['id','kompetensi','no_urut_kompetensi'];
   protected $table = "kompetensis";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;

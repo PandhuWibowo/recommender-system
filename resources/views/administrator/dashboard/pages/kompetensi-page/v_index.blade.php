@@ -148,6 +148,10 @@
                                                     <label for="usr">Name of Competencies</label>
                                                     <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_competencies" required>
                                                   </div>
+                                                  <div class="form-group">
+                                                    <label for="usr">Sequence Number to</label>
+                                                    <input type="number" min="1" class="form-control" autocomplete="off" id="no_urut_kompetensi" required>
+                                                  </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                   <button type="button" id="btn_save" class="btn btn-primary">Save</button>
@@ -201,6 +205,7 @@
                                       <thead>
                                           <tr>
                                               <th>Name of Competencies</th>
+                                              <th>Sequence Number to</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -208,8 +213,9 @@
                                         @foreach($dataKompetensis as $key=>$row)
                                           <tr>
                                             <td>{{ $row->kompetensi }}</td>
+                                            <td>{{ $row->no_urut_kompetensi }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-no="{{$row->no_urut_kompetensi}}" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -217,6 +223,7 @@
                                       <tfoot>
                                           <tr>
                                             <th>Name of Competencies</th>
+                                            <th>Sequence Number to</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -239,6 +246,11 @@
                                             <div class="form-group">
                                               <label for="usr">Name of Competencies</label>
                                               <input type="text" class="form-control" autocomplete="off" id="name_jenis_competencies" required>
+                                            </div>
+                                            <!-- no_urut_kompetensi -->
+                                            <div class="form-group">
+                                              <label for="usr">Sequence Number to</label>
+                                              <input type="number" min="1" class="form-control" autocomplete="off" id="edit_no_urut_kompetensi" required>
                                             </div>
                                           </div>
                                           <div class="modal-footer">
@@ -366,11 +378,13 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $(".btn_edit").on("click", function(){
-          var varId   = $(this).data("id");
-          var varName = $(this).data("kompetensi");
+          var varId     = $(this).data("id");
+          var varName   = $(this).data("kompetensi");
+          var varNoUrut = $(this).data("no");
           try {
             $("#id_jenis_competencies").val(varId);
             $("#name_jenis_competencies").val(varName);
+            $("#edit_no_urut_kompetensi").val(varNoUrut);
             $("#editModal").modal("show");
           } catch (e) {
             console.log(e);
@@ -384,13 +398,22 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varName = $("#jenis_competencies").val();
+          var varName   = $("#jenis_competencies").val();
+          var varNoUrut = $("#no_urut_kompetensi").val();
           try {
             if(varName == ""){
               swal({
                 type    : "info",
                 title   : "Empty",
                 text    : "Type of Competencies is required",
+                timer   : 3000
+              });
+            }
+            else if(varNoUrut == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Sequence Number is required",
                 timer   : 3000
               });
             }
@@ -401,7 +424,8 @@
                 async   : true,
                 dataType: "JSON",
                 data    : {
-                  kompetensi  : varName
+                  kompetensi        : varName,
+                  no_urut_kompetensi: varNoUrut
                 },
                 success:function(data){
                   $("#myModal").modal("hide");
@@ -409,7 +433,7 @@
                     swal({
                       type : "success",
                       title: "Success",
-                      text : "Name of Competencies has been saved",
+                      text : "Data's has been saved",
                       timer: 3000
                     }).then(function(){
                       window.location = "{{ url('backend/pages/competencies') }}";
@@ -441,8 +465,10 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varId   = $("#id_jenis_competencies").val();
-          var varName = $("#name_jenis_competencies").val();
+          var varId     = $("#id_jenis_competencies").val();
+          var varName   = $("#name_jenis_competencies").val();
+          var varNoUrut = $("#edit_no_urut_kompetensi").val();
+
           try {
             $.ajax({
               type    : "PUT",
@@ -450,8 +476,9 @@
               async   : true,
               dataType: "JSON",
               data    : {
-                id          : varId,
-                kompetensi  : varName
+                id                  : varId,
+                kompetensi          : varName,
+                no_urut_kompetensi  : varNoUrut
               },
               success:function(data){
                 $("#editModal").modal("hide");
@@ -459,7 +486,7 @@
                   swal({
                     type : "success",
                     title: "Success",
-                    text : "Name of Competencies has been updated",
+                    text : "Data's has been updated",
                     timer: 3000
                   }).then(function(){
                     window.location = "{{ url('backend/pages/competencies') }}";

@@ -39,8 +39,9 @@ class KompetensiController extends Controller
     }
     else{
       $assesment = new Kompetensi([
-        'id'        => Uuid::generate()->string,
-        'kompetensi' => ucfirst(trim($request->kompetensi)),
+        'id'                => Uuid::generate()->string,
+        'kompetensi'        => ucfirst(trim($request->kompetensi)),
+        'no_urut_kompetensi'=> trim($request->no_urut_kompetensi)
       ]);
       $assesment->save();
       return response()->json(
@@ -67,8 +68,9 @@ class KompetensiController extends Controller
       );
     }
     else{
-      $assesment        = Kompetensi::findOrFail(Crypt::decrypt($request->id));
-      $assesment->kompetensi  = $request->kompetensi;
+      $assesment                      = Kompetensi::findOrFail(Crypt::decrypt($request->id));
+      $assesment->kompetensi          = $request->kompetensi;
+      $assesment->no_urut_kompetensi  = $request->no_urut_kompetensi;
       $assesment->save();
       return response()->json(
           array(
