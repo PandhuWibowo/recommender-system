@@ -186,7 +186,7 @@
                                                                 <div class="col-lg-3"></div>
                                                                 <div class="col-lg-9">
                                                                     <div class="login-horizental cancel-wp pull-left form-bc-ele">
-                                                                        <button class="btn btn-sm btn-primary login-submit-cs" type="button" id="btn_save">Save</button>
+                                                                        <button class="btn btn-sm btn-primary login-submit-cs" type="button" id="btn_save">Next</button>
                                                                     </div>
                                                                 </div>
                                                             </div>

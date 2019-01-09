@@ -170,7 +170,7 @@
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">All Type of Assesments</span>
+                                            <li><span class="bread-blod">Score Description</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -189,7 +189,7 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Type of Assesments <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Score Description <span class="table-project-n">Data</span> Table</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">

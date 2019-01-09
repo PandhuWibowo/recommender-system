@@ -71,6 +71,16 @@
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     @include("items.meta")
+    <style>
+    input[type=radio] {
+      float: left;
+    }
+
+    .jawaban {
+      margin-left: 30px;
+      display: block;
+    }
+    </style>
 </head>
 
 <body>
@@ -168,7 +178,6 @@
                                                                           <th style="text-align:center;">#</th>
                                                                           <th style="text-align:center;">Competencies</th>
                                                                           <th style="text-align:center;">Situation</th>
-                                                                          <th style="text-align:center;">Response</th>
                                                                           <!-- <th style="text-align:center;">Score</th> -->
                                                                       </tr>
                                                                   </thead>
@@ -179,32 +188,35 @@
                                                                         <tr>
                                                                             <td>{{$no}}</td>
                                                                             <td>{{$row->get_kompetensi->kompetensi}}</td>
-                                                                            <td style="text-align:justify;">{{ucfirst($row->pertanyaan)}}</td>
-                                                                            <td>
-                                                                                <div class="form-group-inner">
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                            <div class="bt-df-checkbox pull-left">
-                                                                                                @foreach($row->get_jawaban as $key2=>$row2)
-                                                                                                  <div class="row">
-                                                                                                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                                          <div class="i-checks pull-left">
-                                                                                                              <p style="text-align:justify;">
-                                                                                                                <input type="hidden" value="{{$decryptAssId}}" name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
-                                                                                                                <input type="hidden" value="{{$row2->pertanyaan_id}}" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
-                                                                                                                <input type="hidden" value="{{$row2->id}}" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
-                                                                                                                <input type="radio" value="{{$row2->nilai}}" name="nilai{{$x}}" id="nilai{{$x}}" required>
-                                                                                                                {{ucfirst($row2->jawaban)}}
-                                                                                                              </p>
-                                                                                                          </div>
-                                                                                                      </div>
-                                                                                                  </div>
-                                                                                                @endforeach
-                                                                                                <!-- <input type="text" name="count" id="count" value="{{$x}}"> -->
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
+                                                                            <td style="text-align:justify;">
+                                                                              <p>
+                                                                                {{ucfirst($row->pertanyaan)}}
+                                                                              </p>
+                                                                              <div class="form-group-inner">
+                                                                                  <div class="row">
+                                                                                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                          <div class="bt-df-checkbox pull-left">
+                                                                                              @foreach($row->get_jawaban as $key2=>$row2)
+                                                                                                <div class="row">
+                                                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                                        <div class="i-checks pull-left">
+
+                                                                                                              <input type="hidden" value="{{$decryptAssId}}" name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
+                                                                                                              <input type="hidden" value="{{$row2->pertanyaan_id}}" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
+                                                                                                              <input type="hidden" value="{{$row2->id}}" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
+                                                                                                              <input type="radio" value="{{$row2->nilai}}" name="nilai{{$x}}" id="nilai{{$x}}" required>
+
+
+                                                                                                        </div>
+                                                                                                        <div class="jawaban">{{ucfirst($row2->jawaban)}}</div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                              @endforeach
+                                                                                              <!-- <input type="text" name="count" id="count" value="{{$x}}"> -->
+                                                                                          </div>
+                                                                                      </div>
+                                                                                  </div>
+                                                                              </div>
 
                                                                             </td>
                                                                         </tr>
