@@ -130,6 +130,7 @@ class PertanyaanController extends Controller
         exit();
     }
     else{
+      // echo dd(Crypt::decrypt($request->id));
       $rowscore                     = Pertanyaan::find(Crypt::decrypt($request->id));
       $rowscore->pertanyaan         = $request->pertanyaan;
       $rowscore->assesment_id       = $request->assesment_id;
@@ -145,8 +146,11 @@ class PertanyaanController extends Controller
                                   ->where("j.pertanyaan_id", $pertanyaanId)
                                   ->where("j.deleted_at", null)
                                   ->pluck("j.pertanyaan_id");
+      // echo dd(count($request->jawaban));
+      for($i=0;$i<count($hapusIdPertanyaan);$i++){
+        $delete = DB::table("jawabans")->where("pertanyaan_id",$hapusIdPertanyaan)->where("deleted_at", null)->delete();
+      }
 
-      DB::table("jawabans")->where("pertanyaan_id",$hapusIdPertanyaan)->where("deleted_at", null)->delete();
 
       for($i=0;$i<count($request->jawaban);$i++){
         if($request->jawaban[$i] == "" && $request->nilai[$i] == ""){
@@ -164,10 +168,11 @@ class PertanyaanController extends Controller
       }
       Session::flash("success","Your question has been saved");
       return Redirect::to('backend/pages/questions');
+
       // $jawaban                = Jawaban::findOrFail(Crypt::decrypt($request->jawaban_id));
       // $jawaban->jawaban       = $request->jawaban;
       // $jawaban->nilai         = $request->nilai;
-
+      //
       // $jawaban->save();
       //
       // $rowscore->save();

@@ -88,6 +88,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+    <style>
+    .inline-option {
+      border: none;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin: 4px 40px;
+      cursor: pointer;
+    }
+    </style>
 </head>
 
 <body>
@@ -245,30 +255,45 @@
                                                   <input class="form-control" type="number" min="1" id="no_urut_pertanyaan" name="no_urut_pertanyaan" placeholder="Sequence Number to" value="{{$pertanyaan->no_urut_pertanyaan}}">
                                               </div>
 
-                                              <div class="input-group-btn">
+                                              <div class="input-group-btn inline-option">
                                                   <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                               </div>
 
-                                              <div class="after-add-more">
+                                              <div class="inline-option">
+                                                <div class="chosen-select-single mg-b-20">
+                                                    <select data-placeholder="Choose Answer Model (Option)" data-jawaban_id="{{Crypt::encrypt($pertanyaan->id)}}" id="model_answer" name="model_answer" class="chosen-select" tabindex="-1">
+                                                      <option></option>
+                                                      <option value="1">Agree/Disgree</option>
+                                                      <option value="2">True/False</option>
+                          													</select>
+                                                </div>
+                                              </div>
+
+                                              <div class="model-answer"></div>
+                                              <div class="model-truefalse"></div>
+                                              <div class="after-add-more type_answer">
                                                 <div class="control-group" style="margin-top:10px">
+                                                <?php $h = 0;?>
                                                 @foreach($pertanyaan->data_jawabans as $key=>$row)
                                                   <div class="chosen-select-single mg-b-20">
                                                       <input type="hidden" min="0" class="form-control jawaban_id" id="jawaban_id" name="jawaban_id[]" placeholder="Answer Id" value="{{Crypt::encrypt($row->id)}}">
                                                   </div>
                                                   <div class="chosen-select-single mg-b-20">
                                                       <label>Answer</label>
-                                                      <textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">{{$row->jawaban}}</textarea>
+                                                      <textarea class="form-control disabled-jawaban<?php echo $h;?>" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">{{$row->jawaban}}</textarea>
                                                   </div>
 
                                                   <div class="chosen-select-single mg-b-20">
                                                       <label>Score</label>
-                                                      <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score" value="{{$row->nilai}}">
+                                                      <input type="number" min="0" class="form-control disabled-nilai<?php echo $h;?>" id="nilai" name="nilai[]" placeholder="Score" value="{{$row->nilai}}">
                                                   </div>
 
                                                   <div class="input-group-btn">
                                                       <button class="btn btn-danger btn_delete" data-jawaban_id="{{Crypt::encrypt($row->id)}}" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                                                   </div>
+                                                  <?php $h++;?>
                                                 @endforeach
+                                                  <input type="hidden" name="" id="count" value="{{count($pertanyaan->data_jawabans)}}">
                                                 </div>
                                               </div>
 
@@ -417,6 +442,87 @@
                 allowClear: true
             });
         });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#model_answer").on("change", function(){
+          var varPertanyaanId = $(this).data("jawaban_id");
+          var count = $("#count").val();
+
+          for(var i=0;i<count;i++){
+            $(".disabled-jawaban"+i).attr("disabled", "disabled");
+            $(".disabled-nilai"+i).attr("disabled", "disabled");
+          }
+          // console.log(varPertanyaanId);
+          var varModelId = $(this).val();
+          if(varModelId == 1 || varModelId == "1"){
+            $(".type_answer").hide();
+            var html = "";
+            html+='<div class="after-add-more model-answer">'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Answer</label>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Strongly Disagree</textarea>'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Score</label>'+
+                  '<input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Answer</label>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Disagree</textarea>'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Score</label>'+
+                  '<input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Answer</label>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Agree</textarea>'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Score</label>'+
+                  '<input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Answer</label>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Strongly Agree</textarea>'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Score</label>'+
+                  '<input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">'+
+              '</div>'+
+            '</div>';
+
+
+            $(".model-answer").html(html);
+          }
+          else if(varModelId == 2 || varModelId == "2"){
+            $(".type_answer").hide();
+            $(".model-answer").hide();
+            var html = "";
+            html+='<div class="after-add-more model-answer">'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Answer</label>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">True</textarea>'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Score</label>'+
+                  '<input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Answer</label>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">False</textarea>'+
+              '</div>'+
+              '<div class="chosen-select-single mg-b-20">'+
+                  '<label>Score</label>'+
+                  '<input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">'+
+              '</div>'+
+            '</div>';
+            $(".model-truefalse").html(html);
+          }
+        })
+      })
     </script>
 
     <script type="text/javascript">
