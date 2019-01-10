@@ -33,14 +33,15 @@ class PertanyaanController extends Controller
 // ,compact("assesments","kompetensi","rowscore")
   public function add(){
     $noUrutTerakhir   = Pertanyaan::where("assesment_id", Session::get("assesment_id"))->pluck("no_urut_pertanyaan");
-    $arrNoUrutTerakhir= $noUrutTerakhir->toArray();
 
-    $maxNoUrutTerakhir= max($arrNoUrutTerakhir);
 
-    if(count($arrNoUrutTerakhir) == 0){
+    if(count($noUrutTerakhir) == 0){
       $kasihNomorUrut = 1;
     }
     else{
+      $arrNoUrutTerakhir= $noUrutTerakhir->toArray();
+
+      $maxNoUrutTerakhir= max($arrNoUrutTerakhir);
       $kasihNomorUrut = $maxNoUrutTerakhir+1;
     }
 
