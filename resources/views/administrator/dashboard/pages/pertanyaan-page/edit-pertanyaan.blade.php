@@ -575,7 +575,7 @@
                         'Your file has been deleted.',
                         'success'
                       ).then(function(){
-                        window.location = "{{ url('backend/pages/questions') }}"+"/"+varPertanyaanId;
+                        window.location = "{{ url('backend/pages/questions') }}";
                       });
                     }
                     else if (data.response == "failed") {

@@ -37,6 +37,8 @@ class QuestionController extends Controller
       $pertanyaanAssesment->save();
     }
 
+    //Query
+    // SELECT rowscores.nama_rowscore, sum(pertanyaan_assesments.nilai) FROM `pertanyaan_assesments` JOIN pertanyaans ON pertanyaan_assesments.pertanyaan_id = pertanyaans.id JOIN jawabans ON pertanyaan_assesments.jawaban_id = jawabans.id JOIN rowscores ON rowscores.id = pertanyaans.rowscore_id GROUP BY rowscores.no_urut_rowscore
     return response()->json(
         array(
           'response'  => "success"
