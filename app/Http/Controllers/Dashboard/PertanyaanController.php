@@ -32,10 +32,22 @@ class PertanyaanController extends Controller
   }
 // ,compact("assesments","kompetensi","rowscore")
   public function add(){
+    $noUrutTerakhir   = Pertanyaan::where("assesment_id", Session::get("assesment_id"))->pluck("no_urut_pertanyaan");
+    $arrNoUrutTerakhir= $noUrutTerakhir->toArray();
+
+    $maxNoUrutTerakhir= max($arrNoUrutTerakhir);
+
+    if(count($arrNoUrutTerakhir) == 0){
+      $kasihNomorUrut = 1;
+    }
+    else{
+      $kasihNomorUrut = $maxNoUrutTerakhir+1;
+    }
+
     $assesments = JenisAssesment::all();
     $kompetensi = Kompetensi::all();
     $rowscore   = RowScore::all();
-    return view("administrator.dashboard.pages.pertanyaan-page.add-pertanyaan",compact("assesments","kompetensi","rowscore"));
+    return view("administrator.dashboard.pages.pertanyaan-page.add-pertanyaan",compact("assesments","kompetensi","rowscore","kasihNomorUrut"));
   }
 
   public function show($id){

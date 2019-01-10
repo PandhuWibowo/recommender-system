@@ -241,7 +241,7 @@
 
                                               <div class="chosen-select-single mg-b-20">
                                                   <label>Sequence Number to</label>
-                                                  <input class="form-control" type="number" min="1" id="no_urut_pertanyaan" name="no_urut_pertanyaan" placeholder="Sequence Number to">
+                                                  <input class="form-control" type="number" min="1" id="no_urut_pertanyaan" name="no_urut_pertanyaan" placeholder="Sequence Number to" value="{{$kasihNomorUrut}}">
                                               </div>
 
                                               <div class="input-group-btn">
