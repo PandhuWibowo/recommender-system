@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use DB;
 /**
  * UserController
  */
@@ -36,14 +37,22 @@ class QuestionController extends Controller
 
       $pertanyaanAssesment->save();
     }
-
+    // SELECT rowscores.nama_rowscore, kompetensis.kompetensi, sum(pertanyaan_assesments.nilai) FROM `pertanyaan_assesments` JOIN pertanyaans ON pertanyaan_assesments.pertanyaan_id = pertanyaans.id JOIN jawabans ON pertanyaan_assesments.jawaban_id = jawabans.id JOIN rowscores ON rowscores.id = pertanyaans.rowscore_id JOIN kompetensis ON kompetensis.id = pertanyaans.kompetensi_id GROUP BY rowscores.no_urut_rowscore, kompetensis.no_urut_kompetensi
     //Query
     // SELECT rowscores.nama_rowscore, sum(pertanyaan_assesments.nilai) FROM `pertanyaan_assesments` JOIN pertanyaans ON pertanyaan_assesments.pertanyaan_id = pertanyaans.id JOIN jawabans ON pertanyaan_assesments.jawaban_id = jawabans.id JOIN rowscores ON rowscores.id = pertanyaans.rowscore_id GROUP BY rowscores.no_urut_rowscore
-    return response()->json(
-        array(
-          'response'  => "success"
-          // 'id'        => $request->id
-        )
-    );
+
+
+        // return $query;
+        // Session::push("data", collect($query));
+
+        //
+        // redirect("user/pages/results/final")->with(['data' => $query]);
+        return response()->json(
+          array(
+            "response"  => "success",
+            "assId"     => Crypt::encrypt($assesmentId[0])
+          )
+        );
   }
+
 }

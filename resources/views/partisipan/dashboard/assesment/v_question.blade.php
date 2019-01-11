@@ -489,12 +489,17 @@
                   "nilai[]"         : arrNilai
                 },
                 success:function(data){
+                  // if(data.response == "success"){
+                  //   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
+                  // }
                   // console.log(data);
                   if(data.response == "success"){
                     swal({
-                      type      : "info",
+                      type      : "success",
                       title     : "Success",
                       timer     : 3000,
+                    }).then(function(){
+                      window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
                     });
                   }
                 },

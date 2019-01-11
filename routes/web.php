@@ -105,6 +105,8 @@ Route::prefix('user/pages')->group(function () {
     Route::get("assesments/{id}/{assId}","Dashboard\User\DashboardUser\AssesmentController@show");
 
     Route::post("questions/store","Dashboard\User\DashboardUser\QuestionController@store");
+
+    Route::get("results/final/{assId}","Dashboard\User\DashboardUser\ResultController@show");
 });
 
 // Auth::routes();
