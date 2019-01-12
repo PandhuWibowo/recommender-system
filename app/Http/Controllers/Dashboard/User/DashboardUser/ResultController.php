@@ -46,72 +46,80 @@ class ResultController extends Controller
               ->get();
 
 
-              foreach($query2 as $row){
-                $nilai_assess;
-                $nilai_sjq = $row->sum_nilai * 0.4;
-                // <!-- sum_nilai sjq = {{$row->sum_nilai}} <br /> -> ini juga -->
+  $cekHistory = AssessmentKompetensi::where("ass_id", $assId)->get();
 
-                // <!-- ngeloop assessment -->
-                foreach($query as $row2){
-                  if($row->kKompetensi == $row2->kKompetensi){
-                    $nilai_assess = ($row2->sum_nilai / 4)*0.6;
-                    // <!-- sum_nilai assessment = {{$row2->sum_nilai}}<br /> -> ini kan cuma setelah diitung masing2 -->
-                  }
-                }
+  if(count($cekHistory) > 0){
 
-                // <!-- ngitung total -->
-                // <!-- assessment = {{$nilai_assess}}, sjq = {{$nilai_sjq}}<br /> -> trus ini hasil tambah -->
-                $nilai_total = $nilai_assess + $nilai_sjq;
-                $hasil[$row->kKompetensi] = $nilai_total;
-                // <!-- {{$hasil[$row->kKompetensi]}} -->
-                if($hasil[$row->kKompetensi] >= 3.75 && $hasil[$row->kKompetensi] <= 4.75){
-                  $kompetensi4 = new AssessmentKompetensi;
-                  $kompetensi4->id            = Uuid::generate()->string;
-                  $kompetensi4->ass_id        = $assId;
-                  $kompetensi4->kompetensi_id = $row->kId;
-                  $kompetensi4->weight        = $hasil[$row->kKompetensi];
-                  $kompetensi4->pembulatan    = 4;
-                  $kompetensi4->save();
-                  // echo $row->kId."-".$row->kKompetensi."- 4 <br/>";
-                }else if($hasil[$row->kKompetensi] >= 2.75 && $hasil[$row->kKompetensi] < 3.75){
-                  $kompetensi3 = new AssessmentKompetensi;
-                  $kompetensi3->id            = Uuid::generate()->string;
-                  $kompetensi3->ass_id        = $assId;
-                  $kompetensi3->kompetensi_id = $row->kId;
-                  $kompetensi3->weight        = $hasil[$row->kKompetensi];
-                  $kompetensi3->pembulatan    = 3;
-                  $kompetensi3->save();
-                  // echo $row->kId."-".$row->kKompetensi."- 3 <br/>";
-                }else if($hasil[$row->kKompetensi] >= 1.75 && $hasil[$row->kKompetensi] < 2.75){
-                  $kompetensi2 = new AssessmentKompetensi;
-                  $kompetensi2->id            = Uuid::generate()->string;
-                  $kompetensi2->ass_id        = $assId;
-                  $kompetensi2->kompetensi_id = $row->kId;
-                  $kompetensi2->weight        = $hasil[$row->kKompetensi];
-                  $kompetensi2->pembulatan    = 2;
-                  $kompetensi2->save();
-                  // echo $row->kId."-".$row->kKompetensi."- 2 <br/>";
-                }else if($hasil[$row->kKompetensi] >= 0.75 && $hasil[$row->kKompetensi] < 1.75){
-                  $kompetensi1 = new AssessmentKompetensi;
-                  $kompetensi1->id            = Uuid::generate()->string;
-                  $kompetensi1->ass_id        = $assId;
-                  $kompetensi1->kompetensi_id = $row->kId;
-                  $kompetensi1->weight        = $hasil[$row->kKompetensi];
-                  $kompetensi1->pembulatan    = 1;
-                  $kompetensi1->save();
-                  // echo $row->kId."-".$row->kKompetensi."- 1 <br/>";
-                }else{
-                  $kompetensi0 = new AssessmentKompetensi;
-                  $kompetensi0->id            = Uuid::generate()->string;
-                  $kompetensi0->ass_id        = $assId;
-                  $kompetensi0->kompetensi_id = $row->kId;
-                  $kompetensi0->weight        = $hasil[$row->kKompetensi];
-                  $kompetensi0->pembulatan    = 0;
-                  $kompetensi0->save();
-                  // echo $row->kId."-".$row->kKompetensi."- 0 <br/>";
-                }
-                // $kompetensiFinal->save();
-              }
+  }
+  else{
+    foreach($query2 as $row){
+      $nilai_assess;
+      $nilai_sjq = $row->sum_nilai * 0.4;
+      // <!-- sum_nilai sjq = {{$row->sum_nilai}} <br /> -> ini juga -->
+
+      // <!-- ngeloop assessment -->
+      foreach($query as $row2){
+        if($row->kKompetensi == $row2->kKompetensi){
+          $nilai_assess = ($row2->sum_nilai / 4)*0.6;
+          // <!-- sum_nilai assessment = {{$row2->sum_nilai}}<br /> -> ini kan cuma setelah diitung masing2 -->
+        }
+      }
+
+      // <!-- ngitung total -->
+      // <!-- assessment = {{$nilai_assess}}, sjq = {{$nilai_sjq}}<br /> -> trus ini hasil tambah -->
+      $nilai_total = $nilai_assess + $nilai_sjq;
+      $hasil[$row->kKompetensi] = $nilai_total;
+      // <!-- {{$hasil[$row->kKompetensi]}} -->
+      if($hasil[$row->kKompetensi] >= 3.75 && $hasil[$row->kKompetensi] <= 4.75){
+        $kompetensi4 = new AssessmentKompetensi;
+        $kompetensi4->id            = Uuid::generate()->string;
+        $kompetensi4->ass_id        = $assId;
+        $kompetensi4->kompetensi_id = $row->kId;
+        $kompetensi4->weight        = $hasil[$row->kKompetensi];
+        $kompetensi4->pembulatan    = 4;
+        $kompetensi4->save();
+        // echo $row->kId."-".$row->kKompetensi."- 4 <br/>";
+      }else if($hasil[$row->kKompetensi] >= 2.75 && $hasil[$row->kKompetensi] < 3.75){
+        $kompetensi3 = new AssessmentKompetensi;
+        $kompetensi3->id            = Uuid::generate()->string;
+        $kompetensi3->ass_id        = $assId;
+        $kompetensi3->kompetensi_id = $row->kId;
+        $kompetensi3->weight        = $hasil[$row->kKompetensi];
+        $kompetensi3->pembulatan    = 3;
+        $kompetensi3->save();
+        // echo $row->kId."-".$row->kKompetensi."- 3 <br/>";
+      }else if($hasil[$row->kKompetensi] >= 1.75 && $hasil[$row->kKompetensi] < 2.75){
+        $kompetensi2 = new AssessmentKompetensi;
+        $kompetensi2->id            = Uuid::generate()->string;
+        $kompetensi2->ass_id        = $assId;
+        $kompetensi2->kompetensi_id = $row->kId;
+        $kompetensi2->weight        = $hasil[$row->kKompetensi];
+        $kompetensi2->pembulatan    = 2;
+        $kompetensi2->save();
+        // echo $row->kId."-".$row->kKompetensi."- 2 <br/>";
+      }else if($hasil[$row->kKompetensi] >= 0.75 && $hasil[$row->kKompetensi] < 1.75){
+        $kompetensi1 = new AssessmentKompetensi;
+        $kompetensi1->id            = Uuid::generate()->string;
+        $kompetensi1->ass_id        = $assId;
+        $kompetensi1->kompetensi_id = $row->kId;
+        $kompetensi1->weight        = $hasil[$row->kKompetensi];
+        $kompetensi1->pembulatan    = 1;
+        $kompetensi1->save();
+        // echo $row->kId."-".$row->kKompetensi."- 1 <br/>";
+      }else{
+        $kompetensi0 = new AssessmentKompetensi;
+        $kompetensi0->id            = Uuid::generate()->string;
+        $kompetensi0->ass_id        = $assId;
+        $kompetensi0->kompetensi_id = $row->kId;
+        $kompetensi0->weight        = $hasil[$row->kKompetensi];
+        $kompetensi0->pembulatan    = 0;
+        $kompetensi0->save();
+        // echo $row->kId."-".$row->kKompetensi."- 0 <br/>";
+      }
+      // $kompetensiFinal->save();
+    }
+  }
+
 
     // echo dd($query3);
     // $rowscores = RowScore::all();
