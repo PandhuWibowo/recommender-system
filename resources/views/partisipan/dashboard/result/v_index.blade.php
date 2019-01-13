@@ -136,7 +136,7 @@
         <div class="courses-area mg-b-15">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="white-box">
                             <h3 class="box-title">Score Tests</h3>
                             <ul class="basic-list">
