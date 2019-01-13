@@ -127,8 +127,8 @@
     <div class="left-sidebar-pro">
         <nav id="sidebar" class="">
             <div class="sidebar-header">
-                <a href="{{ url('user/pages/home') }}"><img class="main-logo" src="{!! asset('assets/assets_admin/img/logo/logo.png') !!}" alt="" /></a>
-                <strong><a href="{{ url('user/pages/home') }}"><img src="{!! asset('assets/assets_admin/img/logo/logosn.png') !!}" alt="" /></a></strong>
+                <!-- <a href="{{ url('user/pages/home') }}"><img class="main-logo" src="{!! asset('assets/assets_admin/img/logo/logo.png') !!}" alt="" /></a>
+                <strong><a href="{{ url('user/pages/home') }}"><img src="{!! asset('assets/assets_admin/img/logo/logosn.png') !!}" alt="" /></a></strong> -->
             </div>
             <div class="left-custom-menu-adp-wrap comment-scrollbar">
                 <nav class="sidebar-nav left-sidebar-menu-pro">
@@ -163,15 +163,7 @@
                                 <li><a title="Students Profile" href="student-profile.html"><span class="mini-sub-pro">Student Profile</span></a></li> -->
                             </ul>
                         </li>
-                        <!-- <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Assesments</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Jenis Assesments" href="{{ url('backend/pages/assesments') }}"><span class="mini-sub-pro">Type of Assesments</span></a></li>
-                                <li><a title="All Jenis Competencies" href="{{ url('backend/pages/competencies') }}"><span class="mini-sub-pro">Type of Competencies</span></a></li>
-                                <li><a title="All Jenis Row Scores" href="{{ url('backend/pages/rowscores') }}"><span class="mini-sub-pro">Row Scores</span></a></li>
-                                <li><a title="All Questions" href="{{ url('backend/pages/questions') }}"><span class="mini-sub-pro">Questions</span></a></li>
-                            </ul>
-                        </li> -->
+                        
                         <!--
                         <li>
                             <a class="has-arrow" href="mailbox.html" aria-expanded="false"><span class="educate-icon educate-charts icon-wrap"></span> <span class="mini-click-non">Charts</span></a>
@@ -240,3 +232,12 @@
   </script> -->
   <!-- Masih belum bisa direct -->
 @endif
+
+<script type="text/javascript">
+  $(function(){
+    $('.toggle-menu').click(function(e){
+      e.preventDefault();
+      $('#sidebar').toggleClass('toggled');
+    });
+  });
+</script>
