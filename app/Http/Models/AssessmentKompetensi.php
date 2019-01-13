@@ -11,6 +11,7 @@ class AssessmentKompetensi extends Model{
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
+  
   // public function get_assesment(){
   //     return $this->belongsTo(JenisAssesment::class,'assesment_id');
   // }

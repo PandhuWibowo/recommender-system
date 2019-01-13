@@ -115,7 +115,7 @@
                     </div>
                 </div>
 			</div>
-			<div class="text-center login-footer">
+			<div class="text-center login-footer" style="text-align: center;bottom:0;width: 100%;left:0;position: fixed;">
 				<p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a> Modified by <a href="http://rootorial.com/">Pandhu Wibowo</a></p>
 			</div>
 		</div>

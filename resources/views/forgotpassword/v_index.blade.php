@@ -92,7 +92,7 @@
                     </div>
                 </div>
 			</div>
-			<div class="text-center login-footer">
+			<div class="text-center login-footer" style="text-align: center;bottom:0;width: 100%;left:0;position: fixed;">
         @include('administrator.dashboard.include.v_copyright')
 				<!-- <p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a></p> -->
 			</div>

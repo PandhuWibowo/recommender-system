@@ -80,6 +80,11 @@ Route::prefix('backend/pages')->group(function () {
     Route::post("scoredescriptions/store","Dashboard\KeteranganNilaiController@store");
     Route::delete("scoredescriptions/delete","Dashboard\KeteranganNilaiController@destroy");
     Route::put("scoredescriptions/update","Dashboard\KeteranganNilaiController@update");
+
+    //Log Test
+    Route::resource("histories","Dashboard\HistoriesController", ["only" =>
+      ["index","show"]
+    ]);
 });
 
 Route::prefix('user/pages')->group(function () {
@@ -112,6 +117,10 @@ Route::prefix('user/pages')->group(function () {
     Route::post("forgot/password/sent","Dashboard\User\ForgotPassword\ForgotPasswordController@sendEmail");
     Route::get("changepassword/{id}","Dashboard\User\ForgotPassword\ForgotPasswordController@reset");
     Route::put("forgot/password/resets","Dashboard\User\ForgotPassword\ForgotPasswordController@update");
+
+    Route::resource("histories","Dashboard\User\DashboardUser\HistoriesController", ["only" =>
+      ["index","show"]
+    ]);
 });
 
 //Grouping error Page

@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -54,6 +53,16 @@
 		============================================ -->
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/calendar/fullcalendar.min.css') !!}">
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/calendar/fullcalendar.print.min.css') !!}">
+    <!-- x-editor CSS
+		============================================ -->
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/editor/select2.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/editor/datetimepicker.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/editor/bootstrap-editable.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/editor/x-editor-style.css') !!}">
+    <!-- normalize CSS
+		============================================ -->
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/data-table/bootstrap-table.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/data-table/bootstrap-editable.css') !!}">
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/style.css') !!}">
@@ -63,10 +72,18 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body>
-    @include('administrator.dashboard.include.v_sidebar')
+    <!--[if lt IE 8]>
+		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+    @include("administrator.dashboard.include.v_sidebar")
 
     <!-- Start Welcome area -->
     <div class="all-content-wrapper">
@@ -74,7 +91,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="logo-pro">
-                      <a href="{{ url('user/pages/home') }}"><img class="main-logo" src="{!! asset('assets/assets_admin/img/logo/logo.png') !!}" alt="" /></a>
+                      <a href="index.html"><img class="main-logo" src="{!! asset('assets/assets_admin/img/logo/logo.png') !!}" alt="" /></a>
                     </div>
                 </div>
             </div>
@@ -93,6 +110,7 @@
                     												</button>
                                         </div>
                                     </div>
+
                                     @include('administrator.dashboard.include.v_menu-navbar')
                                     @include('administrator.dashboard.include.v_setting-navbar')
                                 </div>
@@ -107,7 +125,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="breadcome-list">
+                            <div class="breadcome-list single-page-breadcome">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
@@ -132,60 +150,67 @@
                 </div>
             </div>
         </div>
-
-        <div class="courses-area mg-b-15">
+        <!-- Static Table Start -->
+        <div class="data-table-area mg-b-15">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="white-box">
-                            <h3 class="box-title">Score Tests</h3>
-                            <ul class="basic-list">
-                                <li><span class="pull-left label-danger label-1 label">Competencies</span> <span class="pull-right label-danger label-1 label">Scores</span></li>
-                                <br>
-                                <!-- ngeloop sjq -->
-                                @foreach($query2 as $row)
-                                  <?php $nilai_assess;
-                                  $nilai_sjq = $row->sum_nilai * 0.4; ?>
-                                  <!-- sum_nilai sjq = {{$row->sum_nilai}} <br /> -> ini juga -->
-
-                                  <!-- ngeloop assessment -->
-                                  @foreach($query as $row2)
-                                    @if($row->kKompetensi == $row2->kKompetensi)
-                                      <?php $nilai_assess = ($row2->sum_nilai / 4)*0.6; ?>
-                                      <!-- sum_nilai assessment = {{$row2->sum_nilai}}<br /> -> ini kan cuma setelah diitung masing2 -->
-                                    @endif
-                                  @endforeach
-
-                                  <!-- ngitung total -->
-                                  <!-- assessment = {{$nilai_assess}}, sjq = {{$nilai_sjq}}<br /> -> trus ini hasil tambah -->
-                                  <?php $nilai_total = $nilai_assess + $nilai_sjq;
-                                  $hasil[$row->kKompetensi] = $nilai_total; ?>
-                                  <!-- {{$hasil[$row->kKompetensi]}} -->
-                                  @if($hasil[$row->kKompetensi] >= 3.75 && $hasil[$row->kKompetensi] <= 4.75)
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">4</span></li>
-                                  @elseif($hasil[$row->kKompetensi] >= 2.75 && $hasil[$row->kKompetensi] < 3.75)
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">3</span></li>
-                                  @elseif($hasil[$row->kKompetensi] >= 1.75 && $hasil[$row->kKompetensi] < 2.75)
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">2</span></li>
-                                  @elseif($hasil[$row->kKompetensi] >= 0.75 && $hasil[$row->kKompetensi] < 1.75)
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">1</span></li>
-                                  @else
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">0</span></li>
-                                  @endif
-                                @endforeach
-
-                            </ul>
+                        <div class="sparkline13-list">
+                            <!-- <div class="sparkline13-hd">
+                                <div class="main-sparkline13-hd">
+                                    <h1> <span class="table-project-n">Data</span> Table</h1>
+                                </div>
+                            </div> -->
+                            <div class="sparkline13-graph">
+                                <div class="datatable-dashv1-list custom-datatable-overright">
+                                    <!-- <div id="toolbar">
+                                        <select class="form-control dt-tb">
+                    											<option value="">Export Basic</option>
+                    											<option value="all">Export All</option>
+                    											<option value="selected">Export Selected</option>
+                    										</select>
+                                    </div> -->
+                                    <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
+                                      <thead>
+                                        <tr>
+                                          <th>Participant</th>
+                                          <th>Date</th>
+                                          <th>Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        @foreach($histories as $key=>$row)
+                                          <tr>
+                                            <td>{{ $row->get_user->firstname }} {{ $row->get_user->lastname }}</td>
+                                            <td>{{Carbon::parse($row->created_at)->formatLocalized('%A, %d %B %Y')}}</td>
+                                            <td>
+                                                <a class="btn btn-warning btn_edit" href="{{ url('backend/pages/histories/'.Crypt::encrypt($row->id)) }}"><i class="fa fa-table"></i></a>
+                                            </td>
+                                          </tr>
+                                        @endforeach
+                                      </tbody>
+                                      <tfoot>
+                                          <tr>
+                                            <th>Participant</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                          </tr>
+                                      </tfoot>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer-copyright-area" style="text-align: center;bottom:0;width: 100%;left:0;">
+        <!-- Static Table End -->
+        <div class="footer-copyright-area" style="text-align: center;bottom:0;position: fixed;width: 100%;left:0;">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="footer-copy-right">
-                          @include('administrator.dashboard.include.v_copyright')
+                            @include('administrator.dashboard.include.v_copyright')
                         </div>
                     </div>
                 </div>
@@ -217,11 +242,6 @@
     <!-- scrollUp JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/jquery.scrollUp.min.js') !!}"></script>
-    <!-- counterup JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/counterup/jquery.counterup.min.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/counterup/waypoints.min.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/counterup/counterup-active.js') !!}"></script>
     <!-- mCustomScrollbar JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/scrollbar/jquery.mCustomScrollbar.concat.min.js') !!}"></script>
@@ -230,21 +250,32 @@
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/metisMenu/metisMenu.min.js') !!}"></script>
     <script src="{!! asset('assets/assets_admin/js/metisMenu/metisMenu-active.js') !!}"></script>
-    <!-- morrisjs JS
+    <!-- data table JS
 		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/morrisjs/raphael-min.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/morrisjs/morris.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/morrisjs/morris-active.js') !!}"></script>
-    <!-- morrisjs JS
+    <script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-table.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/data-table/tableExport.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/data-table/data-table-active.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-table-editable.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-editable.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-table-resizable.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/data-table/colResizable-1.5.source.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/data-table/bootstrap-table-export.js') !!}"></script>
+    <!--  editable JS
 		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/sparkline/jquery.sparkline.min.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/sparkline/jquery.charts-sparkline.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/sparkline/sparkline-active.js') !!}"></script>
-    <!-- calendar JS
+    <script src="{!! asset('assets/assets_admin/js/editable/jquery.mockjax.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/editable/mock-active.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/editable/select2.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/editable/moment.min.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/editable/bootstrap-datetimepicker.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/editable/bootstrap-editable.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/editable/xediable-active.js') !!}"></script>
+    <!-- Chart JS
 		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/calendar/moment.min.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/calendar/fullcalendar.min.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/calendar/fullcalendar-active.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/chart/jquery.peity.min.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/peity/peity-active.js') !!}"></script>
+    <!-- tab JS
+		============================================ -->
+    <script src="{!! asset('assets/assets_admin/js/tab.js') !!}"></script>
     <!-- plugins JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/plugins.js') !!}"></script>
@@ -254,6 +285,32 @@
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" charset="utf-8"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js" charset="utf-8"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js" charset="utf-8"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js" charset="utf-8"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" charset="utf-8"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $(document).ready( function () {
+        $('#myCompetencies').DataTable({
+          "dom": 'Bfrtip',
+          "buttons": {
+             "dom": {
+                "button": {
+                  "tag": "button",
+                  "className": "waves-effect waves-light btn btn-info"
+                }
+             },
+             "buttons": [ 'copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+          }
+        });
+      });
+    </script>
 </body>
 
 </html>

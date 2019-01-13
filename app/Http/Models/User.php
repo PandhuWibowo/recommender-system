@@ -14,4 +14,8 @@ class User extends Model{
   public function data_pertanyaan(){
       return $this->hasMany("App\Http\Models\Pertanyaan");
   }
+
+  public function data_assessment(){
+    return $this->hasMany("App\Http\Models\Assesment");
+  }
 }

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
 		============================================ -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="{!! asset('images/icon.png') !!}">
     <!-- Google Fonts
 		============================================ -->
     <link href="https://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet">
@@ -119,7 +119,7 @@
             </div>
         </div>
 			</div>
-			<div class="text-center login-footer">
+			<div class="text-center login-footer" style="text-align: center;bottom:0;width: 100%;left:0; position: fixed;">
         @include('administrator.dashboard.include.v_copyright')
 				<!-- <p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a></p> -->
 			</div>
