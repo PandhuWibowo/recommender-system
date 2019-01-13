@@ -107,6 +107,17 @@ Route::prefix('user/pages')->group(function () {
     Route::post("questions/store","Dashboard\User\DashboardUser\QuestionController@store");
 
     Route::get("results/final/{assId}","Dashboard\User\DashboardUser\ResultController@show");
+
+    Route::get("forgot/password/sendemail","Dashboard\User\ForgotPassword\ForgotPasswordController@index");
+    Route::post("forgot/password/sent","Dashboard\User\ForgotPassword\ForgotPasswordController@sendEmail");
+    Route::get("changepassword/{id}","Dashboard\User\ForgotPassword\ForgotPasswordController@reset");
+    Route::put("forgot/password/resets","Dashboard\User\ForgotPassword\ForgotPasswordController@update");
+});
+
+//Grouping error Page
+Route::prefix('error/page')->group(function () {
+  Route::get('404', ['as' => '404', 'uses' => 'ErrorPage\ErrorController@notfound']);
+  Route::get('500', ['as' => '500', 'uses' => 'ErrorPage\ErrorController@fatal']);
 });
 
 // Auth::routes();

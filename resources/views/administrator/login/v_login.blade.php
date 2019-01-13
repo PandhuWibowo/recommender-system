@@ -4,6 +4,8 @@
 			<div class="text-center m-b-md custom-login">
 				<!-- <h3></h3>
 				<p>Please, you have signin first!</p> -->
+				<img class="img-responsive" style="margin-left:35%;" width="30%" src="{!! asset('images/logo.PNG') !!}" alt="">
+				<br>
 			</div>
 			<div class="content-error">
 				<div class="hpanel">
@@ -12,6 +14,14 @@
                   <p style="color:red">
                     {{ Session::get('must-login') }}
                   </p>
+								@elseif(Session::has('reset-password'))
+									<p style="color:red">
+										{{ Session::get('reset-password') }}
+									</p>
+								@elseif(Session::has('changed'))
+									<p style="color:red">
+										{{ Session::get('changed') }}
+									</p>
                 @elseif(Session::has('logout'))
                   <p style="color:red">
                     {{ Session::get('logout') }}
@@ -33,17 +43,22 @@
                         <input type="password" title="Please enter your password" placeholder="******" required="" value="" name="password" id="password" class="form-control">
                         <span class="help-block small">Your strong password</span>
                     </div>
-                    <!-- <div class="checkbox login-checkbox">
-                        <label>
-						            <input type="checkbox" class="i-checks"> Remember me </label>
-                        <p class="help-block small">(if this is a private computer)</p>
-                    </div> -->
-                    <button class="btn btn-success btn-block loginbtn" id="btn-login" type="button">Login</button>
-										<br>
-										<button id="btn_register" class="btn btn-success btn-block loginbtn">Doesn't have an account? Register</button>
+                    <div class="checkbox login-checkbox">
+                        <!-- <label> -->
+						            <!-- <input type="checkbox" class="i-checks"> Remember me </label> -->
+                        <!-- <p class="help-block small">(if this is a private computer)</p> -->
+												<div class="row">
+													<div class="col-sm-6">
+														<a class="btn btn-primary btn-block" href="{{ url('user/pages/forgot/password/sendemail') }}">Forgot password?</a>
+													</div>
+												</div>
+										</div>
 
-										<!-- <a class="btn btn-default btn-block" href="#">Register</a> -->
+                    <button class="btn btn-success btn-block loginbtn" id="btn-login" type="button">Login</button>
+
+										<a id="btn_register" class="btn btn-success btn-block loginbtn">Doesn't have an account? Register</a>
                 </form>
+
             </div>
         </div>
 			</div>

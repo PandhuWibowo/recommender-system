@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Session;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Mail;/**
+use Mail;
+/**
  * Register Controller
  */
 
