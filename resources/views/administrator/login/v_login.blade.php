@@ -4,7 +4,7 @@
 			<div class="text-center m-b-md custom-login">
 				<!-- <h3></h3>
 				<p>Please, you have signin first!</p> -->
-				<img class="img-responsive" style="margin-left:35%;" width="30%" src="{!! asset('images/logo.PNG') !!}" alt="">
+				<img class="img-responsive" style="margin-left:35%;" width="30%" src="{!! asset('images/icon.png') !!}" alt="">
 				<br>
 			</div>
 			<div class="content-error">

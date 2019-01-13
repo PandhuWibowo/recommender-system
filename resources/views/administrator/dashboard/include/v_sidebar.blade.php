@@ -4,8 +4,8 @@
       <div class="left-sidebar-pro">
           <nav id="sidebar" class="">
               <div class="sidebar-header">
-                  <a href="{{ url('backend/pages/home') }}"><img class="main-logo" src="{!! asset('assets/assets_admin/img/logo/logo.png') !!}" alt="" /></a>
-                  <strong><a href="{{ url('backend/pages/home') }}"><img src="{!! asset('assets/assets_admin/img/logo/logosn.png') !!}" alt="" /></a></strong>
+                  <!-- <a href="{{ url('backend/pages/home') }}"><img class="main-logo img-responsive" width="0" src="{!! asset('images/icon.png') !!}" alt="" /></a>
+                  <strong><a href="{{ url('backend/pages/home') }}"><img width="0" class="img-responsive" src="{!! asset('images/icon.png') !!}" alt="" /></a></strong> -->
               </div>
               <div class="left-custom-menu-adp-wrap comment-scrollbar">
                   <nav class="sidebar-nav left-sidebar-menu-pro">

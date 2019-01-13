@@ -25,7 +25,7 @@
 
               -->
               <div class="mui-divider-bottom">
-              <img style="width:300px" src="{!! asset('images/images-admin/loopingid.PNG') !!}">
+              <img style="width:300px" src="{!! asset('images/icon.png') !!}">
               <h3 style="margin-top: -5px!important; margin-bottom: 16px!important; color: grey!important;">DISCOVER YOUR SELF</h3>
               <div class="mui-divider-bottom"></div>
 
