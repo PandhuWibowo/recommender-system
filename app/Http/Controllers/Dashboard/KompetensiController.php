@@ -25,8 +25,13 @@ class KompetensiController extends Controller
 
   public function store(Request $request){
     $rules = array(
-      'kompetensi'  => 'required'
+      'kompetensi'  => 'required',
+      'definisi'    => 'required',
+      'p_mandiri'   => 'required',
+      'p_bermitra'  => 'required',
+      't_pelatihan' => 'required'
     );
+
     $validator = Validator::make(Input::all(), $rules);
 
     if ($validator->fails()) {
@@ -41,8 +46,13 @@ class KompetensiController extends Controller
       $assesment = new Kompetensi([
         'id'                => Uuid::generate()->string,
         'kompetensi'        => ucfirst(trim($request->kompetensi)),
-        'no_urut_kompetensi'=> trim($request->no_urut_kompetensi)
+        'no_urut_kompetensi'=> trim($request->no_urut_kompetensi),
+        'definisi'          => ucfirst(trim($request->definisi)),
+        'p_mandiri'         => ucfirst(trim($request->p_mandiri)),
+        'p_bermitra'        => ucfirst(trim($request->p_bermitra)),
+        't_pelatihan'       => ucfirst(trim($request->t_pelatihan)),
       ]);
+      
       $assesment->save();
       return response()->json(
           array(
@@ -79,7 +89,7 @@ class KompetensiController extends Controller
       );
     }
   }
-  
+
   public function destroy(Request $request){
     $txtId    = Crypt::decrypt($request->id);
     Kompetensi::where('id',$txtId)->delete();

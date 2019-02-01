@@ -235,7 +235,7 @@
                                         @foreach($dataKompetensis as $key=>$row)
                                           <tr>
                                             <td>{{ $row->kompetensi }}</td>
-                                            <td>{{ $row->definition }}</td>
+                                            <td>{{ $row->definisi }}</td>
                                             <td>{{ $row->no_urut_kompetensi }}</td>
                                             <td>
                                                 <a class="btn btn-warning btn_edit" data-no="{{$row->no_urut_kompetensi}}" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}" data-definition="{{$row->definition}}" data-p_mandiri="{{$row->p_mandiri}}" data-p_bermitra="{{$row->p_bermitra}}" data-t_pelatihan="{{$row->t_pelatihan}}"><i class="fa fa-edit"></i></a>

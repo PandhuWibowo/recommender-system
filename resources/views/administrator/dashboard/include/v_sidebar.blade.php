@@ -163,7 +163,7 @@
                                 <li><a title="Students Profile" href="student-profile.html"><span class="mini-sub-pro">Student Profile</span></a></li> -->
                             </ul>
                         </li>
-                        
+
                         <!--
                         <li>
                             <a class="has-arrow" href="mailbox.html" aria-expanded="false"><span class="educate-icon educate-charts icon-wrap"></span> <span class="mini-click-non">Charts</span></a>
@@ -232,12 +232,3 @@
   </script> -->
   <!-- Masih belum bisa direct -->
 @endif
-
-<script type="text/javascript">
-  $(function(){
-    $('.toggle-menu').click(function(e){
-      e.preventDefault();
-      $('#sidebar').toggleClass('toggled');
-    });
-  });
-</script>
