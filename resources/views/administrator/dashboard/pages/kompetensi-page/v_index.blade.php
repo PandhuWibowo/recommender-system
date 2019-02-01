@@ -402,6 +402,10 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" charset="utf-8"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
+    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script>
+
+    </script>
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myCompetencies').DataTable({
@@ -466,7 +470,6 @@
           var varPMandiri = $("#p_mandiri").val();
           var varPMitra   = $("#p_bermitra").val();
           var varTTheme   = $("#t_pelatihan").val();
-
           try {
             if(varName == ""){
               swal({
@@ -572,51 +575,60 @@
           var varId       = $("#id_jenis_competencies").val();
           var varName     = $("#name_jenis_competencies").val();
           var varNoUrut   = $("#edit_no_urut_kompetensi").val();
-          var varDefinisi = $("#edit_definisi").val();
+          var varDefinisi = CKEDITOR.replace( 'edit_definisi' );
           var varPMandiri = $("#edit_p_mandiri").val();
           var varPMitra   = $("#edit_p_bermitra").val();
           var varTTheme   = $("#edit_t_pelatihan").val();
 
-          try {
-            $.ajax({
-              type    : "PUT",
-              url     : "{{ url('backend/pages/competencies/update') }}",
-              async   : true,
-              dataType: "JSON",
-              data    : {
-                id                  : varId,
-                kompetensi          : varName,
-                no_urut_kompetensi  : varNoUrut
-              },
-              success:function(data){
-                $("#editModal").modal("hide");
-                if(data.response == "success"){
-                  swal({
-                    type : "success",
-                    title: "Success",
-                    text : "Data's has been updated",
-                    timer: 3000
-                  }).then(function(){
-                    window.location = "{{ url('backend/pages/competencies') }}";
-                  })
-                }else{
-                  swal({
-                    type : "error",
-                    title: "Error",
-                    text : "Failed updaing the data",
-                    timer: 3000
-                  })
-                }
-              },
-              error:function(data){
-                console.log(data);
-              }
-            })
-          } catch (e) {
-            console.log(e);
-          } finally {
+          //
+          // CKEDITOR.replace( 'edit_p_mandiri' );
+          // CKEDITOR.replace( 'edit_p_bermitra' );
+          // CKEDITOR.replace( 'edit_t_pelatihan' );
 
-          }
+          // try {
+          //   $.ajax({
+          //     type    : "PUT",
+          //     url     : "{{ url('backend/pages/competencies/update') }}",
+          //     async   : true,
+          //     dataType: "JSON",
+          //     data    : {
+          //       id                  : varId,
+          //       kompetensi          : varName,
+          //       no_urut_kompetensi  : varNoUrut,
+          //       definisi            : varDefinisi,
+          //       p_mandiri           : varPMandiri,
+          //       p_bermitra          : varPMitra,
+          //       t_pelatihan         : varTTheme
+          //     },
+          //     success:function(data){
+          //       $("#editModal").modal("hide");
+          //       if(data.response == "success"){
+          //         swal({
+          //           type : "success",
+          //           title: "Success",
+          //           text : "Data's has been updated",
+          //           timer: 3000
+          //         }).then(function(){
+          //           window.location = "{{ url('backend/pages/competencies') }}";
+          //         })
+          //       }else{
+          //         swal({
+          //           type : "error",
+          //           title: "Error",
+          //           text : "Failed updating the data",
+          //           timer: 3000
+          //         })
+          //       }
+          //     },
+          //     error:function(data){
+          //       console.log(data);
+          //     }
+          //   })
+          // } catch (e) {
+          //   console.log(e);
+          // } finally {
+          //
+          // }
         });
 
         $("#btn_hps").on("click", function(){

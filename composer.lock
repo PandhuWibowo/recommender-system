@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "21be1b5bfe63286afebb7bdc4bb02c1a",
+    "content-hash": "306730feb5d49617bd847c2e7ad8d212",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -311,6 +311,56 @@
                 "parser"
             ],
             "time": "2018-03-08T01:11:30+00:00"
+        },
+        {
+            "name": "fico7489/laravel-eloquent-join",
+            "version": "4.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fico7489/laravel-eloquent-join.git",
+                "reference": "220aa02b973055f40885df6b00ddec47e68e43cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fico7489/laravel-eloquent-join/zipball/220aa02b973055f40885df6b00ddec47e68e43cb",
+                "reference": "220aa02b973055f40885df6b00ddec47e68e43cb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "2.*",
+                "orchestra/testbench": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fico7489\\Laravel\\EloquentJoin\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Filip Horvat",
+                    "email": "filip.horvat@am2studio.hr",
+                    "homepage": "http://am2studio.hr",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This package introduces the join magic for eloquent models and relations.",
+            "homepage": "https://github.com/fico7489/laravel-eloquent-join",
+            "keywords": [
+                "laravel eloquent join",
+                "laravel join",
+                "laravel join relation",
+                "laravel sort join",
+                "laravel where join"
+            ],
+            "time": "2019-01-27T10:55:55+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -3052,6 +3102,60 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "unisharp/laravel-ckeditor",
+            "version": "4.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/UniSharp/laravel-ckeditor.git",
+                "reference": "5c75f3f9128ec8567955913074795deee5869c5c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UniSharp/laravel-ckeditor/zipball/5c75f3f9128ec8567955913074795deee5869c5c",
+                "reference": "5c75f3f9128ec8567955913074795deee5869c5c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Unisharp\\Ckeditor\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+",
+                "LGPL-2.1+",
+                "MPL-1.1+"
+            ],
+            "authors": [
+                {
+                    "name": "CKSource",
+                    "homepage": "http://cksource.com"
+                },
+                {
+                    "name": "UniSharp Ltd. (Composer Package Maintainer)",
+                    "homepage": "http://www.unisharp.com"
+                }
+            ],
+            "description": "JavaScript WYSIWYG web text editor (for laravel).",
+            "homepage": "http://ckeditor.com",
+            "keywords": [
+                "CKEditor",
+                "editor",
+                "fckeditor",
+                "html",
+                "javascript",
+                "laravel",
+                "richtext",
+                "text",
+                "wysiwyg"
+            ],
+            "time": "2017-11-01T04:33:40+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

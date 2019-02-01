@@ -52,7 +52,7 @@ class KompetensiController extends Controller
         'p_bermitra'        => ucfirst(trim($request->p_bermitra)),
         't_pelatihan'       => ucfirst(trim($request->t_pelatihan)),
       ]);
-      
+
       $assesment->save();
       return response()->json(
           array(
@@ -65,7 +65,11 @@ class KompetensiController extends Controller
   public function update(Request $request){
     $rules = array(
       'id'          => 'required',
-      'kompetensi'  => 'required'
+      'kompetensi'  => 'required',
+      'definisi'    => 'required',
+      'p_mandiri'   => 'required',
+      'p_bermitra'  => 'required',
+      't_pelatihan' => 'required'
     );
     $validator = Validator::make(Input::all(), $rules);
 
@@ -81,6 +85,10 @@ class KompetensiController extends Controller
       $assesment                      = Kompetensi::findOrFail(Crypt::decrypt($request->id));
       $assesment->kompetensi          = $request->kompetensi;
       $assesment->no_urut_kompetensi  = $request->no_urut_kompetensi;
+      $assesment->definisi            = $request->definisi;
+      $assesment->p_mandiri           = $request->p_mandiri;
+      $assesment->p_bermitra          = $request->p_bermitra;
+      $assesment->t_pelatihan         = $request->t_pelatihan;
       $assesment->save();
       return response()->json(
           array(
