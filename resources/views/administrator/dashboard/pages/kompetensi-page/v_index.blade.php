@@ -130,7 +130,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                          <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
+                                          <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
                                             Add New
                                           </a>
                                           <!-- Modal -->
@@ -152,6 +152,27 @@
                                                     <label for="usr">Sequence Number to</label>
                                                     <input type="number" min="1" class="form-control" autocomplete="off" id="no_urut_kompetensi" required>
                                                   </div>
+
+                                                  <div class="form-group res-mg-t-15">
+                                                    <label for="usr">Definition</label>
+                                                    <textarea name="definisi" id="definisi" placeholder="Definition"></textarea>
+                                                  </div>
+
+                                                  <div class="form-group res-mg-t-15">
+                                                    <label for="usr">Self Development</label>
+                                                    <textarea name="p_mandiri" id="p_mandiri" placeholder="Self Development"></textarea>
+                                                  </div>
+
+                                                  <div class="form-group res-mg-t-15">
+                                                    <label for="usr">Partner Development</label>
+                                                    <textarea name="p_bermitra" id="p_bermitra" placeholder="Partner Development"></textarea>
+                                                  </div>
+
+                                                  <div class="form-group res-mg-t-15">
+                                                    <label for="usr">Training Theme</label>
+                                                    <textarea name="t_pelatihan" id="t_pelatihan" placeholder="Training Theme"></textarea>
+                                                  </div>
+
                                                 </div>
                                                 <div class="modal-footer">
                                                   <button type="button" id="btn_save" class="btn btn-primary">Save</button>
@@ -205,6 +226,7 @@
                                       <thead>
                                           <tr>
                                               <th>Name of Competencies</th>
+                                              <th>Definition</th>
                                               <th>Sequence Number to</th>
                                               <th>Action</th>
                                           </tr>
@@ -213,9 +235,10 @@
                                         @foreach($dataKompetensis as $key=>$row)
                                           <tr>
                                             <td>{{ $row->kompetensi }}</td>
+                                            <td>{{ $row->definition }}</td>
                                             <td>{{ $row->no_urut_kompetensi }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-no="{{$row->no_urut_kompetensi}}" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-no="{{$row->no_urut_kompetensi}}" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}" data-definition="{{$row->definition}}" data-p_mandiri="{{$row->p_mandiri}}" data-p_bermitra="{{$row->p_bermitra}}" data-t_pelatihan="{{$row->t_pelatihan}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -223,6 +246,7 @@
                                       <tfoot>
                                           <tr>
                                             <th>Name of Competencies</th>
+                                            <th>Definition</th>
                                             <th>Sequence Number to</th>
                                             <th>Action</th>
                                           </tr>
@@ -268,7 +292,7 @@
             </div>
         </div>
         <!-- Static Table End -->
-        <div class="footer-copyright-area" style="text-align: center;bottom:0;position: fixed;width: 100%;left:0;">
+        <div class="footer-copyright-area" style="text-align: center;bottom:0;width: 100%;left:0;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -377,6 +401,8 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
+
+        //Menampilkan ke modal edit
         $(".btn_edit").on("click", function(){
           var varId     = $(this).data("id");
           var varName   = $(this).data("kompetensi");
@@ -385,27 +411,39 @@
             $("#id_jenis_competencies").val(varId);
             $("#name_jenis_competencies").val(varName);
             $("#edit_no_urut_kompetensi").val(varNoUrut);
-            $("#editModal").modal("show");
+            $("#editModal").modal({
+              backdrop: 'static',
+              keyboard: true,
+              show: true
+            });
+            // $('#editModal').modal({backdrop: 'static', keyboard: false})
           } catch (e) {
             console.log(e);
           } finally {
 
           }
         });
+
+        //Insert data baru
         $("#btn_save").on("click", function(){
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varName   = $("#jenis_competencies").val();
-          var varNoUrut = $("#no_urut_kompetensi").val();
+          var varName     = $("#jenis_competencies").val();
+          var varNoUrut   = $("#no_urut_kompetensi").val();
+          var varDefinisi = $("#definisi").val();
+          var varPMandiri = $("#p_mandiri").val();
+          var varPMitra   = $("#p_bermitra").val();
+          var varTTheme   = $("#t_pelatihan").val();
+
           try {
             if(varName == ""){
               swal({
                 type    : "info",
                 title   : "Empty",
-                text    : "Type of Competencies is required",
+                text    : "Competencies is required",
                 timer   : 3000
               });
             }
@@ -417,6 +455,38 @@
                 timer   : 3000
               });
             }
+            else if(varDefinisi == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Definition is required",
+                timer   : 3000
+              });
+            }
+            else if(varPMandiri == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Self Development is required",
+                timer   : 3000
+              });
+            }
+            else if(varPMitra == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Partner Development is required",
+                timer   : 3000
+              });
+            }
+            else if(varTTheme == ""){
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Training Theme is required",
+                timer   : 3000
+              });
+            }
             else{
               $.ajax({
                 type    : "POST",
@@ -425,7 +495,11 @@
                 dataType: "JSON",
                 data    : {
                   kompetensi        : varName,
-                  no_urut_kompetensi: varNoUrut
+                  no_urut_kompetensi: varNoUrut,
+                  definisi          : varDefinisi,
+                  p_mandiri         : varPMandiri,
+                  p_bermitra        : varPMitra,
+                  t_pelatihan       : varTTheme
                 },
                 success:function(data){
                   $("#myModal").modal("hide");

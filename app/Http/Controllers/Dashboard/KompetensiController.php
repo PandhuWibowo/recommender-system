@@ -79,6 +79,7 @@ class KompetensiController extends Controller
       );
     }
   }
+  
   public function destroy(Request $request){
     $txtId    = Crypt::decrypt($request->id);
     Kompetensi::where('id',$txtId)->delete();
