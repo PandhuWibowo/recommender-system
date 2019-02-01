@@ -238,7 +238,7 @@
                                             <td>{{ $row->definisi }}</td>
                                             <td>{{ $row->no_urut_kompetensi }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-no="{{$row->no_urut_kompetensi}}" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}" data-definition="{{$row->definition}}" data-p_mandiri="{{$row->p_mandiri}}" data-p_bermitra="{{$row->p_bermitra}}" data-t_pelatihan="{{$row->t_pelatihan}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-no="{{$row->no_urut_kompetensi}}" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}" data-definition="{{$row->definisi}}" data-p_mandiri="{{$row->p_mandiri}}" data-p_bermitra="{{$row->p_bermitra}}" data-t_pelatihan="{{$row->t_pelatihan}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -275,6 +275,26 @@
                                             <div class="form-group">
                                               <label for="usr">Sequence Number to</label>
                                               <input type="number" min="1" class="form-control" autocomplete="off" id="edit_no_urut_kompetensi" required>
+                                            </div>
+
+                                            <div class="form-group res-mg-t-15">
+                                              <label for="usr">Definition</label>
+                                              <textarea name="edit_definisi" id="edit_definisi" placeholder="Definition"></textarea>
+                                            </div>
+
+                                            <div class="form-group res-mg-t-15">
+                                              <label for="usr">Self Development</label>
+                                              <textarea name="edit_p_mandiri" id="edit_p_mandiri" placeholder="Self Development"></textarea>
+                                            </div>
+
+                                            <div class="form-group res-mg-t-15">
+                                              <label for="usr">Partner Development</label>
+                                              <textarea name="edit_p_bermitra" id="edit_p_bermitra" placeholder="Partner Development"></textarea>
+                                            </div>
+
+                                            <div class="form-group res-mg-t-15">
+                                              <label for="usr">Training Theme</label>
+                                              <textarea name="edit_t_pelatihan" id="edit_t_pelatihan" placeholder="Training Theme"></textarea>
                                             </div>
                                           </div>
                                           <div class="modal-footer">
@@ -385,7 +405,8 @@
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myCompetencies').DataTable({
-          "dom": 'Bfrtip',
+          "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Show All"]],
+          "dom": 'Bfrtlip',
           "buttons": {
              "dom": {
                 "button": {
@@ -404,13 +425,21 @@
 
         //Menampilkan ke modal edit
         $(".btn_edit").on("click", function(){
-          var varId     = $(this).data("id");
-          var varName   = $(this).data("kompetensi");
-          var varNoUrut = $(this).data("no");
+          var varId       = $(this).data("id");
+          var varName     = $(this).data("kompetensi");
+          var varNoUrut   = $(this).data("no");
+          var varDefinisi = $(this).data("definition");
+          var varPMandiri = $(this).data("p_mandiri");
+          var varPMitra   = $(this).data("p_bermitra");
+          var varTTheme   = $(this).data("t_pelatihan");
           try {
             $("#id_jenis_competencies").val(varId);
             $("#name_jenis_competencies").val(varName);
             $("#edit_no_urut_kompetensi").val(varNoUrut);
+            $("#edit_definisi").val(varDefinisi);
+            $("#edit_p_mandiri").val(varPMandiri);
+            $("#edit_p_bermitra").val(varPMitra);
+            $("#edit_t_pelatihan").val(varTTheme);
             $("#editModal").modal({
               backdrop: 'static',
               keyboard: true,
@@ -539,9 +568,14 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varId     = $("#id_jenis_competencies").val();
-          var varName   = $("#name_jenis_competencies").val();
-          var varNoUrut = $("#edit_no_urut_kompetensi").val();
+
+          var varId       = $("#id_jenis_competencies").val();
+          var varName     = $("#name_jenis_competencies").val();
+          var varNoUrut   = $("#edit_no_urut_kompetensi").val();
+          var varDefinisi = $("#edit_definisi").val();
+          var varPMandiri = $("#edit_p_mandiri").val();
+          var varPMitra   = $("#edit_p_bermitra").val();
+          var varTTheme   = $("#edit_t_pelatihan").val();
 
           try {
             $.ajax({
