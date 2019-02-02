@@ -235,10 +235,10 @@
                                         @foreach($dataKompetensis as $key=>$row)
                                           <tr>
                                             <td>{{ $row->kompetensi }}</td>
-                                            <td>{{ $row->definisi }}</td>
+                                            <td>{!! $row->definisi !!}</td>
                                             <td>{{ $row->no_urut_kompetensi }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-no="{{$row->no_urut_kompetensi}}" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}" data-definition="{{$row->definisi}}" data-p_mandiri="{{$row->p_mandiri}}" data-p_bermitra="{{$row->p_bermitra}}" data-t_pelatihan="{{$row->t_pelatihan}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-no="{{$row->no_urut_kompetensi}}" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}" data-definition="{!!$row->definisi!!}" data-p_mandiri="{!!$row->p_mandiri!!}" data-p_bermitra="{!!$row->p_bermitra!!}" data-t_pelatihan="{!!$row->t_pelatihan!!}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -404,8 +404,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script>
-
+      //Buat Edit Modal
+      CKEDITOR.replace( 'edit_definisi' );
+      CKEDITOR.replace( 'edit_p_mandiri' );
+      CKEDITOR.replace( 'edit_p_bermitra' );
+      CKEDITOR.replace( 'edit_t_pelatihan' );
     </script>
+
+    <script>
+      //Buat Insert Modal
+      CKEDITOR.replace( 'definisi' );
+      CKEDITOR.replace( 'p_mandiri' );
+      CKEDITOR.replace( 'p_bermitra' );
+      CKEDITOR.replace( 't_pelatihan' );
+    </script>
+
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myCompetencies').DataTable({
@@ -429,6 +442,7 @@
 
         //Menampilkan ke modal edit
         $(".btn_edit").on("click", function(){
+
           var varId       = $(this).data("id");
           var varName     = $(this).data("kompetensi");
           var varNoUrut   = $(this).data("no");
@@ -436,14 +450,20 @@
           var varPMandiri = $(this).data("p_mandiri");
           var varPMitra   = $(this).data("p_bermitra");
           var varTTheme   = $(this).data("t_pelatihan");
+
+          // var varDefinisi     = CKEDITOR.instances['definition'].getData()
           try {
             $("#id_jenis_competencies").val(varId);
             $("#name_jenis_competencies").val(varName);
             $("#edit_no_urut_kompetensi").val(varNoUrut);
-            $("#edit_definisi").val(varDefinisi);
-            $("#edit_p_mandiri").val(varPMandiri);
-            $("#edit_p_bermitra").val(varPMitra);
-            $("#edit_t_pelatihan").val(varTTheme);
+            // $("#edit_definisi").val(varDefinisi);
+            CKEDITOR.instances['edit_definisi'].setData(varDefinisi);
+            // $("#edit_p_mandiri").val(varPMandiri);
+            // $("#edit_p_bermitra").val(varPMitra);
+            // $("#edit_t_pelatihan").val(varTTheme);
+            CKEDITOR.instances['edit_p_mandiri'].setData(varPMandiri);
+            CKEDITOR.instances['edit_p_bermitra'].setData(varPMitra);
+            CKEDITOR.instances['edit_t_pelatihan'].setData(varTTheme);
             $("#editModal").modal({
               backdrop: 'static',
               keyboard: true,
@@ -464,12 +484,14 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
+
           var varName     = $("#jenis_competencies").val();
           var varNoUrut   = $("#no_urut_kompetensi").val();
-          var varDefinisi = $("#definisi").val();
-          var varPMandiri = $("#p_mandiri").val();
-          var varPMitra   = $("#p_bermitra").val();
-          var varTTheme   = $("#t_pelatihan").val();
+          var varDefinisi = CKEDITOR.instances["definisi"].getData();
+          var varPMandiri = CKEDITOR.instances["p_mandiri"].getData();
+          var varPMitra   = CKEDITOR.instances["p_bermitra"].getData();
+          var varTTheme   = CKEDITOR.instances["t_pelatihan"].getData();
+
           try {
             if(varName == ""){
               swal({
@@ -575,60 +597,55 @@
           var varId       = $("#id_jenis_competencies").val();
           var varName     = $("#name_jenis_competencies").val();
           var varNoUrut   = $("#edit_no_urut_kompetensi").val();
-          var varDefinisi = CKEDITOR.replace( 'edit_definisi' );
-          var varPMandiri = $("#edit_p_mandiri").val();
-          var varPMitra   = $("#edit_p_bermitra").val();
-          var varTTheme   = $("#edit_t_pelatihan").val();
+          var varDefinisi = CKEDITOR.instances["edit_definisi"].getData();
+          var varPMandiri = CKEDITOR.instances["edit_p_mandiri"].getData();
+          var varPMitra   = CKEDITOR.instances["edit_p_bermitra"].getData();
+          var varTTheme   = CKEDITOR.instances["edit_t_pelatihan"].getData();
 
-          //
-          // CKEDITOR.replace( 'edit_p_mandiri' );
-          // CKEDITOR.replace( 'edit_p_bermitra' );
-          // CKEDITOR.replace( 'edit_t_pelatihan' );
+          try {
+            $.ajax({
+              type    : "PUT",
+              url     : "{{ url('backend/pages/competencies/update') }}",
+              async   : true,
+              dataType: "JSON",
+              data    : {
+                id                  : varId,
+                kompetensi          : varName,
+                no_urut_kompetensi  : varNoUrut,
+                definisi            : varDefinisi,
+                p_mandiri           : varPMandiri,
+                p_bermitra          : varPMitra,
+                t_pelatihan         : varTTheme
+              },
+              success:function(data){
+                $("#editModal").modal("hide");
+                if(data.response == "success"){
+                  swal({
+                    type : "success",
+                    title: "Success",
+                    text : "Data's has been updated",
+                    timer: 3000
+                  }).then(function(){
+                    window.location = "{{ url('backend/pages/competencies') }}";
+                  })
+                }else{
+                  swal({
+                    type : "error",
+                    title: "Error",
+                    text : "Failed updating the data",
+                    timer: 3000
+                  })
+                }
+              },
+              error:function(data){
+                console.log(data);
+              }
+            })
+          } catch (e) {
+            console.log(e);
+          } finally {
 
-          // try {
-          //   $.ajax({
-          //     type    : "PUT",
-          //     url     : "{{ url('backend/pages/competencies/update') }}",
-          //     async   : true,
-          //     dataType: "JSON",
-          //     data    : {
-          //       id                  : varId,
-          //       kompetensi          : varName,
-          //       no_urut_kompetensi  : varNoUrut,
-          //       definisi            : varDefinisi,
-          //       p_mandiri           : varPMandiri,
-          //       p_bermitra          : varPMitra,
-          //       t_pelatihan         : varTTheme
-          //     },
-          //     success:function(data){
-          //       $("#editModal").modal("hide");
-          //       if(data.response == "success"){
-          //         swal({
-          //           type : "success",
-          //           title: "Success",
-          //           text : "Data's has been updated",
-          //           timer: 3000
-          //         }).then(function(){
-          //           window.location = "{{ url('backend/pages/competencies') }}";
-          //         })
-          //       }else{
-          //         swal({
-          //           type : "error",
-          //           title: "Error",
-          //           text : "Failed updating the data",
-          //           timer: 3000
-          //         })
-          //       }
-          //     },
-          //     error:function(data){
-          //       console.log(data);
-          //     }
-          //   })
-          // } catch (e) {
-          //   console.log(e);
-          // } finally {
-          //
-          // }
+          }
         });
 
         $("#btn_hps").on("click", function(){
