@@ -130,7 +130,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                          <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
+                                          <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
                                             Add New
                                           </a>
                                           <!-- Modal -->
@@ -152,6 +152,12 @@
                                                     <label for="usr">Description</label>
                                                     <input type="text" class="form-control" autocomplete="off" id="description" required>
                                                   </div>
+
+                                                  <div class="form-group res-mg-t-15">
+                                                    <label for="usr">Description Type</label>
+                                                    <textarea name="jenisketerangan" id="jenisketerangan" placeholder="Description Type"></textarea>
+                                                  </div>
+
                                                 </div>
                                                 <div class="modal-footer">
                                                   <button type="button" id="btn_save" class="btn btn-primary">Save</button>
@@ -206,6 +212,7 @@
                                           <tr>
                                               <th>Range Score</th>
                                               <th>Description</th>
+                                              <th>Description Type</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -213,9 +220,10 @@
                                         @foreach($keteranganNilai as $key=>$row)
                                           <tr>
                                             <td>{{ $row->range_score }}</td>
-                                            <td>{{ $row->keterangan }}</td>
+                                            <td>{!! $row->keterangan !!}</td>
+                                            <td>{!! $row->jenisketerangan !!}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-range_score="{{ $row->range_score }}" data-keterangan="{{$row->keterangan}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-range_score="{{ $row->range_score }}" data-keterangan="{!! $row->keterangan !!}" data-jenisketerangan="{!! $row->jenisketerangan !!}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -224,6 +232,7 @@
                                           <tr>
                                             <th>Range Score</th>
                                             <th>Description</th>
+                                            <th>Description Type</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -252,6 +261,12 @@
                                               <label for="usr">Description</label>
                                               <input type="text" class="form-control" autocomplete="off" id="edit_description" required>
                                             </div>
+
+                                            <div class="form-group res-mg-t-15">
+                                              <label for="usr">Description Type</label>
+                                              <textarea name="edit_jenisketerangan" id="edit_jenisketerangan" placeholder="Description Type"></textarea>
+                                            </div>
+
                                           </div>
                                           <div class="modal-footer">
                                             <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
@@ -358,6 +373,19 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" charset="utf-8"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
+    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script>
+      //Buat Insert Modal
+      CKEDITOR.replace( 'jenisketerangan' );
+      CKEDITOR.replace( 'description' );
+    </script>
+
+    <script>
+      //Buat Edit Modal
+      CKEDITOR.replace( 'edit_description' );
+      CKEDITOR.replace( 'edit_jenisketerangan' );
+    </script>
+
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myAssesments').DataTable({
@@ -378,14 +406,22 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $(".btn_edit").on("click", function(){
-          var varId         = $(this).data("id");
-          var varRangeScore = $(this).data("range_score");
-          var varKeterangan = $(this).data("keterangan");
+          var varId               = $(this).data("id");
+          var varRangeScore       = $(this).data("range_score");
+          var varKeterangan       = $(this).data("keterangan");
+          var varJenisKeterangan  = $(this).data("jenisketerangan");
           try {
             $("#id_jenis_keterangan").val(varId);
             $("#edit_range_score").val(varRangeScore);
-            $("#edit_description").val(varKeterangan);
-            $("#editModal").modal("show");
+            // $("#edit_description").val(varKeterangan);
+            CKEDITOR.instances['edit_description'].setData(varKeterangan);
+            CKEDITOR.instances['edit_jenisketerangan'].setData(varJenisKeterangan);
+            // $("#editModal").modal("show");
+            $("#editModal").modal({
+              backdrop: 'static',
+              keyboard: true,
+              show: true
+            });
           } catch (e) {
             console.log(e);
           } finally {
@@ -398,8 +434,10 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varRangeScore   = $("#range_score").val();
-          var varDescription  = $("#description").val();
+          var varRangeScore     = $("#range_score").val();
+          var varDescription    = CKEDITOR.instances["description"].getData();
+          var varDescriptionType= CKEDITOR.instances["jenisketerangan"].getData();
+
           try {
             if(varRangeScore == ""){
               swal({
@@ -417,6 +455,14 @@
                 timer   : 3000
               });
             }
+            else if (varDescriptionType == "") {
+              swal({
+                type    : "info",
+                title   : "Empty",
+                text    : "Description Type is required",
+                timer   : 3000
+              });
+            }
             else{
               $.ajax({
                 type    : "POST",
@@ -425,7 +471,8 @@
                 dataType: "JSON",
                 data    : {
                   range_score       : varRangeScore,
-                  keterangan        : varDescription
+                  keterangan        : varDescription,
+                  jenisketerangan   : varDescriptionType
                 },
                 success:function(data){
                   $("#myModal").modal("hide");
@@ -465,9 +512,10 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varId         = $("#id_jenis_keterangan").val();
-          var varRangeScore = $("#edit_range_score").val();
-          var varDescription= $("#edit_description").val();
+          var varId             = $("#id_jenis_keterangan").val();
+          var varRangeScore     = $("#edit_range_score").val();
+          var varDescription    = CKEDITOR.instances["edit_description"].getData();
+          var varJenisKeterangan= CKEDITOR.instances["edit_jenisketerangan"].getData();
           try {
             $.ajax({
               type    : "PUT",
@@ -475,9 +523,10 @@
               async   : true,
               dataType: "JSON",
               data    : {
-                id          : varId,
-                range_score : varRangeScore,
-                keterangan  : varDescription
+                id              : varId,
+                range_score     : varRangeScore,
+                keterangan      : varDescription,
+                jenisketerangan : varJenisKeterangan
               },
               success:function(data){
                 $("#editModal").modal("hide");

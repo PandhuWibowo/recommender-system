@@ -26,8 +26,9 @@ class KeteranganNilaiController extends Controller
 
   public function store(Request $request){
     $rules = array(
-      'range_score'  => 'required',
-      'keterangan'  => 'required'
+      'range_score'     => 'required',
+      'keterangan'      => 'required',
+      'jenisketerangan' => 'required'
     );
     $validator = Validator::make(Input::all(), $rules);
 
@@ -41,9 +42,10 @@ class KeteranganNilaiController extends Controller
     }
     else{
       $assesment = new KeteranganNilai([
-        'id'          => Uuid::generate()->string,
-        'range_score' => ucfirst(trim($request->range_score)),
-        'keterangan'  => trim($request->keterangan)
+        'id'              => Uuid::generate()->string,
+        'range_score'     => ucfirst(trim($request->range_score)),
+        'keterangan'      => trim($request->keterangan),
+        'jenisketerangan' => ucfirst(trim($request->jenisketerangan))
       ]);
       $assesment->save();
       return response()->json(
@@ -56,9 +58,10 @@ class KeteranganNilaiController extends Controller
 
   public function update(Request $request){
     $rules = array(
-      'id'            => 'required',
-      'range_score'   => 'required',
-      'keterangan'    => 'required'
+      'id'              => 'required',
+      'range_score'     => 'required',
+      'keterangan'      => 'required',
+      'jenisketerangan' => 'required'
     );
     $validator = Validator::make(Input::all(), $rules);
 
@@ -74,6 +77,7 @@ class KeteranganNilaiController extends Controller
       $assesment                    = KeteranganNilai::findOrFail(Crypt::decrypt($request->id));
       $assesment->range_score       = $request->range_score;
       $assesment->keterangan        = $request->keterangan;
+      $assesment->jenisketerangan   = $request->jenisketerangan;
       $assesment->save();
       return response()->json(
           array(

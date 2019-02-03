@@ -85,6 +85,9 @@ Route::prefix('backend/pages')->group(function () {
     Route::resource("histories","Dashboard\HistoriesController", ["only" =>
       ["index","show"]
     ]);
+
+    //User Assesments
+    Route::get("userassessments","Dashboard\UserAssessmentController@index");
 });
 
 Route::prefix('user/pages')->group(function () {
