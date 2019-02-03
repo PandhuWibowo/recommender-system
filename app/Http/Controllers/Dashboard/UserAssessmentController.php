@@ -24,5 +24,5 @@ class UserAssessmentController extends Controller{
     $jenisAssessments = JenisAssesment::all();
     return view("",compact("users","jenisAssessments"));
   }
-  
+
 }
