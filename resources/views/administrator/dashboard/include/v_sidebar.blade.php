@@ -49,10 +49,7 @@
                                   <li><a title="All Questions" href="{{ url('backend/pages/questions') }}"><span class="mini-sub-pro">Questions</span></a></li>
                                   <li><a title="All Description of Score" href="{{ url('backend/pages/scoredescriptions') }}"><span class="mini-sub-pro">Description of Scores</span></a></li>
                                   <li><a title="All User Assesments" href="{{ url('backend/pages/userassessments') }}"><span class="mini-sub-pro">User Assesments</span></a></li>
-                                  <!-- <li><a title="Add Courses" href="add-course.html"><span class="mini-sub-pro">Add Course</span></a></li>
-                                  <li><a title="Edit Courses" href="edit-course.html"><span class="mini-sub-pro">Edit Course</span></a></li>
-                                  <li><a title="Courses Profile" href="course-info.html"><span class="mini-sub-pro">Courses Info</span></a></li>
-                                  <li><a title="Product Payment" href="course-payment.html"><span class="mini-sub-pro">Courses Payment</span></a></li> -->
+                                  <li><a title="Competency Results" href="{{ url("backend/pages/competenciesresults") }}"><span class="mini-sub-pro">Competency Results</span></a></li>
                               </ul>
                           </li>
                           <li>
