@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use App\Http\Models\Kompetensi;
+use App\Http\Models\HasilKompetensi;
+use App\Http\Models\KeteranganNilai;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -20,6 +22,8 @@ use Illuminate\Http\Response;
  class CompetenciesResultController extends Controller{
 
    public function index(){
-     return view("administrator.dashboard.pages.hasil-kompetensi.competency-result");
+     $keteranganNilai = KeteranganNilai::all();
+     $kompetensi      = Kompetensi::all();
+     return view("administrator.dashboard.pages.hasil-kompetensi.competency-result", compact("keteranganNilai","kompetensi"));
    }
  }
