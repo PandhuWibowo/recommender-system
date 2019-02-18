@@ -8,7 +8,7 @@ class HasilKompetensi extends Model{
   use SoftDeletes;
   protected $fillable = ['id','keterangan_id','kompetensi_id','hasil_kompetensi'];
   protected $table = "hasils";
-  protected $primaryKey = 'id'; // or null
+  protected $primaryKey = 'id';
   public $incrementing = false;
 
   public function getKeteranganNilai(){
