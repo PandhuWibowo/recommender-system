@@ -16,12 +16,12 @@ class UserAssessment extends Model{
   //   return $this->hasMany('App\Http\Models\Pertanyaan');
   // }
 
-  public function data_user(){
-    return $this->hasMany("App\Http\Models\User");
+  public function get_users(){
+    return $this->belongsTo(User::class,"user_id");
   }
 
-  public function data_jenisAssessment(){
-    return $this->hasMany("App\Http\Models\JenisAssesment");
+  public function get_jenisAssessments(){
+    return $this->belongsTo(JenisAssesment::class,"assesment_id");
   }
 
 }

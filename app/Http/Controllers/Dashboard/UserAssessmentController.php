@@ -22,7 +22,8 @@ class UserAssessmentController extends Controller{
   public function index(){
     $users            = User::all();
     $jenisAssessments = JenisAssesment::all();
-    return view("",compact("users","jenisAssessments"));
+    $userAssessments  = UserAssessment::all();
+    return view("administrator/dashboard/pages/user-jenisassessment/v_index", compact("users","jenisAssessments","userAssessments"));
   }
 
 }
