@@ -64,6 +64,9 @@
 		============================================ -->
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/data-table/bootstrap-table.css') !!}">
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/data-table/bootstrap-editable.css') !!}">
+
+
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/duallistbox/bootstrap-duallistbox.min.css') !!}">
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/style.css') !!}">
@@ -76,6 +79,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
     input[type=radio] {
@@ -366,15 +370,15 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                          <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
+                                          <!-- <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
                                             Add New
-                                          </a>
+                                          </a> -->
                                           <!-- Modal -->
-                                          <div id="myModal" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
+                                          <!-- <div id="myModal" class="modal fade" role="dialog">
+                                            <div class="modal-dialog"> -->
 
                                               <!-- Modal content-->
-                                              <div class="modal-content">
+                                              <!-- <div class="modal-content">
                                                 <div class="modal-header">
                                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                   <h4 class="modal-title">New Score Description</h4>
@@ -401,7 +405,7 @@
                                               </div>
 
                                             </div>
-                                          </div>
+                                          </div> -->
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
@@ -423,6 +427,61 @@
                 </div>
             </div>
         </div>
+        <!-- dual list Start -->
+        <div class="dual-list-box-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sparkline10-list">
+                            <div class="sparkline10-hd">
+                                <div class="main-sparkline10-hd">
+                                    <h1>Enable New Users</h1>
+                                </div>
+                            </div>
+                            <div class="sparkline10-graph">
+                                <div class="basic-login-form-ad">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="dual-list-box-inner">
+                                                <form id="form" action="#" class="wizard-big" autocomplete="off">
+                                                    <!-- Users -->
+                                                    <div class="form-group">
+                                                      <select class="form-control dual_select" multiple name="user_id" id="user_id">
+                                                        @foreach($users as $row)
+                                                          <option value="{{$row->id}}">{{$row->firstname}} {{$row->lastname}}</option>
+                                                        @endforeach
+                          														</select>
+                                                    </div>
+
+                                                    <!-- Jenis Assessment -->
+                                                    <div class="form-group">
+                                                      <label>Assessments Type</label>
+                                                      <select class="form-control js-example-basic-multiple chosen-select" name="jenis_ass[]" id="jenis_ass" multiple="multiple" tabindex="-1">
+                                                        <option></option>
+                                                        @foreach($jenisAssessments as $row)
+                                                          <option value="{{$row->id}}">{{$row->nama}}</option>
+                                                        @endforeach
+                            													</select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                      <label>Maxattempt</label>
+                                                      <input class="form-control" type="number" min="1" id="maxattempt" name="maxattempt" placeholder="Maxattempt" value="1">
+                                                    </div>
+                                                    <div class="form-group">
+                                                      <button type="button" name="btn_save" id="btn_save" class="btn btn-primary">Add</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- dual list End-->
         <!-- Static Table Start -->
         <div class="data-table-area mg-b-15">
             <div class="container-fluid">
@@ -650,6 +709,9 @@
     <!-- main JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/main.js') !!}"></script>
+
+    <script src="{!! asset('assets/assets_admin/js/duallistbox/jquery.bootstrap-duallistbox.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/duallistbox/duallistbox.active.js') !!}"></script>
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
@@ -664,6 +726,7 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" charset="utf-8"></script>
 
 
     <script type="text/javascript">
@@ -826,6 +889,15 @@
         });
         //==========================================================//
       });
+    </script>
+
+    <script>
+    $(document).ready(function() {
+      $('.js-example-basic-multiple').select2({
+        placeholder: "Please Select Assessment Type",
+        allowClear: true
+      });
+    });
     </script>
 </body>
 

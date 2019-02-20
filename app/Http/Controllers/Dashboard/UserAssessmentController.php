@@ -27,11 +27,11 @@ class UserAssessmentController extends Controller{
   }
 
   public function updateStatusEnable(Request $request){
-    $id     = $request->id;
-    $status = $request->status;
+    $id     = trim($request->id);
+    $status = trim($request->status);
     for($i=0;$i<count($id);$i++){
-      $userAssessments  = UserAssessment::find($request->id[$i]);
-      $userAssessments->status  = $request->status[$i];
+      $userAssessments  = UserAssessment::find(trim($request->id[$i]));
+      $userAssessments->status  = trim($request->status[$i]);
       $userAssessments->save();
     }
     return response()->json(
@@ -42,11 +42,11 @@ class UserAssessmentController extends Controller{
   }
 
   public function updateStatusDisable(Request $request){
-    $id     = $request->id;
-    $status = $request->status;
+    $id     = trim($request->id);
+    $status = trim($request->status);
     for($i=0;$i<count($id);$i++){
-      $userAssessments  = UserAssessment::find($request->id[$i]);
-      $userAssessments->status  = $request->status[$i];
+      $userAssessments  = UserAssessment::find(trim($request->id[$i]));
+      $userAssessments->status  = trim($request->status[$i]);
       $userAssessments->save();
     }
     return response()->json(
