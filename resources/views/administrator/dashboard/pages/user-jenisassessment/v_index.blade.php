@@ -1105,6 +1105,7 @@
                   maxattempt    : varMaxattempt
                 },
                 success:function(data){
+                  $("#editModal").modal("hide")
                   if(data.response == "success"){
                     swal({
                       type      : "success",
@@ -1141,6 +1142,62 @@
             } finally {
 
             }
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#btn_hps").on("click", function(){
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+          var varId = $("#edit_id").val();
+          try {
+            swal({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if(result.value){
+                $.ajax({
+                  type      : "DELETE",
+                  url       : "{{ url('backend/pages/userassessments/delete') }}",
+                  async     : true,
+                  dataType  : "JSON",
+                  data      : {
+                    id      : varId
+                  },
+                  success:function(data){
+                    // console.log(data);
+                    $("#editModal").modal("hide")
+                    if(data.response == "success"){
+                      swal(
+                        'Deleted!',
+                        'Your data has been deleted.',
+                        'success'
+                      ).then(function(){
+                        window.location = "{{ url('backend/pages/userassessments') }}";
+                      });
+                    }
+                  },
+                  error:function(data){
+                    console.log(data);
+                  }
+                });
+              }
+            });
+          } catch (e) {
+            console.log(e);
+          } finally {
+
           }
         });
       });

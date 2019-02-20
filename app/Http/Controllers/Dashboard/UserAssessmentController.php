@@ -121,4 +121,14 @@ class UserAssessmentController extends Controller{
     }
   }
 
+  public function destroy(Request $request){
+    $txtId    = $request->id;
+    UserAssessment::where('id',$txtId)->delete();
+    return response()->json(
+      array(
+        'response'  => "success"
+      )
+    );
+  }
+
 }
