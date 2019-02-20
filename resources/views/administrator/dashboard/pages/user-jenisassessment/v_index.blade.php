@@ -446,7 +446,7 @@
                                                 <form id="form" action="#" class="wizard-big" autocomplete="off">
                                                     <!-- Users -->
                                                     <div class="form-group">
-                                                      <select class="form-control dual_select" multiple name="user_id" id="user_id">
+                                                      <select class="form-control dual_select user_id" multiple name="user_id[]" id="user_id">
                                                         @foreach($users as $row)
                                                           <option value="{{$row->id}}">{{$row->firstname}} {{$row->lastname}}</option>
                                                         @endforeach
@@ -898,6 +898,100 @@
         allowClear: true
       });
     });
+    </script>
+
+    <script type="text/javascript">
+      //Storing into database for add user for quiz activation
+      $(document).ready(function(){
+        $("#btn_save").on("click", function(){
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+          // var selectedUser = $("input[name=user_id]:selected").map(function() {
+          //     return $(this).val();
+          //        // hidden_uniq_id : $(row).find("input[name=uniq_id]").val()
+          // }).get();
+
+          // var selectedUser = $("#user_id option:selected").val();
+          var  selectedUser     = $("select[name=\'user_id[]\']").map(function() {
+              return $(this).val();
+          }).toArray();
+
+          var selectedJenisAss  = $("select[name=\'jenis_ass[]\']").map(function() {
+            return $(this).val();
+          }).toArray();
+
+          var maxAttempt        = $("#maxattempt").val();
+
+          if(selectedUser == ""){
+            swal({
+              type    : "info",
+              title   : "Required",
+              text    : "New User is required",
+              timer   : 3000
+            });
+          }
+          else if (selectedJenisAss == "") {
+            swal({
+              type    : "info",
+              title   : "Required",
+              text    : "Assessment Type is required",
+              timer   : 3000
+            });
+          }
+          else if(maxAttempt == ""){
+            swal({
+              type    : "info",
+              title   : "Required",
+              text    : "Maxattempt is required",
+              timer   : 3000
+            });
+          }
+          else{
+            try {
+              $.ajax({
+                type      : "POST",
+                url       : "{{ url('backend/pages/userassessments/store') }}",
+                async     : true,
+                dataType  : "JSON",
+                data      : {
+                  "user_id[]"     : selectedUser,
+                  "assesment_id[]": selectedJenisAss,
+                  maxattempt      : maxAttempt
+                },
+                success:function(data){
+                  if(data.response == "success"){
+                    swal({
+                      type      : "success",
+                      title     : "Saved",
+                      timer     : 3000,
+                    }).then(function(){
+                      window.location.href="{{ url('backend/pages/userassessments') }}";
+                    });
+                  }
+                },
+                error:function(data){
+                  console.log(data);
+                },
+                beforeSend: function(){
+                    // Code to display spinner
+                    $('.loading').show();
+                },
+                complete: function(){
+                    // Code to hide spinner.
+                    $('.loading').hide();
+                }
+              });
+            } catch (e) {
+              console.log("Check : "+e);
+            } finally {
+
+            }
+          }
+        });
+      });
     </script>
 </body>
 

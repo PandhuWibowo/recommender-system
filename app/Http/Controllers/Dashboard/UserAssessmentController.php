@@ -56,4 +56,49 @@ class UserAssessmentController extends Controller{
     );
   }
 
+  public function store(Request $request){
+    $userId     = $request->user_id;
+    $jenisAss   = $request->assesment_id;
+    $maxAttempt = $request->maxattempt;
+
+    $rules = array(
+      'user_id'           => 'required',
+      'assesment_id'      => 'required',
+      'maxattempt'        => 'required'
+    );
+
+    $validator = Validator::make(Input::all(), $rules);
+
+    if ($validator->fails()) {
+      $messages = $validator->messages();
+      return response()->json(
+        array(
+          ""
+        )
+      );
+        exit();
+    }
+    else{
+      for($i=0;$i<count($userId);$i++){
+        for($j=0;$j<count($jenisAss);$j++){
+          $userAssessments = new UserAssessment([
+            'id'                => Uuid::generate()->string,
+            'user_id'           => $userId[$i],
+            'assesment_id'      => $jenisAss[$j],
+            'maxattempt'        => $maxAttempt,
+            'status'            => 0,
+            'attempt'           => 0
+          ]);
+          $userAssessments->save();
+        }
+      }
+
+      return response()->json(
+        array(
+          "response" => "success"
+        )
+      );
+    }
+  }
+
 }

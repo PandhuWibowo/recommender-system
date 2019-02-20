@@ -90,6 +90,7 @@ Route::prefix('backend/pages')->group(function () {
     Route::get("userassessments","Dashboard\UserAssessmentController@index");
     Route::put("userassessments/status/update/enable","Dashboard\UserAssessmentController@updateStatusEnable");
     Route::put("userassessments/status/update/disable","Dashboard\UserAssessmentController@updateStatusDisable");
+    Route::post("userassessments/store","Dashboard\UserAssessmentController@store");
 
     //Competencies Result
     Route::get("competenciesresults","Dashboard\CompetenciesResultController@index");
