@@ -88,10 +88,11 @@ Route::prefix('backend/pages')->group(function () {
 
     //User Assesments
     Route::get("userassessments","Dashboard\UserAssessmentController@index");
+    Route::put("userassessments/status/update","Dashboard\UserAssessmentController@updateStatus");
 
     //Competencies Result
     Route::get("competenciesresults","Dashboard\CompetenciesResultController@index");
-    
+
 });
 
 Route::prefix('user/pages')->group(function () {

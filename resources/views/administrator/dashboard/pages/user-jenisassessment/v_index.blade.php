@@ -78,6 +78,138 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
+    input[type=radio] {
+      float: left;
+    }
+
+    .jawaban {
+      margin-left: 30px;
+      display: block;
+    }
+
+    /* Absolute Center Spinner */
+      .loading {
+        position: fixed;
+        z-index: 999;
+        height: 2em;
+        width: 2em;
+        overflow: visible;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+
+      /* Transparent Overlay */
+      .loading:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.3);
+      }
+
+      /* :not(:required) hides these rules from IE9 and below */
+      .loading:not(:required) {
+        /* hide "loading..." text */
+        font: 0/0 a;
+        color: transparent;
+        text-shadow: none;
+        background-color: transparent;
+        border: 0;
+      }
+
+      .loading:not(:required):after {
+        content: '';
+        display: block;
+        font-size: 10px;
+        width: 1em;
+        height: 1em;
+        margin-top: -0.5em;
+        -webkit-animation: spinner 1500ms infinite linear;
+        -moz-animation: spinner 1500ms infinite linear;
+        -ms-animation: spinner 1500ms infinite linear;
+        -o-animation: spinner 1500ms infinite linear;
+        animation: spinner 1500ms infinite linear;
+        border-radius: 0.5em;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+      }
+
+      /* Animation */
+
+      @-webkit-keyframes spinner {
+        0% {
+          -webkit-transform: rotate(0deg);
+          -moz-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          -moz-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          -o-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @-moz-keyframes spinner {
+        0% {
+          -webkit-transform: rotate(0deg);
+          -moz-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          -moz-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          -o-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @-o-keyframes spinner {
+        0% {
+          -webkit-transform: rotate(0deg);
+          -moz-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          -moz-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          -o-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinner {
+        0% {
+          -webkit-transform: rotate(0deg);
+          -moz-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          -o-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          -moz-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          -o-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
+    <style>
+    /* Untuk switch enable or disable */
     .switch {
       position: relative;
       height: 26px;
@@ -325,7 +457,7 @@
                                                   <span class="switch-selection"></span>
                                                 </div>
                                                 <div id="ifYes">
-                                                  <input type="submit" value="Enable" disabled class="btn btn-info" id="buttonClass">
+                                                  <input type="submit" value="Enable" disabled class="btn btn-info updateEnable" id="buttonClass">
                                                 </div>
 
                                                 <div id="ifNo" style="display:none;">
@@ -334,7 +466,7 @@
                                               </th>
                                               <th>Customers</th>
                                               <th>Assesments Type</th>
-                                              <th>Status</th>
+                                              <!-- <th>Status</th> -->
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -349,27 +481,30 @@
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="">
+                                                            <input type="hidden" name="uniq_id" id="uniq_id" name="uniq_id" class="uniq_id" value="{{$row->id}}" readonly>
                                                             <label>
-                                                               <input type="checkbox" value="0" id="status<?php echo $no;?>" class="chk" name="status<?php echo $no;?>">
+                                                               <input type="checkbox" value="0" id="status_" class="chk" name="status_">
                                                             </label>
+                                                            @if($row->attempt >= $row->maxattempt)
+                                                              <button type="button" class="btn btn-custon-rounded-three btn-danger disabled"><i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Finished</button>
+                                                            @else
+                                                              @if($row->status == 0 || $row->status == '0')
+                                                                <button type="button" class="btn btn-custon-rounded-three btn-success">Enable</button>
+                                                              @else
+                                                                <button type="button" class="btn btn-custon-rounded-three btn-danger disabled">Disable</button>
+                                                              @endif
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
+
                                               @endif
                                             </td>
                                             <td>{{ $row->get_users->firstname }} {{ $row->get_users->lastname }}</td>
                                             <td>{{ $row->get_jenisAssessments->nama }}</td>
-                                            <td>
-                                              @if($row->attempt >= $row->maxattempt)
-                                                <button type="button" class="btn btn-custon-rounded-three btn-danger disabled"><i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Finished</button>
-                                              @else
-                                                @if($row->status == 0 || $row->status == '0')
-                                                  <button type="button" class="btn btn-custon-rounded-three btn-success"><i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Active</button>
-                                                @else
-                                                  <button type="button" class="btn btn-custon-rounded-three btn-danger disabled"><i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Non Active</button>
-                                                @endif
-                                              @endif
-                                            </td>
+                                            <!-- <td>
+
+                                            </td> -->
                                             <td>
                                                 <a class="btn btn-warning btn_edit" data-range_score="{{ $row->range_score }}" data-keterangan="{!! $row->keterangan !!}" data-jenisketerangan="{!! $row->jenisketerangan !!}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
@@ -382,7 +517,7 @@
                                             <th width="5">For Activation</th>
                                             <th>Customers</th>
                                             <th>Assesments Type</th>
-                                            <th>Status</th>
+                                            <!-- <th>Status</th> -->
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -447,6 +582,7 @@
             </div>
         </div>
     </div>
+    <div class="loading" style="display:none;">Loading&#8230;</div>
 
     <!-- jquery
 		============================================ -->
@@ -549,7 +685,7 @@
 
     <script type="text/javascript">
 
-
+      //Enable or Disable Status
       //============================================================//
       function yesnoCheck() {
         if (document.getElementById('week').checked) {
@@ -566,7 +702,7 @@
         }
       }
       //============================================================//
-      
+
       $(document).ready(function(){
 
         //Enable Button
@@ -582,15 +718,75 @@
 
         //Get Value From Checkbox - Enable
         //==========================================================//
-        $("#buttonClass").on("click", function() {
-          var checkedIds = $(".chk:checked").map(function() {
-            return $('.chk').val();
-          }).toArray();
-          var arrValue = checkedIds.join(", ");
+        // $("#buttonClass").on("click", function(event) {
+        //   event.preventDefault();
+        //   //Id
+        //   // var elements    = $(".uniq_id").map(function(){
+        //   //   return $(this).val();
+        //   // }).get();
+        //   // console.log(elements);
+        //
+        //   //Value Id
+        //   var arrValue  = $(".chk:checked").map(function() {
+        //     return $('.chk').val();
+        //   }).toArray();
+        //   var arrValue = checkedIds.join(", ");
+        //
+        //   //Convert into database
+        //   // console.log(value);
+        //
+        // });
 
-          //Convert into database
-          console.log(arrValue);
+        $('#buttonClass').click(function(){
+            $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+            });
+            var checkboxValues = $("table input[name=status_]:checked").map(function() {
+                row = $(this).closest("tr");
+                return $(this).val();
+                   // hidden_uniq_id : $(row).find("input[name=uniq_id]").val()
+            }).get();
 
+            var checkboxUniqId = $("table input[name=status_]:checked").map(function() {
+                row = $(this).closest("tr");
+                return $(row).find("input[name=uniq_id]").val();
+            }).get();
+
+            //Proses ke controller
+            $.ajax({
+              type    : "PUT",
+              url       : "{{ url('backend/pages/userassessments/status/update') }}",
+              async     : true,
+              dataType  : "JSON",
+              data      : {
+                "id[]"      : checkboxUniqId,
+                "status[]"  : checkboxValues
+              },
+              success:function(data){
+                if(data.response == "success"){
+                  swal({
+                    type      : "success",
+                    title     : "Changed",
+                    timer     : 3000,
+                  }).then(function(){
+                    window.location.href="{{ url('backend/pages/userassessments') }}";
+                  });
+                }
+              },
+              error:function(data){
+                console.log(data);
+              },
+              beforeSend: function(){
+                  // Code to display spinner
+                  $('.loading').show();
+              },
+              complete: function(){
+                  // Code to hide spinner.
+                  $('.loading').hide();
+              }
+            });
         });
         //==========================================================//
 
@@ -603,7 +799,7 @@
           var arrValue = checkedIds.join(", ");
 
           //Convert into database
-          console.log(arrValue);
+          // console.log(arrValue);
         });
         //==========================================================//
       });

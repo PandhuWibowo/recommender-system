@@ -26,4 +26,19 @@ class UserAssessmentController extends Controller{
     return view("administrator/dashboard/pages/user-jenisassessment/v_index", compact("users","jenisAssessments","userAssessments"));
   }
 
+  public function updateStatus(Request $request){
+    $id     = $request->id;
+    $status = $request->status;
+    for($i=0;$i<count($id);$i++){
+      $userAssessments  = UserAssessment::find($request->id[$i]);
+      $userAssessments->status  = $request->status[$i];
+      $userAssessments->save();
+    }
+    return response()->json(
+      array(
+        "response"  => "success"
+      )
+    );
+  }
+
 }
