@@ -91,6 +91,7 @@ Route::prefix('backend/pages')->group(function () {
     Route::put("userassessments/status/update/enable","Dashboard\UserAssessmentController@updateStatusEnable");
     Route::put("userassessments/status/update/disable","Dashboard\UserAssessmentController@updateStatusDisable");
     Route::post("userassessments/store","Dashboard\UserAssessmentController@store");
+    Route::put("userassessments/update","Dashboard\UserAssessmentController@update");
 
     //Competencies Result
     Route::get("competenciesresults","Dashboard\CompetenciesResultController@index");

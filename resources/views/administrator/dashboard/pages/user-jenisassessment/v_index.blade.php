@@ -73,6 +73,7 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/responsive.css') !!}">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/chosen/bootstrap-chosen.css') !!}">
     <!-- modernizr JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
@@ -565,7 +566,7 @@
 
                                             </td> -->
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-range_score="{{ $row->range_score }}" data-keterangan="{!! $row->keterangan !!}" data-jenisketerangan="{!! $row->jenisketerangan !!}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-maxattempt="{{ $row->maxattempt }}" data-attempt="{{ $row->attempt }}" data-user_id="{{ $row->user_id }}" data-id="{{$row->id}}" data-assesment_id="{{$row->assesment_id}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                           <?php $no++;?>
@@ -591,31 +592,46 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Score Description</h4>
+                                            <h4 class="modal-title">Customers Chance Edit</h4>
                                             <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
                                           <div class="modal-body">
                                             <div class="form-group">
-                                              <input type="hidden" class="form-control" autocomplete="off" id="id_jenis_keterangan" required>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="usr">Range Score</label>
-                                              <input type="number" min="1" class="form-control" autocomplete="off" id="edit_range_score" required>
-                                            </div>
-                                            <!-- no_urut_assesment -->
-                                            <div class="form-group">
-                                              <label for="usr">Description</label>
-                                              <input type="text" class="form-control" autocomplete="off" id="edit_description" required>
+                                              <input type="hidden" class="form-control" autocomplete="off" id="edit_id" required>
                                             </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Description Type</label>
-                                              <textarea name="edit_jenisketerangan" id="edit_jenisketerangan" placeholder="Description Type"></textarea>
+                                            <div class="chosen-select-single mg-b-20">
+                                              <label>Participants</label>
+                                              <select data-placeholder="Choose Participants" width="100%" id="edit_user_id" name="edit_user_id" class="edit_user_id">
+                                                <option value=""></option>
+                                                @foreach($users as $row)
+                                                  <option value="{{$row->id}}">{{$row->firstname}} {{$row->lastname}}</option>
+                                                @endforeach
+                                              </select>
                                             </div>
 
+                                            <div class="chosen-select-single mg-b-20">
+                                              <label>Assesments Type</label>
+                                              <select data-placeholder="Choose Assesment Type" width="100%" id="edit_assesment_id" name="edit_assesment_id" class="">
+                                                <option value=""></option>
+                                                @foreach($jenisAssessments as $row)
+                                                  <option value="{{$row->id}}">{{$row->nama}}</option>
+                                                @endforeach
+                                              </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label for="usr">Maxattempt</label>
+                                              <input type="number" min="1" class="form-control" autocomplete="off" id="edit_maxattempt" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label for="usr">Attempt User</label>
+                                              <input type="number" min="1" class="form-control" autocomplete="off" id="edit_attempt" readonly>
+                                            </div>
                                           </div>
                                           <div class="modal-footer">
-                                            <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
+                                            <button type="button" id="btn_update" class="btn btn-primary">Save</button>
                                           </div>
                                         </div>
 
@@ -727,7 +743,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" charset="utf-8"></script>
-
+    <script src="{!! asset('assets/assets_admin/js/chosen/chosen.jquery.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/chosen/chosen-active.js') !!}"></script>
+    <!-- select2 JS
+		============================================ -->
+    <script src="{!! asset('assets/assets_admin/js/select2/select2.full.min.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/select2/select2-active.js') !!}"></script>
 
     <script type="text/javascript">
       $(document).ready( function () {
@@ -986,6 +1007,137 @@
               });
             } catch (e) {
               console.log("Check : "+e);
+            } finally {
+
+            }
+          }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#edit_assesment_id").select2({
+          width: '100%',
+          allowClear: true
+        });
+        $("#edit_user_id").select2({
+          width: '100%',
+          allowClear: true
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(".btn_edit").on("click", function(){
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+
+          var varId               = $(this).data("id");
+          var varMaxattempt       = $(this).data("maxattempt");
+          var varAttempt          = $(this).data("attempt");
+          var varUserId           = $(this).data("user_id");
+          var varAssessmentId     = $(this).data("assesment_id");
+
+          $("#edit_id").val(varId);
+          $("#edit_maxattempt").val(varMaxattempt);
+          $("#edit_attempt").val(varAttempt);
+          $('#edit_user_id').select2("val", varUserId);
+          $("#edit_assesment_id").select2("val", varAssessmentId);
+
+          $("#editModal").modal({
+            backdrop: 'static',
+            keyboard: true,
+            show: true
+          });
+
+        })
+      });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#btn_update").on("click", function(){
+          var varId           = $("#edit_id").val();
+          var varUserId       = $("#edit_user_id").val();
+          var varAssessmentId = $("#edit_assesment_id").val();
+          var varMaxattempt   = $("#edit_maxattempt").val();
+
+          if(varUserId == ""){
+            swal({
+              type    : "info",
+              title   : "Required",
+              text    : "User is required",
+              timer   : 3000
+            });
+          }
+          else if (varAssessmentId == "") {
+            swal({
+              type    : "info",
+              title   : "Required",
+              text    : "Assessment Type is required",
+              timer   : 3000
+            });
+          }
+          else if (varMaxattempt == "") {
+            swal({
+              type    : "info",
+              title   : "Required",
+              text    : "Maxattempt is required",
+              timer   : 3000
+            });
+          }
+          else{
+            try {
+              $.ajax({
+                type      : "PUT",
+                url       : "{{ url('backend/pages/userassessments/update') }}",
+                async     : true,
+                dataType  : "JSON",
+                data      : {
+                  id            : varId,
+                  user_id       : varUserId,
+                  assesment_id  : varAssessmentId,
+                  maxattempt    : varMaxattempt
+                },
+                success:function(data){
+                  if(data.response == "success"){
+                    swal({
+                      type      : "success",
+                      title     : "Updated",
+                      timer     : 3000,
+                    }).then(function(){
+                      window.location.href="{{ url('backend/pages/userassessments') }}";
+                    });
+                  }
+                  else{
+                    swal({
+                      type      : "error",
+                      title     : "Failed",
+                      timer     : 3000,
+                    }).then(function(){
+                      window.location.href="{{ url('backend/pages/userassessments') }}";
+                    });
+                  }
+                },
+                error:function(data){
+                  console.log(data);
+                },
+                beforeSend: function(){
+                    // Code to display spinner
+                    $('.loading').show();
+                },
+                complete: function(){
+                    // Code to hide spinner.
+                    $('.loading').hide();
+                }
+              });
+            } catch(e) {
+              console.log(e);
             } finally {
 
             }

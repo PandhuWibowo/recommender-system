@@ -27,8 +27,8 @@ class UserAssessmentController extends Controller{
   }
 
   public function updateStatusEnable(Request $request){
-    $id     = trim($request->id);
-    $status = trim($request->status);
+    $id     = $request->id;
+    $status = $request->status;
     for($i=0;$i<count($id);$i++){
       $userAssessments  = UserAssessment::find(trim($request->id[$i]));
       $userAssessments->status  = trim($request->status[$i]);
@@ -42,8 +42,8 @@ class UserAssessmentController extends Controller{
   }
 
   public function updateStatusDisable(Request $request){
-    $id     = trim($request->id);
-    $status = trim($request->status);
+    $id     = $request->id;
+    $status = $request->status;
     for($i=0;$i<count($id);$i++){
       $userAssessments  = UserAssessment::find(trim($request->id[$i]));
       $userAssessments->status  = trim($request->status[$i]);
@@ -96,6 +96,26 @@ class UserAssessmentController extends Controller{
       return response()->json(
         array(
           "response" => "success"
+        )
+      );
+    }
+  }
+
+  public function update(Request $request){
+    $id           = $request->id;
+    $userId       = $request->user_id;
+    $assesmentId  = $request->assesment_id;
+    $maxAttempt   = $request->maxattempt;
+
+    $userAssessments                = UserAssessment::find($id);
+    $userAssessments->user_id       = $userId;
+    $userAssessments->assesment_id  = $assesmentId;
+    $userAssessments->maxAttempt    = $maxAttempt;
+
+    if($userAssessments->save()){
+      return response()->json(
+        array(
+          "response"  => "success"
         )
       );
     }
