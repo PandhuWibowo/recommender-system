@@ -10,6 +10,7 @@ use App\Http\Models\User;
 use App\Http\Models\JenisAssesment;
 use App\Http\Models\Assesment;
 use App\Http\Models\Pertanyaan;
+use App\Http\Models\UserAssessment;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -22,8 +23,14 @@ use Illuminate\Support\Facades\Hash;
 class AssesmentController extends Controller
 {
   public function index(){
-    $jenisAssesment   = JenisAssesment::all();
-    return view("partisipan.dashboard.assesment.v_assesment", compact("jenisAssesment"));
+    $jenisAssesment   = UserAssessment::join("jenis_assesments as ja","user_assesments.assesment_id","=","ja.id")
+                                      ->join("users as u","user_assesments.user_id","=","u.id")
+                                      ->where("user_assesments.user_id", Session::get('id'))
+                                      ->where("status", 0)
+                                      ->get();
+    $countAssessment = count($jenisAssesment);
+
+    return view("partisipan.dashboard.assesment.v_assesment", compact("jenisAssesment","countAssessment"));
   }
 
   public function store(Request $request){

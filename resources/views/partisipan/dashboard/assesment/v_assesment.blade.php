@@ -144,7 +144,7 @@
         <div class="basic-form-area mg-b-15">
             <div class="container-fluid">
 
-
+              @if($countAssessment > 0)
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="sparkline12-list">
@@ -201,6 +201,17 @@
                         </div>
                     </div>
                 </div>
+              @else
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="tab-content-details shadow-reset">
+                            <h2>Oops, sorry...</h2>
+                            <p>{{Session::get("first_name")}} {{Session::get("last_name")}}, you have not may access this page. Please contact administrator first. Thank you.</p>
+                        </div>
+                    </div>
+                </div>
+              @endif
+
             </div>
         </div>
         <!-- Basic Form End-->
