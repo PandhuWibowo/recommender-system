@@ -489,9 +489,9 @@
                                                               <button type="button" class="btn btn-custon-rounded-three btn-danger disabled"><i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Finished</button>
                                                             @else
                                                               @if($row->status == 0 || $row->status == '0')
-                                                                <button type="button" class="btn btn-custon-rounded-three btn-success">Enable</button>
+                                                                <button type="button" class="btn btn-custon-rounded-three btn-success"><i class="fa fa-check"></i></button>
                                                               @else
-                                                                <button type="button" class="btn btn-custon-rounded-three btn-danger disabled">Disable</button>
+                                                                <button type="button" class="btn btn-custon-rounded-three btn-danger disabled"><i class="fa fa-times-circle"></i></button>
                                                               @endif
                                                             @endif
                                                         </div>
@@ -718,25 +718,6 @@
 
         //Get Value From Checkbox - Enable
         //==========================================================//
-        // $("#buttonClass").on("click", function(event) {
-        //   event.preventDefault();
-        //   //Id
-        //   // var elements    = $(".uniq_id").map(function(){
-        //   //   return $(this).val();
-        //   // }).get();
-        //   // console.log(elements);
-        //
-        //   //Value Id
-        //   var arrValue  = $(".chk:checked").map(function() {
-        //     return $('.chk').val();
-        //   }).toArray();
-        //   var arrValue = checkedIds.join(", ");
-        //
-        //   //Convert into database
-        //   // console.log(value);
-        //
-        // });
-
         $('#buttonClass').click(function(){
             $.ajaxSetup({
               headers: {
@@ -757,7 +738,7 @@
             //Proses ke controller
             $.ajax({
               type    : "PUT",
-              url       : "{{ url('backend/pages/userassessments/status/update') }}",
+              url       : "{{ url('backend/pages/userassessments/status/update/enable') }}",
               async     : true,
               dataType  : "JSON",
               data      : {
@@ -792,14 +773,56 @@
 
         //Get Value From Checkbox - Disable
         //==========================================================//
-        $("#buttonClass2").on("click", function() {
-          var checkedIds = $(".chk:checked").map(function() {
-            return $('.chk').val();
-          }).toArray();
-          var arrValue = checkedIds.join(", ");
+        $('#buttonClass2').click(function(){
+            $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+            });
+            var checkboxValues = $("table input[name=status_]:checked").map(function() {
+                row = $(this).closest("tr");
+                return $(this).val();
+                   // hidden_uniq_id : $(row).find("input[name=uniq_id]").val()
+            }).get();
 
-          //Convert into database
-          // console.log(arrValue);
+            var checkboxUniqId = $("table input[name=status_]:checked").map(function() {
+                row = $(this).closest("tr");
+                return $(row).find("input[name=uniq_id]").val();
+            }).get();
+
+            //Proses ke controller
+            $.ajax({
+              type    : "PUT",
+              url       : "{{ url('backend/pages/userassessments/status/update/disable') }}",
+              async     : true,
+              dataType  : "JSON",
+              data      : {
+                "id[]"      : checkboxUniqId,
+                "status[]"  : checkboxValues
+              },
+              success:function(data){
+                if(data.response == "success"){
+                  swal({
+                    type      : "success",
+                    title     : "Changed",
+                    timer     : 3000,
+                  }).then(function(){
+                    window.location.href="{{ url('backend/pages/userassessments') }}";
+                  });
+                }
+              },
+              error:function(data){
+                console.log(data);
+              },
+              beforeSend: function(){
+                  // Code to display spinner
+                  $('.loading').show();
+              },
+              complete: function(){
+                  // Code to hide spinner.
+                  $('.loading').hide();
+              }
+            });
         });
         //==========================================================//
       });
