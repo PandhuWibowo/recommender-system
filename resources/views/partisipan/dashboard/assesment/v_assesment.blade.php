@@ -164,16 +164,29 @@
                                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                                                                 <div class="bt-df-checkbox pull-left">
                                                                     @foreach($jenisAssesment as $row)
-                                                                      <div class="row">
-                                                                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                              <div class="i-checks pull-left">
-                                                                                  <label>
-                                                                                    <input type="radio" value="{{Crypt::encrypt($row->id)}}" name="jenis_assesment" id="jenis_assesment" required>
-                                                                                    {{$row->nama}}
-                                                                                  </label>
-                                                                              </div>
-                                                                          </div>
-                                                                      </div>
+                                                                      @if($row->attempt >= $row->maxattempt)
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <div class="i-checks pull-left">
+                                                                                    <label>
+                                                                                      <input disabled type="radio" value="{{Crypt::encrypt($row->id)}}" name="jenis_assesment" id="jenis_assesment" required>
+                                                                                      <strike>{{$row->nama}}</strike>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                      @else
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                                                <div class="i-checks pull-left">
+                                                                                    <label>
+                                                                                      <input type="radio" value="{{Crypt::encrypt($row->id)}}" name="jenis_assesment" id="jenis_assesment" required>
+                                                                                      {{$row->nama}}
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                      @endif
                                                                     @endforeach
                                                                 </div>
                                                             </div>
@@ -205,8 +218,9 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="tab-content-details shadow-reset">
-                            <h2>Oops, sorry...</h2>
-                            <p>{{Session::get("first_name")}} {{Session::get("last_name")}}, you have not may access this page. Please contact administrator first. Thank you.</p>
+                          <img id="rightclick" src="{!! asset('images/images-users/confused.png') !!}" alt="" class="img-responsive" draggable="false" style="display: block;margin-left: auto;margin-right: auto;">
+                          <h2>Oops, sorry...</h2>
+                          <p>{{Session::get("first_name")}} {{Session::get("last_name")}}, you have not may access this page. Please contact administrator first. Thank you.</p>
                         </div>
                     </div>
                 </div>
@@ -278,6 +292,14 @@
     <!-- <script src="js/tawk-chat.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script type="text/javascript">
+      //Right Click image
+      $(document).ready(function(){
+        $('img').bind('contextmenu', function(e){
+            return false;
+        });
+      });
+    </script>
+    <script type="text/javascript">
       $(document).ready(function(){
         $("#btn_save").on("click", function(){
           $.ajaxSetup({
@@ -306,10 +328,11 @@
                   id      : varJenisAssesment
                 },
                 success:function(data){
-                  if(data.response == "success"){
-                    window.location.href="{{ url('user/pages/assesments') }}"+"/"+data.id+"/"+data.ass_id;
-                    // console.log();
-                  }
+                  console.log(data);
+                  // if(data.response == "success"){
+                  //   window.location.href="{{ url('user/pages/assesments') }}"+"/"+data.id+"/"+data.ass_id;
+                  //   // console.log();
+                  // }
                 },
                 error:function(data){
                   console.log(data);

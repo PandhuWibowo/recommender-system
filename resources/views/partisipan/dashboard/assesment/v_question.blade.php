@@ -273,8 +273,7 @@
         <!-- Basic Form Start -->
         <div class="basic-form-area mg-b-15">
             <div class="container-fluid">
-
-
+              @if($countQuestions > 0)
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="sparkline12-list">
@@ -360,10 +359,22 @@
                         </div>
                     </div>
                 </div>
+
+              @else
+              <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="tab-content-details shadow-reset">
+                          <img id="rightclick" src="{!! asset('images/images-users/confused.png') !!}" alt="" class="img-responsive" draggable="false" style="display: block;margin-left: auto;margin-right: auto;">
+                          <h2>Oops, sorry...</h2>
+                          <p>{{Session::get("first_name")}} {{Session::get("last_name")}}, all questions were still empty. Please contact administrator first. Thank you.</p>
+                      </div>
+                  </div>
+              </div>
+              @endif
             </div>
         </div>
         <!-- Basic Form End-->
-        <div class="footer-copyright-area" style="text-align: center;bottom:0;position: fixed;width: 100%;left:0;">
+        <div class="footer-copyright-area" style="text-align: center;bottom:0;width: 100%;left:0;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -425,6 +436,15 @@
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+      //Right Click image
+      $(document).ready(function(){
+        $('img').bind('contextmenu', function(e){
+            return false;
+        });
+      });
+    </script>
     <script type="text/javascript">
       $(document).ready(function(){
         $("#btn_save").on("click", function(){

@@ -20,7 +20,7 @@ use Illuminate\Http\Response;
 class UserAssessmentController extends Controller{
 
   public function index(){
-    $users            = User::all();
+    $users            = User::where("level","Participant")->get();
     $jenisAssessments = JenisAssesment::all();
     $userAssessments  = UserAssessment::all();
     return view("administrator/dashboard/pages/user-jenisassessment/v_index", compact("users","jenisAssessments","userAssessments"));

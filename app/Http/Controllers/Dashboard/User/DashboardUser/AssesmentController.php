@@ -24,7 +24,6 @@ class AssesmentController extends Controller
 {
   public function index(){
     $jenisAssesment   = UserAssessment::join("jenis_assesments as ja","user_assesments.assesment_id","=","ja.id")
-                                      ->join("users as u","user_assesments.user_id","=","u.id")
                                       ->where("user_assesments.user_id", Session::get('id'))
                                       ->where("status", 0)
                                       ->get();
@@ -40,6 +39,16 @@ class AssesmentController extends Controller
       'tanggal_akses' => Carbon::now()->format('Y-m-d')
     ]);
     $assesment->save();
+
+    $tampilAttempt = UserAssessment::select(["attempt"])->where("user_id", Session::get("id"))
+                                  ->where("assesment_id", Crypt::decrypt($request->id))
+                                  ->first()->attempt;
+
+    $countAttempt = $tampilAttempt;
+
+    $attemptUpdate = UserAssessment::where("user_id", Session::get("id"))
+                                  ->where("assesment_id", Crypt::decrypt($request->id))
+                                  ->update(["attempt" => $countAttempt+1]);
     return response()->json(
         array(
           'response'  => "success",
@@ -52,6 +61,8 @@ class AssesmentController extends Controller
   public function show($id, $assId){
     $decryptId    = Crypt::decrypt($id);
     $decryptAssId = Crypt::decrypt($assId);
+
+    // echo dd($decryptId);
     $questions    = Pertanyaan::with(['get_rowscore' => function ($q) {
                                   $q->orderBy('no_urut_rowscore', 'desc');
                                 }])
@@ -59,10 +70,12 @@ class AssesmentController extends Controller
                                   $q->orderBy('no_urut_kompetensi', 'ASC');
                                 }])
                               ->with("get_assesment")
-                              // ->where("assesment_id", $decryptId)
+                              ->where("assesment_id", $decryptId)
                               // ->orderBy("rowscores.no_urut_rowscore","asc")
                               ->orderBy("no_urut_pertanyaan","asc")
                               ->get();
+    $countQuestions = count($questions);
+
                               // ->sortBy(function($noUrutRowScore) {
                               //      return $noUrutRowScore->get_rowscore->no_urut_rowscore;
                               // })
@@ -73,6 +86,6 @@ class AssesmentController extends Controller
                               // ->orderBy("kompetensis.no_urut_kompetensi","as")
                               // ->sortByDesc("rowscores.no_urut_rowscore");
 
-    return view("partisipan.dashboard.assesment.v_question", compact("questions","decryptAssId"));
+    return view("partisipan.dashboard.assesment.v_question", compact("questions","decryptAssId","countQuestions"));
   }
 }
