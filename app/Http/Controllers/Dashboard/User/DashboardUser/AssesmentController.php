@@ -11,6 +11,8 @@ use App\Http\Models\JenisAssesment;
 use App\Http\Models\Assesment;
 use App\Http\Models\Pertanyaan;
 use App\Http\Models\UserAssessment;
+use App\Http\Models\Configuration;
+use App\Http\Models\Kompetensi;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -62,7 +64,9 @@ class AssesmentController extends Controller
     $decryptId    = Crypt::decrypt($id);
     $decryptAssId = Crypt::decrypt($assId);
 
-    // echo dd($decryptId);
+    //Paginate total number
+    $limit = Configuration::pluck("konfigurasi")->first();
+
     $questions    = Pertanyaan::with(['get_rowscore' => function ($q) {
                                   $q->orderBy('no_urut_rowscore', 'desc');
                                 }])
@@ -76,16 +80,22 @@ class AssesmentController extends Controller
                               ->get();
     $countQuestions = count($questions);
 
-                              // ->sortBy(function($noUrutRowScore) {
-                              //      return $noUrutRowScore->get_rowscore->no_urut_rowscore;
-                              // })
-                              // ->sortBy(function($noUrutKompetensi) {
-                              //      return $noUrutKompetensi->get_kompetensi->no_urut_kompetensi;
-                              // });
+    //Penentuan Assessment
+    $competencyType = Pertanyaan::where("assesment_id", $decryptId)
+                                ->join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
+                                ->pluck("ja.nama")
+                                ->first();
 
-                              // ->orderBy("kompetensis.no_urut_kompetensi","as")
-                              // ->sortByDesc("rowscores.no_urut_rowscore");
-
-    return view("partisipan.dashboard.assesment.v_question", compact("questions","decryptAssId","countQuestions"));
+    //                           // ->sortBy(function($noUrutRowScore) {
+    //                           //      return $noUrutRowScore->get_rowscore->no_urut_rowscore;
+    //                           // })
+    //                           // ->sortBy(function($noUrutKompetensi) {
+    //                           //      return $noUrutKompetensi->get_kompetensi->no_urut_kompetensi;
+    //                           // });
+    //
+    //                           // ->orderBy("kompetensis.no_urut_kompetensi","as")
+    //                           // ->sortByDesc("rowscores.no_urut_rowscore");
+    //
+    return view("partisipan.dashboard.assesment.v_question", compact("questions","decryptAssId","countQuestions","competencyType"));
   }
 }

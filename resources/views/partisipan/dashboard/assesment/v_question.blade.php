@@ -71,6 +71,9 @@
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     @include("items.meta")
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <style>
     input[type=radio] {
       float: left;
@@ -279,7 +282,7 @@
                         <div class="sparkline12-list">
                             <div class="sparkline12-hd">
                                 <div class="main-sparkline12-hd">
-                                    <h1>Questionnaire</h1>
+                                    <h1>Assessment : {{$competencyType}}</h1>
                                 </div>
                             </div>
                             <div class="sparkline12-graph">
@@ -291,7 +294,7 @@
                                                   <div class="sparkline8-list">
                                                       <div class="sparkline8-graph">
                                                           <div class="static-table-list">
-                                                              <table class="table">
+                                                              <table class="table" id="datatables">
                                                                   <thead>
                                                                       <tr>
                                                                           <th style="text-align:center;">#</th>
@@ -343,8 +346,11 @@
                                                                         <?php $no++;?>
                                                                         <?php $x++;?>
                                                                       @endforeach
+
+
                                                                   </tbody>
                                                               </table>
+
                                                               <button type="button" class="btn btn-primary" id="btn_save" data-count="{{$x}}">Save</button>
 
                                                           </div>
@@ -436,6 +442,20 @@
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
+    <!-- <script src="{!! asset('js/pagination.js') !!}" charset="utf-8"></script> -->
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#datatables").DataTable({
+          "pagingType": "full_numbers",
+          "searching": false,
+          "pageLength": 4,
+          dom: 'Bfrtip',
+          "ordering": false
+        });
+      });
+    </script>
+
 
     <script type="text/javascript">
       //Right Click image
