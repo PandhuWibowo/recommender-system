@@ -96,6 +96,6 @@ class AssesmentController extends Controller
     //                           // ->orderBy("kompetensis.no_urut_kompetensi","as")
     //                           // ->sortByDesc("rowscores.no_urut_rowscore");
     //
-    return view("partisipan.dashboard.assesment.v_question", compact("questions","decryptAssId","countQuestions","competencyType"));
+    return view("partisipan.dashboard.assesment.v_question", compact("questions","decryptAssId","countQuestions","competencyType", "limit"));
   }
 }

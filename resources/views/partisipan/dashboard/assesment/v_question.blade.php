@@ -282,7 +282,7 @@
                         <div class="sparkline12-list">
                             <div class="sparkline12-hd">
                                 <div class="main-sparkline12-hd">
-                                    <h1>Assessment : {{$competencyType}}</h1>
+                                    <h1 style="text-align:center;">Assessment : {{$competencyType}}</h1>
                                 </div>
                             </div>
                             <div class="sparkline12-graph">
@@ -294,12 +294,12 @@
                                                   <div class="sparkline8-list">
                                                       <div class="sparkline8-graph">
                                                           <div class="static-table-list">
-                                                              <table class="table" id="datatables">
+                                                              <table class="table table-striped" id="datatables">
                                                                   <thead>
                                                                       <tr>
-                                                                          <th style="text-align:center;">#</th>
-                                                                          <th style="text-align:center;">Competencies</th>
-                                                                          <th style="text-align:center;">Situation</th>
+                                                                          <th style="text-align:center;width:0.5%;">#</th>
+                                                                          <th style="text-align:center;width:4%;">Competencies</th>
+                                                                          <th style="text-align:center;width:10%;">Situation</th>
                                                                           <!-- <th style="text-align:center;">Score</th> -->
                                                                       </tr>
                                                                   </thead>
@@ -449,9 +449,17 @@
         $("#datatables").DataTable({
           "pagingType": "full_numbers",
           "searching": false,
-          "pageLength": 4,
+          "pageLength": {{$limit}},
           dom: 'Bfrtip',
-          "ordering": false
+          "ordering": false,
+          stateSave: true,
+          "bJQueryUI": true,
+          "fnStateSave": function (oSettings, oData) {
+              localStorage.setItem('offersDataTables', JSON.stringify(oData));
+          },
+          "fnStateLoad": function (oSettings) {
+              return JSON.parse(localStorage.getItem('offersDataTables'));
+          }
         });
       });
     </script>
