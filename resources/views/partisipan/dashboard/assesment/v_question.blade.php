@@ -74,6 +74,19 @@
 
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
+    <style media="screen">
+      table.dataTable thead th {
+        border-bottom: 0;
+      }
+      table.dataTable tfoot th {
+        border-top: 0;
+      }
+
+      table.dataTable.no-footer {
+        border-bottom: 0;
+      }
+    </style>
     <style>
     input[type=radio] {
       float: left;
@@ -294,10 +307,10 @@
                                                   <div class="sparkline8-list">
                                                       <div class="sparkline8-graph">
                                                           <div class="static-table-list">
-                                                              <table class="table table-striped" id="datatables" border="0">
+                                                              <table class="table table-striped dataTable" id="datatables">
                                                                   <thead>
                                                                       <tr>
-                                                                          <th width="5%" style="text-align:center;">#</th>
+                                                                          <th width="5%" style="text-align:center;">No. </th>
                                                                           <!-- <th>Competencies</th> -->
                                                                           <th></th>
                                                                           <!-- Situation -->
