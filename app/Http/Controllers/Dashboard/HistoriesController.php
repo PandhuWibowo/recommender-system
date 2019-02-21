@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use App\Http\Models\User;
 use App\Http\Models\Assesment;
+use App\Http\Models\KeteranganNilai;
 use App\Http\Models\AssessmentKompetensi;
 use App\Http\Models\RowScore;
 use Illuminate\Support\Facades\Crypt;
@@ -53,7 +54,10 @@ class HistoriesController extends Controller
               ->groupBy("r.no_urut_rowscore","k.no_urut_kompetensi")
               ->get();
 
-    return view("administrator.dashboard.pages.logtest.v_detail", compact("query","query2"));
+    $rangeScore = KeteranganNilai::orderBy("range_score")->get();
+
+
+    return view("administrator.dashboard.pages.logtest.v_detail", compact("query","query2","rangeScore"));
 
 
   }

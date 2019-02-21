@@ -469,7 +469,6 @@
           "fnStateLoad": function (oSettings) {
               return JSON.parse(localStorage.getItem('offersDataTables'));
           }
-
         });
       });
     </script>
@@ -535,42 +534,54 @@
             });
           }else{
             try {
-              $.ajax({
-                type      : "POST",
-                url       : "{{ url('user/pages/questions/store') }}",
-                async     : true,
-                dataType  : "JSON",
-                data      : {
-                  "ass_id[]"        : arrAssesmentId,
-                  "pertanyaan_id[]" : arrPertanyaanId,
-                  "jawaban_id[]"    : arrJawabanId,
-                  "nilai[]"         : arrNilai
-                },
-                success:function(data){
-                  // if(data.response == "success"){
-                  //   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
-                  // }
-                  // console.log(data);
-                  if(data.response == "success"){
-                    swal({
-                      type      : "success",
-                      title     : "Success",
-                      timer     : 3000,
-                    }).then(function(){
-                      window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
-                    });
-                  }
-                },
-                error:function(data){
-                  console.log(data);
-                },
-                beforeSend: function(){
-                    // Code to display spinner
-                    $('.loading').show();
-                },
-                complete: function(){
-                    // Code to hide spinner.
-                    $('.loading').hide();
+              swal({
+                title: 'Are you sure?',
+                text: "Click yes to process your answers",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+              }).then((result) => {
+                if(result.value){
+                  $.ajax({
+                    type      : "POST",
+                    url       : "{{ url('user/pages/questions/store') }}",
+                    async     : true,
+                    dataType  : "JSON",
+                    data      : {
+                      "ass_id[]"        : arrAssesmentId,
+                      "pertanyaan_id[]" : arrPertanyaanId,
+                      "jawaban_id[]"    : arrJawabanId,
+                      "nilai[]"         : arrNilai
+                    },
+                    success:function(data){
+                      // if(data.response == "success"){
+                      //   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
+                      // }
+                      // console.log(data);
+                      if(data.response == "success"){
+                        swal({
+                          type      : "success",
+                          title     : "Success",
+                          timer     : 3000,
+                        }).then(function(){
+                          window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
+                        });
+                      }
+                    },
+                    error:function(data){
+                      console.log(data);
+                    },
+                    beforeSend: function(){
+                        // Code to display spinner
+                        $('.loading').show();
+                    },
+                    complete: function(){
+                        // Code to hide spinner.
+                        $('.loading').hide();
+                    }
+                  });
                 }
               });
             } catch (e) {

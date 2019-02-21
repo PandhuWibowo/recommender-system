@@ -68,7 +68,7 @@ class AssesmentController extends Controller
     $limit = Configuration::pluck("konfigurasi")->first();
 
     $questions    = Pertanyaan::with(['get_rowscore' => function ($q) {
-                                  $q->orderBy('no_urut_rowscore', 'asc');
+                                  $q->orderBy('no_urut_rowscore', 'desc');
                                 }])
                               ->with(['get_kompetensi' => function ($q) {
                                   $q->orderBy('no_urut_kompetensi', 'ASC');
