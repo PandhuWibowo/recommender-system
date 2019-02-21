@@ -136,15 +136,15 @@
         <div class="courses-area mg-b-15">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
-                            <h3 class="box-title">Score Tests</h3>
+                            <!-- <h3 class="box-title">Score Tests</h3> -->
                             <ul class="basic-list">
                                 <li><span class="pull-left label-danger label-1 label">Competencies</span> <span class="pull-right label-danger label-1 label">Scores</span></li>
                                 <br>
                                 <!-- ngeloop sjq -->
                                 @foreach($query2 as $row)
-                                  <?php $nilai_assess;
+                                  <?php $nilai_assess=0;
                                   $nilai_sjq = $row->sum_nilai * 0.4; ?>
                                   <!-- sum_nilai sjq = {{$row->sum_nilai}} <br /> -> ini juga -->
 
@@ -175,6 +175,94 @@
                                 @endforeach
 
                             </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="white-box">
+                            <!-- <h3 class="box-title">Range Score</h3> -->
+                            <table class="table table-striped" id="tableRange">
+                              <thead>
+                                <tr>
+                                  <th style="text-align:center">Range Score</th>
+                                  <th style="text-align:center">Description</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach($rangeScore as $row)
+                                  <tr>
+                                    <td style="text-align:center">{!!$row->range_score!!}</td>
+                                    <td style="text-align:center">{!!$row->keterangan!!}</td>
+                                  </tr>
+                                @endforeach
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <th style="text-align:center">Range Score</th>
+                                  <th style="text-align:center">Description</th>
+                                </tr>
+                              </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="courses-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="white-box">
+                            <!-- <h3 class="box-title">Range Score</h3> -->
+                            <table class="table table-striped" id="tableRange">
+                              <thead>
+                                <tr>
+                                  <th style="text-align:center">Range Score</th>
+                                  <th style="text-align:center">Description</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach($rangeScore as $row)
+                                  <tr>
+                                    <td style="text-align:center">{!!$row->range_score!!}</td>
+                                    <td style="text-align:center">{!!$row->keterangan!!}</td>
+                                  </tr>
+                                @endforeach
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <th style="text-align:center">Range Score</th>
+                                  <th style="text-align:center">Description</th>
+                                </tr>
+                              </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="white-box">
+                            <!-- <h3 class="box-title">Range Score</h3> -->
+                            <table class="table table-striped" id="tableRange">
+                              <thead>
+                                <tr>
+                                  <th style="text-align:center">Range Score</th>
+                                  <th style="text-align:center">Description</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach($rangeScore as $row)
+                                  <tr>
+                                    <td style="text-align:center">{!!$row->range_score!!}</td>
+                                    <td style="text-align:center">{!!$row->keterangan!!}</td>
+                                  </tr>
+                                @endforeach
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <th style="text-align:center">Range Score</th>
+                                  <th style="text-align:center">Description</th>
+                                </tr>
+                              </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>

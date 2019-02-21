@@ -144,7 +144,7 @@
                                 <br>
                                 <!-- ngeloop sjq -->
                                 @foreach($query2 as $row)
-                                  <?php $nilai_assess;
+                                  <?php $nilai_assess=0;
                                   $nilai_sjq = $row->sum_nilai * 0.4; ?>
                                   <!-- sum_nilai sjq = {{$row->sum_nilai}} <br /> -> ini juga -->
 

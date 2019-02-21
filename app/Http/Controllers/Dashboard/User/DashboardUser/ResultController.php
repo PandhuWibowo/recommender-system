@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 // use App\Http\Models\JenisAssesment;
 use App\Http\Models\AssessmentKompetensi;
 use App\Http\Models\RowScore;
+use App\Http\Models\KeteranganNilai;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -34,7 +35,7 @@ class ResultController extends Controller
                 ->where("r.nama_rowscore","Self Assessment")
                 ->groupBy("r.no_urut_rowscore","k.no_urut_kompetensi")
                 ->get();
-  $query2   = DB::table("pertanyaan_assesments as pa")
+    $query2   = DB::table("pertanyaan_assesments as pa")
               ->select("k.id as kId","r.id as rId","r.nama_rowscore as namaRowScore","k.kompetensi as kKompetensi",DB::raw("SUM(pa.nilai) as sum_nilai"))
               ->join("pertanyaans as p","pa.pertanyaan_id","=","p.id")
               ->join("jawabans as j","pa.jawaban_id","=","j.id")
@@ -53,7 +54,7 @@ class ResultController extends Controller
   }
   else{
     foreach($query2 as $row){
-      $nilai_assess;
+      $nilai_assess=0;
       $nilai_sjq = $row->sum_nilai * 0.4;
       // <!-- sum_nilai sjq = {{$row->sum_nilai}} <br /> -> ini juga -->
 
@@ -120,9 +121,9 @@ class ResultController extends Controller
     }
   }
 
-
+    $rangeScore = KeteranganNilai::orderBy("range_score")->get();
     // echo dd($query3);
     // $rowscores = RowScore::all();
-    return view("partisipan.dashboard.result.v_index", compact("query","rowscores","query2"));
+    return view("partisipan.dashboard.result.v_index", compact("query","rowscores","query2","rangeScore"));
   }
 }

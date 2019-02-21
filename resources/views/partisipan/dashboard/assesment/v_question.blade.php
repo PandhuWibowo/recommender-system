@@ -294,12 +294,13 @@
                                                   <div class="sparkline8-list">
                                                       <div class="sparkline8-graph">
                                                           <div class="static-table-list">
-                                                              <table class="table table-striped" id="datatables">
+                                                              <table class="table table-striped" id="datatables" border="0">
                                                                   <thead>
                                                                       <tr>
-                                                                          <th style="text-align:center;width:0.5%;">#</th>
-                                                                          <th style="text-align:center;width:4%;">Competencies</th>
-                                                                          <th style="text-align:center;width:10%;">Situation</th>
+                                                                          <th width="5%" style="text-align:center;">#</th>
+                                                                          <!-- <th>Competencies</th> -->
+                                                                          <th></th>
+                                                                          <!-- Situation -->
                                                                           <!-- <th style="text-align:center;">Score</th> -->
                                                                       </tr>
                                                                   </thead>
@@ -308,8 +309,8 @@
                                                                       <?php $no = 1;?>
                                                                       @foreach($questions as $row)
                                                                         <tr>
-                                                                            <td>{{$no}}</td>
-                                                                            <td>{{$row->get_kompetensi->kompetensi}}</td>
+                                                                            <td width="5%" style="text-align:center;">{{$no}}</td>
+                                                                            <!-- <td>{{$row->get_kompetensi->kompetensi}}</td> -->
                                                                             <td style="text-align:justify;">
                                                                               <p>
                                                                                 {{ucfirst($row->pertanyaan)}}
@@ -322,13 +323,10 @@
                                                                                                 <div class="row">
                                                                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                                         <div class="i-checks pull-left">
-
                                                                                                               <input type="hidden" value="{{$decryptAssId}}" name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
                                                                                                               <input type="hidden" value="{{$row2->pertanyaan_id}}" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
                                                                                                               <input type="hidden" value="{{$row2->id}}" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
                                                                                                               <input type="radio" value="{{$row2->nilai}}" name="nilai{{$x}}" id="nilai{{$x}}" required>
-
-
                                                                                                         </div>
                                                                                                         <div class="jawaban">{{ucfirst($row2->jawaban)}}</div>
 
@@ -346,13 +344,9 @@
                                                                         <?php $no++;?>
                                                                         <?php $x++;?>
                                                                       @endforeach
-
-
                                                                   </tbody>
                                                               </table>
-
                                                               <button type="button" class="btn btn-primary" id="btn_save" data-count="{{$x}}">Save</button>
-
                                                           </div>
                                                       </div>
                                                   </div>
@@ -449,8 +443,9 @@
         $("#datatables").DataTable({
           "pagingType": "full_numbers",
           "searching": false,
+          "lengthMenu": [[{{$limit}}, -1], [{{$limit}}, "All"]],
           "pageLength": {{$limit}},
-          dom: 'Bfrtip',
+// dom: 'Bfrtip',
           "ordering": false,
           stateSave: true,
           "bJQueryUI": true,
@@ -460,6 +455,7 @@
           "fnStateLoad": function (oSettings) {
               return JSON.parse(localStorage.getItem('offersDataTables'));
           }
+
         });
       });
     </script>
