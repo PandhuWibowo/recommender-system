@@ -310,7 +310,7 @@
                                                               <table class="table table-striped dataTable" id="datatables">
                                                                   <thead>
                                                                       <tr>
-                                                                          <th width="5%" style="text-align:center;">No. </th>
+                                                                          <th width="5%" style="text-align:center;"></th>
                                                                           <!-- <th>Competencies</th> -->
                                                                           <th></th>
                                                                           <!-- Situation -->
@@ -458,6 +458,7 @@
           "searching": false,
           "lengthMenu": [[{{$limit}}, -1], [{{$limit}}, "All"]],
           "pageLength": {{$limit}},
+          "info":     false,
 // dom: 'Bfrtip',
           "ordering": false,
           stateSave: true,
