@@ -317,7 +317,6 @@
       background-image: -o-linear-gradient(top, #e0dd94, #c4bb61);
       background-image: linear-gradient(top, #e0dd94, #c4bb61);
     }
-
     </style>
 </head>
 
