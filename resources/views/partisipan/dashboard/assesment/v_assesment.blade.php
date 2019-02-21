@@ -328,11 +328,11 @@
                   id      : varJenisAssesment
                 },
                 success:function(data){
-                  console.log(data);
-                  // if(data.response == "success"){
-                  //   window.location.href="{{ url('user/pages/assesments') }}"+"/"+data.id+"/"+data.ass_id;
-                  //   // console.log();
-                  // }
+
+                  if(data.response == "success"){
+                    window.location.href="{{ url('user/pages/assesments') }}"+"/"+data.id+"/"+data.ass_id;
+                    // console.log();
+                  }
                 },
                 error:function(data){
                   console.log(data);
