@@ -234,7 +234,7 @@
                                           <tr>
                                             <td>{{ $row->getKeteranganNilai->range_score }}</td>
                                             <td>{{ $row->getKompetensi->kompetensi }}</td>
-                                            <td>{!! substr($row->hasil_kompetensi, 0, 50)."..." !!}</td>
+                                            <td>{!! trim(substr($row->hasil_kompetensi, 0, 50)."...") !!}</td>
                                             <td>
                                                 <a class="btn btn-warning btn_edit" data-keterangan_id="{{ $row->keterangan_id }}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-hasil_kompetensi="{!! $row->hasil_kompetensi !!}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
@@ -259,6 +259,7 @@
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             <h4 class="modal-title">Edit Description Result</h4>
+                                            <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
                                           <div class="modal-body">
                                             <div class="form-group">
@@ -266,7 +267,7 @@
                                             </div>
                                             <div class="form-group">
                                               <label>Description Score</label>
-                                              <select class="form-control js-example-basic chosen-select" name="edit_keterangan_id" id="edit_keterangan_id" tabindex="-1">
+                                              <select class="js-example-basic" name="edit_keterangan_id" id="edit_keterangan_id" tabindex="-1">
                                                 <option></option>
                                                 @foreach($keteranganNilai as $row)
                                                   <option value="{{$row->id}}">{{$row->range_score}}</option>
@@ -276,7 +277,7 @@
 
                                             <div class="form-group">
                                               <label>Competency</label>
-                                              <select class="form-control js-example-basic chosen-select" name="edit_kompetensi_id" id="edit_kompetensi_id" tabindex="-1">
+                                              <select class="js-example-basic" name="edit_kompetensi_id" id="edit_kompetensi_id" tabindex="-1">
                                                 <option></option>
                                                 @foreach($kompetensi as $row)
                                                   <option value="{{$row->id}}">{{$row->kompetensi}}</option>
@@ -451,6 +452,10 @@
           var varKeteranganID     = $(this).data("keterangan_id");
           var varKompetensiID     = $(this).data("kompetensi_id");
           var varHasilKompetensi  = $(this).data("hasil_kompetensi");
+
+          // console.log(varId);
+          // console.log(varKeteranganID);
+          // console.log(varKompetensiID);
           try {
             $("#edit_id").val(varId);
             $('#edit_keterangan_id').select2("val", varKeteranganID);
@@ -609,7 +614,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
           });
-          var varId = $("#id_jenis_keterangan").val();
+          var varId = $("#edit_id").val();
           try {
             swal({
               title: 'Are you sure?',
@@ -623,7 +628,7 @@
               if(result.value){
                 $.ajax({
                   type      : "DELETE",
-                  url       : "{{ url('backend/pages/scoredescriptions/delete') }}",
+                  url       : "{{ url('backend/pages/descriptionresults/delete') }}",
                   async     : true,
                   dataType  : "JSON",
                   data      : {
@@ -638,7 +643,7 @@
                         'Your file has been deleted.',
                         'success'
                       ).then(function(){
-                        window.location = "{{ url('backend/pages/scoredescriptions') }}";
+                        window.location = "{{ url('backend/pages/descriptionresults') }}";
                       });
                     }
                   },

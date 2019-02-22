@@ -66,4 +66,34 @@ use Illuminate\Http\Response;
        );
      }
    }
+
+   public function update(Request $request){
+     $varId             = Crypt::decrypt($request->id);
+     $varKeteranganId   = $request->keterangan_id;
+     $varKompetensiId   = $request->kompetensi_id;
+     $varHasilKompetensi= $request->hasil_kompetensi;
+
+     $descriptionScore                  = HasilKompetensi::findOrFail($varId);
+     $descriptionScore->keterangan_id   = $varKeteranganId;
+     $descriptionScore->kompetensi_id   = $varKompetensiId;
+     $descriptionScore->hasil_kompetensi= $varHasilKompetensi;
+
+     $descriptionScore->save();
+
+     return response()->json(
+       array(
+         "response" => "success"
+       )
+     );
+   }
+
+   public function destroy(Request $request){
+     $varId = Crypt::decrypt($request->id);
+     HasilKompetensi::where('id',$varId)->delete();
+     return response()->json(
+       array(
+         'response'  => "success"
+       )
+     );
+   }
  }
