@@ -76,6 +76,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
@@ -153,9 +155,17 @@
                                                     <input type="text" class="form-control" autocomplete="off" id="description" required>
                                                   </div>
 
-                                                  <div class="form-group res-mg-t-15">
+                                                  <!-- <div class="form-group res-mg-t-15">
                                                     <label for="usr">Description Type</label>
                                                     <textarea name="jenisketerangan" id="jenisketerangan" placeholder="Description Type"></textarea>
+                                                  </div> -->
+                                                  <div class="chosen-select-single mg-b-20">
+                                                    <label>Description Type</label>
+                                                    <select data-placeholder="Choose Description Type" width="100%" id="jenis_keterangan" name="jenis_keterangan" class="jenis_keterangan">
+                                                      <option value=""></option>
+                                                      <option value="Kekuatan">Kekuatan</option>
+                                                      <option value="Pengembangan">Pengembangan</option>
+                                                    </select>
                                                   </div>
 
                                                 </div>
@@ -262,9 +272,18 @@
                                               <input type="text" class="form-control" autocomplete="off" id="edit_description" required>
                                             </div>
 
-                                            <div class="form-group res-mg-t-15">
+                                            <!-- <div class="form-group res-mg-t-15">
                                               <label for="usr">Description Type</label>
                                               <textarea name="edit_jenisketerangan" id="edit_jenisketerangan" placeholder="Description Type"></textarea>
+                                            </div> -->
+
+                                            <div class="chosen-select-single mg-b-20">
+                                              <label>Description Type</label>
+                                              <select data-placeholder="Choose Description Type" width="100%" id="edit_jenis_keterangan" name="edit_jenis_keterangan" class="edit_jenis_keterangan">
+                                                <option value=""></option>
+                                                <option value="Kekuatan">Kekuatan</option>
+                                                <option value="Pengembangan">Pengembangan</option>
+                                              </select>
                                             </div>
 
                                           </div>
@@ -373,17 +392,32 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" charset="utf-8"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" charset="utf-8"></script>
+
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#jenis_keterangan").select2({
+          width: '100%',
+          allowClear: true
+        });
+
+        $("#edit_jenis_keterangan").select2({
+          width: '100%',
+          allowClear: true
+        });
+      });
+    </script>
     <script>
       //Buat Insert Modal
-      CKEDITOR.replace( 'jenisketerangan' );
+      // CKEDITOR.replace( 'jenisketerangan' );
       CKEDITOR.replace( 'description' );
     </script>
 
     <script>
       //Buat Edit Modal
       CKEDITOR.replace( 'edit_description' );
-      CKEDITOR.replace( 'edit_jenisketerangan' );
+      // CKEDITOR.replace( 'edit_jenisketerangan' );
     </script>
 
     <script type="text/javascript">
@@ -415,7 +449,8 @@
             $("#edit_range_score").val(varRangeScore);
             // $("#edit_description").val(varKeterangan);
             CKEDITOR.instances['edit_description'].setData(varKeterangan);
-            CKEDITOR.instances['edit_jenisketerangan'].setData(varJenisKeterangan);
+            // CKEDITOR.instances['edit_jenisketerangan'].setData(varJenisKeterangan);
+            $("#edit_jenis_keterangan").select2("val", varJenisKeterangan);
             // $("#editModal").modal("show");
             $("#editModal").modal({
               backdrop: 'static',
@@ -436,7 +471,8 @@
           });
           var varRangeScore     = $("#range_score").val();
           var varDescription    = CKEDITOR.instances["description"].getData();
-          var varDescriptionType= CKEDITOR.instances["jenisketerangan"].getData();
+          // var varDescriptionType= CKEDITOR.instances["jenisketerangan"].getData();
+          var varDescriptionType= $("#jenis_keterangan").val();
 
           try {
             if(varRangeScore == ""){
@@ -515,7 +551,8 @@
           var varId             = $("#id_jenis_keterangan").val();
           var varRangeScore     = $("#edit_range_score").val();
           var varDescription    = CKEDITOR.instances["edit_description"].getData();
-          var varJenisKeterangan= CKEDITOR.instances["edit_jenisketerangan"].getData();
+          // var varJenisKeterangan= CKEDITOR.instances["edit_jenisketerangan"].getData();
+          var varJenisKeterangan= $("#edit_jenis_keterangan").val();
           try {
             $.ajax({
               type    : "PUT",
