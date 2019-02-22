@@ -49,6 +49,7 @@
                                   <li><a title="All Questions" href="{{ url('backend/pages/questions') }}"><span class="mini-sub-pro">Questions</span></a></li>
                                   <li><a title="All Description of Score" href="{{ url('backend/pages/scoredescriptions') }}"><span class="mini-sub-pro">Description of Scores</span></a></li>
                                   <li><a title="All User Assesments" href="{{ url('backend/pages/userassessments') }}"><span class="mini-sub-pro">User Assesments</span></a></li>
+                                  <li><a title="Description Results" href="{{ url("backend/pages/descriptionresults") }}"><span class="mini-sub-pro">Description Results</span></a></li>
                                   <li><a title="Configuration" href="{{ url("backend/pages/configurations") }}"><span class="mini-sub-pro">Configurations</span></a></li>
                               </ul>
                           </li>

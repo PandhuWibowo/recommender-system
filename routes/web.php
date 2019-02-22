@@ -24,7 +24,7 @@ Route::prefix('backend/pages')->group(function () {
     Route::resource('administrator',"Dashboard\AdministratorController", ["only" =>
         ["index","show"]
     ]);
-    
+
     Route::match(array('PUT', 'PATCH'), 'administrator/update',"Dashboard\AdministratorController@update");
     Route::delete('administrator/delete',"Dashboard\AdministratorController@destroy");
     Route::post("administrator/store","Dashboard\AdministratorController@store");
@@ -98,7 +98,10 @@ Route::prefix('backend/pages')->group(function () {
     Route::resource("configurations","Dashboard\ConfigurationController");
 
     //Competencies Result
-    Route::get("competenciesresults","Dashboard\CompetenciesResultController@index");
+    // Route::get("competenciesresults","Dashboard\CompetenciesResultController@index");
+
+    //Description Results
+    Route::resource("descriptionresults","Dashboard\CompetenciesResultController");
 
 });
 

@@ -76,6 +76,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/chosen/bootstrap-chosen.css') !!}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
@@ -141,21 +143,32 @@
                                               <div class="modal-content">
                                                 <div class="modal-header">
                                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                  <h4 class="modal-title">New Score Description</h4>
+                                                  <h4 class="modal-title">New Description Result</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                   <div class="form-group">
-                                                    <label for="usr">Range Score</label>
-                                                    <input type="number" min="1" class="form-control" autofocus="on" autocomplete="off" id="range_score" required>
+                                                    <label>Description Score</label>
+                                                    <select class="form-control js-example-basic-multiple chosen-select" name="keterangan_id" id="keterangan_id" tabindex="-1">
+                                                      <option></option>
+                                                      @foreach($keteranganNilai as $row)
+                                                        <option value="{{$row->id}}">{{$row->range_score}}</option>
+                                                      @endforeach
+                                                    </select>
                                                   </div>
+
                                                   <div class="form-group">
-                                                    <label for="usr">Description</label>
-                                                    <input type="text" class="form-control" autocomplete="off" id="description" required>
+                                                    <label>Competency</label>
+                                                    <select class="form-control js-example-basic-multiple chosen-select" name="kompetensi_id" id="kompetensi_id" tabindex="-1">
+                                                      <option></option>
+                                                      @foreach($kompetensi as $row)
+                                                        <option value="{{$row->id}}">{{$row->kompetensi}}</option>
+                                                      @endforeach
+                                                    </select>
                                                   </div>
 
                                                   <div class="form-group res-mg-t-15">
-                                                    <label for="usr">Description Type</label>
-                                                    <textarea name="jenisketerangan" id="jenisketerangan" placeholder="Description Type"></textarea>
+                                                    <label for="usr">Competency Result</label>
+                                                    <textarea name="hasil_kompetensi" id="hasil_kompetensi" placeholder="Competency Result"></textarea>
                                                   </div>
 
                                                 </div>
@@ -210,29 +223,29 @@
                                     <table id="myAssesments" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
-                                              <th>Score Descriptions</th>
+                                              <th>Description Scores</th>
                                               <th>Competencies</th>
-                                              <th>Competency Results</th>
+                                              <th>Description Results</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
                                       <tbody>
-                                        @foreach($keteranganNilai as $key=>$row)
+                                        @foreach($hasilkompetensi as $key=>$row)
                                           <tr>
-                                            <td>{{ $row->keterangan }}</td>
-                                            <td>{!! $row->kompetensi !!}</td>
-                                            <td>{!! $row->hasil_kompetensi !!}</td>
+                                            <td>{{ $row->getKeteranganNilai->range_score }}</td>
+                                            <td>{{ $row->getKompetensi->kompetensi }}</td>
+                                            <td>{!! substr($row->hasil_kompetensi, 0, 50)."..." !!}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-range_score="{{ $row->range_score }}" data-keterangan="{!! $row->keterangan !!}" data-jenisketerangan="{!! $row->jenisketerangan !!}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-keterangan_id="{{ $row->keterangan_id }}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-hasil_kompetensi="{!! $row->hasil_kompetensi !!}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>Score Descriptions</th>
+                                            <th>Description Scores</th>
                                             <th>Competencies</th>
-                                            <th>Competency Results</th>
+                                            <th>Description Results</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -245,26 +258,35 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Score Description</h4>
-                                            <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
+                                            <h4 class="modal-title">Edit Description Result</h4>
                                           </div>
                                           <div class="modal-body">
                                             <div class="form-group">
-                                              <input type="hidden" class="form-control" autocomplete="off" id="id_jenis_keterangan" required>
+                                              <input type="hidden" name="edit_id" id="edit_id" readonly>
                                             </div>
                                             <div class="form-group">
-                                              <label for="usr">Range Score</label>
-                                              <input type="number" min="1" class="form-control" autocomplete="off" id="edit_range_score" required>
+                                              <label>Description Score</label>
+                                              <select class="form-control js-example-basic chosen-select" name="edit_keterangan_id" id="edit_keterangan_id" tabindex="-1">
+                                                <option></option>
+                                                @foreach($keteranganNilai as $row)
+                                                  <option value="{{$row->id}}">{{$row->range_score}}</option>
+                                                @endforeach
+                                              </select>
                                             </div>
-                                            <!-- no_urut_assesment -->
+
                                             <div class="form-group">
-                                              <label for="usr">Description</label>
-                                              <input type="text" class="form-control" autocomplete="off" id="edit_description" required>
+                                              <label>Competency</label>
+                                              <select class="form-control js-example-basic chosen-select" name="edit_kompetensi_id" id="edit_kompetensi_id" tabindex="-1">
+                                                <option></option>
+                                                @foreach($kompetensi as $row)
+                                                  <option value="{{$row->id}}">{{$row->kompetensi}}</option>
+                                                @endforeach
+                                              </select>
                                             </div>
 
                                             <div class="form-group res-mg-t-15">
-                                              <label for="usr">Description Type</label>
-                                              <textarea name="edit_jenisketerangan" id="edit_jenisketerangan" placeholder="Description Type"></textarea>
+                                              <label for="usr">Competency Result</label>
+                                              <textarea name="hasil_kompetensi" id="edit_hasil_kompetensi" placeholder="Competency Result"></textarea>
                                             </div>
 
                                           </div>
@@ -374,16 +396,35 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" charset="utf-8"></script>
+    <script src="{!! asset('assets/assets_admin/js/chosen/chosen.jquery.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/chosen/chosen-active.js') !!}"></script>
+    <!-- select2 JS
+		============================================ -->
+    <script src="{!! asset('assets/assets_admin/js/select2/select2.full.min.js') !!}"></script>
+    <script src="{!! asset('assets/assets_admin/js/select2/select2-active.js') !!}"></script>
     <script>
       //Buat Insert Modal
-      CKEDITOR.replace( 'jenisketerangan' );
-      CKEDITOR.replace( 'description' );
+      CKEDITOR.replace( 'hasil_kompetensi' );
+      // CKEDITOR.replace( 'description' );
     </script>
 
     <script>
       //Buat Edit Modal
-      CKEDITOR.replace( 'edit_description' );
-      CKEDITOR.replace( 'edit_jenisketerangan' );
+      CKEDITOR.replace( 'edit_hasil_kompetensi' );
+      // CKEDITOR.replace( 'edit_jenisketerangan' );
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#edit_keterangan_id").select2({
+          width: '100%',
+          allowClear: true
+        });
+        $("#edit_kompetensi_id").select2({
+          width: '100%',
+          allowClear: true
+        });
+      });
     </script>
 
     <script type="text/javascript">
@@ -407,15 +448,17 @@
       $(document).ready(function(){
         $(".btn_edit").on("click", function(){
           var varId               = $(this).data("id");
-          var varRangeScore       = $(this).data("range_score");
-          var varKeterangan       = $(this).data("keterangan");
-          var varJenisKeterangan  = $(this).data("jenisketerangan");
+          var varKeteranganID     = $(this).data("keterangan_id");
+          var varKompetensiID     = $(this).data("kompetensi_id");
+          var varHasilKompetensi  = $(this).data("hasil_kompetensi");
           try {
-            $("#id_jenis_keterangan").val(varId);
-            $("#edit_range_score").val(varRangeScore);
+            $("#edit_id").val(varId);
+            $('#edit_keterangan_id').select2("val", varKeteranganID);
+            $("#edit_kompetensi_id").select2("val", varKompetensiID);
+            // $("#edit_keterangan_id").val(varKeteranganID);
             // $("#edit_description").val(varKeterangan);
-            CKEDITOR.instances['edit_description'].setData(varKeterangan);
-            CKEDITOR.instances['edit_jenisketerangan'].setData(varJenisKeterangan);
+            // CKEDITOR.instances['edit_kompetensi_id'].setData(varKeterangan);
+            CKEDITOR.instances['edit_hasil_kompetensi'].setData(varHasilKompetensi);
             // $("#editModal").modal("show");
             $("#editModal").modal({
               backdrop: 'static',
@@ -434,45 +477,46 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varRangeScore     = $("#range_score").val();
-          var varDescription    = CKEDITOR.instances["description"].getData();
-          var varDescriptionType= CKEDITOR.instances["jenisketerangan"].getData();
+          var varKeteranganID   = $("#keterangan_id").val();
+          var varKompetensiID   = $("#kompetensi_id").val();
+          var varHasilKompetensi= CKEDITOR.instances["hasil_kompetensi"].getData();
+          // var varDescriptionType= CKEDITOR.instances["jenisketerangan"].getData();
 
           try {
-            if(varRangeScore == ""){
+            if(varKeteranganID == ""){
               swal({
                 type    : "info",
                 title   : "Empty",
-                text    : "Range Score is required",
+                text    : "Description Score is required",
                 timer   : 3000
               });
             }
-            else if(varDescription == ""){
+            else if(varKompetensiID == ""){
               swal({
                 type    : "info",
                 title   : "Empty",
-                text    : "Description is required",
+                text    : "Competency is required",
                 timer   : 3000
               });
             }
-            else if (varDescriptionType == "") {
+            else if (varHasilKompetensi == "") {
               swal({
                 type    : "info",
                 title   : "Empty",
-                text    : "Description Type is required",
+                text    : "Competency Result is required",
                 timer   : 3000
               });
             }
             else{
               $.ajax({
                 type    : "POST",
-                url     : "{{ url('backend/pages/scoredescriptions/store') }}",
+                url     : "{{ url('backend/pages/descriptionresults') }}",
                 async   : true,
                 dataType: "JSON",
                 data    : {
-                  range_score       : varRangeScore,
-                  keterangan        : varDescription,
-                  jenisketerangan   : varDescriptionType
+                  keterangan_id     : varKeteranganID,
+                  kompetensi_id     : varKompetensiID,
+                  hasil_kompetensi  : varHasilKompetensi
                 },
                 success:function(data){
                   $("#myModal").modal("hide");
@@ -483,13 +527,13 @@
                       text : "Data's has been saved",
                       timer: 3000
                     }).then(function(){
-                      window.location = "{{ url('backend/pages/scoredescriptions') }}";
+                      window.location = "{{ url('backend/pages/descriptionresults') }}";
                     })
                   }else{
                     swal({
                       type : "error",
                       title: "Error",
-                      text : "Failed saving the data",
+                      text : "Failed saving data",
                       timer: 3000
                     })
                   }
@@ -512,21 +556,21 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varId             = $("#id_jenis_keterangan").val();
-          var varRangeScore     = $("#edit_range_score").val();
-          var varDescription    = CKEDITOR.instances["edit_description"].getData();
-          var varJenisKeterangan= CKEDITOR.instances["edit_jenisketerangan"].getData();
+          var varId             = $("#edit_id").val();
+          var varKeteranganID   = $("#edit_keterangan_id").val();
+          var varKompetensiID   = $("#edit_kompetensi_id").val();
+          var varHasilKompetensi= CKEDITOR.instances["edit_hasil_kompetensi"].getData();
           try {
             $.ajax({
               type    : "PUT",
-              url     : "{{ url('backend/pages/scoredescriptions/update') }}",
+              url     : "{{ url('backend/pages/descriptionresults/update') }}",
               async   : true,
               dataType: "JSON",
               data    : {
                 id              : varId,
-                range_score     : varRangeScore,
-                keterangan      : varDescription,
-                jenisketerangan : varJenisKeterangan
+                keterangan_id   : varKeteranganID,
+                kompetensi_id   : varKompetensiID,
+                hasil_kompetensi: varHasilKompetensi
               },
               success:function(data){
                 $("#editModal").modal("hide");
@@ -537,7 +581,7 @@
                     text : "Data's has been updated",
                     timer: 3000
                   }).then(function(){
-                    window.location = "{{ url('backend/pages/scoredescriptions') }}";
+                    window.location = "{{ url('backend/pages/descriptionresults') }}";
                   })
                 }else{
                   swal({

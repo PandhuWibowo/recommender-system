@@ -73,7 +73,7 @@ class UserAssessmentController extends Controller{
       $messages = $validator->messages();
       return response()->json(
         array(
-          ""
+          "error" => $validator
         )
       );
         exit();

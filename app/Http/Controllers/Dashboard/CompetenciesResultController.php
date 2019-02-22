@@ -23,7 +23,47 @@ use Illuminate\Http\Response;
 
    public function index(){
      $keteranganNilai = KeteranganNilai::all();
-     $kompetensi      = Kompetensi::all();
-     return view("administrator.dashboard.pages.hasil-kompetensi.competency-result", compact("keteranganNilai","kompetensi"));
+     $kompetensi      = Kompetensi::orderBy("kompetensi")->get();
+     $hasilkompetensi = HasilKompetensi::orderBy("id")->get();
+     return view("administrator.dashboard.pages.hasil-kompetensi.competency-result", compact("keteranganNilai","kompetensi","hasilkompetensi"));
+   }
+
+   public function store(Request $request){
+     $keteranganId    = $request->keterangan_id;
+     $kompetensiId    = $request->kompetensi_id;
+     $hasilkompetensi = $request->hasil_kompetensi;
+
+     $rules = array(
+       'keterangan_id'    => 'required',
+       'kompetensi_id'    => 'required',
+       'hasil_kompetensi' => 'required'
+     );
+
+     $validator = Validator::make(Input::all(), $rules);
+
+     if ($validator->fails()) {
+       $messages = $validator->messages();
+       return response()->json(
+         array(
+           "error" => $validator
+         )
+       );
+         exit();
+     }
+     else{
+       $descResults         = new HasilKompetensi([
+         'id'               => Uuid::generate()->string,
+         'keterangan_id'    => $keteranganId,
+         'kompetensi_id'    => $kompetensiId,
+         'hasil_kompetensi' => $hasilkompetensi
+       ]);
+       $descResults->save();
+
+       return response()->json(
+         array(
+           "response" => "success"
+         )
+       );
+     }
    }
  }
