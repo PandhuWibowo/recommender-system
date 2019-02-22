@@ -453,23 +453,7 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" charset="utf-8"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        $("#datatables").DataTable({
-          "pagingType": "full_numbers",
-          "searching": false,
-          "lengthMenu": [[{{$limit}}, -1], [{{$limit}}, "All"]],
-          "pageLength": {{$limit}},
-          "info":     false,
-// dom: 'Bfrtip',
-          "ordering": false,
-          stateSave: true,
-          "bJQueryUI": true,
-          "fnStateSave": function (oSettings, oData) {
-              localStorage.setItem('offersDataTables', JSON.stringify(oData));
-          },
-          "fnStateLoad": function (oSettings) {
-              return JSON.parse(localStorage.getItem('offersDataTables'));
-          }
-        });
+        //
       });
     </script>
 
@@ -484,6 +468,23 @@
     </script>
     <script type="text/javascript">
       $(document).ready(function(){
+        var table = $("#datatables").DataTable({
+          "pagingType": "full_numbers",
+          "searching": false,
+          "pageLength": {{$limit}},
+          "info":     false,
+          dom: 'Bfrtip',
+          "ordering": false,
+          stateSave: true,
+          // "bJQueryUI": true,
+          "fnStateSave": function (oSettings, oData) {
+              localStorage.setItem('offersDataTables', JSON.stringify(oData));
+          },
+          "fnStateLoad": function (oSettings) {
+              return JSON.parse(localStorage.getItem('offersDataTables'));
+          }
+        });
+
         $("#btn_save").on("click", function(){
           $.ajaxSetup({
             headers: {
@@ -501,10 +502,10 @@
           var arrJawabanId    = [];
           for (i = 1; i <= varParseCount; i++) {
             // varNilai = $("#nilai"+i).val();
-            var varJenisAssesmentId  = $("input[name=assessmentid"+i+"]").val();
-            var varPertanyaanId      = $("input[name=pertanyaanid"+i+"]").val();
-            var varJawabanId         = $("input[name=jawabanid"+i+"]").val();
-            var varNilai             = $("input[name=nilai"+i+"]:checked").val();
+            var varJenisAssesmentId  = table.$("input[name=assessmentid"+i+"]").val();
+            var varPertanyaanId      = table.$("input[name=pertanyaanid"+i+"]").val();
+            var varJawabanId         = table.$("input[name=jawabanid"+i+"]").val();
+            var varNilai             = table.$("input[name=nilai"+i+"]:checked").val();
             if(varNilai == "" || varNilai == undefined){
               swal({
                 type      : "info",
@@ -549,6 +550,7 @@
                     url       : "{{ url('user/pages/questions/store') }}",
                     async     : true,
                     dataType  : "JSON",
+                    cache     : true,
                     data      : {
                       "ass_id[]"        : arrAssesmentId,
                       "pertanyaan_id[]" : arrPertanyaanId,
