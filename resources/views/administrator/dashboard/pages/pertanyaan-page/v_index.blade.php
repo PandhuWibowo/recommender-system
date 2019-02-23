@@ -333,7 +333,8 @@
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myCompetencies').DataTable({
-          "dom": 'Bfrtip',
+          "dom": 'lBfrtip',
+          "ordering":false,
           "buttons": {
              "dom": {
                 "button": {

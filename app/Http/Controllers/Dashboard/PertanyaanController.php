@@ -25,7 +25,7 @@ use DB;
 class PertanyaanController extends Controller
 {
   public function index(){
-    $pertanyaan = Pertanyaan::all();
+    $pertanyaan = Pertanyaan::orderBy("no_urut_pertanyaan")->get();
     // $pertanyaan = Pertanyaan::with("get_assesment")->with("get_kompetensi")->with("get_rowscore");
     return view("administrator.dashboard.pages.pertanyaan-page.v_index", compact("pertanyaan"));
     // echo dd($pertanyaan);
