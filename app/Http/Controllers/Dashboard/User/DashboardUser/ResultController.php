@@ -212,7 +212,10 @@ class ResultController extends Controller
                                     ->where("ak.ass_id", $assId)
                                     ->whereIn("range_score",["3","4"])
                                     ->get();
-                                    
-    return view("partisipan.dashboard.result.v_index", compact("query","rowscores","query2","rangeScore","cetakHasilAsskomsKekuatan","cetakHasilAsskomsPengembangan"));
+
+    $resultAssKom = AssessmentKompetensi::where("ass_id", $assId)->get();
+
+
+    return view("partisipan.dashboard.result.v_index", compact("resultAssKom","rowscores","rangeScore","cetakHasilAsskomsKekuatan","cetakHasilAsskomsPengembangan"));
   }
 }

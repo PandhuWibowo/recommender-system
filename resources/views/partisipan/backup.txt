@@ -36,3 +36,31 @@ Backup codingan bagian result
     <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">0</span></li>
   @endif
 @endforeach -->
+
+
+<!-- ngeloop sjq -->
+@foreach($query2 as $row)
+  <?php $nilai_assess=0;
+  $nilai_sjq = $row->sum_nilai * 0.4; ?>
+  <!-- sum_nilai sjq = {{$row->sum_nilai}} <br /> -> ini juga -->
+
+  <!-- ngeloop assessment -->
+  @foreach($query as $row2)
+    @if($row->kKompetensi == $row2->kKompetensi)
+      <?php $nilai_assess = ($row2->sum_nilai / 4)*0.6; ?>
+      <!-- sum_nilai assessment = {{$row2->sum_nilai}}<br /> -> ini kan cuma setelah diitung masing2 -->
+    @endif
+  @endforeach
+
+  <!-- ngitung total -->
+  <!-- assessment = {{$nilai_assess}}, sjq = {{$nilai_sjq}}<br /> -> trus ini hasil tambah -->
+  <?php $nilai_total = $nilai_assess + $nilai_sjq;
+  $hasil[$row->kKompetensi] = $nilai_total; ?>
+  <!-- {{$hasil[$row->kKompetensi]}} -->
+  @if($hasil[$row->kKompetensi] >= 3.75 && $hasil[$row->kKompetensi] <= 4.75)
+  @elseif($hasil[$row->kKompetensi] >= 2.75 && $hasil[$row->kKompetensi] < 3.75)
+  @elseif($hasil[$row->kKompetensi] >= 1.75 && $hasil[$row->kKompetensi] < 2.75)
+  @elseif($hasil[$row->kKompetensi] >= 0.75 && $hasil[$row->kKompetensi] < 1.75)
+  @else
+  @endif
+@endforeach

@@ -142,37 +142,21 @@
                             <ul class="basic-list">
                                 <li><span class="pull-left label-danger label-1 label">Competencies</span> <span class="pull-right label-danger label-1 label">Scores</span></li>
                                 <br>
-                                <!-- ngeloop sjq -->
-                                @foreach($query2 as $row)
-                                  <?php $nilai_assess=0;
-                                  $nilai_sjq = $row->sum_nilai * 0.4; ?>
-                                  <!-- sum_nilai sjq = {{$row->sum_nilai}} <br /> -> ini juga -->
 
-                                  <!-- ngeloop assessment -->
-                                  @foreach($query as $row2)
-                                    @if($row->kKompetensi == $row2->kKompetensi)
-                                      <?php $nilai_assess = ($row2->sum_nilai / 4)*0.6; ?>
-                                      <!-- sum_nilai assessment = {{$row2->sum_nilai}}<br /> -> ini kan cuma setelah diitung masing2 -->
-                                    @endif
-                                  @endforeach
-
-                                  <!-- ngitung total -->
-                                  <!-- assessment = {{$nilai_assess}}, sjq = {{$nilai_sjq}}<br /> -> trus ini hasil tambah -->
-                                  <?php $nilai_total = $nilai_assess + $nilai_sjq;
-                                  $hasil[$row->kKompetensi] = $nilai_total; ?>
-                                  <!-- {{$hasil[$row->kKompetensi]}} -->
-                                  @if($hasil[$row->kKompetensi] >= 3.75 && $hasil[$row->kKompetensi] <= 4.75)
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">4</span></li>
-                                  @elseif($hasil[$row->kKompetensi] >= 2.75 && $hasil[$row->kKompetensi] < 3.75)
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">3</span></li>
-                                  @elseif($hasil[$row->kKompetensi] >= 1.75 && $hasil[$row->kKompetensi] < 2.75)
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">2</span></li>
-                                  @elseif($hasil[$row->kKompetensi] >= 0.75 && $hasil[$row->kKompetensi] < 1.75)
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">1</span></li>
+                                @foreach($resultAssKom as $row)
+                                  @if($row->pembulatan == 4 || $row->pembulatan == "4")
+                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-1 label">4</span></li>
+                                  @elseif($row->pembulatan == 3 || $row->pembulatan == "3")
+                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-success label-3 label">3</span></li>
+                                  @elseif($row->pembulatan == 2 || $row->pembulatan == "2")
+                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-yellow label-7 label">2</span></li>
+                                  @elseif($row->pembulatan == 1 || $row->pembulatan == "1")
+                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-2 label">1</span></li>
                                   @else
-                                    <li>{{$row->kKompetensi}} <span class="pull-right label-danger label-1 label">0</span></li>
+                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-2 label">1</span></li>
                                   @endif
                                 @endforeach
+                                
 
                             </ul>
                         </div>
@@ -182,10 +166,10 @@
                             <h3 class="box-title">Strength Area</h3>
                             <table class="table table-striped" id="tableRange">
                               <tbody>
-                                @foreach($rangeScore as $row)
+                                @foreach($cetakHasilAsskomsKekuatan as $row)
                                   <tr>
-                                    <td style="text-align:center">{!!$row->range_score!!}</td>
-                                    <td style="text-align:center">{!!$row->keterangan!!}</td>
+                                    <td style="text-align:center">&#x2605;</td>
+                                    <td>{!!$row->hasil_kompetensi!!}</td>
                                   </tr>
                                 @endforeach
                               </tbody>
@@ -194,10 +178,10 @@
                             <h3 class="box-title">Development Area</h3>
                             <table class="table table-striped" id="tableRange">
                               <tbody>
-                                @foreach($rangeScore as $row)
+                                @foreach($cetakHasilAsskomsPengembangan as $row)
                                   <tr>
-                                    <td style="text-align:center">{!!$row->range_score!!}</td>
-                                    <td style="text-align:center">{!!$row->keterangan!!}</td>
+                                    <td style="text-align:center">&#x26AB;</td>
+                                    <td style="text-align:center">{!!$row->hasil_kompetensi!!}</td>
                                   </tr>
                                 @endforeach
                               </tbody>

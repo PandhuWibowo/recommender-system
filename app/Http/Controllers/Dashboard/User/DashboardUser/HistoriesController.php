@@ -55,26 +55,28 @@ class HistoriesController extends Controller
     //           ->where("r.nama_rowscore","SJQ")
     //           ->groupBy("r.no_urut_rowscore","k.no_urut_kompetensi")
     //           ->get();
-    //
-    // $rangeScore = KeteranganNilai::orderBy("range_score")->get();
 
-    $assKom         = AssessmentKompetensi::with("get_kompetensi")->where("ass_id", $decryptAssId)->get();
+    $resultAssKom = AssessmentKompetensi::where("ass_id", $decryptAssId)->get();
 
-    echo "Area Kekuatan : <br/>";
-    $no = 1;
-    foreach($assKom as $row){
+    $rangeScore = KeteranganNilai::orderBy("range_score")->get();
 
-      echo $no.". Kompetensi : "."(".$row->kompetensi_id.") ".$row->get_kompetensi->kompetensi." - ".$row->pembulatan."<br />";
-      $no++;
-    }
-    //
-    // $queryKekuatan = HasilKompetensi::join("keterangan_nilais","keteranganhasils.keterangan_id","=","keterangan_nilais.id")
-    //                                     ->whereIn("range_score",["1","2"])
-    //                                     ->get();
-    // foreach($queryKekuatan as $row){
-    //   echo $row->hasil_kompetensi."<br />";
-    // }
-    // return view("partisipan.dashboard.logtest.v_detail", compact("query","query2","rangeScore"));
+
+
+    $cetakHasilAsskomsKekuatan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->where("ak.ass_id", $decryptAssId)
+                                    ->whereIn("range_score",["1","2"])
+                                    ->get();
+
+    $cetakHasilAsskomsPengembangan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->where("ak.ass_id", $decryptAssId)
+                                    ->whereIn("range_score",["3","4"])
+                                    ->get();
+
+    return view("partisipan.dashboard.logtest.v_detail", compact("resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan"));
 
   }
 }
