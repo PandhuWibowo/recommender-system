@@ -167,7 +167,7 @@
                               @foreach($cetakHasilAsskomsKekuatan as $row)
                                 <tr>
                                   <td style="text-align:center">&#x2605;</td>
-                                  <td>{!!$row->hasil_kompetensi!!}</td>
+                                  <td style="text-align:justify">{!!$row->hasil_kompetensi!!}</td>
                                 </tr>
                               @endforeach
                             </tbody>
@@ -179,7 +179,7 @@
                               @foreach($cetakHasilAsskomsPengembangan as $row)
                                 <tr>
                                   <td style="text-align:center">&#x26AB;</td>
-                                  <td style="text-align:center">{!!$row->hasil_kompetensi!!}</td>
+                                  <td style="text-align:justify">{!!$row->hasil_kompetensi!!}</td>
                                 </tr>
                               @endforeach
                             </tbody>

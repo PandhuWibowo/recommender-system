@@ -156,36 +156,36 @@
                                     <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-2 label">1</span></li>
                                   @endif
                                 @endforeach
-                                
+
 
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
-                            <h3 class="box-title">Strength Area</h3>
-                            <table class="table table-striped" id="tableRange">
-                              <tbody>
-                                @foreach($cetakHasilAsskomsKekuatan as $row)
-                                  <tr>
-                                    <td style="text-align:center">&#x2605;</td>
-                                    <td>{!!$row->hasil_kompetensi!!}</td>
-                                  </tr>
-                                @endforeach
-                              </tbody>
-                            </table>
+                          <h3 class="box-title">Strength Area</h3>
+                          <table class="table table-striped" id="tableRange">
+                            <tbody>
+                              @foreach($cetakHasilAsskomsKekuatan as $row)
+                                <tr>
+                                  <td style="text-align:center">&#x2605;</td>
+                                  <td style="text-align:justify">{!!$row->hasil_kompetensi!!}</td>
+                                </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
 
-                            <h3 class="box-title">Development Area</h3>
-                            <table class="table table-striped" id="tableRange">
-                              <tbody>
-                                @foreach($cetakHasilAsskomsPengembangan as $row)
-                                  <tr>
-                                    <td style="text-align:center">&#x26AB;</td>
-                                    <td style="text-align:center">{!!$row->hasil_kompetensi!!}</td>
-                                  </tr>
-                                @endforeach
-                              </tbody>
-                            </table>
+                          <h3 class="box-title">Development Area</h3>
+                          <table class="table table-striped" id="tableRange">
+                            <tbody>
+                              @foreach($cetakHasilAsskomsPengembangan as $row)
+                                <tr>
+                                  <td style="text-align:center">&#x26AB;</td>
+                                  <td style="text-align:justify">{!!$row->hasil_kompetensi!!}</td>
+                                </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
                         </div>
                     </div>
                 </div>

@@ -203,14 +203,14 @@ class ResultController extends Controller
                                     ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
                                     ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
                                     ->where("ak.ass_id", $assId)
-                                    ->whereIn("range_score",["1","2"])
+                                    ->whereIn("range_score",["3","4"])
                                     ->get();
 
     $cetakHasilAsskomsPengembangan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
                                     ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
                                     ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
                                     ->where("ak.ass_id", $assId)
-                                    ->whereIn("range_score",["3","4"])
+                                    ->whereIn("range_score",["1","2"])
                                     ->get();
 
     $resultAssKom = AssessmentKompetensi::where("ass_id", $assId)->get();
