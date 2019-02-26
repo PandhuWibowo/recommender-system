@@ -10,4 +10,8 @@ class KeteranganNilai extends Model{
   protected $table = "keterangan_nilais";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
+
+  public function dataHasilAssKom(){
+      return $this->hasMany("App\Http\Models\HasilAssKom");
+  }
 }

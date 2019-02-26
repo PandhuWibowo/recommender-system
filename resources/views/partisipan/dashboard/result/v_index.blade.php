@@ -179,14 +179,8 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
-                            <!-- <h3 class="box-title">Range Score</h3> -->
+                            <h3 class="box-title">Strength Area</h3>
                             <table class="table table-striped" id="tableRange">
-                              <thead>
-                                <tr>
-                                  <th style="text-align:center">Range Score</th>
-                                  <th style="text-align:center">Description</th>
-                                </tr>
-                              </thead>
                               <tbody>
                                 @foreach($rangeScore as $row)
                                   <tr>
@@ -195,12 +189,18 @@
                                   </tr>
                                 @endforeach
                               </tbody>
-                              <tfoot>
-                                <tr>
-                                  <th style="text-align:center">Range Score</th>
-                                  <th style="text-align:center">Description</th>
-                                </tr>
-                              </tfoot>
+                            </table>
+
+                            <h3 class="box-title">Development Area</h3>
+                            <table class="table table-striped" id="tableRange">
+                              <tbody>
+                                @foreach($rangeScore as $row)
+                                  <tr>
+                                    <td style="text-align:center">{!!$row->range_score!!}</td>
+                                    <td style="text-align:center">{!!$row->keterangan!!}</td>
+                                  </tr>
+                                @endforeach
+                              </tbody>
                             </table>
                         </div>
                     </div>

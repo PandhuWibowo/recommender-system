@@ -4,22 +4,22 @@ namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class AssessmentKompetensi extends Model{
+class HasilAssKom extends Model{
   use SoftDeletes;
-  protected $fillable = ['id','ass_id','kompetensi_id','weight','pembulatan'];
-  protected $table = "assesment_kompetensis";
+  protected $fillable = ['id','keteranganhasil_id','asskom_id'];
+  protected $table = "hasil_nilai_asskoms";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
 
-  public function dataHasilAssKom(){
-      return $this->hasMany("App\Http\Models\HasilAssKom");
+  public function getKeteranganHasil(){
+      return $this->belongsTo(HasilKompetensi::class,'keteranganhasil_id');
   }
 
-  public function get_kompetensi(){
-    return $this->belongsTo(Kompetensi::class, 'kompetensi_id');
+  public function getAssessmentKompetensi(){
+    return $this->belongsTo(AssessmentKompetensi::class, 'asskom_id');
   }
-
+  //
   // public function get_rowscore(){
   //   return $this->belongsTo(RowScore::class, 'rowscore_id');
   // }

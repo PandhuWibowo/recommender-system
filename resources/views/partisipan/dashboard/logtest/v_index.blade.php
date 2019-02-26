@@ -184,7 +184,7 @@
                                             <td>{{ $row->get_user->firstname }} {{ $row->get_user->lastname }}</td>
                                             <td>{{Carbon::parse($row->created_at)->formatLocalized('%A, %d %B %Y')}}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" href="{{ url('backend/pages/histories/'.Crypt::encrypt($row->id)) }}"><i class="fa fa-table"></i></a>
+                                                <a class="btn btn-warning btn_edit" href="{{ url('user/pages/histories/'.Crypt::encrypt($row->id)) }}"><i class="fa fa-table"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
