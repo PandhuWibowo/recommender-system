@@ -407,7 +407,7 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
-        $(".btn_edit").on("click", function(){
+        $("#myCompetencies").on("click", ".btn_edit",function(){
           var varId         = $(this).data("id");
           var varPresentase = $(this).data("presentase");
           var varRowScore   = $(this).data("nama_rowscore");
@@ -428,6 +428,7 @@
 
           }
         });
+
         $("#btn_save").on("click", function(){
           $.ajaxSetup({
               headers: {

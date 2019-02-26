@@ -377,7 +377,7 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
-        $(".btn_edit").on("click", function(){
+        $("#myAssesments").on("click", ".btn_edit",function(){
           var varId     = $(this).data("id");
           var varName   = $(this).data("nama");
           var varNoUrut = $(this).data("no");

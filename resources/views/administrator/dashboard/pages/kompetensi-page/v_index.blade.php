@@ -441,7 +441,7 @@
       $(document).ready(function(){
 
         //Menampilkan ke modal edit
-        $(".btn_edit").on("click", function(){
+        $("#myCompetencies").on("click", ".btn_edit",function(){
 
           var varId       = $(this).data("id");
           var varName     = $(this).data("kompetensi");

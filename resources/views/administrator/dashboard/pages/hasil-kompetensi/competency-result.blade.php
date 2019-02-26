@@ -447,7 +447,7 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
-        $(".btn_edit").on("click", function(){
+        $("#myAssesments").on("click", ".btn_edit", function(){
           var varId               = $(this).data("id");
           var varKeteranganID     = $(this).data("keterangan_id");
           var varKompetensiID     = $(this).data("kompetensi_id");
