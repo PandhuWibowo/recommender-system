@@ -199,11 +199,20 @@ class ResultController extends Controller
 
     $rangeScore = KeteranganNilai::orderBy("range_score")->get();
 
-    $cetakHasilAsskoms = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+    $cetakHasilAsskomsKekuatan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
                                     ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-                                    ->where("keteranganhasils.ass_id", $assId)
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->where("ak.ass_id", $assId)
+                                    ->whereIn("range_score",["1","2"])
                                     ->get();
 
-    return view("partisipan.dashboard.result.v_index", compact("query","rowscores","query2","rangeScore"));
+    $cetakHasilAsskomsPengembangan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->where("ak.ass_id", $assId)
+                                    ->whereIn("range_score",["3","4"])
+                                    ->get();
+                                    
+    return view("partisipan.dashboard.result.v_index", compact("query","rowscores","query2","rangeScore","cetakHasilAsskomsKekuatan","cetakHasilAsskomsPengembangan"));
   }
 }

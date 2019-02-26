@@ -182,10 +182,10 @@
                             <h3 class="box-title">Strength Area</h3>
                             <table class="table table-striped" id="tableRange">
                               <tbody>
-                                @foreach($rangeScore as $row)
+                                @foreach($cetakHasilAsskomsKekuatan as $row)
                                   <tr>
-                                    <td style="text-align:center">{!!$row->range_score!!}</td>
-                                    <td style="text-align:center">{!!$row->keterangan!!}</td>
+                                    <td style="text-align:center">&#x2605;</td>
+                                    <td>{!!$row->hasil_kompetensi!!}</td>
                                   </tr>
                                 @endforeach
                               </tbody>
@@ -194,10 +194,10 @@
                             <h3 class="box-title">Development Area</h3>
                             <table class="table table-striped" id="tableRange">
                               <tbody>
-                                @foreach($rangeScore as $row)
+                                @foreach($cetakHasilAsskomsPengembangan as $row)
                                   <tr>
-                                    <td style="text-align:center">{!!$row->range_score!!}</td>
-                                    <td style="text-align:center">{!!$row->keterangan!!}</td>
+                                    <td style="text-align:center">&#x2605;</td>
+                                    <td style="text-align:center">{!!$row->hasil_kompetensi!!}</td>
                                   </tr>
                                 @endforeach
                               </tbody>
