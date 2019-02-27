@@ -10,6 +10,7 @@ use App\Http\Models\User;
 use App\Http\Models\Assesment;
 use App\Http\Models\KeteranganNilai;
 use App\Http\Models\AssessmentKompetensi;
+use App\Http\Models\Kompetensi;
 use App\Http\Models\HasilAssKom;
 use App\Http\Models\RowScore;
 use Illuminate\Support\Facades\Crypt;
@@ -79,7 +80,23 @@ class HistoriesController extends Controller
                                     ->orderBy("pembulatan")
                                     ->get();
 
-    return view("administrator.dashboard.pages.logtest.v_detail", compact("resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan"));
+    // $cetakSaran = Kompetensi::join("assesment_kompetensis as ak","kompetensis.id","=","ak.kompetensi_id")
+    //                         ->join("keteranganhasils as kh","kompetensis.id","=","kh.kompetensi_id")
+    //                         ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+    //                         ->where("ak.ass_id", $decryptAssId)
+    //                         ->whereIn("range_score", ["1","2"])
+    //                         ->orderBy("pembulatan")
+    //                         ->get();
+
+    $cetakSaran = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->join("kompetensis as k","kh.kompetensi_id","=","k.id")
+                                    ->where("ak.ass_id", $decryptAssId)
+                                    ->whereIn("range_score",["1","2"])
+                                    ->orderByDesc("pembulatan")
+                                    ->get();
+    return view("administrator.dashboard.pages.logtest.v_detail", compact("cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan"));
 
 
   }

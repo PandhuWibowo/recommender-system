@@ -76,7 +76,16 @@ class HistoriesController extends Controller
                                     ->whereIn("range_score",["1","2"])
                                     ->get();
 
-    return view("partisipan.dashboard.logtest.v_detail", compact("resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan"));
+    $cetakSaran = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->join("kompetensis as k","kh.kompetensi_id","=","k.id")
+                                    ->where("ak.ass_id", $decryptAssId)
+                                    ->whereIn("range_score",["1","2"])
+                                    ->orderByDesc("pembulatan")
+                                    ->get();
+
+    return view("partisipan.dashboard.logtest.v_detail", compact("cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan"));
 
   }
 }

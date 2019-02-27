@@ -216,6 +216,15 @@ class ResultController extends Controller
     $resultAssKom = AssessmentKompetensi::where("ass_id", $assId)->get();
 
 
-    return view("partisipan.dashboard.result.v_index", compact("resultAssKom","rowscores","rangeScore","cetakHasilAsskomsKekuatan","cetakHasilAsskomsPengembangan"));
+    $cetakSaran = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->join("kompetensis as k","kh.kompetensi_id","=","k.id")
+                                    ->where("ak.ass_id", $assId)
+                                    ->whereIn("range_score",["1","2"])
+                                    ->orderByDesc("pembulatan")
+                                    ->get();
+
+    return view("partisipan.dashboard.result.v_index", compact("cetakSaran","resultAssKom","rowscores","rangeScore","cetakHasilAsskomsKekuatan","cetakHasilAsskomsPengembangan"));
   }
 }
