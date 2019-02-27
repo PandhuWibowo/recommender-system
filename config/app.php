@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
+        'hisorange\BrowserDetect\Provider\BrowserDetectService',
         /*
          * Package Service Providers...
          */
@@ -225,6 +226,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Carbon' => 'Carbon\Carbon',
         'Uuid' => Webpatser\Uuid\Uuid::class,
+        'BrowserDetect' => 'hisorange\BrowserDetect\Facade\Parser',
     ],
 
 ];

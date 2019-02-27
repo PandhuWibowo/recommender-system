@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use App\Http\Models\LoginAuth;
+use App\Http\Models\ModelLogs\Login;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use BrowserDetect;
 // use Auth;
 /**
  * Login Controller
@@ -50,13 +52,39 @@ class LoginController extends Controller
         Session::put('image', $data->image);
         Session::put('id', $data->id);
         Session::put('login', TRUE);
+
+
+
+        $logLogin = new Login([
+          "user_id"     => $data->id,
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Login Button",
+          "data"        => $txtEmail." melakukan signin dengan password ".$txtPassword.".",
+          "link"        => url()->current()
+        ]);
+
+        $logLogin->save();
+
         return response()->json(
           array(
             "response"  => "success",
             "level"     => $data->level,
           )
         );
+
       }else{
+        $logLogin = new Login([
+          "user_id"     => $data->id,
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Login Button",
+          "data"        => $txtEmail." tidak bisa melakukan signin dengan password ".$txtPassword.". Karena password salah.",
+          "link"        => url()->current()
+        ]);
+
+        $logLogin->save();
+
         return response()->json(
           array(
             'error' => "Oops, Password doesn't match"
@@ -64,6 +92,17 @@ class LoginController extends Controller
         );
       }
     }else{
+      $logLogin = new Login([
+        "user_id"     => $data->id,
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Login Button",
+        "data"        => $txtEmail." dengan password ".$txtPassword.". belum terdaftar dalam database.",
+        "link"        => url()->current()
+      ]);
+
+      $logLogin->save();
+
       return response()->json(
         array(
           'null' => 'You have not been yet account, cause Your email has not been registered'
@@ -72,7 +111,17 @@ class LoginController extends Controller
     }
   }
 
-  public function mm_logout(){
+  public function mm_logout(Request $request){
+      $logLogOut = new Login([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Log Out Button",
+        "data"        => Session::get("email")." telah keluar.",
+        "link"        => url()->current()
+      ]);
+
+      $logLogOut->save();
       Session::flush();
       Session::flash('logout','You are already out');
       return redirect('backend/pages/signin');

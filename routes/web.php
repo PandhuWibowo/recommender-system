@@ -6,10 +6,11 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Autho
 
 // auth
 //Administrator Routing
+Route::get("/","Login\LoginController@index");
+
 Route::prefix('backend/pages')->group(function () {
 
     //Login Page
-    Route::get("routing/signin","Login\LoginController@index");
     Route::get("signin","Login\LoginController@auth");
     Route::post("auth/process","Login\LoginController@auth_process");
     Route::get("signout","Login\LoginController@mm_logout");
@@ -145,6 +146,11 @@ Route::prefix('user/pages')->group(function () {
 Route::prefix('error/page')->group(function () {
   Route::get('404', ['as' => '404', 'uses' => 'ErrorPage\ErrorController@notfound']);
   Route::get('500', ['as' => '500', 'uses' => 'ErrorPage\ErrorController@fatal']);
+});
+
+//URL for Logs
+Route::prefix("logs")->group(function(){
+
 });
 
 // Auth::routes();

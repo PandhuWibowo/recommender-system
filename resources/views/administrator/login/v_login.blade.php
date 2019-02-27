@@ -142,6 +142,8 @@
                   });break;
                 }
               }
+
+							// console.log(data);
             },
             error:function(data){
               console.log(data);
