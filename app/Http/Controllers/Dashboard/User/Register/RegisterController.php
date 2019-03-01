@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Session;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use BrowserDetect;
+use App\Http\Models\ModelLogs\Register;
 use Mail;
 /**
  * Register Controller
@@ -62,17 +64,33 @@ class RegisterController extends Controller
           'confirmation_code' => $confirmation_code
         ]);
 
-        Mail::send('administrator.dashboard.pages.email_page.verify', ['confirmation_code' => $confirmation_code], function($m) {
-            $m->from('adm.ngartish@gmail.com', 'Loopinc.id');
-            $m->to(Input::get('email'), Input::get('firstname').' '.Input::get('lastname'))
-                ->subject('Confirm your account at this email');
-        });
+        $logRegister = new Register([
+          "user_id"     => $users->id,
+          "email"       => trim($request->email),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Register Button",
+          "data"        => trim($request->email)." melakukan pendaftaran akun baru",
+          "link"        => url()->current()
+        ]);
 
-        return response()->json(
-            array(
-              "response"  => "success"
-            )
-        );
+        if($logRegister->save()){
+          Mail::send('administrator.dashboard.pages.email_page.verify', ['confirmation_code' => $confirmation_code], function($m) {
+              $m->from('no-reply@loopinc.id', 'Loopinc.id');
+              $m->to(Input::get('email'), Input::get('firstname').' '.Input::get('lastname'))
+                  ->subject('Confirm your account at this email');
+          });
+
+          return response()->json(
+              array(
+                "response"  => "success"
+              )
+          );
+        }else{
+          return response()->json($mail);
+        }
+
+
 
         // Session::flash('message', 'Terima kasih telah mendaftar! Silahkan cek email anda untuk konfirmasi.');
         //

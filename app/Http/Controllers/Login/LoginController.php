@@ -53,8 +53,6 @@ class LoginController extends Controller
         Session::put('id', $data->id);
         Session::put('login', TRUE);
 
-
-
         $logLogin = new Login([
           "user_id"     => $data->id,
           "ip_address"  => $request->ip(),
