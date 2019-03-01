@@ -25,22 +25,28 @@ class ForgotPasswordController extends Controller
   public function sendEmail(Request $request)
   {
     $email              = $request->email;
+
     $confirmation_code  = str_random(30);
 
     $user = User::where("email", $email)->select("email","id")->first();
 
-    $update = User::findOrFail($user->id);
-    $update->code_reset_password  = $confirmation_code;
-    $update->save();
+    if($user == null || $user == ""){
+      Session::flash("failed-reset-password","Email has not been at our database");
+      return redirect("backend/pages/signin");
+    }else{
+      $update = User::findOrFail($user->id);
+      $update->code_reset_password  = $confirmation_code;
+      $update->save();
 
-    Mail::send('administrator.dashboard.pages.email_page.reset', ['code_reset_password' => $confirmation_code], function($m) {
-        $m->from('adm.ngartish@gmail.com', 'Loopinc.id');
-        $m->to(Input::get('email'))
-            ->subject('Do you wanna change password?');
-    });
+      Mail::send('administrator.dashboard.pages.email_page.reset', ['code_reset_password' => $confirmation_code], function($m) {
+          $m->from('no-reply@loopinc.id', 'Loopinc.id');
+          $m->to(Input::get('email'))
+              ->subject('Do you wanna change password?');
+      });
 
-    Session::flash("reset-password","Please check your email");
-    return redirect("backend/pages/signin");
+      Session::flash("reset-password","Please check your email");
+      return redirect("backend/pages/signin");
+    }
   }
 
   public function reset($id){

@@ -87,7 +87,11 @@ class RegisterController extends Controller
               )
           );
         }else{
-          return response()->json($mail);
+          return response()->json(
+            array(
+              "response"  => "failed"
+            )
+          );
         }
 
 

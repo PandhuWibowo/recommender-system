@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Password Recevery | Kiaalap - Kiaalap Admin Template</title>
+    <title>Password Recovery | Kiaalap - Kiaalap Admin Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
@@ -92,7 +92,7 @@
                     </div>
                 </div>
 			</div>
-			<div class="text-center login-footer" style="text-align: center;bottom:0;width: 100%;left:0;position: fixed;">
+			<div class="text-center login-footer" style="text-align: center;bottom:0;width: 100%;left:0;">
         @include('administrator.dashboard.include.v_copyright')
 				<!-- <p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a></p> -->
 			</div>

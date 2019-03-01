@@ -14,6 +14,10 @@
                   <p style="color:red">
                     {{ Session::get('must-login') }}
                   </p>
+								@elseif(Session::get('failed-reset-password'))
+									<p style="color:red">
+										{{ Session::get('failed-reset-password') }}
+									</p>
 								@elseif(Session::has('reset-password'))
 									<p style="color:red">
 										{{ Session::get('reset-password') }}
