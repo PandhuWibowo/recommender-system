@@ -262,7 +262,7 @@
                                                 <div class="chosen-select-single mg-b-20">
                                                     <select data-placeholder="Choose Answer Model (Option)" id="model_answer" name="model_answer" class="chosen-select" tabindex="-1">
                                                       <option></option>
-                                                      <option value="1">Agree/Disgree</option>
+                                                      <option value="1">Setuju/Tidak Setuju</option>
                                                       <option value="2">True/False</option>
                           													</select>
                                                 </div>
@@ -436,7 +436,7 @@
             html+='<div class="after-add-more model-answer">'+
               '<div class="chosen-select-single mg-b-20">'+
                   '<label>Answer</label>'+
-                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Strongly Disagree</textarea>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Sangat Tidak Setuju</textarea>'+
               '</div>'+
               '<div class="chosen-select-single mg-b-20">'+
                   '<label>Score</label>'+
@@ -444,7 +444,7 @@
               '</div>'+
               '<div class="chosen-select-single mg-b-20">'+
                   '<label>Answer</label>'+
-                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Disagree</textarea>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Tidak Setuju</textarea>'+
               '</div>'+
               '<div class="chosen-select-single mg-b-20">'+
                   '<label>Score</label>'+
@@ -452,7 +452,7 @@
               '</div>'+
               '<div class="chosen-select-single mg-b-20">'+
                   '<label>Answer</label>'+
-                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Agree</textarea>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Setuju</textarea>'+
               '</div>'+
               '<div class="chosen-select-single mg-b-20">'+
                   '<label>Score</label>'+
@@ -460,7 +460,7 @@
               '</div>'+
               '<div class="chosen-select-single mg-b-20">'+
                   '<label>Answer</label>'+
-                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Strongly Agree</textarea>'+
+                  '<textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer">Sangat Setuju</textarea>'+
               '</div>'+
               '<div class="chosen-select-single mg-b-20">'+
                   '<label>Score</label>'+

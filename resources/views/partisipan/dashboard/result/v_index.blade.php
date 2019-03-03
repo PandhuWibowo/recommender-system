@@ -148,7 +148,7 @@
                                   @elseif($row->pembulatan == 3 || $row->pembulatan == "3")
                                     <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-success label-3 label">3</span></li>
                                   @elseif($row->pembulatan == 2 || $row->pembulatan == "2")
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-yellow label-7 label">2</span></li>
+                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-yellow label-7 label" style="color:#000;">2</span></li>
                                   @elseif($row->pembulatan == 1 || $row->pembulatan == "1")
                                     <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-2 label">1</span></li>
                                   @else
