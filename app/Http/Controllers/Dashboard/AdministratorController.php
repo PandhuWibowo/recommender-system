@@ -13,26 +13,64 @@ use Illuminate\Support\Facades\Session;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\Administrator;
+use BrowserDetect;
+
+
 /**
  * AdministratorController
  */
 class AdministratorController extends Controller
 {
 
-    public function index(){
+    public function index(Request $request){
+      $logPages = new DirectPage([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Menu Administrator",
+        "data"        => Session::get("email")." mengunjungi halaman Daftar Administrator",
+        "link"        => url()->current()
+      ]);
+
+      $logPages->save();
+
       $dataAdministrator = LoginAuth::where('level', 'Super Admin')->where('active','1')->orderBy('firstname', 'desc')->get();
       return view("administrator.dashboard.pages.admin-page.v_index", compact('dataAdministrator'));
     }
 
-    public function show($id){
+    public function show($id, Request $request){
       $decryptId            = Crypt::decrypt($id);
+      $logPages = new DirectPage([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Detail Administrator",
+        "data"        => Session::get("email")." mengunjungi halaman Detail Administrator dengan No. Id : ".$id,
+        "link"        => url()->current()
+      ]);
+
+      $logPages->save();
+
       $detailAdministrator  = LoginAuth::where('level','Super Admin')->where('id',$decryptId)->first();
       // echo response()->json($detailAdministrator);
       return view("administrator.dashboard.pages.admin-page.detail.v_view", compact('detailAdministrator'));
       // echo $decryptId;
     }
 
-    public function add(){
+    public function add(Request $request){
+      $logPages = new DirectPage([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Add New Administrator",
+        "data"        => Session::get("email")." mengunjungi halaman Add New Administrator",
+        "link"        => url()->current()
+      ]);
+
+      $logPages->save();
+
       return view("administrator.dashboard.pages.admin-page.v_add_admin");
     }
 
@@ -60,6 +98,18 @@ class AdministratorController extends Controller
         //Rumus Session
         // Session::put('st_firstname', $request->firstname);
         $messages = $validator->messages();
+
+        $log = new Administrator([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Add New Administrator - Store",
+          "data"        => $validator,
+          "link"        => url()->current()
+        ]);
+
+        $log->save();
+
         return Redirect::to('backend/pages/administrator/add')
           ->withErrors($validator);
       }
@@ -83,12 +133,35 @@ class AdministratorController extends Controller
             'active'    => '1'
           ]);
 
-          $result = $users->save();
-          if($result){
+          if($users->save()){
+            $log = new Administrator([
+              "user_id"     => Session::get("id"),
+              "ip_address"  => $request->ip(),
+              "browser"     => BrowserDetect::browserName(),
+              "action"      => "Add New Administrator - Store|Success",
+              "data"        => "Berhasil menyimpan data Administrator baru - Administrator ID : ".$users->id.", Firstname : ".ucfirst(trim($request->firstname)).", Lastname : ".ucfirst(trim($request->lastname)).", Nickname : ".ucfirst(trim($request->nickname)).", Email : ".trim($request->email).", Username : ".ucfirst(trim($request->username)).", Phone Number : ".trim($request->phone).
+                               ", Level : ".trim($request->level).", Address : ".ucfirst(trim($request->address)).", Password : ".Hash::make($request->password).", Image : ".$txtImageName,
+              "link"        => url()->current()
+            ]);
+
+            $log->save();
+
             request()->image->move(public_path('images/images-admin'), $txtImageName);
             Session::flash("success","Anda berhasil menyimpan data administrator yang baru");
             return redirect("backend/pages/administrator");
           }else{
+            $log = new Administrator([
+              "user_id"     => Session::get("id"),
+              "ip_address"  => $request->ip(),
+              "browser"     => BrowserDetect::browserName(),
+              "action"      => "Add New Administrator - Store|Failed",
+              "data"        => "Gagal menyimpan data Administrator baru - Administrator ID : ".$users->id.", Firstname : ".ucfirst(trim($request->firstname)).", Lastname : ".ucfirst(trim($request->lastname)).", Nickname : ".ucfirst(trim($request->nickname)).", Email : ".trim($request->email).", Username : ".ucfirst(trim($request->username)).", Phone Number : ".trim($request->phone).
+                               ", Level : ".trim($request->level).", Address : ".ucfirst(trim($request->address)).", Password : ".Hash::make($request->password).", Image : ".$txtImageName,
+              "link"        => url()->current()
+            ]);
+
+            $log->save();
+
             Session::flash("error","Anda gagal menyimpan data administrator yang baru");
             return redirect("backend/pages/administrator/add");
           }
@@ -127,11 +200,34 @@ class AdministratorController extends Controller
         $updateUsers->username  = $txtUsername;
         if($updateUsers->save()){
           // request()->image->move(public_path('images/images-admin'), $txtImageName);
+          $log = new Administrator([
+            "user_id"     => Session::get("id"),
+            "ip_address"  => $request->ip(),
+            "browser"     => BrowserDetect::browserName(),
+            "action"      => "Update Administrator - Update|Success",
+            "data"        => "Berhasil mengubah data Administrator - Administrator ID : ".$decryptId.", Firstname : ".ucfirst(trim($txtFirstName)).", Lastname : ".ucfirst(trim($txtLastName)).", Nickname : ".ucfirst(trim($txtNickName)).", Email : ".trim($txtEmail).", Username : ".ucfirst(trim($txtUsername)).", Phone Number : ".trim($txtPhone).
+                             ucfirst(trim($txtAddress)),
+            "link"        => url()->current()
+          ]);
+
+          $log->save();
           Session::flash("success","Anda telah berhasil mengubah datanya.");
           return redirect("backend/pages/administrator/".$txtIdAdmin);
           exit();
         }
         else{
+          $log = new Administrator([
+            "user_id"     => Session::get("id"),
+            "ip_address"  => $request->ip(),
+            "browser"     => BrowserDetect::browserName(),
+            "action"      => "Update Administrator - Update|Failed",
+            "data"        => "Berhasil mengubah data Administrator - Administrator ID : ".$decryptId.", Firstname : ".ucfirst(trim($txtFirstName)).", Lastname : ".ucfirst(trim($txtLastName)).", Nickname : ".ucfirst(trim($txtNickName)).", Email : ".trim($txtEmail).", Username : ".ucfirst(trim($txtUsername)).", Phone Number : ".trim($txtPhone).
+                             ucfirst(trim($txtAddress)),
+            "link"        => url()->current()
+          ]);
+
+          $log->save();
+
           Session::flash("error","Gagal mengubah.");
           return redirect("backend/pages/administrator/".$txtIdAdmin);
           exit();
@@ -149,11 +245,36 @@ class AdministratorController extends Controller
 
         if($updateUsers->save()){
           request()->image->move(public_path('images/images-admin'), $txtImageName);
+
+          $log = new Administrator([
+            "user_id"     => Session::get("id"),
+            "ip_address"  => $request->ip(),
+            "browser"     => BrowserDetect::browserName(),
+            "action"      => "Update Administrator - Update|Success",
+            "data"        => "Berhasil mengubah data Administrator - Administrator ID : ".$decryptId.", Firstname : ".ucfirst(trim($txtFirstName)).", Lastname : ".ucfirst(trim($txtLastName)).", Nickname : ".ucfirst(trim($txtNickName)).", Email : ".trim($txtEmail).", Username : ".ucfirst(trim($txtUsername)).", Phone Number : ".trim($txtPhone).
+                             ucfirst(trim($txtAddress)).", Image : ".$txtImageName,
+            "link"        => url()->current()
+          ]);
+
+          $log->save();
+
           Session::flash("success","Anda telah berhasil mengubah datanya.");
           return redirect("backend/pages/administrator/".$txtIdAdmin);
           exit();
         }
         else{
+          $log = new Administrator([
+            "user_id"     => Session::get("id"),
+            "ip_address"  => $request->ip(),
+            "browser"     => BrowserDetect::browserName(),
+            "action"      => "Update Administrator - Update|Failed",
+            "data"        => "Gagal mengubah data Administrator - Administrator ID : ".$decryptId.", Firstname : ".ucfirst(trim($txtFirstName)).", Lastname : ".ucfirst(trim($txtLastName)).", Nickname : ".ucfirst(trim($txtNickName)).", Email : ".trim($txtEmail).", Username : ".ucfirst(trim($txtUsername)).", Phone Number : ".trim($txtPhone).
+                             ucfirst(trim($txtAddress)).", Image : ".$txtImageName,
+            "link"        => url()->current()
+          ]);
+
+          $log->save();
+
           Session::flash("error","Gagal mengubah.");
           return redirect("backend/pages/administrator/".$txtIdAdmin);
           exit();
@@ -163,11 +284,44 @@ class AdministratorController extends Controller
 
     public function destroy(Request $request){
       $txtId    = Crypt::decrypt($request->id);
-      LoginAuth::where('id',$txtId)->delete();
-      return response()->json(
-        array(
-          'response'  => "success"
-        )
-      );
+
+      $data = LoginAuth::where('id', $txtId)->where('active', '1')->first();
+      if(LoginAuth::where('id',$txtId)->delete()){
+        $log = new Administrator([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Delete Administrator - Delete|Success",
+          "data"        => "Berhasil menghapus data Administrator - Administrator ID : ".$data->id.", Firstname : ".ucfirst(trim($data->firstname)).", Lastname : ".ucfirst(trim($data->lastname)).", Nickname : ".ucfirst(trim($data->nickname)).", Email : ".trim($data->email).", Username : ".ucfirst(trim($data->username)).", Phone Number : ".trim($data->phone).
+                           ", Level : ".trim($data->level).", Address : ".ucfirst(trim($data->address)).", Password : ".Hash::make($data->password).", Image : ".$data->image,
+          "link"        => url()->current()
+        ]);
+
+        $log->save();
+
+        return response()->json(
+          array(
+            'response'  => "success"
+          )
+        );
+      }else{
+        $log = new Administrator([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Delete Administrator - Delete|Failed",
+          "data"        => "Gagal menghapus data Administrator - Administrator ID : ".$data->id.", Firstname : ".ucfirst(trim($data->firstname)).", Lastname : ".ucfirst(trim($data->lastname)).", Nickname : ".ucfirst(trim($data->nickname)).", Email : ".trim($data->email).", Username : ".ucfirst(trim($data->username)).", Phone Number : ".trim($data->phone).
+                           ", Level : ".trim($data->level).", Address : ".ucfirst(trim($data->address)).", Password : ".Hash::make($data->password).", Image : ".$data->image,
+          "link"        => url()->current()
+        ]);
+
+        $log->save();
+
+        return response()->json(
+          array(
+            'response'  => "failed"
+          )
+        );
+      }
     }
 }
