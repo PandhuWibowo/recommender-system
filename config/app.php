@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    // 'log' => 'daily',
 
     /*
     |--------------------------------------------------------------------------
@@ -163,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
         'hisorange\BrowserDetect\Provider\BrowserDetectService',
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
         /*
          * Package Service Providers...
          */
