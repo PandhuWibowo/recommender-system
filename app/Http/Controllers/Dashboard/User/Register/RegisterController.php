@@ -112,11 +112,23 @@ class RegisterController extends Controller
     }
   }
 
-  public function confirm($id){
+  public function confirm($id, Request $request){
 
     if(!$id)
     {
+        $user = User::where('confirmation_code', $id)->first();
         echo "Link not registered";
+
+        $logFP = new Register([
+          "email"       => trim($user->email),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Confirmation Link",
+          "data"        => trim($request->email)." Link tidak terdaftar",
+          "link"        => url()->current()
+        ]);
+
+        $logFP->save();
     }
 
         $user = User::where('confirmation_code', $id)->first();
@@ -124,14 +136,35 @@ class RegisterController extends Controller
         if (!$user)
         {
             echo "Link not registered";
+            $logFP = new Register([
+              "email"       => "",
+              "ip_address"  => $request->ip(),
+              "browser"     => BrowserDetect::browserName(),
+              "action"      => "Confirmation Link Email",
+              "data"        => "Link tidak terdaftar",
+              "link"        => url()->current()
+            ]);
+
+            $logFP->save();
+        }else{
+          $logFP = new Register([
+            "email"       => trim($user->email),
+            "ip_address"  => $request->ip(),
+            "browser"     => BrowserDetect::browserName(),
+            "action"      => "Confirmatin Link Email",
+            "data"        => trim($user->email)." pergi ke halaman Login",
+            "link"        => url()->current()
+          ]);
+
+          $logFP->save();
+
+          $user->active = '1';
+          $user->confirmation_code = null;
+          $user->save();
+
+          Session::flash('message', 'Your account has been successfully verified, please log in!');
+
+          return redirect('backend/pages/signin');
         }
-
-        $user->active = '1';
-        $user->confirmation_code = null;
-        $user->save();
-
-        Session::flash('message', 'Your account has been successfully verified, please log in!');
-
-        return redirect('backend/pages/signin');
   }
 }
