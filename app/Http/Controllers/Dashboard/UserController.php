@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Models\ModelLogs\DirectPage;
 use App\Http\Models\ModelLogs\Participant;
-use Mail;
 use BrowserDetect;
+use Mail;
 
 /**
  * AdministratorController
@@ -100,7 +100,7 @@ class UserController extends Controller
         // Session::put('st_firstname', $request->firstname);
         $messages = $validator->messages();
 
-        
+
 
         return Redirect::to('backend/pages/users/add')
           ->withErrors($validator);
