@@ -13,12 +13,27 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
+use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\Competency;
+use BrowserDetect;
+
 /**
  * KompetensiController
  */
 class KompetensiController extends Controller
 {
-  public function index(){
+  public function index(Request $request){
+    $logPages = new DirectPage([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Menu Kompetensi",
+      "data"        => Session::get("email")." mengunjungi halaman Kompetensi",
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
+
     $dataKompetensis = Kompetensi::all();
     return view("administrator.dashboard.pages.kompetensi-page.v_index", compact("dataKompetensis"));
   }
@@ -53,12 +68,43 @@ class KompetensiController extends Controller
         't_pelatihan'       => ucfirst(trim($request->t_pelatihan)),
       ]);
 
-      $assesment->save();
-      return response()->json(
-          array(
-            'response' => "success"
-          )
-      );
+      if($assesment->save()){
+        $log = new Competency([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Store Kompetensi - Store|Success",
+          "data"        => "Berhasil menyimpan data baru Kompetensi - Kompetensi ID : ".$request->id.", Kompetensi : ".ucwords(trim($request->kompetensi)).", Definisi : ".$request->definisi.", Pengembangan Mandiri : ".$request->p_mandiri.
+                           ", Pengembangan Bermitra : ".$request->p_bermitra.", Tema Pelatihan : ".$request->t_pelatihan.", No Urut : ".$request->no_urut_kompetensi,
+          "link"        => url()->current()
+        ]);
+
+        $log->save();
+
+        return response()->json(
+            array(
+              'response' => "success"
+            )
+        );
+      }else{
+        $log = new Competency([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Store Kompetensi - Store|Success",
+          "data"        => "Gagal menyimpan data baru Kompetensi - Kompetensi ID : ".$request->id.", Kompetensi : ".ucwords(trim($request->kompetensi)).", Definisi : ".$request->definisi.", Pengembangan Mandiri : ".$request->p_mandiri.
+                           ", Pengembangan Bermitra : ".$request->p_bermitra.", Tema Pelatihan : ".$request->t_pelatihan.", No Urut : ".$request->no_urut_kompetensi,
+          "link"        => url()->current()
+        ]);
+
+        $log->save();
+
+        return response()->json(
+            array(
+              'response' => "failed"
+            )
+        );
+      }
     }
   }
 
@@ -89,22 +135,84 @@ class KompetensiController extends Controller
       $assesment->p_mandiri           = $request->p_mandiri;
       $assesment->p_bermitra          = $request->p_bermitra;
       $assesment->t_pelatihan         = $request->t_pelatihan;
-      $assesment->save();
-      return response()->json(
-          array(
-            'response' => "success"
-          )
-      );
+      if($assesment->save()){
+        $log = new Competency([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Update Kompetensi - Update|Success",
+          "data"        => "Berhasil mengubah data Kompetensi - Kompetensi ID : ".$request->id.", Kompetensi : ".ucwords(trim($request->kompetensi)).", Definisi : ".$request->definisi.", Pengembangan Mandiri : ".$request->p_mandiri.
+                           ", Pengembangan Bermitra : ".$request->p_bermitra.", Tema Pelatihan : ".$request->t_pelatihan.", No Urut : ".$request->no_urut_kompetensi,
+          "link"        => url()->current()
+        ]);
+
+        $log->save();
+        return response()->json(
+            array(
+              'response' => "success"
+            )
+        );
+      }else{
+        $log = new Competency([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Update Kompetensi - Update|Success",
+          "data"        => "Gagal mengubah data Kompetensi - Kompetensi ID : ".$request->id.", Kompetensi : ".ucwords(trim($request->kompetensi)).", Definisi : ".$request->definisi.", Pengembangan Mandiri : ".$request->p_mandiri.
+                           ", Pengembangan Bermitra : ".$request->p_bermitra.", Tema Pelatihan : ".$request->t_pelatihan.", No Urut : ".$request->no_urut_kompetensi,
+          "link"        => url()->current()
+        ]);
+
+        $log->save();
+
+        return response()->json(
+            array(
+              'response' => "failed"
+            )
+        );
+      }
     }
   }
 
   public function destroy(Request $request){
     $txtId    = Crypt::decrypt($request->id);
-    Kompetensi::where('id',$txtId)->delete();
-    return response()->json(
-      array(
-        'response'  => "success"
-      )
-    );
+    $data = Kompetensi::where('id', $txtId)->first();
+
+    if (Kompetensi::where('id',$txtId)->delete()) {
+      $log = new Competency([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Delete Kompetensi - Delete|Success",
+        "data"        => "Berhasil menghapus data Kompetensi - Kompetensi ID : ".$data->id.", Kompetensi : ".ucwords(trim($data->kompetensi)).", Definisi : ".$data->definisi.", Pengembangan Mandiri : ".$data->p_mandiri.
+                         ", Pengembangan Bermitra : ".$data->p_bermitra.", Tema Pelatihan : ".$data->t_pelatihan.", No Urut : ".$data->no_urut_kompetensi,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
+      return response()->json(
+        array(
+          'response'  => "success"
+        )
+      );
+    }else{
+      $log = new Competency([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Delete Kompetensi - Delete|Success",
+        "data"        => "Berhasil menghapus data Kompetensi - Kompetensi ID : ".$data->id.", Kompetensi : ".ucwords(trim($data->kompetensi)).", Definisi : ".$data->definisi.", Pengembangan Mandiri : ".$data->p_mandiri.
+                         ", Pengembangan Bermitra : ".$data->p_bermitra.", Tema Pelatihan : ".$data->t_pelatihan.", No Urut : ".$data->no_urut_kompetensi,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
+
+      return response()->json(
+        array(
+          'response'  => "failed"
+        )
+      );
+    }
   }
 }
