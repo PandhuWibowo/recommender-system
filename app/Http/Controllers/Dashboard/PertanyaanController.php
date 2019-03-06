@@ -19,21 +19,35 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
 use DB;
+use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\Question;
+use App\Http\Models\ModelLogs\Answer;
+use BrowserDetect;
 /**
  * JenisAssesmentController
  */
 class PertanyaanController extends Controller
 {
-  public function index(){
+  public function index(Request $request){
+    $logPages = new DirectPage([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Menu Pertanyaan",
+      "data"        => Session::get("email")." mengunjungi halaman Pertanyaan",
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
+
     $pertanyaan = Pertanyaan::orderBy("no_urut_pertanyaan")->get();
     // $pertanyaan = Pertanyaan::with("get_assesment")->with("get_kompetensi")->with("get_rowscore");
     return view("administrator.dashboard.pages.pertanyaan-page.v_index", compact("pertanyaan"));
     // echo dd($pertanyaan);
   }
 // ,compact("assesments","kompetensi","rowscore")
-  public function add(){
+  public function add(Request $request){
     $noUrutTerakhir   = Pertanyaan::where("assesment_id", Session::get("assesment_id"))->pluck("no_urut_pertanyaan");
-
 
     if(count($noUrutTerakhir) == 0){
       $kasihNomorUrut = 1;
@@ -45,13 +59,35 @@ class PertanyaanController extends Controller
       $kasihNomorUrut = $maxNoUrutTerakhir+1;
     }
 
+    $logPages = new DirectPage([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Add New Pertanyaan",
+      "data"        => Session::get("email")." mengunjungi halaman Add New Pertanyaan",
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
+
     $assesments = JenisAssesment::all();
     $kompetensi = Kompetensi::all();
     $rowscore   = RowScore::all();
     return view("administrator.dashboard.pages.pertanyaan-page.add-pertanyaan",compact("assesments","kompetensi","rowscore","kasihNomorUrut"));
   }
 
-  public function show($id){
+  public function show($id, Request $request){
+    $logPages = new DirectPage([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Detail Pertanyaan",
+      "data"        => Session::get("email")." mengunjungi halaman Detail Pertanyaan dengan ID : ".$id,
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
+
     $assesments = JenisAssesment::all();
     $kompetensi = Kompetensi::all();
     $rowscore   = RowScore::all();
@@ -106,6 +142,18 @@ class PertanyaanController extends Controller
           $jawaban->save();
         }
       }
+
+      $logPages = new Question([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Store Pertanyaan - Store|Success",
+        "data"        => "Berhasil menyimpan pertanyaan baru",
+        "link"        => url()->current()
+      ]);
+
+      $logPages->save();
+
       Session::flash("success","Your question has been saved");
       return Redirect::to('backend/pages/questions');
     }
@@ -166,21 +214,20 @@ class PertanyaanController extends Controller
           $jawaban->save();
         }
       }
+
+      $logPages = new Question([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Update Pertanyaan - Update|Success",
+        "data"        => "Berhasil mengubah pertanyaan dengan ID Pertanyaan : ".$request->id,
+        "link"        => url()->current()
+      ]);
+
+      $logPages->save();
+
       Session::flash("success","Your question has been saved");
       return Redirect::to('backend/pages/questions');
-
-      // $jawaban                = Jawaban::findOrFail(Crypt::decrypt($request->jawaban_id));
-      // $jawaban->jawaban       = $request->jawaban;
-      // $jawaban->nilai         = $request->nilai;
-      //
-      // $jawaban->save();
-      //
-      // $rowscore->save();
-      // return response()->json(
-      //     array(
-      //       'response' => "success"
-      //     )
-      // );
     }
   }
 
@@ -188,6 +235,16 @@ class PertanyaanController extends Controller
     $txtId    = Crypt::decrypt($request->id);
     $checkId  = Jawaban::where("pertanyaan_id", $txtId)->pluck("pertanyaan_id");
     if(count($checkId) > 0){
+      $log = new Pertanyaan([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Cek Pertanyaan",
+        "data"        => "Tidak ditemukan pertanyaan disini",
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
       return response()->json(
         array(
           'response'  => "failed"
@@ -195,23 +252,86 @@ class PertanyaanController extends Controller
         )
       );
     }else{
-      Pertanyaan::where('id',$txtId)->delete();
-      return response()->json(
-        array(
-          'response'  => "success"
-        )
-      );
+      $data = Pertanyaan::where('id', $txtId)->first();
+
+      if(Pertanyaan::where('id',$txtId)->delete()){
+        $log = new Question([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Delete Pertanyaan - Delete|Success",
+          "data"        => "Berhasil menghapus data Pertanyaan - Pertanyaan ID : ".$data->id.", Pertanyaan : ".$data->pertanyaan.", Assessment ID : ".$data->assesment_id.", Kompetensi ID : ".$data->kompetensi_id.
+                            ", Row Score ID : ".$data->rowscore_id.", No Urut Pertanyaan : ".$data->no_urut_pertanyaan,
+          "link"        => url()->current()
+        ]);
+
+        $log->save();
+
+        return response()->json(
+          array(
+            'response'  => "success"
+          )
+        );
+      }else{
+        $log = new Question([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Delete Pertanyaan - Delete|Failed",
+          "data"        => "Gagal menghapus data Pertanyaan - Pertanyaan ID : ".$data->id.", Pertanyaan : ".$data->pertanyaan.", Assessment ID : ".$data->assesment_id.", Kompetensi ID : ".$data->kompetensi_id.
+                            ", Row Score ID : ".$data->rowscore_id.", No Urut Pertanyaan : ".$data->no_urut_pertanyaan,
+          "link"        => url()->current()
+        ]);
+
+        $log->save();
+
+        return response()->json(
+          array(
+            'response'  => "failed"
+          )
+        );
+      }
+
     }
 
   }
 
   public function destroyAnswer(Request $request){
     $txtId    = Crypt::decrypt($request->id);
-    Jawaban::where('id',$txtId)->delete();
-    return response()->json(
-      array(
-        'response'  => "success"
-      )
-    );
+    $data = Jawaban::where('id', $txtId)->first();
+
+    if(Jawaban::where('id',$txtId)->delete()){
+      $log = new Answer([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Delete Jawaban - Delete|Success",
+        "data"        => "Berhasil menghapus data Jawaban - Jawaban ID : ".$data->id.", Pertanyaan ID : ".$data->pertanyaan_id.", Jawaban : ".$data->jawaban.", Nilai : ".$data->nilai,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
+      return response()->json(
+        array(
+          'response'  => "success"
+        )
+      );
+    }else{
+      $log = new Answer([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Delete Jawaban - Delete|Failed",
+        "data"        => "Gagal menghapus data Jawaban - Jawaban ID : ".$data->id.", Pertanyaan ID : ".$data->pertanyaan_id.", Jawaban : ".$data->jawaban.", Nilai : ".$data->nilai,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
+      return response()->json(
+        array(
+          'response'  => "failed"
+        )
+      );
+    }
   }
 }
