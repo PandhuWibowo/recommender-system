@@ -214,7 +214,7 @@
                                     <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
-                                              <th>Name of Competencies</th>
+                                              <th>Name of Row Score</th>
                                               <th>Abbreviation</th>
                                               <th>Percentage</th>
                                               <th>Sequence Number to</th>
