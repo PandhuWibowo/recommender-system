@@ -16,10 +16,24 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
+use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\Ua;
+use BrowserDetect;
 
 class UserAssessmentController extends Controller{
 
-  public function index(){
+  public function index(Request $request){
+    $logPages = new DirectPage([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Menu User Assessment",
+      "data"        => Session::get("email")." mengunjungi halaman User Assessment",
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
+
     $users            = User::where("level","Participant")->get();
     $jenisAssessments = JenisAssesment::all();
     $userAssessments  = UserAssessment::all();
@@ -34,6 +48,16 @@ class UserAssessmentController extends Controller{
       $userAssessments->status  = trim($request->status[$i]);
       $userAssessments->save();
     }
+    $log = new Ua([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Enable Status - Enable|Success",
+      "data"        => "Berhasil enable status User Assessment",
+      "link"        => url()->current()
+    ]);
+
+    $log->save();
     return response()->json(
       array(
         "response"  => "success"
@@ -49,6 +73,18 @@ class UserAssessmentController extends Controller{
       $userAssessments->status  = trim($request->status[$i]);
       $userAssessments->save();
     }
+
+    $log = new Ua([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Disable Status - Disable|Success",
+      "data"        => "Berhasil disable status User Assessment",
+      "link"        => url()->current()
+    ]);
+
+    $log->save();
+
     return response()->json(
       array(
         "response"  => "success"
@@ -93,6 +129,17 @@ class UserAssessmentController extends Controller{
         }
       }
 
+      $log = new Ua([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Store User Assessment - Store|Success",
+        "data"        => "Berhasil menyimpan data baru User Assessment",
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
+
       return response()->json(
         array(
           "response" => "success"
@@ -113,9 +160,37 @@ class UserAssessmentController extends Controller{
     $userAssessments->maxAttempt    = $maxAttempt;
 
     if($userAssessments->save()){
+      $log = new Ua([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Update User Assessment - Update|Success",
+        "data"        => "Berhasil mengubah data User Assessment - User Assessment ID : ".$request->id.", User ID : ".$request->user_id.", Assessment ID : ".$request->assesment_id.
+                          ", Maxattempt : ".$request->maxattempt,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
       return response()->json(
         array(
           "response"  => "success"
+        )
+      );
+    }else{
+      $log = new Ua([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Update User Assessment - Update|Failed",
+        "data"        => "Gagal mengubah data User Assessment - User Assessment ID : ".$request->id.", User ID : ".$request->user_id.", Assessment ID : ".$request->assesment_id.
+                          ", Maxattempt : ".$request->maxattempt,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
+      return response()->json(
+        array(
+          "response"  => "failed"
         )
       );
     }
@@ -123,12 +198,44 @@ class UserAssessmentController extends Controller{
 
   public function destroy(Request $request){
     $txtId    = $request->id;
-    UserAssessment::where('id',$txtId)->delete();
-    return response()->json(
-      array(
-        'response'  => "success"
-      )
-    );
+    $data = UserAssessment::where('id', $txtId)->first();
+
+    if(UserAssessment::where('id',$txtId)->delete()){
+      $log = new Ua([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Delete User Assessment - Delete|Success",
+        "data"        => "Berhasil menghapus data User Assessment - User Assessment ID : ".$data->id.", User ID : ".$data->user_id.", Assessment ID : ".$data->assesment_id.", Status : ".$data->status.
+                          ", Maxattempt : ".$data->maxattempt.", Attempt : ".$data->attempt,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
+      return response()->json(
+        array(
+          'response'  => "success"
+        )
+      );
+    }else{
+      $log = new Ua([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Delete User Assessment - Delete|Failed",
+        "data"        => "Gagal menghapus data User Assessment - User Assessment ID : ".$data->id.", User ID : ".$data->user_id.", Assessment ID : ".$data->assesment_id.", Status : ".$data->status.
+                          ", Maxattempt : ".$data->maxattempt.", Attempt : ".$data->attempt,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
+      return response()->json(
+        array(
+          'response'  => "failed"
+        )
+      );
+    }
+
   }
 
 }
