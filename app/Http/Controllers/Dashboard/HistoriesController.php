@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use BrowserDetect;
 use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\LogUserHistory;
 use DB;
 
 /**
@@ -111,7 +112,7 @@ class HistoriesController extends Controller
                                     ->orderByDesc("pembulatan")
                                     ->get();
 
-    $logPages = new DirectPage([
+    $logPages = new LogUserHistory([
       "user_id"     => Session::get("id"),
       "ip_address"  => $request->ip(),
       "browser"     => BrowserDetect::browserName(),

@@ -34,6 +34,4 @@ class HomeController extends Controller
     // $title  = "Dashboard";
     return view('partisipan.dashboard.v_index');
   }
-
-
 }

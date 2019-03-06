@@ -18,6 +18,9 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\LogUserAnswer;
+use BrowserDetect;
 /**
  * UserController
  */
@@ -47,12 +50,23 @@ class QuestionController extends Controller
 
         //
         // redirect("user/pages/results/final")->with(['data' => $query]);
-        return response()->json(
-          array(
-            "response"  => "success",
-            "assId"     => Crypt::encrypt($assesmentId[0])
-          )
-        );
+    $logPages = new LogUserAnswer([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Store Jawaban Store|Success",
+      "data"        => Session::get("email")." berhasil menyimpan jawaban",
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
+
+    return response()->json(
+      array(
+        "response"  => "success",
+        "assId"     => Crypt::encrypt($assesmentId[0])
+      )
+    );
   }
 
 }

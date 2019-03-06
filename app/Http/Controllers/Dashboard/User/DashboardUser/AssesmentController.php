@@ -19,17 +19,32 @@ use Illuminate\Support\Facades\Session;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\LogUserAssessment;
+use BrowserDetect;
 /**
  * UserController
  */
 class AssesmentController extends Controller
 {
-  public function index(){
+  public function index(Request $request){
     $jenisAssesment   = UserAssessment::join("jenis_assesments as ja","user_assesments.assesment_id","=","ja.id")
                                       ->where("user_assesments.user_id", Session::get('id'))
                                       ->where("status", 0)
                                       ->get();
     $countAssessment = count($jenisAssesment);
+
+    $logPages = new DirectPage([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Menu Participants Assessments",
+      "data"        => Session::get("email")." mengunjungi halaman Participants Assessments",
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
+
 
     return view("partisipan.dashboard.assesment.v_assesment", compact("jenisAssesment","countAssessment"));
   }
@@ -40,27 +55,59 @@ class AssesmentController extends Controller
       'user_id'       => Session::get("id"),
       'tanggal_akses' => Carbon::now()->format('Y-m-d')
     ]);
-    $assesment->save();
 
-    $tampilAttempt = UserAssessment::select(["attempt"])->where("user_id", Session::get("id"))
-                                  ->where("assesment_id", Crypt::decrypt($request->id))
-                                  ->first()->attempt;
+    if($assesment->save()){
+      $tampilAttempt = UserAssessment::select(["attempt"])->where("user_id", Session::get("id"))
+                                    ->where("assesment_id", Crypt::decrypt($request->id))
+                                    ->first()->attempt;
 
-    $countAttempt = $tampilAttempt;
+      $countAttempt = $tampilAttempt;
 
-    $attemptUpdate = UserAssessment::where("user_id", Session::get("id"))
-                                  ->where("assesment_id", Crypt::decrypt($request->id))
-                                  ->update(["attempt" => $countAttempt+1]);
-    return response()->json(
-        array(
-          'response'  => "success",
-          'id'        => $request->id,
-          'ass_id'    => Crypt::encrypt($assesment->id)
-        )
-    );
+      $attemptUpdate = UserAssessment::where("user_id", Session::get("id"))
+                                    ->where("assesment_id", Crypt::decrypt($request->id))
+                                    ->update(["attempt" => $countAttempt+1]);
+
+      $logPages = new LogUserAssessment([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Assessment to Questions",
+        "data"        => Session::get("email")." memilih jenis assessment pada quis dengan ID : ".$assesment->id,
+        "link"        => url()->current()
+      ]);
+
+      $logPages->save();
+
+      return response()->json(
+          array(
+            'response'  => "success",
+            'id'        => $request->id,
+            'ass_id'    => Crypt::encrypt($assesment->id)
+          )
+      );
+    }else{
+      $logPages = new LogUserAssessment([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Assessment to Questions",
+        "data"        => Session::get("email")."gagal memilih jenis assessment pada quis dengan ID : ".$assesment->id,
+        "link"        => url()->current()
+      ]);
+
+      $logPages->save();
+
+      return response()->json(
+          array(
+            'response'  => "failed"
+          )
+      );
+    }
+
+
   }
 
-  public function show($id, $assId){
+  public function show($id, $assId, Request $request){
     $decryptId    = Crypt::decrypt($id);
     $decryptAssId = Crypt::decrypt($assId);
 
@@ -96,6 +143,18 @@ class AssesmentController extends Controller
     //                           // ->orderBy("kompetensis.no_urut_kompetensi","as")
     //                           // ->sortByDesc("rowscores.no_urut_rowscore");
     //
+
+    $logPages = new DirectPage([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Quis",
+      "data"        => Session::get("email")." mengunjungi halaman Quis dengan detail Id Assessment : ".$decryptId,
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
+
     return view("partisipan.dashboard.assesment.v_question", compact("questions","decryptAssId","countQuestions","competencyType", "limit"));
   }
 }

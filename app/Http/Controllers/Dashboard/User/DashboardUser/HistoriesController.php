@@ -20,18 +20,31 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use BrowserDetect;
+use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\LogUserHistory;
 
 /**
  * HistoriesController
  */
 class HistoriesController extends Controller
 {
-  public function index(){
+  public function index(Request $request){
+    $logPages = new DirectPage([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Menu Histories",
+      "data"        => Session::get("email")." mengunjungi halaman Histories",
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
     $histories = Assesment::where("user_id", Session::get("id"))->get();
     return view("partisipan.dashboard.logtest.v_index", compact("histories"));
   }
 
-  public function show($id){
+  public function show($id, Request $request){
     $decryptAssId = Crypt::decrypt($id);
 
     // $query  = DB::table("pertanyaan_assesments as pa")
@@ -84,6 +97,17 @@ class HistoriesController extends Controller
                                     ->whereIn("range_score",["1","2"])
                                     ->orderByDesc("pembulatan")
                                     ->get();
+
+    $logPages = new LogUserHistory([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Menu Detail Histories",
+      "data"        => Session::get("email")." mengunjungi halaman Detail Histories dengan ID : ".$id,
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
 
     return view("partisipan.dashboard.logtest.v_detail", compact("cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan"));
 

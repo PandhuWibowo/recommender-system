@@ -19,12 +19,15 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\LogUserResult;
+use BrowserDetect;
 /**
  *
  */
 class ResultController extends Controller
 {
-  public function show($assId){
+  public function show($assId, Request $request){
     $assId  = Crypt::decrypt($assId);
 
     $query  = DB::table("pertanyaan_assesments as pa")
@@ -224,6 +227,17 @@ class ResultController extends Controller
                                     ->whereIn("range_score",["1","2"])
                                     ->orderByDesc("pembulatan")
                                     ->get();
+
+    $logPages = new LogUserResult([
+      "user_id"     => Session::get("id"),
+      "ip_address"  => $request->ip(),
+      "browser"     => BrowserDetect::browserName(),
+      "action"      => "Hasil Jawaban - Kesimpulan",
+      "data"        => Session::get("email")." mendapatkan hasil tes dengan assessment id : ".$assId,
+      "link"        => url()->current()
+    ]);
+
+    $logPages->save();
 
     return view("partisipan.dashboard.result.v_index", compact("cetakSaran","resultAssKom","rowscores","rangeScore","cetakHasilAsskomsKekuatan","cetakHasilAsskomsPengembangan"));
   }
