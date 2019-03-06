@@ -74,7 +74,7 @@ class KompetensiController extends Controller
           "ip_address"  => $request->ip(),
           "browser"     => BrowserDetect::browserName(),
           "action"      => "Store Kompetensi - Store|Success",
-          "data"        => "Berhasil menyimpan data baru Kompetensi - Kompetensi ID : ".$request->id.", Kompetensi : ".ucwords(trim($request->kompetensi)).", Definisi : ".$request->definisi.", Pengembangan Mandiri : ".$request->p_mandiri.
+          "data"        => "Berhasil menyimpan data baru Kompetensi - Kompetensi ID : ".$assesment->id.", Kompetensi : ".ucwords(trim($request->kompetensi)).", Definisi : ".$request->definisi.", Pengembangan Mandiri : ".$request->p_mandiri.
                            ", Pengembangan Bermitra : ".$request->p_bermitra.", Tema Pelatihan : ".$request->t_pelatihan.", No Urut : ".$request->no_urut_kompetensi,
           "link"        => url()->current()
         ]);
@@ -190,6 +190,7 @@ class KompetensiController extends Controller
       ]);
 
       $log->save();
+      
       return response()->json(
         array(
           'response'  => "success"
