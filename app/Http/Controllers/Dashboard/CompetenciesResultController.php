@@ -15,13 +15,27 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
+use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\DescResult;
+use BrowserDetect;
 /**
  * KompetensiController
  */
 
  class CompetenciesResultController extends Controller{
 
-   public function index(){
+   public function index(Request $request){
+     $logPages = new DirectPage([
+       "user_id"     => Session::get("id"),
+       "ip_address"  => $request->ip(),
+       "browser"     => BrowserDetect::browserName(),
+       "action"      => "Menu Description Result",
+       "data"        => Session::get("email")." mengunjungi halaman Description Result",
+       "link"        => url()->current()
+     ]);
+
+     $logPages->save();
+
      $keteranganNilai = KeteranganNilai::all();
      $kompetensi      = Kompetensi::orderBy("kompetensi")->get();
      $hasilkompetensi = HasilKompetensi::orderBy("id")->get();
@@ -57,13 +71,42 @@ use Illuminate\Http\Response;
          'kompetensi_id'    => $kompetensiId,
          'hasil_kompetensi' => $hasilkompetensi
        ]);
-       $descResults->save();
 
-       return response()->json(
-         array(
-           "response" => "success"
-         )
-       );
+       if($descResults->save()){
+         $log = new DescResult([
+           "user_id"     => Session::get("id"),
+           "ip_address"  => $request->ip(),
+           "browser"     => BrowserDetect::browserName(),
+           "action"      => "Store Description Result - Store|Success",
+           "data"        => "Berhasil menyimpan data baru Description Result - Description Result ID : ".$descResults->id.", Keterangan ID : ".$keteranganId.", Kompetensi ID : ".$kompetensiId.", Hasil Kompetensi : ".$hasilkompetensi,
+           "link"        => url()->current()
+         ]);
+
+         $log->save();
+
+         return response()->json(
+           array(
+             "response" => "success"
+           )
+         );
+       }else{
+         $log = new DescResult([
+           "user_id"     => Session::get("id"),
+           "ip_address"  => $request->ip(),
+           "browser"     => BrowserDetect::browserName(),
+           "action"      => "Store Description Result - Store|Failed",
+           "data"        => "Gagal menyimpan data baru Description Result - Description Result ID : ".$descResults->id.", Keterangan ID : ".$keteranganId.", Kompetensi ID : ".$kompetensiId.", Hasil Kompetensi : ".$hasilkompetensi,
+           "link"        => url()->current()
+         ]);
+
+         $log->save();
+
+         return response()->json(
+           array(
+             "response" => "failed"
+           )
+         );
+       }
      }
    }
 
@@ -78,22 +121,79 @@ use Illuminate\Http\Response;
      $descriptionScore->kompetensi_id   = $varKompetensiId;
      $descriptionScore->hasil_kompetensi= $varHasilKompetensi;
 
-     $descriptionScore->save();
+     if($descriptionScore->save()){
+       $log = new DescResult([
+         "user_id"     => Session::get("id"),
+         "ip_address"  => $request->ip(),
+         "browser"     => BrowserDetect::browserName(),
+         "action"      => "Update Description Result - Update|Success",
+         "data"        => "Berhasil mengubah data Description Result - Description Result ID : ".$request->id.", Keterangan ID : ".$varKeteranganId.", Kompetensi ID : ".$varKompetensiId.", Hasil Kompetensi : ".$varHasilKompetensi,
+         "link"        => url()->current()
+       ]);
 
-     return response()->json(
-       array(
-         "response" => "success"
-       )
-     );
+       $log->save();
+       return response()->json(
+         array(
+           "response" => "success"
+         )
+       );
+     }else{
+       $log = new DescResult([
+         "user_id"     => Session::get("id"),
+         "ip_address"  => $request->ip(),
+         "browser"     => BrowserDetect::browserName(),
+         "action"      => "Update Description Result - Update|Failed",
+         "data"        => "Gagal mengubah data Description Result - Description Result ID : ".$request->id.", Keterangan ID : ".$varKeteranganId.", Kompetensi ID : ".$varKompetensiId.", Hasil Kompetensi : ".$varHasilKompetensi,
+         "link"        => url()->current()
+       ]);
+
+       $log->save();
+
+       return response()->json(
+         array(
+           "response" => "failed"
+         )
+       );
+     }
    }
 
    public function destroy(Request $request){
      $varId = Crypt::decrypt($request->id);
-     HasilKompetensi::where('id',$varId)->delete();
-     return response()->json(
-       array(
-         'response'  => "success"
-       )
-     );
+     $data = HasilKompetensi::where('id', $varId)->first();
+
+     if(HasilKompetensi::where('id',$varId)->delete()){
+       $log = new DescResult([
+         "user_id"     => Session::get("id"),
+         "ip_address"  => $request->ip(),
+         "browser"     => BrowserDetect::browserName(),
+         "action"      => "Delete Description Result - Delete|Success",
+         "data"        => "Berhasil menghapus data Description Result - Description Result ID : ".$data->id.", Keterangan ID : ".$data->keterangan_id.", Kompetensi ID : ".$data->kompetensi_id.", Hasil Kompetensi : ".$data->hasil_kompetensi,
+         "link"        => url()->current()
+       ]);
+
+       $log->save();
+       return response()->json(
+         array(
+           'response'  => "success"
+         )
+       );
+     }else{
+       $log = new DescResult([
+         "user_id"     => Session::get("id"),
+         "ip_address"  => $request->ip(),
+         "browser"     => BrowserDetect::browserName(),
+         "action"      => "Delete Description Result - Delete|Failed",
+         "data"        => "Gagal menghapus data Description Result - Description Result ID : ".$data->id.", Keterangan ID : ".$data->keterangan_id.", Kompetensi ID : ".$data->kompetensi_id.", Hasil Kompetensi : ".$data->hasil_kompetensi,
+         "link"        => url()->current()
+       ]);
+
+       $log->save();
+
+       return response()->json(
+         array(
+           'response'  => "success"
+         )
+       );
+     }
    }
  }
