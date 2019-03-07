@@ -6,6 +6,7 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Autho
 
 // auth
 //Administrator Routing
+Route::get("/","LandingPage\MainController@index");
 Route::get("/direct","Login\LoginController@index");
 
 Route::prefix('backend/pages')->group(function () {

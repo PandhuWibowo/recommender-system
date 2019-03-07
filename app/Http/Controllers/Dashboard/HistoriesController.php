@@ -122,6 +122,7 @@ class HistoriesController extends Controller
     ]);
 
     $logPages->save();
+    
     return view("administrator.dashboard.pages.logtest.v_detail", compact("cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan"));
 
 
