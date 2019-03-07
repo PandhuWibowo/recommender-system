@@ -20,8 +20,11 @@ a:hover, a:focus {
 
 /* .main-nav, */
 .main-nav{
+  /* background-color:#028fcc; */
+
   background-color: #fff;
 }
+
 .service-icon,
 .progress-bar.progress-bar-primary,
 .single-table.featured,

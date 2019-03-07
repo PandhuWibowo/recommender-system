@@ -21,7 +21,6 @@
 
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
   <link rel="shortcut icon" href="images/favicon.ico">
-
   <style media="screen">
   /* .menu-area{background: #563d7c} */
     .dropdown-menu{padding:0;margin:0;border:0 solid transition!important;border:0 solid rgba(0,0,0,.15);border-radius:0;-webkit-box-shadow:none!important;box-shadow:none!important}
@@ -83,6 +82,65 @@
       /* background-color: rgba(0,0,0,.2); */
       background-color: #ff7f00;
     }
+
+    form.form-search{
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-40%, 15%);
+        transition: all 1s;
+        width: 50px;
+        height: 50px;
+        background: #ff7f00;
+        box-sizing: border-box;
+        border-radius: 25px;
+        border: 4px solid white;
+        padding: 5px;
+    }
+
+    input.text-search{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 42.5px;
+        line-height: 30px;
+        outline: 0;
+        border: 0;
+        display: none;
+        font-size: 1em;
+        border-radius: 20px;
+        padding: 0 20px;
+    }
+
+    form .fa{
+        box-sizing: border-box;
+        padding: 10px;
+        width: 42.5px;
+        height: 42.5px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-radius: 50%;
+        color: #07051a;
+        text-align: center;
+        font-size: 1.2em;
+        transition: all 1s;
+    }
+
+    form:hover.form-search{
+        width: 200px;
+        cursor: pointer;
+    }
+
+    form:hover.form-search input{
+        display: block;
+    }
+
+    form:hover.form-search .fa{
+        background: #ff7f00;
+        color: white;
+    }
   </style>
 </head><!--/head-->
 
@@ -124,7 +182,7 @@
 
     </div><!--/#home-slider-->
     <div class="main-nav">
-      <div class="container">
+      <div class="">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -132,11 +190,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">
-            <h1><img class="img-responsive" style="margin-left:-2%;margin-top:-9%;" width="23%" src="{!! asset('images/icon.png') !!}" alt="loopinc.id"></h1>
+          <a class="navbar-brand" href="{{ url("/")}}">
+            <h1><img class="img-responsive" style="margin-left:0%;margin-top:-35%;" width="100ms" src="{!! asset('images/icon.png') !!}" alt="loopinc.id"></h1>
           </a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" >
           <ul class="nav navbar-nav navbar-pandhu">
             <li class="scroll"><a href="#tentang-kami">Tentang Kami</a></li>
             <li class="">
@@ -195,8 +253,16 @@
               </ul>
             </li>
             <li class=""><a href="#blog">Blog</a></li>
-            <li class="scroll"><a href="#hubungi-kami">Hubung Kami</a></li>
-            <!-- <li class=""><a href="#contact">Contact</a></li> -->
+            <li class="scroll"><a href="#contact-us">Hubung Kami</a></li>
+            <li style="margin-left:18em;">
+              <a href="{{ url('direct') }}">Sign In <i class="fa fa-user"></i></a>
+            </li>
+            <li class="">
+              <form action="" class="form-search">
+                <input type="search" class="text-search">
+                <i class="fa fa-search"></i>
+              </form>
+            </li>
           </ul>
         </div>
       </div>
@@ -835,45 +901,50 @@
       <div class="container">
         <div class="row">
           <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <h2>Contact Us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam</p>
+            <h2>Hubungi Kami</h2>
+            <!-- <p></p> -->
           </div>
         </div>
         <div class="contact-form wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
           <div class="row">
             <div class="col-sm-6">
-              <form id="main-contact-form" name="contact-form" method="post" action="#">
+              <form id="main-contact-form" name="contact-form" method="post" action="#" autocomplete="off">
                 <div class="row  wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <input type="text" name="name" class="form-control" placeholder="Name" required="required">
+                      <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama" required="required">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <input type="email" name="email" class="form-control" placeholder="Email Address" required="required">
+                      <input type="text" name="institusi" id="institusi" class="form-control" placeholder="Institusi" required="required">
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="text" name="subject" class="form-control" placeholder="Subject" required="required">
+                  <input type="text" name="no_pe" id="no_pe" class="form-control" placeholder="Nomor Telepon" required="required">
                 </div>
                 <div class="form-group">
-                  <textarea name="message" id="message" class="form-control" rows="4" placeholder="Enter your message" required="required"></textarea>
+                  <textarea name="kebutuhan" id="kebutuhan" class="form-control" rows="4" placeholder="Kebutuhan" required="required"></textarea>
                 </div>
                 <div class="form-group">
-                  <button type="submit" class="btn-submit">Send Now</button>
+                  <button type="submit" class="btn-submit">Kirim</button>
                 </div>
               </form>
             </div>
             <div class="col-sm-6">
               <div class="contact-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                <p>Loopinc.id menyediakan paket khusus untuk kerja sama dengan sekolah dan kampus. Untuk informasi
+    lebih lanjut, silakan tinggalkan data diri Anda :</p>
                 <ul class="address">
-                  <li><i class="fa fa-map-marker"></i> <span> Address:</span> 2400 South Avenue A </li>
-                  <li><i class="fa fa-phone"></i> <span> Phone:</span> +928 336 2000  </li>
-                  <li><i class="fa fa-envelope"></i> <span> Email:</span><a href="mailto:someone@yoursite.com"> support@oxygen.com</a></li>
-                  <li><i class="fa fa-globe"></i> <span> Website:</span> <a href="#">www.sitename.com</a></li>
+                  <!-- <li><i class="fa fa-map-marker"></i> <span> Address:</span> 2400 South Avenue A </li> -->
+                  <li><i class="fa fa-phone"></i> <span> Loopinc Call Centre:</span> 081288291187  </li>
+                  <li><i class="fa fa-envelope"></i> <span> Email:</span><a href="mailto:hello@loopinc.id"> hello@loopinc.id</a>
+                    <p>
+                      (Layanan Pada Hari Kerja, Senin-Jumat Pukul 10.00-16.00 WIB)
+                    </p>
+                  </li>
+                  <!-- <li><i class="fa fa-globe"></i> <span> Website:</span> <a href="#">www.sitename.com</a></li> -->
                 </ul>
               </div>
             </div>
@@ -886,16 +957,16 @@
     <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
       <div class="container text-center">
         <div class="footer-logo">
-          <a href="index.html"><img class="img-responsive" src="images/logo.png" alt=""></a>
+          <!-- <a href="index.html"><img class="img-responsive" src="images/logo.png" alt=""></a> -->
         </div>
         <div class="social-icons">
           <ul>
-            <li><a class="envelope" href="#"><i class="fa fa-envelope"></i></a></li>
-            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-            <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+            <li><a class="linkedin" href="#"><i class="fa fa-instagram"></i></a></li>
             <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-            <li><a class="tumblr" href="#"><i class="fa fa-tumblr-square"></i></a></li>
+            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+            <!-- <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li> -->
+            <!-- <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li><a class="tumblr" href="#"><i class="fa fa-tumblr-square"></i></a></li> -->
           </ul>
         </div>
       </div>
@@ -904,10 +975,10 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-6">
-            <p>&copy; 2014 Oxygen Theme.</p>
+            <p>Copyright &copy; 2019 Loopinc.id</p>
           </div>
           <div class="col-sm-6">
-            <p class="pull-right">Designed by <a href="http://www.themeum.com/">Themeum</a></p>
+            <p class="pull-right">Designed by <a href="http://www.themeum.com/">Themeum</a> Modified by <a href="https://www.rootorial.com/">rootorial.com</a></p>
           </div>
         </div>
       </div>
