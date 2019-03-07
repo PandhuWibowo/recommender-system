@@ -141,6 +141,24 @@
         background: #ff7f00;
         color: white;
     }
+
+    .float{
+    	position:fixed;
+    	width:60px;
+    	height:60px;
+    	bottom:40px;
+    	right:40px;
+    	background-color:#25d366;
+    	color:#FFF;
+    	border-radius:50px;
+    	text-align:center;
+      font-size:30px;
+      z-index:100;
+    }
+
+    .my-float{
+    	margin-top:16px;
+    }
   </style>
 </head><!--/head-->
 
@@ -971,6 +989,9 @@
         </div>
       </div>
     </div>
+    <a href="https://api.whatsapp.com/send?phone=6281288291187" class="float" target="_blank">
+      <i class="fa fa-whatsapp my-float"></i>
+    </a>
     <div class="footer-bottom">
       <div class="container">
         <div class="row">
