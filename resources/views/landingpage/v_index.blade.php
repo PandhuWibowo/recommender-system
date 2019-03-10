@@ -13,7 +13,7 @@
   <link href="{!! asset('landingpage/css/main.css') !!}" rel="stylesheet">
   <link id="css-preset" href="{!! asset('landingpage/css/presets/preset1.css') !!}" rel="stylesheet">
   <link href="{!! asset('landingpage/css/responsive.css') !!}" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
   <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -160,6 +160,8 @@
     	margin-top:16px;
     }
   </style>
+  @include("items.meta")
+
 </head><!--/head-->
 
 <body>
@@ -929,7 +931,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
         <div class="contact-form wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
           <div class="row">
             <div class="col-sm-6">
-              <form id="main-contact-form" name="contact-form" method="post" action="#" autocomplete="off">
+              <form id="main-contact-form" name="contact-form" method="post" autocomplete="off">
                 <div class="row  wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
                   <div class="col-sm-6">
                     <div class="form-group">
@@ -949,7 +951,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
                   <textarea name="kebutuhan" id="kebutuhan" class="form-control" rows="4" placeholder="Kebutuhan" required="required"></textarea>
                 </div>
                 <div class="form-group">
-                  <button type="submit" class="btn-submit">Kirim</button>
+                  <button type="submit" id="kirim_button" class="btn-submit">Kirim</button>
                 </div>
               </form>
             </div>
@@ -1019,6 +1021,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
   <script type="text/javascript" src="{!! asset('landingpage/js/jquery.countTo.js') !!}"></script>
   <script type="text/javascript" src="{!! asset('landingpage/js/lightbox.min.js') !!}"></script>
   <script type="text/javascript" src="{!! asset('landingpage/js/main.js') !!}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function(){
       (function($){
@@ -1036,6 +1039,128 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
           return false;
         });
       })(jQuery)
+    });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      // Restricts input for the given textbox to the given inputFilter.
+      function setInputFilter(textbox, inputFilter) {
+        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
+          textbox.addEventListener(event, function() {
+            if (inputFilter(this.value)) {
+              this.oldValue = this.value;
+              this.oldSelectionStart = this.selectionStart;
+              this.oldSelectionEnd = this.selectionEnd;
+            } else if (this.hasOwnProperty("oldValue")) {
+              this.value = this.oldValue;
+              this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+            }
+          });
+        });
+      }
+
+
+      // Install input filters.
+      // setInputFilter(document.getElementById("intTextBox"), function(value) {
+      //   return /^-?\d*$/.test(value); });
+      setInputFilter(document.getElementById("no_pe"), function(value) {
+        return /^\d*$/.test(value); });
+      // setInputFilter(document.getElementById("intLimitTextBox"), function(value) {
+      //   return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 500); });
+      // setInputFilter(document.getElementById("floatTextBox"), function(value) {
+      //   return /^-?\d*[.,]?\d*$/.test(value); });
+      // setInputFilter(document.getElementById("currencyTextBox"), function(value) {
+      //   return /^-?\d*[.,]?\d{0,2}$/.test(value); });
+      // setInputFilter(document.getElementById("hexTextBox"), function(value) {
+      //   return /^[0-9a-f]*$/i.test(value); });
+
+      $("#kirim_button").on("click", function(e){
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+        e.preventDefault();
+
+        var varNama      = $("#nama").val();
+        var varInstitusi = $("#institusi").val();
+        var varNoPe      = $("#no_pe").val();
+        var varKebutuhan = $("#kebutuhan").val();
+
+        if(varNama == ""){
+          Swal.fire({
+            type: 'info',
+            title: 'Nama masih kosong',
+            showConfirmButton: true,
+            timer: 3000
+          });
+        }
+        else if (varInstitusi == "") {
+          Swal.fire({
+            type: 'info',
+            title: 'Institusi masih kosong',
+            showConfirmButton: true,
+            timer: 3000
+          });
+        }
+        else if (varNoPe == "") {
+          Swal.fire({
+            type: 'info',
+            title: 'Nomor Telepon masih kosong',
+            showConfirmButton: true,
+            timer: 3000
+          });
+        }
+        else if (varKebutuhan == "") {
+          Swal.fire({
+            type: 'info',
+            title: 'Kebutuhan masih kosong',
+            showConfirmButton: true,
+            timer: 3000
+          });
+        }
+        else{
+          try {
+            $.ajax({
+              type      : "POST",
+              url       : "{{ url('main/process/sent') }}",
+              async     : true,
+              dataType  : "JSON",
+              // cache     : true,
+              data      : {
+                "nama"     : varNama,
+                "institusi": varInstitusi,
+                "no_pe"    : varNoPe,
+                "kebutuhan": varKebutuhan
+              },
+              success:function(data){
+                $("#nama").val("");
+                $("#institusi").val("");
+                $("#no_pe").val("");
+                $("#kebutuhan").val("");
+
+                if(data.response == "success"){
+                  Swal.fire({
+                    type: 'success',
+                    title: 'Halo '+varNama+', tunggu respon dari kami ya',
+                    showConfirmButton: true,
+                    timer: 3000
+                  })
+                }
+
+              },
+              error:function(data){
+                console.log(data);
+              }
+            });
+          } catch (e) {
+            console.log(e);
+          } finally {
+
+          }
+        }
+      });
     });
   </script>
 </body>

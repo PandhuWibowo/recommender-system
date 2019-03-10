@@ -143,6 +143,10 @@ Route::prefix('user/pages')->group(function () {
     ]);
 });
 
+Route::prefix("main")->group(function() {
+  Route::post("process/sent","LandingPage\MainController@store");
+});
+
 //Grouping error Page
 Route::prefix('error/page')->group(function () {
   Route::get('404', ['as' => '404', 'uses' => 'ErrorPage\ErrorController@notfound']);
