@@ -248,9 +248,14 @@
                                             <td>{{ $row->nama }}</td>
                                             <td>{{ $row->institusi }}</td>
                                             <td>{{ $row->no_pe }}</td>
-                                            <td>{{ $row->kebutuhan }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-id="{{Crypt::encrypt($row->id)}}" data-id="{{$row->nama}}" data-institusi="{{$row->institusi}}" data-kebutuhan="{{$row->kebutuhan}}"><i class="fa fa-table"></i></a>
+                                              <?php
+                                                $words = explode(" ", $row->kebutuhan);
+                                                echo implode(" ", array_splice($words, 0, 7));
+                                               ?>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-warning btn_edit" data-id="{{Crypt::encrypt($row->id)}}" data-no_pe="{{ $row->no_pe }}" data-nama="{{$row->nama}}" data-institusi="{{$row->institusi}}" data-kebutuhan="{{$row->kebutuhan}}"><i class="fa fa-table"></i></a>
                                             </td>
                                           </tr>
 
@@ -273,14 +278,26 @@
                                          <div class="modal-content no--shadow">
                                             <div class="modal-header">
                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                               <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                               <h4 class="modal-title" id="myModalLabel"></h4>
                                             </div>
                                             <div class="modal-body">
-                                               <img width="100%" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/8.jpg" alt="" />
+                                               <!-- <img width="100%" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/8.jpg" alt="" /> -->
+                                               <table>
+                                                 <tr>
+                                                   <td>Phone</td>
+                                                   <td>:</td>
+                                                   <td id="nope">081296807905</td>
+                                                 </tr>
+                                                 <tr>
+                                                   <td>Message</td>
+                                                   <td>:</td>
+                                                   <td id="message">081296807905</td>
+                                                 </tr>
+                                               </table>
                                             </div>
                                             <div class="modal-footer">
                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                               <button type="button" class="btn btn-primary">Save changes</button>
+                                               <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                                             </div>
                                          </div>
                                       </div>
@@ -406,17 +423,16 @@
       $(document).ready(function(){
         $("#myCompetencies").on("click", ".btn_edit",function(){
           var varId         = $(this).data("id");
-          var varPresentase = $(this).data("nama");
-          var varRowScore   = $(this).data("institusi");
-          var varNamaSingkat= $(this).data("no_pe");
-          var varNoUrut     = $(this).data("kebutuhan");
+          var varNama       = $(this).data("nama");
+          var varInstitusi  = $(this).data("institusi");
+          var varNoPe       = $(this).data("no_pe");
+          var varKebutuhan  = $(this).data("kebutuhan");
 
           try {
-            // $("#edit_id_row_score").val(varId);
-            // $("#edit_nama_rowscore").val(varRowScore);
-            // $("#edit_nama_singkat").val(varNamaSingkat);
-            // $("#edit_precentage").val(varPresentase);
-            // $("#edit_no_urut_rowscore").val(varNoUrut);
+            document.getElementById('myModalLabel').innerHTML=varNama + " - " + varInstitusi;
+            document.getElementById('nope').innerHTML=varNoPe;
+            document.getElementById('message').innerHTML=varKebutuhan;
+
 
             $("#myModal--effect-fullwidth").modal("show");
           } catch (e) {
