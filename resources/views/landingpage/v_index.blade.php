@@ -690,12 +690,12 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
   <section id="features" class="parallax">
     <div class="container">
       <div class="row count">
-        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="300ms">
+        <div class="col-sm-12 col-xs-12 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="300ms">
           <i class="fa fa-user"></i>
-          <h3 class="timer">4000</h3>
-          <p>Happy Clients</p>
+          <h3 class="timer">{{$countAssessments}}</h3>
+          <p>orang telah mengenal diri dengan lebih baik lewat Loopinc.id</p>
         </div>
-        <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
+        <!-- <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
           <i class="fa fa-desktop"></i>
           <h3 class="timer">200</h3>
           <p>Modern Websites</p>
@@ -709,7 +709,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
           <i class="fa fa-comment-o"></i>
           <h3>24/7</h3>
           <p>Fast Support</p>
-        </div>
+        </div> -->
       </div>
     </div>
   </section><!--/#features-->
@@ -917,7 +917,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
   </section><!--/#blog-->
 
   <section id="contact">
-    <div id="google-map" class="wow fadeIn" data-latitude="52.365629" data-longitude="4.871331" data-wow-duration="1000ms" data-wow-delay="400ms"></div>
+    <div id="google-map" class="wow fadeIn" data-latitude="-6.2084385" data-longitude="106.7620422" data-wow-duration="1000ms" data-wow-delay="400ms"></div>
     <div id="contact-us" class="parallax">
       <div class="container">
         <div class="row">
@@ -958,8 +958,8 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
                 <p>Loopinc.id menyediakan paket khusus untuk kerja sama dengan sekolah dan kampus. Untuk informasi
     lebih lanjut, silakan tinggalkan data diri Anda :</p>
                 <ul class="address">
-                  <!-- <li><i class="fa fa-map-marker"></i> <span> Address:</span> 2400 South Avenue A </li> -->
-                  <li><i class="fa fa-phone"></i> <span> Loopinc Call Centre:</span> 081288291187  </li>
+                  <li><i class="fa fa-map-marker"></i> <span> Address:</span> Infiniti Office, Permata Regency, Ruko D/37, Kembangan Jakarta Barat 11630 </li>
+                  <li><i class="fa fa-phone"></i> <span> Loopinc Call Centre:</span> 081288291187 / 021 58905002  </li>
                   <li><i class="fa fa-envelope"></i> <span> Email:</span><a href="mailto:hello@loopinc.id"> hello@loopinc.id</a>
                     <p>
                       (Layanan Pada Hari Kerja, Senin-Jumat Pukul 10.00-16.00 WIB)
@@ -1011,7 +1011,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
 
   <script type="text/javascript" src="{!! asset('landingpage/js/jquery.js') !!}"></script>
   <script type="text/javascript" src="{!! asset('landingpage/js/bootstrap.min.js') !!}"></script>
-  <script type="text/javascript" src="{!! asset('landingpage/http://maps.google.com/maps/api/js?sensor=true') !!}"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSdxjuCPhzR8BbQe3-crU3qoSC-_ymQBg"></script>
   <script type="text/javascript" src="{!! asset('landingpage/js/jquery.inview.min.js') !!}"></script>
   <script type="text/javascript" src="{!! asset('landingpage/js/wow.min.js') !!}"></script>
   <script type="text/javascript" src="{!! asset('landingpage/js/mousescroll.js') !!}"></script>

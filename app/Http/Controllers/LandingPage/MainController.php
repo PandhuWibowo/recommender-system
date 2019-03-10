@@ -13,14 +13,17 @@ use Illuminate\Support\Facades\Session;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Models\Assesment;
 
 /**
  * MainController
  */
+ 
 class MainController extends Controller
 {
 
   public function index(Request $request){
-    return view("landingpage.v_index");
+    $countAssessments = Assesment::all()->count();
+    return view("landingpage.v_index", compact("countAssessments"));
   }
 }
