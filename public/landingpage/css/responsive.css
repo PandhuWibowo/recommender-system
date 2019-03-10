@@ -33,15 +33,22 @@
 
 /* xs */
 @media (max-width: 767px) {
-    .project-details{
-        margin: 15px;
-    }
+  .project-details{
+      margin: 15px;
+  }
+
 	body {
 		font-size: 14px;
 	}
+
 	#home-slider .caption h1 {
 		font-size: 40px;
 	}
+
+  #home-slider .caption h4 {
+		font-size: 20px;
+	}
+
 	#home-slider .caption {
 		font-size: 15px;
 		padding: 0 30px;

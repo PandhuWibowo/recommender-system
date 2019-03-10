@@ -1,12 +1,13 @@
 a,
 #home-slider .caption h1 span,
+#home-slider .caption h4 span,
 #twitter-carousel .item span,
 #footer .footer-bottom,
 #single-portfolio .close-folio-item:hover,
 .single-table.featured .btn.btn-primary,
 .contact-info ul li a:hover,
 #footer .footer-bottom a  {
-  color: #028fcc;
+  color: #e2725b;
 }
 
 .btn.btn-primary:hover,

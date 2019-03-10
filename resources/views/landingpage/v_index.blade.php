@@ -27,13 +27,13 @@
     /* a, .navbar-default .navbar-nav > li > a, ul li a , .navbar-expand-lg .navbar-nav .nav-link{color:#fff;font-size:16px;text-transform:capitalize;padding:16px 15px;font-family:'Roboto',sans-serif;display: block !important;} */
     .active a, .active a:focus, .active a:hover, li a:hover, li a:focus ,.navbar-default .navbar-nav>.show>a, .navbar-default .navbar-nav>.show>a:focus, .navbar-default .navbar-nav>.show>a:hover{color: #fff;background: utline: 0;}
     /*==========Sub Menu=v==========*/
-    .collapse ul > li:hover > a{background: #ff7f00;}
-    .collapse ul ul > li:hover > a, .navbar-default .navbar-nav .show .dropdown-menu > li > a:focus, .navbar-default .navbar-nav .show .dropdown-menu > li > a:hover{background: #ff7f00;}
-    .collapse ul ul ul > li:hover > a{background: #ff7f00;}
+    .collapse ul > li:hover > a{background: #e2725b;}
+    .collapse ul ul > li:hover > a, .navbar-default .navbar-nav .show .dropdown-menu > li > a:focus, .navbar-default .navbar-nav .show .dropdown-menu > li > a:hover{background: #e2725b;}
+    .collapse ul ul ul > li:hover > a{background: #e2725b;}
 
     .collapse ul ul, .collapse ul ul.dropdown-menu{background:#fff;}
     .collapse ul ul ul, .collapse ul ul ul.dropdown-menu{background:#fff}
-    .collapse ul ul ul ul, .collapse ul ul ul ul.dropdown-menu{background:#64B5F6}
+    .collapse ul ul ul ul, .collapse ul ul ul ul.dropdown-menu{background:#e2725b}
 
     /******************************Drop-down menu work on hover**********************************/
     /* .mainmenu{background: none;border: 0 solid;margin: 0;padding: 0;min-height:20px;width: 100%;} */
@@ -80,7 +80,7 @@
 
     .navbar-pandhu li.active a {
       /* background-color: rgba(0,0,0,.2); */
-      background-color: #ff7f00;
+      background-color: #e2725b;
     }
 
     form.form-search{
@@ -91,7 +91,7 @@
         transition: all 1s;
         width: 50px;
         height: 50px;
-        background: #ff7f00;
+        background: #e2725b;
         box-sizing: border-box;
         border-radius: 25px;
         border: 4px solid white;
@@ -138,7 +138,7 @@
     }
 
     form:hover.form-search .fa{
-        background: #ff7f00;
+        background: #e2725b;
         color: white;
     }
 
@@ -171,25 +171,28 @@
   <header id="home">
     <div id="home-slider" class="carousel slide carousel-fade" data-ride="carousel">
       <div class="carousel-inner">
-        <div class="item active" style="background-image: url(images/slider/1.jpg)">
+        <div class="item active" style="background-image: url(images/landingpage/pict1.jpg)">
           <div class="caption">
-            <h1 class="animated fadeInLeftBig">Welcome to <span>Oxygen</span></h1>
-            <p class="animated fadeInRightBig">Bootstrap - Responsive Design - Retina Ready - Parallax</p>
-            <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Start now</a> -->
+            <h1 class="animated fadeInLeftBig">Selamat Datang di <span>Loopinc.id</span></h1>
+            <p class="animated fadeInRightBig">Cari tahu tentang dirimu disini.</p>
+            <p>Temukan rekomendasi jurusan kuliah, karier, dan
+kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
+            <a data-scroll class="btn btn-start animated fadeInUpBig" href="#tentang-kami">Kenali dirimu sendiri</a>
           </div>
         </div>
-        <div class="item" style="background-image: url(images/slider/2.jpg)">
+
+        <div class="item" style="background-image: url(images/landingpage/pict1.jpg)">
           <div class="caption">
-            <h1 class="animated fadeInLeftBig">Say Hello to <span>Oxygen</span></h1>
-            <p class="animated fadeInRightBig">Bootstrap - Responsive Design - Retina Ready - Parallax</p>
-            <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Start now</a> -->
+            <h4 class="animated fadeInLeftBig">Penasaran tentang minat dan bakat kamu? <span>Temukan disini</span></h4>
+            <!-- <p class="animated fadeInRightBig"></p> -->
+            <a data-scroll class="btn btn-start animated fadeInUpBig" href="#tentang-kami">Kenali dirimu sendiri</a>
           </div>
         </div>
-        <div class="item" style="background-image: url(images/slider/3.jpg)">
+        <div class="item" style="background-image: url(images/landingpage/pict1.jpg)">
           <div class="caption">
-            <h1 class="animated fadeInLeftBig">We are <span>Creative</span></h1>
-            <p class="animated fadeInRightBig">Bootstrap - Responsive Design - Retina Ready - Parallax</p>
-            <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Start now</a> -->
+            <h4 class="animated fadeInLeftBig"> “The future belongs to those who prepare for it today” <span>Malcolm X</span></h4>
+            <!-- <p class="animated fadeInRightBig"></p> -->
+            <a data-scroll class="btn btn-start animated fadeInUpBig" href="#tentang-kami">Kenali dirimu sendiri</a>
           </div>
         </div>
       </div>
