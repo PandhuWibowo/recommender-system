@@ -82,6 +82,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style media="screen">
+      .btn {
+         border-radius: 0px !important;
+      }
+    </style>
     <style>
     input[type=radio] {
       float: left;

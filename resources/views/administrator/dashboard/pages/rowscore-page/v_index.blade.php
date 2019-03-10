@@ -76,7 +76,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <style media="screen">
+      .btn {
+         border-radius: 0px !important;
+      }
+    </style>
 </head>
 
 <body>
@@ -140,11 +144,11 @@
                                               <div class="modal-content">
                                                 <div class="modal-header">
                                                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                  <h4 class="modal-title">New Row Scores</h4>
+                                                  <h4 class="modal-title">New Raw Scores</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                   <div class="form-group">
-                                                    <label for="usr">Name of Row Scores</label>
+                                                    <label for="usr">Name of Raw Scores</label>
                                                     <input type="text" class="form-control" autofocus="on" autocomplete="off" id="nama_rowscore" required>
                                                   </div>
 
@@ -180,7 +184,7 @@
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">All Type of Row Scores</span>
+                                            <li><span class="bread-blod">All Type of Raw Scores</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -199,7 +203,7 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Row Scores <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Raw Scores <span class="table-project-n">Data</span> Table</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
@@ -214,7 +218,7 @@
                                     <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
-                                              <th>Name of Row Score</th>
+                                              <th>Name of Raw Score</th>
                                               <th>Abbreviation</th>
                                               <th>Percentage</th>
                                               <th>Sequence Number to</th>
@@ -236,7 +240,7 @@
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>Name of Competencies</th>
+                                            <th>Name of Raw Score</th>
                                             <th>Abbreviation</th>
                                             <th>Percentage</th>
                                             <th>Sequence Number to</th>
@@ -252,7 +256,7 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">New Type of Row Scores</h4>
+                                            <h4 class="modal-title">New Type of Raw Scores</h4>
                                             <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
                                           <div class="modal-body">

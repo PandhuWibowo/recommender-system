@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -77,134 +76,66 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style media="screen">
-      .btn {
-         border-radius: 0px !important;
-      }
-    </style>
     <style>
 
-    /* Absolute Center Spinner */
-      .loading {
-        position: fixed;
-        z-index: 999;
-        height: 2em;
-        width: 2em;
-        overflow: visible;
-        margin: auto;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-      }
+    button a {
+     letter-spacing: 2px;
+    }
 
-      /* Transparent Overlay */
-      .loading:before {
-        content: '';
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.3);
-      }
+    .modal-content {
+       position: relative;
+       background-color: #fff;
+       -webkit-background-clip: padding-box;
+       background-clip: padding-box;
+       border: 1px solid #999;
+       border: 1px solid rgba(0, 0, 0, .2);
+       border-radius: 0;
+       outline: 0;
+       -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+       box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    }
 
-      /* :not(:required) hides these rules from IE9 and below */
-      .loading:not(:required) {
-        /* hide "loading..." text */
-        font: 0/0 a;
-        color: transparent;
-        text-shadow: none;
-        background-color: transparent;
+    .btn {
+       border-radius: 0px !important;
+    }
+
+    #myModal--effect-fullwidth.modal.fade .modal-dialog {
+
+     -moz-transform: scale(0.3) ;
+     -webkit-transform: scale(0.3) ;
+     -o-transform: scale(0.3) ;
+     -ms-transform: scale(0.3) ;
+     transform: scale(0.3) ;
+     opacity: 1;
+
+    }
+    .modal-dialog.fullwidth--box {
+        width: 90%;
+        margin: 0 auto;
+        left: 5px;
+    }
+
+     .modal-content.no--shadow {
         border: 0;
-      }
+        box-shadow: none !important;
+        /* width: 100%; */
+    }
 
-      .loading:not(:required):after {
-        content: '';
-        display: block;
-        font-size: 10px;
-        width: 1em;
-        height: 1em;
-        margin-top: -0.5em;
-        -webkit-animation: spinner 1500ms infinite linear;
-        -moz-animation: spinner 1500ms infinite linear;
-        -ms-animation: spinner 1500ms infinite linear;
-        -o-animation: spinner 1500ms infinite linear;
-        animation: spinner 1500ms infinite linear;
-        border-radius: 0.5em;
-        -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-        box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-      }
+    #myModal--effect-fullwidth.modal.fade.in .modal-dialog {
+        -moz-transform: scale(1) ;
+       -webkit-transform: scale(1) ;
+       -o-transform: scale(1) ;
+       -ms-transform: scale(1) ;
+       transform: scale(1) ;
+       opacity: 1;
 
-      /* Animation */
+    }
 
-      @-webkit-keyframes spinner {
-        0% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          -o-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-        100% {
-          -webkit-transform: rotate(360deg);
-          -moz-transform: rotate(360deg);
-          -ms-transform: rotate(360deg);
-          -o-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-      @-moz-keyframes spinner {
-        0% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          -o-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-        100% {
-          -webkit-transform: rotate(360deg);
-          -moz-transform: rotate(360deg);
-          -ms-transform: rotate(360deg);
-          -o-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-      @-o-keyframes spinner {
-        0% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          -o-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-        100% {
-          -webkit-transform: rotate(360deg);
-          -moz-transform: rotate(360deg);
-          -ms-transform: rotate(360deg);
-          -o-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-      @keyframes spinner {
-        0% {
-          -webkit-transform: rotate(0deg);
-          -moz-transform: rotate(0deg);
-          -ms-transform: rotate(0deg);
-          -o-transform: rotate(0deg);
-          transform: rotate(0deg);
-        }
-        100% {
-          -webkit-transform: rotate(360deg);
-          -moz-transform: rotate(360deg);
-          -ms-transform: rotate(360deg);
-          -o-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
+
+    div#myModal--effect-fullwidth {
+        background: rgba(255, 255, 255, 1);
+    }
     </style>
-
 </head>
 
 <body>
@@ -257,32 +188,6 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                          <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
-                                            Add New
-                                          </a>
-                                          <!-- Modal -->
-                                          <div id="myModal" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
-
-                                              <!-- Modal content-->
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                  <h4 class="modal-title">New Configuration</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <div class="form-group">
-                                                    <label for="usr">Total Pages</label>
-                                                    <input type="number" min="1" class="form-control" autofocus="on" autocomplete="off" id="total_pages" required>
-                                                  </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                                </div>
-                                              </div>
-
-                                            </div>
-                                          </div>
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
@@ -293,7 +198,7 @@
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">Total Pages</span>
+                                            <li><span class="bread-blod">Results</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -310,11 +215,11 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="sparkline13-list">
-                            <div class="sparkline13-hd">
+                            <!-- <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Total Pages<span class="table-project-n">Data</span> Table</h1>
+                                    <h1> <span class="table-project-n">Data</span> Table</h1>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
                                     <!-- <div id="toolbar">
@@ -324,59 +229,63 @@
                     											<option value="selected">Export Selected</option>
                     										</select>
                                     </div> -->
-                                    <table id="myAssesments" class="display nowrap table table-striped table-bordered" style="width:100%">
+                                    <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
-                                          <tr>
-                                              <th>Total Pages</th>
-                                              <th>Action</th>
-                                          </tr>
+                                        <tr>
+                                          <th>#</th>
+                                          <th>Nama</th>
+                                          <th>Institusi</th>
+                                          <th>Nomor Telepon</th>
+                                          <th>Kebutuhan</th>
+                                          <th>Action</th>
+                                        </tr>
                                       </thead>
                                       <tbody>
-                                        @foreach($configuration as $key=>$row)
+
+                                        @foreach($partnerships as $key=>$row)
                                           <tr>
-                                            <td>{{ $row->konfigurasi }}</td>
+                                            <td>{{$key+1}}</td>
+                                            <td>{{ $row->nama }}</td>
+                                            <td>{{ $row->institusi }}</td>
+                                            <td>{{ $row->no_pe }}</td>
+                                            <td>{{ $row->kebutuhan }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-konfigurasi="{{ $row->konfigurasi }}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-id="{{Crypt::encrypt($row->id)}}" data-id="{{$row->nama}}" data-institusi="{{$row->institusi}}" data-kebutuhan="{{$row->kebutuhan}}"><i class="fa fa-table"></i></a>
                                             </td>
                                           </tr>
+
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>Total Pages</th>
+                                            <th>#</th>
+                                            <th>Nama</th>
+                                            <th>Institusi</th>
+                                            <th>Nomor Telepon</th>
+                                            <th>Kebutuhan</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
                                     </table>
-                                    <!-- Modal -->
-                                    <div id="editModal" class="modal fade" role="dialog">
-                                      <div class="modal-dialog">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Total Pages</h4>
-                                            <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
-                                          </div>
-                                          <div class="modal-body">
-                                            <div class="form-group">
-                                              <input type="hidden" class="form-control" autocomplete="off" id="edit_id" required>
+                                    <div class="modal fade fullwidth" id="myModal--effect-fullwidth" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                      <div class="modal-dialog fullwidth--box " role="document">
+                                         <div class="modal-content no--shadow">
+                                            <div class="modal-header">
+                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                               <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                             </div>
                                             <div class="modal-body">
-                                              <div class="form-group">
-                                                <label for="usr">Total Pages</label>
-                                                <input type="number" min="1" class="form-control" autofocus="on" autocomplete="off" id="edit_total_pages" required>
-                                              </div>
+                                               <img width="100%" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/8.jpg" alt="" />
                                             </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
-                                          </div>
-                                        </div>
-
+                                            <div class="modal-footer">
+                                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                               <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                         </div>
                                       </div>
-                                    </div>
+                                   </div>
+
                                 </div>
                             </div>
                         </div>
@@ -397,7 +306,6 @@
             </div>
         </div>
     </div>
-    <div class="loading" style="display:none;">Loading&#8230;</div>
 
     <!-- jquery
 		============================================ -->
@@ -478,8 +386,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script type="text/javascript">
       $(document).ready( function () {
-        $('#myAssesments').DataTable({
+        $('#myCompetencies').DataTable({
           "dom": 'Bfrtip',
+          "ordering": false,
           "buttons": {
              "dom": {
                 "button": {
@@ -495,187 +404,21 @@
 
     <script type="text/javascript">
       $(document).ready(function(){
-        $(".btn_edit").on("click", function(){
-          var varId               = $(this).data("id");
-          var varConfiguration    = $(this).data("konfigurasi");
+        $("#myCompetencies").on("click", ".btn_edit",function(){
+          var varId         = $(this).data("id");
+          var varPresentase = $(this).data("nama");
+          var varRowScore   = $(this).data("institusi");
+          var varNamaSingkat= $(this).data("no_pe");
+          var varNoUrut     = $(this).data("kebutuhan");
 
           try {
-            $("#edit_id").val(varId);
-            $("#edit_total_pages").val(varConfiguration);
-            $("#editModal").modal("show");
-          } catch (e) {
-            console.log(e);
-          } finally {
+            // $("#edit_id_row_score").val(varId);
+            // $("#edit_nama_rowscore").val(varRowScore);
+            // $("#edit_nama_singkat").val(varNamaSingkat);
+            // $("#edit_precentage").val(varPresentase);
+            // $("#edit_no_urut_rowscore").val(varNoUrut);
 
-          }
-        });
-        $("#btn_save").on("click", function(){
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-          });
-          var varTotalPages   = $("#total_pages").val();
-          try {
-            if(varTotalPages == ""){
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Total pages is required",
-                timer   : 3000
-              });
-            }
-            else{
-              $.ajax({
-                type    : "POST",
-                url     : "{{ url('backend/pages/configurations') }}",
-                async   : true,
-                dataType: "JSON",
-                data    : {
-                  konfigurasi : varTotalPages,
-                },
-                success:function(data){
-                  $("#myModal").modal("hide");
-                  if(data.response == "success"){
-                    swal({
-                      type : "success",
-                      title: "Success",
-                      text : "Data's has been saved",
-                      timer: 3000
-                    }).then(function(){
-                      window.location = "{{ url('backend/pages/configurations') }}";
-                    })
-                  }else{
-                    swal({
-                      type : "error",
-                      title: "Error",
-                      text : "Failed saving the data",
-                      timer: 3000
-                    })
-                  }
-                },
-                error:function(data){
-                  console.log(data);
-                },
-                beforeSend: function(){
-                    // Code to display spinner
-                    $('.loading').show();
-                },
-                complete: function(){
-                    // Code to hide spinner.
-                    $('.loading').hide();
-                }
-              });
-            }
-          } catch (e) {
-            console.log(e);
-          } finally {
-
-          }
-        });
-
-        $("#btn_edit").on("click", function(){
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-          });
-          var varId           = $("#edit_id").val();
-          var varTotalPages   = $("#edit_total_pages").val();
-          try {
-            $.ajax({
-              type    : "PUT",
-              url     : "{{ url('backend/pages/configurations/update') }}",
-              async   : true,
-              dataType: "JSON",
-              data    : {
-                id          : varId,
-                konfigurasi : varTotalPages
-              },
-              success:function(data){
-                $("#editModal").modal("hide");
-                if(data.response == "success"){
-                  swal({
-                    type : "success",
-                    title: "Success",
-                    text : "Configuration has been updated",
-                    timer: 3000
-                  }).then(function(){
-                    window.location = "{{ url('backend/pages/configurations') }}";
-                  })
-                }else{
-                  swal({
-                    type : "error",
-                    title: "Error",
-                    text : "Failed updating the data",
-                    timer: 3000
-                  })
-                }
-              },
-              error:function(data){
-                console.log(data);
-              },
-              beforeSend: function(){
-                  // Code to display spinner
-                  $('.loading').show();
-              },
-              complete: function(){
-                  // Code to hide spinner.
-                  $('.loading').hide();
-              }
-            })
-          } catch (e) {
-            console.log(e);
-          } finally {
-
-          }
-        });
-
-        $("#btn_hps").on("click", function(){
-          $.ajaxSetup({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-          });
-          var varId = $("#edit_id").val();
-          try {
-            swal({
-              title: 'Are you sure?',
-              text: "You won't be able to revert this!",
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-              if(result.value){
-                $.ajax({
-                  type      : "DELETE",
-                  url       : "{{ url('backend/pages/configurations/delete') }}",
-                  async     : true,
-                  dataType  : "JSON",
-                  data      : {
-                    id      : varId
-                  },
-                  success:function(data){
-                    // console.log(data);
-                    $("#editModal").modal("hide")
-                    if(data.response == "success"){
-                      swal(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                      ).then(function(){
-                        window.location = "{{ url('backend/pages/configurations') }}";
-                      });
-                    }
-                  },
-                  error:function(data){
-                    console.log(data);
-                  }
-                });
-              }
-            });
+            $("#myModal--effect-fullwidth").modal("show");
           } catch (e) {
             console.log(e);
           } finally {

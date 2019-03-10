@@ -75,7 +75,11 @@
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-
+    <style media="screen">
+    .btn {
+       border-radius: 0px !important;
+    }
+    </style>
 </head>
 
 <body>

@@ -98,6 +98,11 @@
       cursor: pointer;
     }
     </style>
+    <style media="screen">
+      .btn {
+         border-radius: 0px !important;
+      }
+    </style>
 </head>
 
 <body>

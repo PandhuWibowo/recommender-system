@@ -2984,8 +2984,8 @@ td.text-right.mail-date {
     padding: 6px 12px;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     width: 100%;
-	height:40px;
-	box-shadow:none;
+  	height:40px;
+  	box-shadow:none;
 }
 .form-control:focus {
     border-color: #006DF0;
@@ -3650,7 +3650,7 @@ div#sparklinehome canvas {
     width: 100% !important;
 }
 .header-top-area {
-    background: #00FF7F;
+    background: #e2725b;
 }
 .sidebar-nav .metismenu{
 	background: #fff;
@@ -3684,6 +3684,7 @@ div#sparklinehome canvas {
 	color:#8d9498;
 }
 .sidebar-nav .metismenu a:hover, .sidebar-nav .metismenu a:focus, .sidebar-nav .metismenu a:active {
+  /* e2725b */
     background: #F6F6F6;
 }
 .header-top-menu .navbar-nav>li .dropdown-menu, .header-right-info ul.header-right-menu li .author-message-top, .header-right-info ul.header-right-menu li .notification-author, .header-right-info ul.header-right-menu li .author-log, .header-right-info ul.header-right-menu li .admintab-wrap.menu-setting-wrap.menu-setting-wrap-bg.dropdown-menu {
@@ -3723,7 +3724,7 @@ div#sparklinehome canvas {
     background-color: #86bc42;
 }
 .footer-copyright-area {
-    background: #00FF7F;
+    background: #e2725b;
 	padding: 20px 0px;
     text-align: center;
 }
@@ -4118,7 +4119,7 @@ div#sparklinehome canvas {
 	font-weight:300;
 }
 .menu-switcher-pro .btn-info:active, .menu-switcher-pro .btn-info:focus, .menu-switcher-pro .btn-info:hover, .menu-switcher-pro .btn-info:visited, .header-drl-controller-btn.btn-info:active:focus{
-	background: #006DF0;
+	background: #d1a193;
 	outline:none;
 }
 .mini-navbar .single-review-st-text img {

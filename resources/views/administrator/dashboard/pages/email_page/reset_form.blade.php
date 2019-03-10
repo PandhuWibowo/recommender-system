@@ -60,6 +60,11 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
+    <style media="screen">
+      .btn {
+         border-radius: 0px !important;
+      }
+    </style>
 </head>
 
 <body>

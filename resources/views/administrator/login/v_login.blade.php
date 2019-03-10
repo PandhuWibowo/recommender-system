@@ -58,7 +58,7 @@
 												</div>
 										</div>
 
-                    <button class="btn btn-success btn-block loginbtn" id="btn-login" type="button">Login</button>
+                    <button class="btn btn-success btn-block loginbtn" id="btn-login" type="submit">Login</button>
 
 										<a id="btn_register" class="btn btn-success btn-block loginbtn">Doesn't have an account? Register</a>
                 </form>
@@ -80,7 +80,8 @@
 			e.preventDefault();
 			window.location = "{{ url('user/pages/register') }}";
 		});
-    $("#btn-login").on("click", function(){
+    $("#btn-login").on("click", function(e){
+			e.preventDefault();
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

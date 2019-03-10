@@ -10,6 +10,11 @@
     <!------ Include the above in your HEAD tag ---------->
     <link href="//cdn.muicss.com/mui-0.1.2/email/mui-email-styletag.css" rel="stylesheet" />
     <link href="//cdn.muicss.com/mui-0.1.2/email/mui-email-inline.css" rel="stylesheet" />
+    <style media="screen">
+      .btn {
+         border-radius: 0px !important;
+      }
+    </style>
   </head>
   <body>
     <table class="mui-body" cellpadding="0" cellspacing="0" border="0">

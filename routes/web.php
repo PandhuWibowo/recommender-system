@@ -105,6 +105,10 @@ Route::prefix('backend/pages')->group(function () {
     //Description Results
     Route::resource("descriptionresults","Dashboard\CompetenciesResultController");
 
+    //Log Test
+    Route::resource("partnerships","Dashboard\LandingPageController", ["only" =>
+      ["index","show"]
+    ]);
 });
 
 Route::prefix('user/pages')->group(function () {

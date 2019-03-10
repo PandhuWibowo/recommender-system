@@ -229,7 +229,7 @@
 
                             </div>
                             <div class="text-center">
-                                <button id="btn_register" class="btn btn-success loginbtn">Register</button>
+                                <button id="btn_register" type="submit" class="btn btn-success loginbtn">Register</button>
                                 <button id="btn_signin" class="btn btn-primary">Have an account? Sign In</button>
                             </div>
                         </form>
