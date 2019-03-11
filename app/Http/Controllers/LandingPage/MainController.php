@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Models\Assesment;
 use App\Http\Models\Partnership;
+use App\Http\Models\ModelLogs\KerjaSama;
+use BrowserDetect;
 
 /**
  * MainController
@@ -43,12 +45,32 @@ class MainController extends Controller
     ]);
 
     if($partnership->save()){
+      $logPages = new KerjaSama([
+        "user_id"     => $partnership->id,
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Visitor|Store|Success",
+        "data"        => $nama." telah mengirim pesan untuk bekerja sama",
+        "link"        => url()->current()
+      ]);
+
+      $logPages->save();
       return response()->json(
         array(
           "response"    => "success"
         )
       );
     }else{
+      $logPages = new KerjaSama([
+        "user_id"     => $partnership->id,
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Visitor|Store|Failed",
+        "data"        => $nama." gagal mengirim pesan untuk bekerja sama",
+        "link"        => url()->current()
+      ]);
+
+      $logPages->save();
       return response()->json(
         array(
           "response"    => "failed"

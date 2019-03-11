@@ -186,7 +186,7 @@
                                               <th>Questions</th>
                                               <th>Name of Assesments</th>
                                               <th>Competencies</th>
-                                              <th>Row Scores</th>
+                                              <th>Raw Scores</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -195,7 +195,12 @@
                                         @foreach($pertanyaan as $key=>$row)
                                           <tr>
                                             <td>{{$no}}</td>
-                                            <td>{{ substr($row->pertanyaan, 0, 50)."..." }}</td>
+                                            <td>
+                                              <?php
+                                                $words = explode(" ", $row->pertanyaan);
+                                                echo implode(" ", array_splice($words, 0, 5));
+                                               ?>
+                                            </td>
                                             <td>{{ $row->get_assesment->nama }}</td>
                                             <td>{{ $row->get_kompetensi->kompetensi }}</td>
                                             <td>{{ $row->get_rowscore->nama_rowscore }}</td>
@@ -212,7 +217,7 @@
                                             <th>Questions</th>
                                             <th>Name of Assesments</th>
                                             <th>Competencies</th>
-                                            <th>Row Scores</th>
+                                            <th>Raw Scores</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>

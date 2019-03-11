@@ -109,6 +109,9 @@ Route::prefix('backend/pages')->group(function () {
     Route::resource("partnerships","Dashboard\LandingPageController", ["only" =>
       ["index","show"]
     ]);
+
+    Route::put("partnerships/update","Dashboard\LandingPageController@update");
+
 });
 
 Route::prefix('user/pages')->group(function () {

@@ -135,6 +135,34 @@
     div#myModal--effect-fullwidth {
         background: rgba(255, 255, 255, 1);
     }
+
+    /* The badge */
+    .message {
+      height: 13px;
+      font-family: Segoe UI;
+      font-size: 14px;
+    }
+
+    /* Badge message */
+    .message.badge {
+        background-color: #e2725b;
+        color: white;
+        padding: 0px 4px;
+        margin-left: 10px;
+    }
+
+    .done {
+      height: 13px;
+      font-family: Segoe UI;
+      font-size: 14px;
+    }
+
+    .done.badge{
+      background-color: #000;
+      color: white;
+      padding: 0px 4px;
+      margin-left: 10px;
+    }
     </style>
 </head>
 
@@ -235,8 +263,9 @@
                                           <th>#</th>
                                           <th>Nama</th>
                                           <th>Institusi</th>
-                                          <th>Nomor Telepon</th>
+                                          <!-- <th>Nomor Telepon</th> -->
                                           <th>Kebutuhan</th>
+                                          <th>Status</th>
                                           <th>Action</th>
                                         </tr>
                                       </thead>
@@ -247,12 +276,25 @@
                                             <td>{{$key+1}}</td>
                                             <td>{{ $row->nama }}</td>
                                             <td>{{ $row->institusi }}</td>
-                                            <td>{{ $row->no_pe }}</td>
+
                                             <td>
                                               <?php
                                                 $words = explode(" ", $row->kebutuhan);
                                                 echo implode(" ", array_splice($words, 0, 7));
                                                ?>
+                                            </td>
+                                            <td>
+                                              <?php
+                                                if($row->status == "Baru"){
+                                                  ?>
+                                                  <span class="message badge">{{$row->status}}</span>
+                                                  <?php
+                                                }else{
+                                                  ?>
+                                                  <span class="done badge">{{$row->status}}</span>
+                                                  <?php
+                                                }
+                                              ?>
                                             </td>
                                             <td>
                                                 <a class="btn btn-warning btn_edit" data-id="{{Crypt::encrypt($row->id)}}" data-no_pe="{{ $row->no_pe }}" data-nama="{{$row->nama}}" data-institusi="{{$row->institusi}}" data-kebutuhan="{{$row->kebutuhan}}"><i class="fa fa-table"></i></a>
@@ -266,8 +308,9 @@
                                             <th>#</th>
                                             <th>Nama</th>
                                             <th>Institusi</th>
-                                            <th>Nomor Telepon</th>
+                                            <!-- <th>Nomor Telepon</th> -->
                                             <th>Kebutuhan</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -286,12 +329,12 @@
                                                  <tr>
                                                    <td>Phone</td>
                                                    <td>:</td>
-                                                   <td id="nope">081296807905</td>
+                                                   <td id="nope"></td>
                                                  </tr>
                                                  <tr>
                                                    <td>Message</td>
                                                    <td>:</td>
-                                                   <td id="message">081296807905</td>
+                                                   <td id="message"></td>
                                                  </tr>
                                                </table>
                                             </div>
@@ -435,6 +478,30 @@
 
 
             $("#myModal--effect-fullwidth").modal("show");
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+              type    : "PUT",
+              url     : "{{ url('backend/pages/partnerships/update') }}",
+              async   : true,
+              dataType: "JSON",
+              data    : {
+                id    : varId,
+                status: "Sudah di baca"
+              },
+              success:function(data){
+                // console.log("berhasil update status");
+                console.log(data);
+              },
+              error:function(data){
+                console.log(data);
+              }
+            })
           } catch (e) {
             console.log(e);
           } finally {
