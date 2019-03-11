@@ -62,7 +62,7 @@
 					</p>
 					@endif
 					<span class="login100-form-title p-b-49">
-						Login
+						Loopinc.id
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
@@ -87,7 +87,7 @@
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button class="login100-form-btn" type="submit" id="btn-login">
-								Login
+								Sign In
 							</button>
 						</div>
 					</div>
@@ -117,15 +117,13 @@
 						<!-- </a> -->
 					</div>
 
-					<!-- <div class="flex-col-c p-t-155">
+					<div class="flex-col-c p-t-155">
 						<span class="txt1 p-b-17">
-							Or Sign Up Using
+							Copyright © 2019 Loopinc.id - All right reserved. Modified by <a href="https://www.rootorial.com/" class="txt2" id="btn_register">
+								rootorial.com
+							</a>
 						</span>
-
-						<a href="#" class="txt2" id="btn_register">
-							Sign Up
-						</a>
-					</div> -->
+					</div>
 				</form>
 			</div>
 		</div>
