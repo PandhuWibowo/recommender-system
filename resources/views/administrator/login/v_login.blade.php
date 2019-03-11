@@ -1,78 +1,159 @@
-@include('administrator.login.include.v_header_signin')
-	<div class="error-pagewrap">
-		<div class="error-page-int">
-			<div class="text-center m-b-md custom-login">
-				<!-- <h3></h3>
-				<p>Please, you have signin first!</p> -->
-				<img class="img-responsive" style="margin-left:35%;" width="30%" src="{!! asset('images/icon.png') !!}" alt="loopinc.id">
-				<br>
-			</div>
-			<div class="content-error">
-				<div class="hpanel">
-            <div class="panel-body">
-                @if(Session::has('must-login'))
-                  <p style="color:red">
-                    {{ Session::get('must-login') }}
-                  </p>
-								@elseif(Session::get('failed-reset-password'))
-									<p style="color:red">
-										{{ Session::get('failed-reset-password') }}
-									</p>
-								@elseif(Session::has('reset-password'))
-									<p style="color:red">
-										{{ Session::get('reset-password') }}
-									</p>
-								@elseif(Session::has('changed'))
-									<p style="color:red">
-										{{ Session::get('changed') }}
-									</p>
-                @elseif(Session::has('logout'))
-                  <p style="color:red">
-                    {{ Session::get('logout') }}
-                  </p>
-								@elseif(Session::has("message"))
-								<p style="color:blue">
-									{{ Session::get('message') }}
-								</p>
-                @endif
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Loopinc.id</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{!! asset('login/images/icons/favicon.ico') !!}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/vendor/bootstrap/css/bootstrap.min.css') !!}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/fonts/font-awesome-4.7.0/css/font-awesome.min.css') !!}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/fonts/iconic/css/material-design-iconic-font.min.css') !!}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/vendor/animate/animate.css') !!}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/vendor/css-hamburgers/hamburgers.min.css') !!}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/vendor/animsition/css/animsition.min.css') !!}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/vendor/select2/select2.min.css') !!}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/vendor/daterangepicker/daterangepicker.css') !!}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/css/util.css') !!}">
+	<link rel="stylesheet" type="text/css" href="{!! asset('login/css/main.css') !!}">
+<!--===============================================================================================-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.32.2/sweetalert2.min.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-                <form action="#" id="loginForm" autocomplete="off">
-                    <div class="form-group">
-                        <label class="control-label" for="username">Email</label>
-                        <input type="email" placeholder="example@gmail.com" title="Please enter you email" required="" value="" name="email" id="email" class="form-control">
-                        <span class="help-block small">Your unique email to app</span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="password">Password</label>
-                        <input type="password" title="Please enter your password" placeholder="******" required="" value="" name="password" id="password" class="form-control">
-                        <span class="help-block small">Your strong password</span>
-                    </div>
-                    <div class="checkbox login-checkbox">
-                        <!-- <label> -->
-						            <!-- <input type="checkbox" class="i-checks"> Remember me </label> -->
-                        <!-- <p class="help-block small">(if this is a private computer)</p> -->
-												<div class="row">
-													<div class="col-sm-6">
-														<a class="btn btn-primary btn-block" href="{{ url('user/pages/forgot/password/sendemail') }}">Forgot password?</a>
-													</div>
-												</div>
-										</div>
+</head>
+<body>
 
-                    <button class="btn btn-success btn-block loginbtn" id="btn-login" type="submit">Login</button>
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+				<form class="login100-form validate-form" autocomplete="off">
+					@if(Session::has('must-login'))
+						<p style="color:red">
+							{{ Session::get('must-login') }}
+						</p>
+					@elseif(Session::get('failed-reset-password'))
+						<p style="color:red">
+							{{ Session::get('failed-reset-password') }}
+						</p>
+					@elseif(Session::has('reset-password'))
+						<p style="color:red">
+							{{ Session::get('reset-password') }}
+						</p>
+					@elseif(Session::has('changed'))
+						<p style="color:red">
+							{{ Session::get('changed') }}
+						</p>
+					@elseif(Session::has('logout'))
+						<p style="color:red">
+							{{ Session::get('logout') }}
+						</p>
+					@elseif(Session::has("message"))
+					<p style="color:blue">
+						{{ Session::get('message') }}
+					</p>
+					@endif
+					<span class="login100-form-title p-b-49">
+						Login
+					</span>
 
-										<a id="btn_register" class="btn btn-success btn-block loginbtn">Doesn't have an account? Register</a>
-                </form>
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
+						<span class="label-input100">Email</span>
+						<input class="input100" type="email" required="" value="" name="email" id="email" placeholder="Type your email">
+						<span class="focus-input100" data-symbol="&#xf206;"></span>
+					</div>
 
-            </div>
-        </div>
-			</div>
-			<div class="text-center login-footer" style="text-align: center;bottom:0;width: 100%;left:0;">
-				<p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a> Modified by <a href="http://rootorial.com/">Pandhu Wibowo</a></p>
+					<div class="wrap-input100 validate-input" data-validate="Password is required">
+						<span class="label-input100">Password</span>
+						<input class="input100" type="password" title="Please enter your password" placeholder="******" required="" value="" name="password" id="password">
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
+					</div>
+
+					<div class="text-right p-t-8 p-b-31">
+						<a href="{{ url('user/pages/forgot/password/sendemail') }}">
+							Forgot password?
+						</a>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" type="submit" id="btn-login">
+								Login
+							</button>
+						</div>
+					</div>
+
+					<div class="txt1 text-center p-t-54 p-b-20">
+						<span>
+							Or Sign Up Using
+						</span>
+
+
+					</div>
+
+					<div class="flex-c-m">
+						<a href="#" class="txt2" id="btn_register">
+							Sign Up
+						</a>
+						<!-- <a href="#" class="login100-social-item bg1">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="login100-social-item bg2">
+							<i class="fa fa-twitter"></i>
+						</a>
+
+						<a href="#" class="login100-social-item bg3">
+							<i class="fa fa-google"></i>
+						<!-- </a> -->
+					</div>
+
+					<!-- <div class="flex-col-c p-t-155">
+						<span class="txt1 p-b-17">
+							Or Sign Up Using
+						</span>
+
+						<a href="#" class="txt2" id="btn_register">
+							Sign Up
+						</a>
+					</div> -->
+				</form>
 			</div>
 		</div>
-  </div>
+	</div>
 
-@include('administrator.login.include.v_footer_signin')
+
+	<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+	<script src="{!! asset('login/vendor/jquery/jquery-3.2.1.min.js') !!}"></script>
+<!--===============================================================================================-->
+	<script src="{!! asset('login/vendor/animsition/js/animsition.min.js') !!}"></script>
+<!--===============================================================================================-->
+	<script src="{!! asset('login/vendor/bootstrap/js/popper.js') !!}"></script>
+	<script src="{!! asset('login/vendor/bootstrap/js/bootstrap.min.js') !!}"></script>
+<!--===============================================================================================-->
+	<script src="{!! asset('login/vendor/select2/select2.min.js') !!}"></script>
+<!--===============================================================================================-->
+	<script src="{!! asset('login/vendor/daterangepicker/moment.min.js') !!}"></script>
+	<script src="{!! asset('login/vendor/daterangepicker/daterangepicker.js') !!}"></script>
+<!--===============================================================================================-->
+	<script src="{!! asset('login/vendor/countdowntime/countdowntime.js') !!}"></script>
+<!--===============================================================================================-->
+	<script src="{!! asset('login/js/main.js') !!}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.32.2/sweetalert2.min.js" charset="utf-8"></script>
+
+</body>
+</html>
 
 <script type="text/javascript">
   $(document).ready(function(){

@@ -1,0 +1,51 @@
+@include('administrator.login.include.v_header_signin')
+	<div class="error-pagewrap">
+		<div class="error-page-int">
+			<div class="text-center m-b-md custom-login">
+				<!-- <h3></h3>
+				<p>Please, you have signin first!</p> -->
+				<img class="img-responsive" style="margin-left:35%;" width="30%" src="{!! asset('images/icon.png') !!}" alt="loopinc.id">
+				<br>
+			</div>
+			<div class="content-error">
+				<div class="hpanel">
+            <div class="panel-body">
+
+
+                <form action="#" id="loginForm" autocomplete="off">
+                    <div class="form-group">
+                        <label class="control-label" for="username">Email</label>
+                        <input type="email" placeholder="example@gmail.com" title="Please enter you email" required="" value="" name="email" id="email" class="form-control">
+                        <span class="help-block small">Your unique email to app</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="password">Password</label>
+                        <input type="password" title="Please enter your password" placeholder="******" required="" value="" name="password" id="password" class="form-control">
+                        <span class="help-block small">Your strong password</span>
+                    </div>
+                    <div class="checkbox login-checkbox">
+                        <!-- <label> -->
+						            <!-- <input type="checkbox" class="i-checks"> Remember me </label> -->
+                        <!-- <p class="help-block small">(if this is a private computer)</p> -->
+												<div class="row">
+													<div class="col-sm-6">
+														<a class="btn btn-primary btn-block" >Forgot password?</a>
+													</div>
+												</div>
+										</div>
+
+                    <button class="btn btn-success btn-block loginbtn" id="btn-login" type="submit">Login</button>
+
+										<a id="btn_register" class="btn btn-success btn-block loginbtn">Doesn't have an account? Register</a>
+                </form>
+
+            </div>
+        </div>
+			</div>
+			<div class="text-center login-footer" style="text-align: center;bottom:0;width: 100%;left:0;">
+				<p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a> Modified by <a href="http://rootorial.com/">Pandhu Wibowo</a></p>
+			</div>
+		</div>
+  </div>
+
+@include('administrator.login.include.v_footer_signin')

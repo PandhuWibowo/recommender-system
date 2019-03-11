@@ -248,15 +248,15 @@
 
 					</div>
 
-					<div class="form-checkbox">
+					<!-- <div class="form-checkbox">
 						<label class="container"><p>I've been filling out the form completely and correctly</p>
 						  	<input type="checkbox" name="checkbox" required>
 						  	<span class="checkmark"></span>
 						</label>
-					</div>
+					</div> -->
 					<div class="form-row-last">
 						<input type="submit" name="register" class="register" id="btn_register" value="Sign Up">
-            <a id="btn_signin" class="btn btn-primary">Have an account? Sign In</a>
+            <a style="cursor: pointer;" id="btn_signin" class="btn btn-primary">Have an account? Sign In</a>
 					</div>
 
 				</div>
@@ -500,13 +500,26 @@
                 async     : true,
                 dataType  : "JSON",
                 data      : {
-                  email             : varEmail,
-                  username          : varUsername,
-                  password          : varPassword,
-                  confirm_password  : varPasswordConfirm,
-                  firstname         : varFirstname,
-                  lastname          : varLastname,
-                  phone             : varPhone
+                  email                 : varEmail,
+                  username              : varUsername,
+                  password              : varPassword,
+                  confirm_password      : varPasswordConfirm,
+                  firstname             : varFirstname,
+                  lastname              : varLastname,
+                  phone                 : varPhone,
+                  nickname              : varNickname,
+                  address               : varAlamat,
+                  jenkel                : varGender,
+                  tanggal_lahir         : varBirthDate,
+                  sekolah_kampus        : varSc,
+                  kelas_semester        : varKs,
+                  hobby                 : varHobby,
+                  social_media          : varSosialMedia,
+                  isi_social_media      : varIsiSocialMedia,
+                  pengalaman_organisasi : varOrganisasi,
+                  ciri_khas_personal    : varUniqPerson,
+                  cita_cita             : varCitaCita,
+                  ambil_paket           : varAmbilPacket
                 },
                 success:function(data){
                   $("#firstname").val("");
@@ -516,6 +529,20 @@
                   $("#confirm_password").val("");
                   $("#email").val("");
                   $("#phone").val("");
+                  $("#nickname").val("");
+                  $("#alamat").val("");
+                  $("#gender").val("");
+                  $("#dt").val("");
+                  $("#sc").val("");
+                  $("#ks").val("");
+                  $("#hobby").val("");
+                  $("#social_media").val("");
+                  $("#isi_social_media").val("");
+                  $("#organisasi").val("");
+                  $("#ciri_khas").val("");
+                  $("#citacita").val("");
+                  $("#ambil_paket").val("");
+
                   if(data.response == "success"){
                     swal({
                       type      : "success",
