@@ -154,7 +154,7 @@
 						</label>
 					</div>
 					<div class="form-row-last">
-						<input type="submit" name="register" class="register" value="Register Badge">
+						<input type="submit" name="register" class="register" value="Sign Up">
 					</div>
 				</div>
 			</form>

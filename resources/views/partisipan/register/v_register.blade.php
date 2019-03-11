@@ -1,65 +1,20 @@
-<!doctype html>
-<html class="no-js" lang="en">
-
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Loopinc.id</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- favicon
-		============================================ -->
-    <link rel="shortcut icon" type="image/x-icon" href="{!! asset('images/icon.png') !!}">
-    <!-- Google Fonts
-		============================================ -->
-    <link href="https://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet">
-    <!-- Bootstrap CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/bootstrap.min.css') !!}">
-    <!-- Bootstrap CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/font-awesome.min.css') !!}">
-    <!-- owl.carousel CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/owl.carousel.css') !!}">
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/owl.theme.css') !!}">
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/owl.transitions.css') !!}">
-    <!-- animate CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/animate.css') !!}">
-    <!-- normalize CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/normalize.css') !!}">
-    <!-- main CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/main.css') !!}">
-    <!-- morrisjs CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/morrisjs/morris.css') !!}">
-    <!-- mCustomScrollbar CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/scrollbar/jquery.mCustomScrollbar.min.css') !!}">
-    <!-- metisMenu CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/metisMenu/metisMenu.min.css') !!}">
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/metisMenu/metisMenu-vertical.css') !!}">
-    <!-- calendar CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/calendar/fullcalendar.min.css') !!}">
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/calendar/fullcalendar.print.min.css') !!}">
-    <!-- forms CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/form/all-type-forms.css') !!}">
-    <!-- style CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/style.css') !!}">
-    <!-- responsive CSS
-		============================================ -->
-    <link rel="stylesheet" href="{!! asset('assets/assets_admin/css/responsive.css') !!}">
+	<meta charset="utf-8">
+	<title>Loopinc.id</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="{!! asset('continueregister/css/montserrat-font.css') !!}">
+	<link rel="stylesheet" type="text/css" href="{!! asset('continueregister/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') !!}">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="{!! asset('continueregister/css/style.css') !!}"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" charset="utf-8"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
-    <!-- modernizr JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style media="screen">
@@ -183,267 +138,424 @@
     }
     </style>
 </head>
+<body class="form-v10">
+	<div class="page-content">
+		<div class="form-v10-content">
+			<form class="form-detail" action="#" method="post" id="myform" autocomplete="off">
+				<div class="form-left">
+					<h2>Registration</h2>
+          <div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="text" name="firstname" id="firstname" class="input-text" placeholder="First Name" required>
+						</div>
+						<div class="form-row form-row-2">
+							<input type="text" name="lastname" id="lastname" class="input-text" placeholder="Last Name" required>
+						</div>
+					</div>
+          <div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="text" name="username" id="username" class="input-text" placeholder="Username" required>
+						</div>
+            <div class="form-row form-row-2">
+							<input type="text" name="email" id="email" class="input-text" placeholder="Email" required>
+						</div>
+					</div>
 
-<body>
-    <!--[if lt IE 8]>
-		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-	<![endif]-->
-	<div class="error-pagewrap">
-		<div class="error-page-int">
-			<div class="text-center custom-login">
-				<h3>Registration</h3>
-			</div>
-			<div class="content-error">
-				<div class="hpanel">
-                    <div class="panel-body">
-                        <form id="loginForm" method="POST" autocomplete="off">
-                            <div class="row">
-                                <div class="form-group col-lg-6">
-                                    <label>First Name</label>
-                                    <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" autofocus="on">
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Last Name</label>
-                                    <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name">
-                                </div>
-                                <div class="form-group col-lg-12">
-                                    <label>Username</label>
-                                    <input class="form-control" name="username" id="username" placeholder="Username">
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Repeat Password</label>
-                                    <input type="password" class="form-control" name="confirm_password" id="confirm_password" placeholder="Password Confirmation">
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Email Address</label>
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Phone</label>
-                                    <input class="form-control" name="phone" id="phone" placeholder="Phone">
-                                </div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="text" name="nickname" id="nickname" class="input-text" placeholder="Nick Name" required>
+						</div>
+						<div class="form-row form-row-2">
+							<input type="text" name="phone" id="phone" class="input-text" placeholder="Phone" required>
+						</div>
+					</div>
+          <div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="password" name="password" id="password" class="input-text" placeholder="Password" required>
+						</div>
+						<div class="form-row form-row-2">
+							<input type="password" name="confirm_password" id="confirm_password" class="input-text" placeholder="Confirm Password" required>
+						</div>
+					</div>
+					<div class="form-row">
+						<input type="text" name="alamat" class="company" id="alamat" placeholder="Address" required>
+					</div>
 
-                            </div>
-                            <div class="text-center">
-                                <button id="btn_register" type="submit" class="btn btn-success loginbtn">Register</button>
-                                <button id="btn_signin" class="btn btn-primary">Have an account? Sign In</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-			</div>
-			<div class="text-center login-footer" style="text-align: center;bottom:0;width: 100%;left:0;">
-				<p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a> Modified by <a href="http://rootorial.com/">Pandhu Wibowo</a></p>
-			</div>
+					<div class="form-row">
+						<select name="gender" id="gender">
+								<option value="" selected disabled>Select Gender Please</option>
+						    <option class="option" value="Pria">Men</option>
+						    <option class="option" value="Wanita">Women</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+
+					<div class="form-row">
+						<input type="text" name="dt" class="company datepicker" id="dt" placeholder="Birth date" required  />
+          </div>
+					<div class="form-row">
+						<input type="text" name="sc" class="company" id="sc" placeholder="School/College" required />
+          </div>
+					<div class="form-row">
+						<input type="text" name="ks" class="company" id="ks" placeholder="Class/Semester - Example : Kelas 7/Semester 2 (Tulis satu saja)" required />
+					</div>
+
+					<div class="form-row">
+						<input type="text" name="hobby" class="company" id="hobby" placeholder="Hobby" required>
+					</div>
+				</div>
+				<div class="form-right">
+					<h2>Details</h2>
+					<div class="form-row">
+						<select name="social_media" id="social_media">
+						    <option value="" selected disabled>Social Media</option>
+						    <option value="Instagram">Instagram</option>
+						    <option value="Facebook">Facebook</option>
+						    <option value="Twitter">Twitter</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+					<div class="form-row" id="isi_sosmed">
+					</div>
+
+					<div class="form-row">
+						<input type="text" name="organisasi" class="additional" id="organisasi" placeholder="Organization" required>
+					</div>
+
+					<div class="form-row">
+						<input type="text" name="ciri_khas" class="additional" id="ciri_khas" placeholder="Speciality" required>
+					</div>
+
+					<div class="form-row">
+						<input type="text" name="citacita" class="additional" id="citacita" placeholder="Goals" required>
+					</div>
+
+					<div class="form-row">
+
+							<select name="ambil_paket" id="ambil_paket">
+							    <option value="" selected disabled>Choose Package</option>
+							    <option value="Starter Package">Starter Package</option>
+							    <option value="Proactive Package">Proactive Package</option>
+							    <option value="Bright Package">Bright Package</option>
+							</select>
+							<span class="select-btn">
+							  	<i class="zmdi zmdi-chevron-down"></i>
+							</span>
+
+					</div>
+
+					<div class="form-checkbox">
+						<label class="container"><p>I've been filling out the form completely and correctly</p>
+						  	<input type="checkbox" name="checkbox" required>
+						  	<span class="checkmark"></span>
+						</label>
+					</div>
+					<div class="form-row-last">
+						<input type="submit" name="register" class="register" id="btn_register" value="Sign Up">
+            <a id="btn_signin" class="btn btn-primary">Have an account? Sign In</a>
+					</div>
+
+				</div>
+			</form>
 		</div>
-    </div>
+	</div>
+  <div class="loading" style="display:none;">Loading&#8230;</div>
 
-    <div class="loading" style="display:none;">Loading&#8230;</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
 
-    <!-- jquery
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/vendor/jquery-1.12.4.min.js') !!}"></script>
-    <!-- bootstrap JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/bootstrap.min.js') !!}"></script>
-    <!-- wow JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/wow.min.js') !!}"></script>
-    <!-- price-slider JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/jquery-price-slider.js') !!}"></script>
-    <!-- meanmenu JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/jquery.meanmenu.js') !!}"></script>
-    <!-- owl.carousel JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/owl.carousel.min.js') !!}"></script>
-    <!-- sticky JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/jquery.sticky.js') !!}"></script>
-    <!-- scrollUp JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/jquery.scrollUp.min.js') !!}"></script>
-    <!-- mCustomScrollbar JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/scrollbar/jquery.mCustomScrollbar.concat.min.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/scrollbar/mCustomScrollbar-active.js') !!}"></script>
-    <!-- metisMenu JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/metisMenu/metisMenu.min.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/metisMenu/metisMenu-active.js') !!}"></script>
-    <!-- tab JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/tab.js') !!}"></script>
-    <!-- icheck JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/icheck/icheck.min.js') !!}"></script>
-    <script src="{!! asset('assets/assets_admin/js/icheck/icheck-active.js') !!}"></script>
-    <!-- plugins JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/plugins.js') !!}"></script>
-    <!-- main JS
-		============================================ -->
-    <script src="{!! asset('assets/assets_admin/js/main.js') !!}"></script>
-    <!-- tawk chat JS
-		============================================ -->
-    <!-- <script src="js/tawk-chat.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	 $(function(){
+		  $(".datepicker").datepicker({
+		      format: 'yyyy-mm-dd',
+		      autoclose: true,
+		      todayHighlight: true,
+		  });
+	 });
+	</script>
 
-    <script type="text/javascript">
-      $(document).ready(function(){
-        $("#btn_signin").on("click", function(e){
-          e.preventDefault();
-          window.location="{{ url('backend/pages/signin') }}";
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#social_media").on("change", function(){
+				var varJenisSosmed = $(this).val();
+				if(varJenisSosmed == "Instagram"){
+					$("#isi_sosmed").html('<input type="text" name="isi_social_media" class="street" id="isi_social_media" value="https://www.instagram.com/" required>');
+				}else if (varJenisSosmed == "Facebook") {
+					$("#isi_sosmed").html('<input type="text" name="isi_social_media" class="street" id="isi_social_media" value="https://www.facebook.com/" required>');
+				}else if (varJenisSosmed == "Twitter") {
+					$("#isi_sosmed").html('<input type="text" name="isi_social_media" class="street" id="isi_social_media" value="https://www.twitter.com/" required>');
+				}
+			});
+		});
+	</script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#btn_signin").on("click", function(e){
+        e.preventDefault();
+        window.location="{{ url('backend/pages/signin') }}";
+      });
+
+      $("#btn_register").on("click", function(e){
+        e.preventDefault();
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
         });
 
-        $("#btn_register").on("click", function(e){
-          e.preventDefault();
-          $.ajaxSetup({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-          });
-          var varFirstname        = $("#firstname").val();
-          var varLastname         = $("#lastname").val();
-          var varUsername         = $("#username").val();
-          var varPassword         = $("#password").val();
-          var varPasswordConfirm  = $("#confirm_password").val();
-          var varEmail            = $("#email").val();
-          var varPhone            = $("#phone").val();
+        var varFirstname        = $("#firstname").val();
+        var varLastname         = $("#lastname").val();
+        var varUsername         = $("#username").val();
+        var varPassword         = $("#password").val();
+        var varPasswordConfirm  = $("#confirm_password").val();
+        var varEmail            = $("#email").val();
+        var varPhone            = $("#phone").val();
+        var varNickname         = $("#nickname").val();
+        var varAlamat           = $("#alamat").val();
+        var varGender           = $("#gender").val();
+        var varBirthDate        = $("#dt").val();
+        var varSc               = $("#sc").val();
+        var varKs               = $("#ks").val();
+        var varHobby            = $("#hobby").val();
+        var varSosialMedia      = $("#social_media").val();
+        var varIsiSocialMedia   = $("#isi_social_media").val();
+        var varOrganisasi       = $("#organisasi").val();
+        var varUniqPerson       = $("#ciri_khas").val();
+        var varCitaCita         = $("#citacita").val();
+        var varAmbilPacket      = $("#ambil_paket").val();
 
-          try {
-            if(varFirstname == ""){
+        try {
+          if(varFirstname == ""){
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Firstname is required",
+              timer     : 3000
+            });
+          }
+          else if(varLastname == ""){
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Lastname is required",
+              timer     : 3000
+            });
+          }
+          else if(varUsername == ""){
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Username is required",
+              timer     : 3000
+            });
+          }
+          else if(varEmail == ""){
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Email is required",
+              timer     : 3000
+            });
+          }
+          else if (varNickname == "") {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Nickname is required",
+              timer     : 3000
+            });
+          }
+          else if(varPhone == ""){
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Phone is required",
+              timer     : 3000
+            });
+          }
+          else if(varPassword == ""){
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Password is required",
+              timer     : 3000
+            });
+          }
+          else if(varPasswordConfirm == ""){
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Password Confirmation is required",
+              timer     : 3000
+            });
+          }
+          else if (varAlamat == "") {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Address is required",
+              timer     : 3000
+            });
+          }
+          else if (varGender == "" || varGender == null) {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Gender is required",
+              timer     : 3000
+            });
+          }
+          else if (varBirthDate == "") {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Birth date is required",
+              timer     : 3000
+            });
+          }
+          else if (varSc == "") {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "School or College is required",
+              timer     : 3000
+            });
+          }
+          else if(varKs == ""){
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Class or Semester is required",
+              timer     : 3000
+            });
+          }
+          else if (varHobby == "") {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Hobby is required",
+              timer     : 3000
+            });
+          }
+          else if (varSosialMedia == "" || varSosialMedia == null) {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Social Media Type is required",
+              timer     : 3000
+            });
+          }
+          else if (varIsiSocialMedia == "") {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Social Media is required",
+              timer     : 3000
+            });
+          }else if (varOrganisasi == "") {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Organizations is required",
+              timer     : 3000
+            });
+          }else if (varUniqPerson == "") {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Speciality is required",
+              timer     : 3000
+            });
+          }else if (varCitaCita == "") {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "Goals is required",
+              timer     : 3000
+            });
+          }
+          else if (varAmbilPacket == "" || varAmbilPacket == null) {
+            swal({
+              type      : "info",
+              title     : "Warning",
+              text      : "The Package is required",
+              timer     : 3000
+            });
+          }
+          else{
+            if(varPassword != varPasswordConfirm){
               swal({
                 type      : "info",
                 title     : "Warning",
-                text      : "Firstname is required",
-                timer     : 3000
-              });
-            }
-            else if(varLastname == ""){
-              swal({
-                type      : "info",
-                title     : "Warning",
-                text      : "Lastname is required",
-                timer     : 3000
-              });
-            }
-            else if(varUsername == ""){
-              swal({
-                type      : "info",
-                title     : "Warning",
-                text      : "Username is required",
-                timer     : 3000
-              });
-            }
-            else if(varPassword == ""){
-              swal({
-                type      : "info",
-                title     : "Warning",
-                text      : "Password is required",
-                timer     : 3000
-              });
-            }
-            else if(varPasswordConfirm == ""){
-              swal({
-                type      : "info",
-                title     : "Warning",
-                text      : "Password Confirmation is required",
-                timer     : 3000
-              });
-            }
-            else if(varEmail == ""){
-              swal({
-                type      : "info",
-                title     : "Warning",
-                text      : "Email is required",
-                timer     : 3000
-              });
-            }
-            else if(varPhone == ""){
-              swal({
-                type      : "info",
-                title     : "Warning",
-                text      : "Phone is required",
+                text      : "Password doesn't match",
                 timer     : 3000
               });
             }else{
-              if(varPassword != varPasswordConfirm){
-                swal({
-                  type      : "info",
-                  title     : "Warning",
-                  text      : "Password doesn't match",
-                  timer     : 3000
-                });
-              }else{
-                $.ajax({
-                  type      : "POST",
-                  url       : "{{ url('user/pages/register/store') }}",
-                  async     : true,
-                  dataType  : "JSON",
-                  data      : {
-                    email             : varEmail,
-                    username          : varUsername,
-                    password          : varPassword,
-                    confirm_password  : varPasswordConfirm,
-                    firstname         : varFirstname,
-                    lastname          : varLastname,
-                    phone             : varPhone
-                  },
-                  success:function(data){
-                    $("#firstname").val("");
-                    $("#lastname").val("");
-                    $("#username").val("");
-                    $("#password").val("");
-                    $("#confirm_password").val("");
-                    $("#email").val("");
-                    $("#phone").val("");
-                    if(data.response == "success"){
-                      swal({
-                        type      : "success",
-                        title     : "Saved",
-                        text      : "Please check your email first for activation your account",
-                        timer     : 3000
-                      }).then(function(){
-                        window.location = "{{ url('user/pages/register') }}";
-                      });
-                    }
-                    else{
-                      swal({
-                        type      : "error",
-                        title     : "Error",
-                        text      : "Oops, Cannot be saved your data",
-                        timer     : 3000
-                      });
-                    }
-                  },
-                  error:function(data){
-                    console.log(data);
-                  },
-                  beforeSend: function(){
-                      // Code to display spinner
-                      $('.loading').show();
-                  },
-                  complete: function(){
-                      // Code to hide spinner.
-                      $('.loading').hide();
+              $.ajax({
+                type      : "POST",
+                url       : "{{ url('user/pages/register/store') }}",
+                async     : true,
+                dataType  : "JSON",
+                data      : {
+                  email             : varEmail,
+                  username          : varUsername,
+                  password          : varPassword,
+                  confirm_password  : varPasswordConfirm,
+                  firstname         : varFirstname,
+                  lastname          : varLastname,
+                  phone             : varPhone
+                },
+                success:function(data){
+                  $("#firstname").val("");
+                  $("#lastname").val("");
+                  $("#username").val("");
+                  $("#password").val("");
+                  $("#confirm_password").val("");
+                  $("#email").val("");
+                  $("#phone").val("");
+                  if(data.response == "success"){
+                    swal({
+                      type      : "success",
+                      title     : "Saved",
+                      text      : "Please check your email first for activation your account",
+                      timer     : 3000
+                    }).then(function(){
+                      window.location = "{{ url('user/pages/register') }}";
+                    });
                   }
-                });
-              }
+                  else{
+                    swal({
+                      type      : "error",
+                      title     : "Error",
+                      text      : "Oops, Cannot be saved your data",
+                      timer     : 3000
+                    });
+                  }
+                },
+                error:function(data){
+                  console.log(data);
+                },
+                beforeSend: function(){
+                    // Code to display spinner
+                    $('.loading').show();
+                },
+                complete: function(){
+                    // Code to hide spinner.
+                    $('.loading').hide();
+                }
+              });
             }
-          } catch (e) {
-            console.log(e);
-          } finally {
-
           }
-        });
-      });
-    </script>
-</body>
+        } catch (e) {
+          console.log(e);
+        } finally {
 
+        }
+      });
+    });
+  </script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>
