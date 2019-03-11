@@ -138,7 +138,7 @@
                 // console.log(data.level);
                 switch (data.level) {
                   case "Super Admin": window.location = "{{ url('backend/pages/home')}}";break;
-                  case "Participant": window.location = "{{ url('user/pages/home') }}";break;
+                  case "Participant": window.location = "{{ url('user/pages/continues') }}";break;
                   default:swal({
                     type    : "error",
                     title   : "Error",

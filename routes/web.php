@@ -120,6 +120,10 @@ Route::prefix('user/pages')->group(function () {
     Route::post("register/store","Dashboard\User\Register\RegisterController@store");
     Route::get('register/verify/{id}', 'Dashboard\User\Register\RegisterController@confirm');
 
+    //Lanjut Registration
+    Route::get("continues","Dashboard\User\Register\RegisterController@continueIndex");
+
+    
     //Home
     Route::get("home","Dashboard\User\DashboardUser\HomeController@index");
 

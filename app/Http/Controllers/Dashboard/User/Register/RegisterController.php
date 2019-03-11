@@ -167,4 +167,10 @@ class RegisterController extends Controller
           return redirect('backend/pages/signin');
         }
   }
+
+  public function continueIndex(Request $request){
+    $continueRegister = User::where("id",Session::get("id"))->first();
+
+    return view("partisipan.register.v_continueregister", compact("continueRegister"));
+  }
 }
