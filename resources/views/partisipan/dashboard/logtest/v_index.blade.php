@@ -174,6 +174,7 @@
                                       <thead>
                                         <tr>
                                           <th>Participant</th>
+                                          <th>Competency</th>
                                           <th>Date</th>
                                           <th>Action</th>
                                         </tr>
@@ -182,6 +183,7 @@
                                         @foreach($histories as $key=>$row)
                                           <tr>
                                             <td>{{ $row->get_user->firstname }} {{ $row->get_user->lastname }}</td>
+                                            <td>{{ $row->get_jenis_assessment->nama}}</td>
                                             <td>{{Carbon::parse($row->created_at)->formatLocalized('%A, %d %B %Y')}}</td>
                                             <td>
                                                 <a class="btn btn-warning btn_edit" href="{{ url('user/pages/histories/'.Crypt::encrypt($row->id)) }}"><i class="fa fa-table"></i></a>
@@ -192,6 +194,7 @@
                                       <tfoot>
                                           <tr>
                                             <th>Participant</th>
+                                            <th>Competency</th>
                                             <th>Date</th>
                                             <th>Action</th>
                                           </tr>
@@ -205,7 +208,7 @@
             </div>
         </div>
         <!-- Static Table End -->
-        <div class="footer-copyright-area" style="text-align: center;bottom:0;position: fixed;width: 100%;left:0;">
+        <div class="footer-copyright-area" style="text-align: center;bottom:0;width: 100%;left:0;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

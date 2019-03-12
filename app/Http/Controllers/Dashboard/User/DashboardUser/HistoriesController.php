@@ -23,7 +23,7 @@ use DB;
 use BrowserDetect;
 use App\Http\Models\ModelLogs\DirectPage;
 use App\Http\Models\ModelLogs\LogUserHistory;
-
+use PDF;
 /**
  * HistoriesController
  */
@@ -40,7 +40,7 @@ class HistoriesController extends Controller
     ]);
 
     $logPages->save();
-    $histories = Assesment::where("user_id", Session::get("id"))->get();
+    $histories = Assesment::with("get_jenis_assessment")->where("user_id", Session::get("id"))->get();
     return view("partisipan.dashboard.logtest.v_index", compact("histories"));
   }
 
@@ -109,7 +109,48 @@ class HistoriesController extends Controller
 
     $logPages->save();
 
-    return view("partisipan.dashboard.logtest.v_detail", compact("cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan"));
+    return view("partisipan.dashboard.logtest.v_detail", compact("cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan","id"));
 
+  }
+
+  public function printPdf($id, Request $request){
+    $decryptAssId = Crypt::decrypt($id);
+
+    $resultAssKom = AssessmentKompetensi::where("ass_id", $decryptAssId)->get();
+
+    $rangeScore = KeteranganNilai::orderBy("range_score")->get();
+
+
+
+    $cetakHasilAsskomsKekuatan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->where("ak.ass_id", $decryptAssId)
+                                    ->whereIn("range_score",["3","4"])
+                                    ->get();
+
+    $cetakHasilAsskomsPengembangan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->where("ak.ass_id", $decryptAssId)
+                                    ->whereIn("range_score",["1","2"])
+                                    ->get();
+
+    $cetakSaran = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
+                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
+                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
+                                    ->join("kompetensis as k","kh.kompetensi_id","=","k.id")
+                                    ->where("ak.ass_id", $decryptAssId)
+                                    ->whereIn("range_score",["1","2"])
+                                    ->orderByDesc("pembulatan")
+                                    ->get();
+
+    $dataUser = Assesment::with('get_user')->with("get_jenis_assessment")
+                          ->where("id", $decryptAssId)->limit(1)->get();
+
+    $pdf = PDF::loadView('partisipan.dashboard.report.v_print', compact("dataUser","cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan","id"))->setPaper('a4', 'portrait');
+    // $pdf->render();
+    
+    return $pdf->stream();
   }
 }

@@ -165,6 +165,7 @@ return [
         Unisharp\Ckeditor\ServiceProvider::class,
         'hisorange\BrowserDetect\Provider\BrowserDetectService',
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -229,6 +230,7 @@ return [
         'Carbon' => 'Carbon\Carbon',
         'Uuid' => Webpatser\Uuid\Uuid::class,
         'BrowserDetect' => 'hisorange\BrowserDetect\Facade\Parser',
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

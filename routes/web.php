@@ -123,7 +123,7 @@ Route::prefix('user/pages')->group(function () {
     //Lanjut Registration
     Route::get("continues","Dashboard\User\Register\RegisterController@continueIndex");
 
-    
+
     //Home
     Route::get("home","Dashboard\User\DashboardUser\HomeController@index");
 
@@ -152,6 +152,10 @@ Route::prefix('user/pages')->group(function () {
     Route::resource("histories","Dashboard\User\DashboardUser\HistoriesController", ["only" =>
       ["index","show"]
     ]);
+
+    // user/pages/prints/pdf
+
+    Route::get("prints/{id}/pdf","Dashboard\User\DashboardUser\HistoriesController@printPdf");
 });
 
 Route::prefix("main")->group(function() {

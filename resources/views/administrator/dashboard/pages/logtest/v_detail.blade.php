@@ -116,6 +116,10 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
+                                          <a href="" type="button" class="btn btn-primary">
+                                            <i class="fa fa-print"></i>
+                                            Print
+                                          </a>
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>

@@ -163,12 +163,12 @@
                                                   </div>
 
                                                   <div class="form-group res-mg-t-15">
-                                                    <label for="usr">Self Development</label>
+                                                    <label for="usr">Self Directed Development</label>
                                                     <textarea name="p_mandiri" id="p_mandiri" placeholder="Self Development"></textarea>
                                                   </div>
 
                                                   <div class="form-group res-mg-t-15">
-                                                    <label for="usr">Partner Development</label>
+                                                    <label for="usr">Partnership Development Activity</label>
                                                     <textarea name="p_bermitra" id="p_bermitra" placeholder="Partner Development"></textarea>
                                                   </div>
 
@@ -287,12 +287,12 @@
                                             </div>
 
                                             <div class="form-group res-mg-t-15">
-                                              <label for="usr">Self Development</label>
+                                              <label for="usr">Self Directed Development</label>
                                               <textarea name="edit_p_mandiri" id="edit_p_mandiri" placeholder="Self Development"></textarea>
                                             </div>
 
                                             <div class="form-group res-mg-t-15">
-                                              <label for="usr">Partner Development</label>
+                                              <label for="usr">Partnership Development Activity</label>
                                               <textarea name="edit_p_bermitra" id="edit_p_bermitra" placeholder="Partner Development"></textarea>
                                             </div>
 
