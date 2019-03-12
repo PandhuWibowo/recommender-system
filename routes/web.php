@@ -142,7 +142,7 @@ Route::prefix('user/pages')->group(function () {
 
     Route::post("questions/store","Dashboard\User\DashboardUser\QuestionController@store");
 
-    Route::get("results/final/{assId}","Dashboard\User\DashboardUser\ResultController@show");
+    Route::get("results/final/{id}","Dashboard\User\DashboardUser\ResultController@show");
 
     Route::get("forgot/password/sendemail","Dashboard\User\ForgotPassword\ForgotPasswordController@index");
     Route::post("forgot/password/sent","Dashboard\User\ForgotPassword\ForgotPasswordController@sendEmail");

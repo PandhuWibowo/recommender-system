@@ -53,7 +53,8 @@ class AssesmentController extends Controller
     $assesment = new Assesment([
       'id'            => Uuid::generate()->string,
       'user_id'       => Session::get("id"),
-      'tanggal_akses' => Carbon::now()->format('Y-m-d')
+      'tanggal_akses' => Carbon::now()->format('Y-m-d'),
+      'assesment_id'  => Crypt::decrypt($request->id)
     ]);
 
     if($assesment->save()){

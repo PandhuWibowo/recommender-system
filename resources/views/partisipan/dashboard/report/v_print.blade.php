@@ -39,6 +39,10 @@
           padding: 8px;
         }
 
+        /* .invoice th, td {
+          border-bottom: 1px solid #ddd;
+        } */
+
         .invoice tr:nth-child(even){background-color: #f2f2f2}
 
         .invoice th {
@@ -63,6 +67,7 @@
         hr {
           color: #e2725b;
           background-color: #e2725b;
+          margin-top:-30px;
           height: 5px;
         }
 
@@ -112,6 +117,10 @@
         .invoice .sub {
           margin-left: 10%;
         }
+
+        .info-partisipan th, .info-partisipan td, .invoice th, .invoice td{
+          border-bottom: 1px solid #ddd;
+        }
     </style>
 
 </head>
@@ -153,8 +162,6 @@ Kembangan, Jakarta Barat
 
 </div>
 
-
-<br/>
 
 <div class="info-partisipan">
   <table width="100%">

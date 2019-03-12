@@ -27,8 +27,8 @@ use BrowserDetect;
  */
 class ResultController extends Controller
 {
-  public function show($assId, Request $request){
-    $assId  = Crypt::decrypt($assId);
+  public function show($id, Request $request){
+    $assId  = Crypt::decrypt($id);
 
     $query  = DB::table("pertanyaan_assesments as pa")
                 ->select("k.id as kId","r.id as rId","r.nama_rowscore as namaRowScore","k.kompetensi as kKompetensi",DB::raw("SUM(pa.nilai) as sum_nilai"))
@@ -239,6 +239,6 @@ class ResultController extends Controller
 
     $logPages->save();
 
-    return view("partisipan.dashboard.result.v_index", compact("cetakSaran","resultAssKom","rowscores","rangeScore","cetakHasilAsskomsKekuatan","cetakHasilAsskomsPengembangan"));
+    return view("partisipan.dashboard.result.v_index", compact("cetakSaran","resultAssKom","rowscores","rangeScore","cetakHasilAsskomsKekuatan","cetakHasilAsskomsPengembangan","id"));
   }
 }
