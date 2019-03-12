@@ -187,6 +187,26 @@ Kembangan, Jakarta Barat
 </div>
 
 <div class="invoice">
+    <h3 class="sub" align="left">Score Descriptions</h3>
+    <table width="100%">
+        <thead>
+          <tr>
+            <th style="text-align:center;width:75px;">Range Score</th>
+            <th style="text-align:center">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($rangeScore as $row)
+            <tr>
+              <td style="text-align:center">{!!$row->range_score!!}</td>
+              <td style="text-align:center">{!!$row->keterangan!!}</td>
+            </tr>
+          @endforeach
+        </tbody>
+    </table>
+</div>
+
+<div class="invoice">
     <h3 align="left" class="sub">Score Tests</h3>
     <table width="100%">
 
@@ -265,26 +285,6 @@ Kembangan, Jakarta Barat
             <tr>
               <td style="text-align:center;width:4px;"><img src="images/dot.png" alt="Loopinc.id" width="30px" class="logo"/></td>
               <td style="text-align:center">{!!$row->p_mandiri!!}</td>
-            </tr>
-          @endforeach
-        </tbody>
-    </table>
-</div>
-
-<div class="invoice">
-    <h3 class="sub" align="left">Score Descriptions</h3>
-    <table width="100%">
-        <thead>
-          <tr>
-            <th style="text-align:center;width:75px;">Range Score</th>
-            <th style="text-align:center">Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($rangeScore as $row)
-            <tr>
-              <td style="text-align:center">{!!$row->range_score!!}</td>
-              <td style="text-align:center">{!!$row->keterangan!!}</td>
             </tr>
           @endforeach
         </tbody>
