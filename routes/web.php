@@ -140,6 +140,7 @@ Route::prefix('user/pages')->group(function () {
     Route::post("assesments/store","Dashboard\User\DashboardUser\AssesmentController@store");
     Route::get("assesments/{id}/{assId}","Dashboard\User\DashboardUser\AssesmentController@show");
 
+    Route::put("questions/update","Dashboard\User\DashboardUser\QuestionController@update");
     Route::post("questions/store","Dashboard\User\DashboardUser\QuestionController@store");
 
     Route::get("results/final/{id}","Dashboard\User\DashboardUser\ResultController@show");

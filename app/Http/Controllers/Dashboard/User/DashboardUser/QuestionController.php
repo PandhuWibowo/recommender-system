@@ -27,19 +27,69 @@ use BrowserDetect;
 class QuestionController extends Controller
 {
   public function store(Request $request){
-    $assesmentId = $request->ass_id; $pertanyaanId = $request->pertanyaan_id;
-    $jawabanId  = $request->jawaban_id; $nilai = $request->nilai;
-    for($i=0;$i<count($nilai);$i++){
+    $assesmentId      = $request->ass_id;
+    $pertanyaanId     = $request->pertanyaan_id;
+    $jawabanId        = $request->jawaban_id;
+    $nilai            = $request->nilai;
+
+    $check = PertanyaanAssesment::where("ass_id", $assesmentId)->where("pertanyaan_id", $pertanyaanId)->get();
+
+    if(count($check) <= 0){
       $pertanyaanAssesment  = new PertanyaanAssesment([
         "id"            => Uuid::generate()->string,
-        "ass_id"        => $assesmentId[$i],
-        "pertanyaan_id" => $pertanyaanId[$i],
-        "jawaban_id"    => $jawabanId[$i],
-        "nilai"         => $nilai[$i]
+        "ass_id"        => $assesmentId,
+        "pertanyaan_id" => $pertanyaanId,
+        "jawaban_id"    => $jawabanId,
+        "nilai"         => $nilai
       ]);
 
-      $pertanyaanAssesment->save();
+      if($pertanyaanAssesment->save()){
+        return response()->json(
+          array(
+            "response"  => "success:store"
+          )
+        );
+      }else{
+        return response()->json(
+          array(
+            "response"  => "failed:store"
+          )
+        );
+      }
+    }else{
+      $pertanyaanAssesment = PertanyaanAssesment::where("ass_id", $assesmentId)->where("pertanyaan_id", $pertanyaanId)->first();
+      $pertanyaanAssesment->jawaban_id = $jawabanId;
+
+      if($pertanyaanAssesment->save()){
+        return response()->json(
+          array(
+            "response"  => "success:update"
+          )
+        );
+      }
+      else{
+        return response()->json(
+          array(
+            "response"  => "failed:update"
+          )
+        );
+      }
     }
+  }
+
+  public function update(Request $request){
+    $assesmentId  = $request->id;
+    $selesai      = $request->selesai;
+
+
+    $statusAssessment = Assesment::find($assesmentId);
+    $statusAssessment->selesai = $selesai;
+
+    $statusAssessment->save();
+
+    // for($i=0;$i<count($nilai);$i++){
+    //
+    // }
     // SELECT rowscores.nama_rowscore, kompetensis.kompetensi, sum(pertanyaan_assesments.nilai) FROM `pertanyaan_assesments` JOIN pertanyaans ON pertanyaan_assesments.pertanyaan_id = pertanyaans.id JOIN jawabans ON pertanyaan_assesments.jawaban_id = jawabans.id JOIN rowscores ON rowscores.id = pertanyaans.rowscore_id JOIN kompetensis ON kompetensis.id = pertanyaans.kompetensi_id GROUP BY rowscores.no_urut_rowscore, kompetensis.no_urut_kompetensi
     //Query
     // SELECT rowscores.nama_rowscore, sum(pertanyaan_assesments.nilai) FROM `pertanyaan_assesments` JOIN pertanyaans ON pertanyaan_assesments.pertanyaan_id = pertanyaans.id JOIN jawabans ON pertanyaan_assesments.jawaban_id = jawabans.id JOIN rowscores ON rowscores.id = pertanyaans.rowscore_id GROUP BY rowscores.no_urut_rowscore
@@ -54,8 +104,8 @@ class QuestionController extends Controller
       "user_id"     => Session::get("id"),
       "ip_address"  => $request->ip(),
       "browser"     => BrowserDetect::browserName(),
-      "action"      => "Store Jawaban Store|Success",
-      "data"        => Session::get("email")." berhasil menyimpan jawaban",
+      "action"      => "Update End Status Update|Success",
+      "data"        => Session::get("email")." berhasil menyelesaikan jawaban",
       "link"        => url()->current()
     ]);
 
@@ -64,7 +114,7 @@ class QuestionController extends Controller
     return response()->json(
       array(
         "response"  => "success",
-        "assId"     => Crypt::encrypt($assesmentId[0])
+        "assId"     => Crypt::encrypt($assesmentId)
       )
     );
   }

@@ -97,6 +97,10 @@
       display: block;
     }
 
+    label {
+        font-weight: normal !important;
+    }
+
     /* Absolute Center Spinner */
       .loading {
         position: fixed;
@@ -342,10 +346,10 @@
                                                                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                                       <!-- i-checks -->
                                                                                                         <div class="pull-left">
-                                                                                                              <input type="hidden" value="{{$decryptAssId}}" name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
-                                                                                                              <input type="hidden" value="{{$row2->pertanyaan_id}}" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
-                                                                                                              <input type="hidden" value="{{$row2->id}}" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
-                                                                                                              <input type="radio" value="{{$row2->nilai}}" name="nilai {{$x}}" id="nilai{{$x}}" required>
+                                                                                                              <input type="hidden" value="{{$decryptAssId}}" class="assessmentid"  name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
+                                                                                                              <input type="hidden" value="{{$row2->pertanyaan_id}}" class="pertanyaanid" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
+                                                                                                              <input type="hidden" value="{{$row2->id}}" class="jawabanid" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
+                                                                                                              <input type="radio" value="{{$row2->nilai}}" class="nilai" name="nilai{{$x}}" id="nilai{{$x}}" assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->pertanyaan_id}}" jawabanid="{{$row2->id}}">
                                                                                                         </div>
                                                                                                         <div class="jawaban">{{ucfirst($row2->jawaban)}}</div>
 
@@ -365,6 +369,7 @@
                                                                       @endforeach
                                                                   </tbody>
                                                               </table>
+
                                                               <button type="button" class="btn btn-primary" id="btn_save" data-count="{{$x}}">Save</button>
                                                           </div>
                                                       </div>
@@ -472,10 +477,14 @@
         });
       });
     </script>
+
     <script type="text/javascript">
+
+
       $(document).ready(function(){
         var table = $("#datatables").DataTable({
-          "pagingType": "full_numbers",
+          "pagingType": "simple",
+          // "sPaginationType": "full_numbers",
           "searching": false,
           "pageLength": {{$limit}},
           "info":     false,
@@ -491,116 +500,161 @@
           }
         });
 
-        
+        $(document).on("click", ".nilai", function() {
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+          var varNilai         = table.$(this).val();
+          var varAssId         = table.$(this).attr("assessmentid");
+          var varPertanyaanId  = table.$(this).attr("pertanyaanid");
+          var varJawabanId     = table.$(this).attr("jawabanid");
+          // console.log("Nilai : "+varNilai);
+          // console.log("Assessment ID : "+varAssId);
+          // console.log("Pertanyaan ID : "+varPertanyaanId);
+          // console.log("Jawaban ID : "+varJawabanId);
 
-        // $("#btn_save").on("click", function(){
-        //   $.ajaxSetup({
-        //     headers: {
-        //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     }
-        //   });
-        //   var varCount = $(this).data("count");
-        //   var varParseCount = parseInt(varCount)-1;
-        //   var i;
-        //   var varNilai;
-        //   var varSum;
-        //   var arrNilai        = [];
-        //   var arrAssesmentId  = [];
-        //   var arrPertanyaanId = [];
-        //   var arrJawabanId    = [];
-        //   for (i = 1; i <= varParseCount; i++) {
-        //     // varNilai = $("#nilai"+i).val();
-        //     var varJenisAssesmentId  = table.$("input[name=assessmentid"+i+"]").val();
-        //     var varPertanyaanId      = table.$("input[name=pertanyaanid"+i+"]").val();
-        //     var varJawabanId         = table.$("input[name=jawabanid"+i+"]").val();
-        //     var varNilai             = table.$("input[name=nilai"+i+"]:checked").val();
-        //     if(varNilai == "" || varNilai == undefined){
-        //       swal({
-        //         type      : "info",
-        //         title     : "Null",
-        //         text      : "Answer is still empty",
-        //         timer     : 3000,
-        //       });
-        //     }else{
-        //       // varNilai = varNilai + varNilai;
-        //           arrNilai[i-1]       = varNilai;
-        //           arrAssesmentId[i-1] = varJenisAssesmentId;
-        //           arrPertanyaanId[i-1]= varPertanyaanId;
-        //           arrJawabanId[i-1]   = varJawabanId;
-        //     }
-        //     // console.log("Nilai"+i+": "+varNilai);
-        //
-        //     // console.log(varSum);
-        //   }
-        //   // varSum = parseInt(varNilai);
-        //   // console.log(arrAssesmentId);
-        //   if(varParseCount != arrNilai.push()){
-        //     swal({
-        //       type      : "info",
-        //       title     : "Null",
-        //       text      : "Answers are still empty",
-        //       timer     : 3000,
-        //     });
-        //   }else{
-        //     try {
-        //       swal({
-        //         title: 'Are you sure?',
-        //         text: "Click yes to process your answers",
-        //         type: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         cancelButtonColor: '#d33',
-        //         confirmButtonText: 'Yes'
-        //       }).then((result) => {
-        //         if(result.value){
-        //           $.ajax({
-        //             type      : "POST",
-        //             url       : "{{ url('user/pages/questions/store') }}",
-        //             async     : true,
-        //             dataType  : "JSON",
-        //             cache     : true,
-        //             data      : {
-        //               "ass_id[]"        : arrAssesmentId,
-        //               "pertanyaan_id[]" : arrPertanyaanId,
-        //               "jawaban_id[]"    : arrJawabanId,
-        //               "nilai[]"         : arrNilai
-        //             },
-        //             success:function(data){
-        //               // if(data.response == "success"){
-        //               //   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
-        //               // }
-        //               // console.log(data);
-        //               if(data.response == "success"){
-        //                 swal({
-        //                   type      : "success",
-        //                   title     : "Success",
-        //                   timer     : 3000,
-        //                 }).then(function(){
-        //                   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
-        //                 });
-        //               }
-        //             },
-        //             error:function(data){
-        //               console.log(data);
-        //             },
-        //             beforeSend: function(){
-        //                 // Code to display spinner
-        //                 $('.loading').show();
-        //             },
-        //             complete: function(){
-        //                 // Code to hide spinner.
-        //                 $('.loading').hide();
-        //             }
-        //           });
-        //         }
-        //       });
-        //     } catch (e) {
-        //       console.log(e);
-        //     } finally {
-        //
-        //     }
-        //   }
-        // });
+          try {
+            $.ajax({
+              type      : "POST",
+              url       : "{{ url('user/pages/questions/store') }}",
+              async     : true,
+              dataType  : "JSON",
+              cache     : true,
+              data      : {
+                ass_id        : varAssId,
+                nilai         : varNilai,
+                pertanyaan_id : varPertanyaanId,
+                jawaban_id    : varJawabanId
+              },
+              success:function(data){
+                console.log(data);
+              },
+              error:function(data){
+                console.log(data);
+              }
+            });
+          } catch (e) {
+            console.log(e);
+          } finally {
+
+          }
+
+
+        });
+
+
+
+        $("#btn_save").on("click", function(){
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+          var varCount = $(this).data("count");
+          var varParseCount = parseInt(varCount)-1;
+          var i;
+          var varNilai;
+          var varSum;
+          var arrNilai        = [];
+          var arrAssesmentId  = [];
+          var arrPertanyaanId = [];
+          var arrJawabanId    = [];
+          for (i = 1; i <= varParseCount; i++) {
+            // varNilai = $("#nilai"+i).val();
+            var varJenisAssesmentId  = table.$("input[name=assessmentid"+i+"]").val();
+            var varPertanyaanId      = table.$("input[name=pertanyaanid"+i+"]").val();
+            var varJawabanId         = table.$("input[name=jawabanid"+i+"]").val();
+            var varNilai             = table.$("input[name=nilai"+i+"]:checked").val();
+            if(varNilai == "" || varNilai == undefined){
+              swal({
+                type      : "info",
+                title     : "Null",
+                text      : "Answer is still empty",
+                timer     : 3000,
+              });
+            }else{
+              // varNilai = varNilai + varNilai;
+                  arrNilai[i-1]       = varNilai;
+                  arrAssesmentId[i-1] = varJenisAssesmentId;
+                  arrPertanyaanId[i-1]= varPertanyaanId;
+                  arrJawabanId[i-1]   = varJawabanId;
+            }
+            // console.log("Nilai"+i+": "+varNilai);
+
+            // console.log(varSum);
+          }
+          // varSum = parseInt(varNilai);
+          // console.log(arrAssesmentId);
+          if(varParseCount != arrNilai.push()){
+            swal({
+              type      : "info",
+              title     : "Null",
+              text      : "Answers are still empty",
+              timer     : 3000,
+            });
+          }else{
+            try {
+              swal({
+                title: 'Are you sure?',
+                text: "Click yes to process your answers",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+              }).then((result) => {
+                if(result.value){
+                  $.ajax({
+                    type      : "PUT",
+                    url       : "{{ url('user/pages/questions/update') }}",
+                    async     : true,
+                    dataType  : "JSON",
+                    cache     : true,
+                    data      : {
+                      id      : varJenisAssesmentId,
+                      selesai : "1"
+                      // "pertanyaan_id[]" : arrPertanyaanId,
+                      // "jawaban_id[]"    : arrJawabanId,
+                      // "nilai[]"         : arrNilai
+                    },
+                    success:function(data){
+                      // if(data.response == "success"){
+                      //   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
+                      // }
+                      // console.log(data);
+                      if(data.response == "success"){
+                        swal({
+                          type      : "success",
+                          title     : "Success",
+                          timer     : 3000,
+                        }).then(function(){
+                          window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
+                        });
+                      }
+                    },
+                    error:function(data){
+                      console.log(data);
+                    },
+                    beforeSend: function(){
+                        // Code to display spinner
+                        $('.loading').show();
+                    },
+                    complete: function(){
+                        // Code to hide spinner.
+                        $('.loading').hide();
+                    }
+                  });
+                }
+              });
+            } catch (e) {
+              console.log(e);
+            } finally {
+
+            }
+          }
+        });
       });
     </script>
 </body>
