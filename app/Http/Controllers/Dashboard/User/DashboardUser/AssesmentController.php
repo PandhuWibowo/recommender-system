@@ -13,6 +13,7 @@ use App\Http\Models\Pertanyaan;
 use App\Http\Models\UserAssessment;
 use App\Http\Models\Configuration;
 use App\Http\Models\Kompetensi;
+use App\Http\Models\PertanyaanAssesment;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -33,6 +34,8 @@ class AssesmentController extends Controller
                                       ->where("status", 0)
                                       ->get();
     $countAssessment = count($jenisAssesment);
+
+    // $continueAss = Assesment::where("user_id", Session::get("id"))->get();
 
     $logPages = new DirectPage([
       "user_id"     => Session::get("id"),
@@ -112,6 +115,7 @@ class AssesmentController extends Controller
     $decryptId    = Crypt::decrypt($id);
     $decryptAssId = Crypt::decrypt($assId);
 
+    // dd($decryptId);
     //Paginate total number
     $limit = Configuration::pluck("konfigurasi")->first();
 
@@ -127,6 +131,9 @@ class AssesmentController extends Controller
                               ->orderBy("no_urut_pertanyaan","asc")
                               ->get();
     $countQuestions = count($questions);
+
+    $hasilJawaban = PertanyaanAssesment::where("ass_id", $decryptAssId)->pluck("jawaban_id");
+    // dd($hasilJawaban);
 
     //Penentuan Assessment
     $competencyType = Pertanyaan::where("assesment_id", $decryptId)
@@ -156,6 +163,6 @@ class AssesmentController extends Controller
 
     $logPages->save();
 
-    return view("partisipan.dashboard.assesment.v_question", compact("questions","decryptAssId","countQuestions","competencyType", "limit"));
+    return view("partisipan.dashboard.assesment.v_question", compact("hasilJawaban","questions","decryptAssId","countQuestions","competencyType", "limit"));
   }
 }

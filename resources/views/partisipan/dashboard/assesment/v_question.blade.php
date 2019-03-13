@@ -225,6 +225,11 @@
       .btn {
          border-radius: 0px !important;
       }
+
+      .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+          border-radius: 0;
+          background: #e2725b;
+      }
     </style>
 </head>
 
@@ -305,6 +310,7 @@
                             <div class="sparkline12-hd">
                                 <div class="main-sparkline12-hd">
                                     <h1 style="text-align:center;">Assessment : {{$competencyType}}</h1>
+
                                 </div>
                             </div>
                             <div class="sparkline12-graph">
@@ -349,7 +355,9 @@
                                                                                                               <input type="hidden" value="{{$decryptAssId}}" class="assessmentid"  name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
                                                                                                               <input type="hidden" value="{{$row2->pertanyaan_id}}" class="pertanyaanid" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
                                                                                                               <input type="hidden" value="{{$row2->id}}" class="jawabanid" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
-                                                                                                              <input type="radio" value="{{$row2->nilai}}" class="nilai" name="nilai{{$x}}" id="nilai{{$x}}" assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->pertanyaan_id}}" jawabanid="{{$row2->id}}">
+
+                                                                                                              <input type="radio" value="{{$row2->nilai}}" class="nilai" name="nilai{{$x}}" id="nilai{{$x}}" assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->pertanyaan_id}}" jawabanid="{{$row2->id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?>>
+
                                                                                                         </div>
                                                                                                         <div class="jawaban">{{ucfirst($row2->jawaban)}}</div>
 

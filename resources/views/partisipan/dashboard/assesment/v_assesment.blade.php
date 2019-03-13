@@ -170,6 +170,7 @@
                                                                 <div class="bt-df-checkbox pull-left">
                                                                     @foreach($jenisAssesment as $row)
                                                                       @if($row->attempt >= $row->maxattempt)
+                                                                      <!-- continueAss -->
                                                                         <div class="row">
                                                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                 <div class="i-checks pull-left">
