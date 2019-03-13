@@ -217,6 +217,11 @@
         }
       }
     </style>
+    <style media="screen">
+      .btn {
+         border-radius: 0px !important;
+      }
+    </style>
 </head>
 
 <body>
@@ -485,114 +490,117 @@
           }
         });
 
-        $("#btn_save").on("click", function(){
-          $.ajaxSetup({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-          });
-          var varCount = $(this).data("count");
-          var varParseCount = parseInt(varCount)-1;
-          var i;
-          var varNilai;
-          var varSum;
-          var arrNilai        = [];
-          var arrAssesmentId  = [];
-          var arrPertanyaanId = [];
-          var arrJawabanId    = [];
-          for (i = 1; i <= varParseCount; i++) {
-            // varNilai = $("#nilai"+i).val();
-            var varJenisAssesmentId  = table.$("input[name=assessmentid"+i+"]").val();
-            var varPertanyaanId      = table.$("input[name=pertanyaanid"+i+"]").val();
-            var varJawabanId         = table.$("input[name=jawabanid"+i+"]").val();
-            var varNilai             = table.$("input[name=nilai"+i+"]:checked").val();
-            if(varNilai == "" || varNilai == undefined){
-              swal({
-                type      : "info",
-                title     : "Null",
-                text      : "Answer is still empty",
-                timer     : 3000,
-              });
-            }else{
-              // varNilai = varNilai + varNilai;
-                  arrNilai[i-1]       = varNilai;
-                  arrAssesmentId[i-1] = varJenisAssesmentId;
-                  arrPertanyaanId[i-1]= varPertanyaanId;
-                  arrJawabanId[i-1]   = varJawabanId;
-            }
-            // console.log("Nilai"+i+": "+varNilai);
-
-            // console.log(varSum);
-          }
-          // varSum = parseInt(varNilai);
-          // console.log(arrAssesmentId);
-          if(varParseCount != arrNilai.push()){
-            swal({
-              type      : "info",
-              title     : "Null",
-              text      : "Answers are still empty",
-              timer     : 3000,
-            });
-          }else{
-            try {
-              swal({
-                title: 'Are you sure?',
-                text: "Click yes to process your answers",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes'
-              }).then((result) => {
-                if(result.value){
-                  $.ajax({
-                    type      : "POST",
-                    url       : "{{ url('user/pages/questions/store') }}",
-                    async     : true,
-                    dataType  : "JSON",
-                    cache     : true,
-                    data      : {
-                      "ass_id[]"        : arrAssesmentId,
-                      "pertanyaan_id[]" : arrPertanyaanId,
-                      "jawaban_id[]"    : arrJawabanId,
-                      "nilai[]"         : arrNilai
-                    },
-                    success:function(data){
-                      // if(data.response == "success"){
-                      //   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
-                      // }
-                      // console.log(data);
-                      if(data.response == "success"){
-                        swal({
-                          type      : "success",
-                          title     : "Success",
-                          timer     : 3000,
-                        }).then(function(){
-                          window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
-                        });
-                      }
-                    },
-                    error:function(data){
-                      console.log(data);
-                    },
-                    beforeSend: function(){
-                        // Code to display spinner
-                        $('.loading').show();
-                    },
-                    complete: function(){
-                        // Code to hide spinner.
-                        $('.loading').hide();
-                    }
-                  });
-                }
-              });
-            } catch (e) {
-              console.log(e);
-            } finally {
-
-            }
-          }
+        $("input[type=radio]:checked").on("change", function(){
+          console.log($(this).val());
         });
+        // $("#btn_save").on("click", function(){
+        //   $.ajaxSetup({
+        //     headers: {
+        //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     }
+        //   });
+        //   var varCount = $(this).data("count");
+        //   var varParseCount = parseInt(varCount)-1;
+        //   var i;
+        //   var varNilai;
+        //   var varSum;
+        //   var arrNilai        = [];
+        //   var arrAssesmentId  = [];
+        //   var arrPertanyaanId = [];
+        //   var arrJawabanId    = [];
+        //   for (i = 1; i <= varParseCount; i++) {
+        //     // varNilai = $("#nilai"+i).val();
+        //     var varJenisAssesmentId  = table.$("input[name=assessmentid"+i+"]").val();
+        //     var varPertanyaanId      = table.$("input[name=pertanyaanid"+i+"]").val();
+        //     var varJawabanId         = table.$("input[name=jawabanid"+i+"]").val();
+        //     var varNilai             = table.$("input[name=nilai"+i+"]:checked").val();
+        //     if(varNilai == "" || varNilai == undefined){
+        //       swal({
+        //         type      : "info",
+        //         title     : "Null",
+        //         text      : "Answer is still empty",
+        //         timer     : 3000,
+        //       });
+        //     }else{
+        //       // varNilai = varNilai + varNilai;
+        //           arrNilai[i-1]       = varNilai;
+        //           arrAssesmentId[i-1] = varJenisAssesmentId;
+        //           arrPertanyaanId[i-1]= varPertanyaanId;
+        //           arrJawabanId[i-1]   = varJawabanId;
+        //     }
+        //     // console.log("Nilai"+i+": "+varNilai);
+        //
+        //     // console.log(varSum);
+        //   }
+        //   // varSum = parseInt(varNilai);
+        //   // console.log(arrAssesmentId);
+        //   if(varParseCount != arrNilai.push()){
+        //     swal({
+        //       type      : "info",
+        //       title     : "Null",
+        //       text      : "Answers are still empty",
+        //       timer     : 3000,
+        //     });
+        //   }else{
+        //     try {
+        //       swal({
+        //         title: 'Are you sure?',
+        //         text: "Click yes to process your answers",
+        //         type: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Yes'
+        //       }).then((result) => {
+        //         if(result.value){
+        //           $.ajax({
+        //             type      : "POST",
+        //             url       : "{{ url('user/pages/questions/store') }}",
+        //             async     : true,
+        //             dataType  : "JSON",
+        //             cache     : true,
+        //             data      : {
+        //               "ass_id[]"        : arrAssesmentId,
+        //               "pertanyaan_id[]" : arrPertanyaanId,
+        //               "jawaban_id[]"    : arrJawabanId,
+        //               "nilai[]"         : arrNilai
+        //             },
+        //             success:function(data){
+        //               // if(data.response == "success"){
+        //               //   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
+        //               // }
+        //               // console.log(data);
+        //               if(data.response == "success"){
+        //                 swal({
+        //                   type      : "success",
+        //                   title     : "Success",
+        //                   timer     : 3000,
+        //                 }).then(function(){
+        //                   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
+        //                 });
+        //               }
+        //             },
+        //             error:function(data){
+        //               console.log(data);
+        //             },
+        //             beforeSend: function(){
+        //                 // Code to display spinner
+        //                 $('.loading').show();
+        //             },
+        //             complete: function(){
+        //                 // Code to hide spinner.
+        //                 $('.loading').hide();
+        //             }
+        //           });
+        //         }
+        //       });
+        //     } catch (e) {
+        //       console.log(e);
+        //     } finally {
+        //
+        //     }
+        //   }
+        // });
       });
     </script>
 </body>

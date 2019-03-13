@@ -71,6 +71,11 @@
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css">
     @include("items.meta")
+    <style media="screen">
+      .btn {
+         border-radius: 0px !important;
+      }
+    </style>
 </head>
 
 <body>
