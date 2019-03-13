@@ -340,11 +340,12 @@
                                                                                               @foreach($row->get_jawaban as $key2=>$row2)
                                                                                                 <div class="row">
                                                                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                                        <div class="i-checks pull-left">
+                                                                                                      <!-- i-checks -->
+                                                                                                        <div class="pull-left">
                                                                                                               <input type="hidden" value="{{$decryptAssId}}" name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
                                                                                                               <input type="hidden" value="{{$row2->pertanyaan_id}}" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
                                                                                                               <input type="hidden" value="{{$row2->id}}" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
-                                                                                                              <input type="radio" value="{{$row2->nilai}}" name="nilai{{$x}}" id="nilai{{$x}}" required>
+                                                                                                              <input type="radio" value="{{$row2->nilai}}" name="nilai {{$x}}" id="nilai{{$x}}" required>
                                                                                                         </div>
                                                                                                         <div class="jawaban">{{ucfirst($row2->jawaban)}}</div>
 
@@ -490,9 +491,8 @@
           }
         });
 
-        $("input[type=radio]:checked").on("change", function(){
-          console.log($(this).val());
-        });
+        
+
         // $("#btn_save").on("click", function(){
         //   $.ajaxSetup({
         //     headers: {
