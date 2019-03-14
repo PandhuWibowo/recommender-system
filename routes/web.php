@@ -15,6 +15,7 @@ Route::prefix('backend/pages')->group(function () {
     Route::get("signin","Login\LoginController@auth");
     Route::post("auth/process","Login\LoginController@auth_process");
     Route::get("signout","Login\LoginController@mm_logout");
+    // Route::post("email/checks","Login\LoginController@mmCheckEmail");
 
     //Dashboard Page
     Route::resource('home', "Dashboard\HomeController", ["only" =>

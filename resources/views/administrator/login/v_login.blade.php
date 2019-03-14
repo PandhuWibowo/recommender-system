@@ -67,7 +67,7 @@
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
 						<span class="label-input100">Email</span>
-						<input class="input100" type="email" required="" value="" name="email" id="email" placeholder="Type your email">
+						<input class="input100" type="email" required="" value="" name="email" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Type your email">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
@@ -198,6 +198,7 @@
               password: txtPassword
             },
             success:function(data){
+							// console.log(data);
               if(data.null){
                 swal({
                   type    : "error",

@@ -39,7 +39,6 @@ class LoginController extends Controller
     $txtPassword= trim($request->password);
 
     $data = LoginAuth::where('email', $txtEmail)->where('active', '1')->first();
-
     if(count((array)$data) > 0){
       if(Hash::check($txtPassword,$data->password)){
         Session::put('first_name', $data->firstname);
@@ -90,8 +89,10 @@ class LoginController extends Controller
         );
       }
     }else{
+      // return response()->json(count((array)$data));
+
       $logLogin = new Login([
-        "user_id"     => $data->id,
+        "user_id"     => "undefined",
         "ip_address"  => $request->ip(),
         "browser"     => BrowserDetect::browserName(),
         "action"      => "Login Button",
@@ -103,6 +104,7 @@ class LoginController extends Controller
 
       return response()->json(
         array(
+          // count((array)$data)
           'null' => 'You have not been yet account, cause Your email has not been registered'
         )
       );
@@ -124,4 +126,6 @@ class LoginController extends Controller
       Session::flash('logout','You are already out');
       return redirect('backend/pages/signin');
   }
+
+  
 }

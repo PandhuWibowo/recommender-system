@@ -146,39 +146,39 @@
 					<h2>Registration</h2>
           <div class="form-group">
 						<div class="form-row form-row-1">
-							<input type="text" name="firstname" id="firstname" class="input-text" placeholder="First Name" required>
+							<input type="text" name="firstname" id="firstname" class="input-text" class="alphaonly" placeholder="First Name" required maxlength="100">
 						</div>
 						<div class="form-row form-row-2">
-							<input type="text" name="lastname" id="lastname" class="input-text" placeholder="Last Name" required>
+							<input type="text" name="lastname" id="lastname" class="input-text" class="alphaonly" placeholder="Last Name" required maxlength="100">
 						</div>
 					</div>
           <div class="form-group">
 						<div class="form-row form-row-1">
-							<input type="text" name="username" id="username" class="input-text" placeholder="Username" required>
+							<input type="text" name="username" id="username" class="input-text" placeholder="Username" required maxlength="50">
 						</div>
             <div class="form-row form-row-2">
-							<input type="text" name="email" id="email" class="input-text" placeholder="Email" required>
+							<input type="text" name="email" id="email" class="input-text" placeholder="Email" required maxlength="150" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="form-row form-row-1">
-							<input type="text" name="nickname" id="nickname" class="input-text" placeholder="Nick Name" required>
+							<input type="text" name="nickname" id="nickname" class="input-text alphaonly" placeholder="Nick Name" required maxlength="100">
 						</div>
 						<div class="form-row form-row-2">
-							<input type="text" name="phone" id="phone" class="input-text" placeholder="Phone" required>
+							<input type="text" name="phone" id="phone" class="input-text" placeholder="Phone" required maxlength="15">
 						</div>
 					</div>
           <div class="form-group">
 						<div class="form-row form-row-1">
-							<input type="password" name="password" id="password" class="input-text" placeholder="Password" required>
+							<input type="password" name="password" id="password" class="input-text" placeholder="Password" required maxlength="20">
 						</div>
 						<div class="form-row form-row-2">
-							<input type="password" name="confirm_password" id="confirm_password" class="input-text" placeholder="Confirm Password" required>
+							<input type="password" name="confirm_password" id="confirm_password" class="input-text" placeholder="Confirm Password" required maxlength="20">
 						</div>
 					</div>
 					<div class="form-row">
-						<input type="text" name="alamat" class="company" id="alamat" placeholder="Address" required>
+						<input type="text" name="alamat" class="company" id="alamat" placeholder="Address" required maxlength="300">
 					</div>
 
 					<div class="form-row">
@@ -196,14 +196,14 @@
 						<input type="text" name="dt" class="company datepicker" id="dt" placeholder="Birth date" required  />
           </div>
 					<div class="form-row">
-						<input type="text" name="sc" class="company" id="sc" placeholder="School/College" required />
+						<input type="text" name="sc" class="company" id="sc" placeholder="School/College" required maxlength="50" />
           </div>
 					<div class="form-row">
-						<input type="text" name="ks" class="company" id="ks" placeholder="Class/Semester - Example : Kelas 7/Semester 2 (Tulis satu saja)" required />
+						<input type="text" name="ks" class="company" id="ks" placeholder="Class/Semester - Example : Kelas 7/Semester 2 (Tulis satu saja)" required maxlength="50"/>
 					</div>
 
 					<div class="form-row">
-						<input type="text" name="hobby" class="company" id="hobby" placeholder="Hobby" required>
+						<input type="text" name="hobby" class="company" id="hobby" placeholder="Hobby" required maxlength="100">
 					</div>
 				</div>
 				<div class="form-right">
@@ -223,15 +223,15 @@
 					</div>
 
 					<div class="form-row">
-						<input type="text" name="organisasi" class="additional" id="organisasi" placeholder="Organization" required>
+						<input type="text" name="organisasi" class="additional" id="organisasi" placeholder="Organization" required maxlength="150">
 					</div>
 
 					<div class="form-row">
-						<input type="text" name="ciri_khas" class="additional" id="ciri_khas" placeholder="Speciality" required>
+						<input type="text" name="ciri_khas" class="additional" id="ciri_khas" placeholder="Speciality" required maxlength="80">
 					</div>
 
 					<div class="form-row">
-						<input type="text" name="citacita" class="additional" id="citacita" placeholder="Goals" required>
+						<input type="text" name="citacita" class="additional" id="citacita" placeholder="Goals" required maxlength="80">
 					</div>
 
 					<div class="form-row">
@@ -267,6 +267,59 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
 
+	<!-- This is for register textbox validation -->
+	<!-- Start here -->
+	<script type="text/javascript">
+		//Allow letters only in textbox : firstname, lastname, nickname
+		$(function() {
+			$('#firstname, #lastname, #nickname').keydown(function(e) {
+				if (e.shiftKey || e.ctrlKey || e.altKey) {
+					e.preventDefault();
+				} else {
+					var key = e.keyCode;
+					if (!((key == 8) || (key == 32) || (key == 46) || (key >= 35 && key <= 40) || (key >= 65 && key <= 90))) {
+						e.preventDefault();
+					}
+				}
+			});
+		});
+
+		//Allow numbers only in textbox such as phone
+		$(document).ready(function(){
+			$('input[name="phone"]').keyup(function(e)
+                                {
+			  if (/\D/g.test(this.value))
+			  {
+			    // Filter non-digits from input value.
+			    this.value = this.value.replace(/\D/g, '');
+			  }
+			});
+		});
+
+		//Giving capital in first word for tenses
+		function ucfirst(str,force){
+	    str=force ? str.toLowerCase() : str;
+	    return str.replace(/(\b)([a-zA-Z])/,
+	       function(firstLetter){
+	          return   firstLetter.toUpperCase();
+	       });
+     }
+
+		 //Action is here - Process call ucfirst methode
+		 $('#firstname, #lastname, #nickname, #alamat, #company, #sc, #ks, #hobby, #organisasi, #ciri_khas, #citacita').keyup(function(evt){
+
+	      // force: true to lower case all letter except first
+	      var cp_value= ucfirst($(this).val(),true) ;
+
+	      // to capitalize all words
+	      //var cp_value= ucwords($(this).val(),true) ;
+
+
+	      $(this).val(cp_value );
+
+	   });
+	</script>
+	<!-- End here -->
 	<script type="text/javascript">
 	 $(function(){
 		  $(".datepicker").datepicker({
