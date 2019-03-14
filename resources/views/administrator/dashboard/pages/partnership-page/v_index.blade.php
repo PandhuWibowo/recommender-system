@@ -297,7 +297,7 @@
                                               ?>
                                             </td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-id="{{Crypt::encrypt($row->id)}}" data-no_pe="{{ $row->no_pe }}" data-nama="{{$row->nama}}" data-institusi="{{$row->institusi}}" data-kebutuhan="{{$row->kebutuhan}}"><i class="fa fa-table"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-id="{{Crypt::encrypt($row->id)}}" data-no_pe="{{ $row->no_pe }}" data-nama="{{$row->nama}}" data-institusi="{{$row->institusi}}" data-kebutuhan="{{$row->kebutuhan}}"><i class="fa fa-eye"></i></a>
                                             </td>
                                           </tr>
 

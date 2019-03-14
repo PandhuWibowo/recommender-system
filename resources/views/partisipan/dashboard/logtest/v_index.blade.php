@@ -346,7 +346,7 @@
                                               <?php
                                                 if($row->selesai == 0 || $row->selesai == "0"){
                                                   ?>
-                                                    <a class="btn btn-warning" href="{{ url('user/pages/assesments/'.Crypt::encrypt($row->assesment_id).'/'.Crypt::encrypt($row->id)) }}" tooltip="Please complete it"><i class="fa fa-forward"></i></a>
+                                                    <a class="btn btn-danger" href="{{ url('user/pages/assesments/'.Crypt::encrypt($row->assesment_id).'/'.Crypt::encrypt($row->id)) }}" tooltip="Please complete it"><i class="fa fa-forward"></i></a>
                                                   <?php
                                                 }else{
                                                   ?>
