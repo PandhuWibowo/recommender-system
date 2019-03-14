@@ -41,7 +41,7 @@ class HistoriesController extends Controller
 
     $logPages->save();
 
-    $histories = Assesment::all();
+    $histories = Assesment::where("selesai","1")->get();
     return view("administrator.dashboard.pages.logtest.v_index", compact("histories"));
   }
 
