@@ -75,6 +75,7 @@ Route::prefix('backend/pages')->group(function () {
     Route::delete("questions/delete","Dashboard\PertanyaanController@destroy");
     Route::delete("answers/delete","Dashboard\PertanyaanController@destroyAnswer");
     Route::put("questions/update","Dashboard\PertanyaanController@update");
+    Route::post("questions/filter","Dashboard\PertanyaanController@search");
 
     //KeteranganNilai Page
     Route::resource("scoredescriptions","Dashboard\KeteranganNilaiController", ["only" =>

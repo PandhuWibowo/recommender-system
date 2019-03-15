@@ -132,19 +132,35 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="breadcome-list single-page-breadcome">
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="breadcome-heading">
                                           <a href="{{ url('backend/pages/questions/add') }}" class="btn btn-primary">
                                             Add New
                                           </a>
 
+
+                                          <select class="dynamic" name="assesment_id" id="assesment_id" data-dependent="kompetensi">
+                                            <option value=""></option>
+                                            @foreach($jenisAssessments as $vaSes)
+                                              <option value="{{Crypt::encrypt($vaSes->id)}}">{{$vaSes->nama}}</option>
+                                            @endforeach
+                                          </select>
+
+                                          <select class="dynamic" name="kompetensi_id" id="kompetensi_id" data-dependent="rawscore">
+                                            <option value=""></option>
+                                          </select>
+
+                                          <select class="dynamic" name="rawscore_id" id="rawscore_id" data-dependent="pertanyaan">
+                                            <option value=""></option>
+                                          </select>
+                                          {{ csrf_field() }}
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
                                             </form> -->
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
@@ -324,22 +340,64 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" charset="utf-8"></script>
     <script>
         $(document).ready(function () {
-            $(".assesment_id").select2({
+            $("#assesment_id").select2({
                 placeholder: "Please select type of assesment",
                 allowClear: true
             });
 
-            $(".kompetensi_id").select2({
+            $("#kompetensi_id").select2({
                 placeholder: "Please select competencie",
                 allowClear: true
             });
 
-            $(".rowscore_id").select2({
+            $("#rawscore_id").select2({
                 placeholder: "Please select row score",
                 allowClear: true
             });
         });
     </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#assesment_id").on("change", function(){
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+          var assessmentId = $(this).val();
+
+          try {
+            $.ajax({
+              type      : "POST",
+              url       : "{{ url('backend/pages/questions/filter') }}",
+              async     : true,
+              dataType  : "JSON",
+              data      : {
+                id      : assessmentId
+              },
+              success:function(data){
+                console.log(data);
+                // var html = "";
+                // for(var i = 0;i<data.length;i++){
+                //   html = "<option>"+data[i].kompetensi+"</option>";
+                // }
+                //
+                // $("#kompetensi_id").html(html);
+              },
+              error:function(data){
+                console.log(data);
+              }
+            });
+          }catch(e){
+            console.log(e);
+          }finally{
+
+          }
+        });
+      });
+    </script>
+
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myCompetencies').DataTable({

@@ -39,10 +39,10 @@ class PertanyaanController extends Controller
     ]);
 
     $logPages->save();
-
+    $jenisAssessments = JenisAssesment::orderBy("nama","asc")->get();
     $pertanyaan = Pertanyaan::orderBy("no_urut_pertanyaan")->get();
     // $pertanyaan = Pertanyaan::with("get_assesment")->with("get_kompetensi")->with("get_rowscore");
-    return view("administrator.dashboard.pages.pertanyaan-page.v_index", compact("pertanyaan"));
+    return view("administrator.dashboard.pages.pertanyaan-page.v_index", compact("pertanyaan","jenisAssessments"));
     // echo dd($pertanyaan);
   }
 // ,compact("assesments","kompetensi","rowscore")
@@ -294,6 +294,12 @@ class PertanyaanController extends Controller
 
     }
 
+  }
+
+  public function search(Request $request){
+    $assId        = Crypt::decrypt($request->id);
+    $kompetensis  = 
+    return response()->json();
   }
 
   public function destroyAnswer(Request $request){
