@@ -220,7 +220,7 @@
                                             <td>{{ $row->kompetensi }}</td>
                                             <td>{{ $row->nama_rowscore }}</td>
                                             <td>
-                                              <!-- <a href="{{ url('backend/pages/questions/'.Crypt::encrypt($row->id)) }}" class="btn btn-warning btn_edit" <?php foreach($row->data_jawabans as $key=>$row2): ;?>data-nilai<?php echo $key;?>="{{$row2->nilai}}" data-jawaban<?php echo $key;?>="{{$row2->jawaban}}" data-jawaban_id<?php echo $key;?>="{{Crypt::encrypt($row2->id)}}"<?php endforeach;?>data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a> -->
+                                              <a href="{{ url('backend/pages/questions/'.Crypt::encrypt($row->pId)) }}" class="btn btn-warning btn_edit"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                           <?php $no++;?>

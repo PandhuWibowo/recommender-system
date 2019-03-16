@@ -330,7 +330,8 @@ class PertanyaanController extends Controller
   }
 
   public function search3($assessment_id, $kompetensi_id, $rawscore_id){
-    $output    = Pertanyaan::join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
+    $output    = Pertanyaan::select("pertanyaan","nama","kompetensi","nama_rowscore","pertanyaans.id as pId")
+                              ->join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
                               ->join("kompetensis as k","pertanyaans.kompetensi_id","=","k.id")
                               ->join("rowscores as r","pertanyaans.rowscore_id","=","r.id")
                               ->where("pertanyaans.assesment_id", Crypt::decrypt($assessment_id))
