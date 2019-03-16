@@ -75,7 +75,10 @@ Route::prefix('backend/pages')->group(function () {
     Route::delete("questions/delete","Dashboard\PertanyaanController@destroy");
     Route::delete("answers/delete","Dashboard\PertanyaanController@destroyAnswer");
     Route::put("questions/update","Dashboard\PertanyaanController@update");
-    Route::post("questions/filter","Dashboard\PertanyaanController@search");
+    Route::post("questions/filter","Dashboard\PertanyaanController@search"); //Filter by assessment_id
+    Route::post("questions/filter2","Dashboard\PertanyaanController@search2"); //Filter by kompetensi_id
+    Route::get("questions/filter3/{assessment_id}/{kompetensi_id}/{rawscore_id}","Dashboard\PertanyaanController@search3"); //Filter by third key
+
 
     //KeteranganNilai Page
     Route::resource("scoredescriptions","Dashboard\KeteranganNilaiController", ["only" =>

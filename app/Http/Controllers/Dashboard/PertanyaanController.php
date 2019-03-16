@@ -298,9 +298,51 @@ class PertanyaanController extends Controller
 
   public function search(Request $request){
     $assId        = Crypt::decrypt($request->id);
-    $kompetensis  = 
-    return response()->json();
+    $kompetensis  = Pertanyaan::select("kompetensi as f_k","k.id as kId")
+                              ->join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
+                              ->join("kompetensis as k","pertanyaans.kompetensi_id","=","k.id")
+                              ->where("pertanyaans.assesment_id", $assId)
+                              ->distinct()
+                              ->orderBy("f_k","asc")
+                              ->get();
+      echo $output = '<option selected disabled>Please select competencies</option>';
+
+    foreach ($kompetensis as $key => $value) {
+      $output = '<option value="'.Crypt::encrypt($value->kId).'">'.$value->f_k.'</option>';
+      echo $output;
+    }
   }
+
+  public function search2(Request $request){
+    $assId        = Crypt::decrypt($request->id);
+    $rawscores    = Pertanyaan::select("nama_rowscore as nr","r.id as rId")
+                              ->join("kompetensis as k","pertanyaans.kompetensi_id","=","k.id")
+                              ->join("rowscores as r","pertanyaans.rowscore_id","=","r.id")
+                              ->where("pertanyaans.kompetensi_id", $assId)
+                              ->distinct()
+                              ->orderBy("nr","asc")
+                              ->get();
+      echo $output = '<option selected disabled>Please select raw scores</option>';
+    foreach ($rawscores as $key => $value) {
+      $output = '<option value="'.Crypt::encrypt($value->rId).'">'.$value->nr.'</option>';
+      echo $output;
+    }
+  }
+
+  public function search3($assessment_id, $kompetensi_id, $rawscore_id){
+    $output    = Pertanyaan::join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
+                              ->join("kompetensis as k","pertanyaans.kompetensi_id","=","k.id")
+                              ->join("rowscores as r","pertanyaans.rowscore_id","=","r.id")
+                              ->where("pertanyaans.assesment_id", Crypt::decrypt($assessment_id))
+                              ->where("pertanyaans.kompetensi_id", Crypt::decrypt($kompetensi_id))
+                              ->where("pertanyaans.rowscore_id", Crypt::decrypt($rawscore_id))
+                              ->orderBy("no_urut_pertanyaan")
+                              ->get();
+    $jenisAssessments = JenisAssesment::orderBy("nama","asc")->get();
+
+    return view("administrator.dashboard.pages.pertanyaan-page.v_filter", compact("output","jenisAssessments"));
+  }
+
 
   public function destroyAnswer(Request $request){
     $txtId    = Crypt::decrypt($request->id);

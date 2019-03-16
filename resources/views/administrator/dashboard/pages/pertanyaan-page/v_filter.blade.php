@@ -147,11 +147,11 @@
                                           </select>
 
                                           <select class="dynamic" name="kompetensi_id" id="kompetensi_id" data-dependent="rawscore">
-                                            <option></option>
+                                            <option value=""></option>
                                           </select>
 
                                           <select class="dynamic" name="rawscore_id" id="rawscore_id" data-dependent="pertanyaan">
-                                            <option></option>
+                                            <option value=""></option>
                                           </select>
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
@@ -207,7 +207,7 @@
                                       </thead>
                                       <tbody>
                                         <?php $no=1;?>
-                                        @foreach($pertanyaan as $key=>$row)
+                                        @foreach($output as $key=>$row)
                                           <tr>
                                             <td>{{$no}}</td>
                                             <td>
@@ -216,11 +216,11 @@
                                                 echo implode(" ", array_splice($words, 0, 5));
                                                ?>
                                             </td>
-                                            <td>{{ $row->get_assesment->nama }}</td>
-                                            <td>{{ $row->get_kompetensi->kompetensi }}</td>
-                                            <td>{{ $row->get_rowscore->nama_rowscore }}</td>
+                                            <td>{{ $row->nama }}</td>
+                                            <td>{{ $row->kompetensi }}</td>
+                                            <td>{{ $row->nama_rowscore }}</td>
                                             <td>
-                                              <a href="{{ url('backend/pages/questions/'.Crypt::encrypt($row->id)) }}" class="btn btn-warning btn_edit" <?php foreach($row->data_jawabans as $key=>$row2): ;?>data-nilai<?php echo $key;?>="{{$row2->nilai}}" data-jawaban<?php echo $key;?>="{{$row2->jawaban}}" data-jawaban_id<?php echo $key;?>="{{Crypt::encrypt($row2->id)}}"<?php endforeach;?>data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                              <!-- <a href="{{ url('backend/pages/questions/'.Crypt::encrypt($row->id)) }}" class="btn btn-warning btn_edit" <?php foreach($row->data_jawabans as $key=>$row2): ;?>data-nilai<?php echo $key;?>="{{$row2->nilai}}" data-jawaban<?php echo $key;?>="{{$row2->jawaban}}" data-jawaban_id<?php echo $key;?>="{{Crypt::encrypt($row2->id)}}"<?php endforeach;?>data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a> -->
                                             </td>
                                           </tr>
                                           <?php $no++;?>
@@ -401,7 +401,7 @@
               }
           });
           var kompetensiId = $(this).val();
-          console.log(kompetensiId);
+          // console.log(kompetensiId);
 
           try {
             $.ajax({
