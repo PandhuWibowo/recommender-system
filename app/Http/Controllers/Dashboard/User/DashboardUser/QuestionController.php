@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 use App\Http\Models\ModelLogs\DirectPage;
 use App\Http\Models\ModelLogs\LogUserAnswer;
+use App\Http\Models\ModelLogs\LogUserMC;
 use BrowserDetect;
 /**
  * UserController
@@ -44,12 +45,33 @@ class QuestionController extends Controller
       ]);
 
       if($pertanyaanAssesment->save()){
+        $logPages = new LogUserMC([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Store Jawaban PG|Success",
+          "data"        => Session::get("email")." berhasil menyimpan jawaban ".$pertanyaanAssesment->id." - ".$jawabanId,
+          "link"        => url()->current()
+        ]);
+
+        $logPages->save();
+
         return response()->json(
           array(
             "response"  => "success:store"
           )
         );
       }else{
+        $logPages = new LogUserMC([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Store Jawaban PG|Failed",
+          "data"        => Session::get("email")." gagal menyimpan jawaban ".$jawabanId,
+          "link"        => url()->current()
+        ]);
+
+        $logPages->save();
         return response()->json(
           array(
             "response"  => "failed:store"
@@ -61,6 +83,16 @@ class QuestionController extends Controller
       $pertanyaanAssesment->jawaban_id = $jawabanId;
 
       if($pertanyaanAssesment->save()){
+        $logPages = new LogUserMC([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Update Jawaban PG|Success",
+          "data"        => Session::get("email")." berhasil mengubah jawaban ".$jawabanId,
+          "link"        => url()->current()
+        ]);
+
+        $logPages->save();
         return response()->json(
           array(
             "response"  => "success:update"
@@ -68,6 +100,14 @@ class QuestionController extends Controller
         );
       }
       else{
+        $logPages = new LogUserMC([
+          "user_id"     => Session::get("id"),
+          "ip_address"  => $request->ip(),
+          "browser"     => BrowserDetect::browserName(),
+          "action"      => "Update Jawaban PG|Failed",
+          "data"        => Session::get("email")." gagal mengubah jawaban ".$jawabanId,
+          "link"        => url()->current()
+        ]);
         return response()->json(
           array(
             "response"  => "failed:update"
