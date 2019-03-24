@@ -250,7 +250,7 @@
         <div class="collapse navbar-collapse" >
           <ul class="nav navbar-nav navbar-pandhu">
             <!-- <li class="scroll"><a href="#tentang-kami">Tentang Kami</a></li> -->
-            <li class="">
+            <li class="scroll">
               <a href="#services" class="dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Fitur
               </a>
@@ -279,7 +279,7 @@
                 <!-- <li><a href="#">KAMPUS</a></li> -->
               </ul>
             </li>
-            <li class="">
+            <li class="scroll">
               <a class="dropdown-toggle" id="tes-online" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 TES ONLINE
               </a>
@@ -292,7 +292,7 @@
                 <li><a href="#">KOMPETENSI KERJA</a></li>
               </ul>
             </li>
-            <li class="">
+            <li class="scroll">
               <a class="dropdown-toggle" id="harga" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 PAKET
               </a>
@@ -301,7 +301,7 @@
                 <li><a href="#">PREMIUM</a></li>
               </ul>
             </li>
-            <li class=""><a href="http://blog.loopinc.id/">Blog</a></li>
+            <li class="scroll"><a href="http://blog.loopinc.id/">Blog</a></li>
             <li class="scroll"><a href="#contact-us">Hubung Kami</a></li>
             <li style="margin-left:18em;">
               <a href="{{ url('direct') }}">Sign In <i class="fa fa-user"></i></a>
