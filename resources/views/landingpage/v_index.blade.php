@@ -6,6 +6,8 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Loopinc.id</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{!! asset('images/icon.png') !!}">
+
   <link href="{!! asset('landingpage/css/bootstrap.min.css') !!}" rel="stylesheet">
   <link href="{!! asset('landingpage/css/animate.min.css') !!}" rel="stylesheet">
   <link href="{!! asset('landingpage/css/font-awesome.min.css') !!}" rel="stylesheet">
@@ -159,6 +161,28 @@
     .my-float{
     	margin-top:16px;
     }
+
+    .warna-title{
+      color : #e2725b;
+      font-weight: bold;
+    }
+
+    .paragraph-address-space{
+      margin: 0;
+      padding: 0;
+    }
+
+    .terra-cotta{
+      color: #e2725b;
+    }
+
+    .space-paragraph{
+      margin-top: 40px;
+    }
+
+    .center-position{
+      margin-left: 37%;
+    }
   </style>
   @include("items.meta")
 
@@ -173,30 +197,36 @@
   <header id="home">
     <div id="home-slider" class="carousel slide carousel-fade" data-ride="carousel">
       <div class="carousel-inner">
-        <div class="item active" style="background-image: url(images/landingpage/pict1.jpg)">
-          <div class="caption">
-            <h1 class="animated fadeInLeftBig">Selamat Datang di <span>Loopinc.id</span></h1>
-            <p class="animated fadeInRightBig">Cari tahu tentang dirimu disini.</p>
-            <p>Temukan rekomendasi jurusan kuliah, karier, dan
-kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
-            <a data-scroll class="btn btn-start animated fadeInUpBig" href="#tentang-kami">Kenali dirimu sendiri</a>
+        <div class="item active" style="background-image: url(landingpage/images/millenials_pic9.jpg)">
+          <div class="col-xs-12 col-md-8 caption">
+            <img src="" class="img-responsive" alt="">
+            <h1 class="animated fadeInLeftBig paragraph-address-space terra-cotta">Selamat Datang di <span>Loopinc.id</span></h1>
+            <p class="animated fadeInRightBig paragraph-address-space terra-cotta" style="text-transform:none;">Temukan rekomendasi jurusan dan karir yang pas buatmu.</p>
+            <p class="terra-cotta animated fadeInLeftBig" style="text-transform:none;">Persiapkan dirimu di dunia kerja dengan konten pengembangan diri.</p>
+            <p class="terra-cotta animated fadeInRightBig">ONLINE, INSTANT, GAK PAKE LAMA</p>
+            <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Kenali dirimu sendiri</a> -->
+          </div>
+        </div>
+        <div class="item" style="background-image: url(landingpage/images/millenials_pic9.jpg)">
+          <div class="col-xs-12 col-md-8 caption">
+            <h4 class="animated fadeInLeftBig terra-cotta" style="font-style: italic;text-transform:none;"> “The future belongs to those who prepare for it today” <span style="font-style: normal;">(Malcolm X)</span></h4>
+            <!-- <p class="animated fadeInRightBig"></p> -->
+            <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Kenali dirimu sendiri</a> -->
+          </div>
+        </div>
+        <div class="item" style="background-image: url(landingpage/images/millenials_pic9.jpg)">
+          <div class="col-xs-12 col-md-8 caption">
+            <h4 style="font-style: oblique;text-transform:none;text-align:right;" class="paragraph-address-space animated fadeInLeftBig terra-cotta">“87% persen mahasiswa di Indonesia salah jurusan”</h4>
+            <p class="paragraph-address-space animated fadeInRightBig terra-cotta" style="text-transform:none;text-align:right;">Irene Guntur, M.Psi., Psi., CGA,</p>
+            <p class="paragraph-address-space animated fadeInRightBig terra-cotta" style="text-transform:none;text-align:right;">Educational Psychologist dari Integrity Development Flexibility (IDF)</p>
+
+            <p class="space-paragraph animated fadeInRightBig terra-cotta" style="text-transform:none;text-align:right;">Kenali dirimu disini, temukan jurusan yang paling pas buatmu.</p>
+            <p class="terra-cotta animated fadeInRightBig center-position">ONLINE, INSTANT, GAK PAKE LAMA</p>
+
+            <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Kenali dirimu sendiri</a> -->
           </div>
         </div>
 
-        <div class="item" style="background-image: url(images/landingpage/pict1.jpg)">
-          <div class="caption">
-            <h4 class="animated fadeInLeftBig">Penasaran tentang minat dan bakat kamu? <span>Temukan disini</span></h4>
-            <!-- <p class="animated fadeInRightBig"></p> -->
-            <a data-scroll class="btn btn-start animated fadeInUpBig" href="#tentang-kami">Kenali dirimu sendiri</a>
-          </div>
-        </div>
-        <div class="item" style="background-image: url(images/landingpage/pict1.jpg)">
-          <div class="caption">
-            <h4 class="animated fadeInLeftBig"> “The future belongs to those who prepare for it today” <span>Malcolm X</span></h4>
-            <!-- <p class="animated fadeInRightBig"></p> -->
-            <a data-scroll class="btn btn-start animated fadeInUpBig" href="#tentang-kami">Kenali dirimu sendiri</a>
-          </div>
-        </div>
       </div>
       <a class="left-control" href="#home-slider" data-slide="prev"><i class="fa fa-angle-left"></i></a>
       <a class="right-control" href="#home-slider" data-slide="next"><i class="fa fa-angle-right"></i></a>
@@ -219,29 +249,34 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
         </div>
         <div class="collapse navbar-collapse" >
           <ul class="nav navbar-nav navbar-pandhu">
-            <li class="scroll"><a href="#tentang-kami">Tentang Kami</a></li>
+            <!-- <li class="scroll"><a href="#tentang-kami">Tentang Kami</a></li> -->
             <li class="">
-              <a class="dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a href="#services" class="dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Fitur
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li class="dropdown">
+                <li><a href="#">GUIDANCE</a></li>
+                <li><a href="#">KNOW WELL</a></li>
+                <li><a href="#">IMPROVE</a></li>
+                <li><a href="#">MENTORING</a></li>
+                <!-- <li class="dropdown">
                     <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SISWA<span style="float:right;position:fix;" class="caret"></span></a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a href="#">GUIDANCE</a></li>
+                      <li><a href="#">KNOW WELL</a></li>
+                      <li><a href="#">IMPROVE</a></li>
+                      <li><a href="#">MENTORING</a></li>
+                    </ul>
+                </li> -->
+                <!-- <li class="dropdown">
+                    <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SEKOLAH<span style="float:right;position:fix;" class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a href="#">SMP</a></li>
                       <li><a href="#">SMK</a></li>
                       <li><a href="#">MAHASISWA</a></li>
                     </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SEKOLAH<span style="float:right;position:fix;" class="caret"></span></a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a href="#">SMP</a></li>
-                      <li><a href="#">SMK</a></li>
-                      <!-- <li><a href="#">MAHASISWA</a></li> -->
-                    </ul>
-                </li>
-                <li><a href="#">KAMPUS</a></li>
+                </li> -->
+                <!-- <li><a href="#">KAMPUS</a></li> -->
               </ul>
             </li>
             <li class="">
@@ -250,32 +285,23 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
               </a>
               <ul class="dropdown-menu" aria-labelledby="tes-online">
                 <li><a href="#">GAYA BELAJAR</a></li>
-                <li><a href="#">PEMINATAN JURUSAN SMA</a></li>
-                <li><a href="#">PEMINATAN JURUSAN KULIAH</a></li>
-                <li><a href="#">PEMINATAN KARIR (CAREER GUIDE)</a></li>
-                <li><a href="#">KESIAPAN KERJA</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#" id="kepribadian" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">KEPRIBADIAN<span style="float:right;position:fix;" class="caret"></span></a>
-                    <ul class="dropdown-menu" aria-labelledby="kepribadian">
-                      <li><a href="#">BERSAHABAT DENGAN DIRI SENDIRI</a></li>
-                      <li><a href="#">STRESS, CEMAS, DAN DEPPRESI</a></li>
-                      <li><a href="#">KESEPIAN DAN PERTEMANAN</a></li>
-                      <li><a href="#">UDAH MOVE ON BELUM ?</a></li>
-                    </ul>
-                </li>
+                <li><a href="#">KEPRIBADIAN</a></li>
+                <li><a href="#">JURUSAN SMA</a></li>
+                <li><a href="#">JURUSAN KULIAH</a></li>
+                <li><a href="#">REKOMENDASI KARIR</a></li>
+                <li><a href="#">KOMPETENSI KERJA</a></li>
               </ul>
             </li>
             <li class="">
               <a class="dropdown-toggle" id="harga" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                HARGA
+                PAKET
               </a>
               <ul class="dropdown-menu" aria-labelledby="harga">
-                <li><a href="#">PAKET STARTER</a></li>
-                <li><a href="#">PAKET PROACTIVE</a></li>
-                <li><a href="#">PAKET BRIGHT</a></li>
+                <li><a href="#">BASIC</a></li>
+                <li><a href="#">PREMIUM</a></li>
               </ul>
             </li>
-            <li class=""><a href="#blog">Blog</a></li>
+            <li class=""><a href="http://blog.loopinc.id/">Blog</a></li>
             <li class="scroll"><a href="#contact-us">Hubung Kami</a></li>
             <li style="margin-left:18em;">
               <a href="{{ url('direct') }}">Sign In <i class="fa fa-user"></i></a>
@@ -288,10 +314,10 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
             </li>
           </ul>
         </div>
-      </div>
+      <!-- </div>
     </div><!--/#main-nav-->
   </header><!--/#home-->
-  <section id="services">
+  <!-- <section id="services">
     <div class="container">
       <div class="heading wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
         <div class="row">
@@ -303,16 +329,17 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
       </div>
       <div class="text-center our-services">
         <div class="row">
-          <div class="col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+          <div class="col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
             <div class="service-icon">
               <i class="fa fa-flask"></i>
+              adsfasdf
             </div>
             <div class="service-info">
               <h3>Brand Identity</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
             </div>
           </div>
-          <div class="col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="450ms">
+          <div class="col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="450ms">
             <div class="service-icon">
               <i class="fa fa-umbrella"></i>
             </div>
@@ -321,7 +348,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
             </div>
           </div>
-          <div class="col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="550ms">
+          <div class="col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="550ms">
             <div class="service-icon">
               <i class="fa fa-cloud"></i>
             </div>
@@ -330,7 +357,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
             </div>
           </div>
-          <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="650ms">
+          <div class="col-sm-6 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="650ms">
             <div class="service-icon">
               <i class="fa fa-coffee"></i>
             </div>
@@ -338,8 +365,8 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
               <h3>Professional Design</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
             </div>
-          </div>
-          <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="750ms">
+          </div> -->
+          <!-- <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="750ms">
             <div class="service-icon">
               <i class="fa fa-bitbucket"></i>
             </div>
@@ -356,54 +383,13 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
               <h3>Clean Code</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
             </div>
-          </div>
-        </div>
+          </div> -->
+        <!-- </div>
       </div>
     </div>
   </section><!--/#services-->
-  <section id="about-us" class="parallax">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="about-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <h2>About us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.Ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="our-skills wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
-              <p class="lead">User Experiances</p>
-              <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="95">95%</div>
-              </div>
-            </div>
-            <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="400ms">
-              <p class="lead">Web Design</p>
-              <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="75">75%</div>
-              </div>
-            </div>
-            <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
-              <p class="lead">Programming</p>
-              <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="60">60%</div>
-              </div>
-            </div>
-            <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-              <p class="lead">Fun</p>
-              <div class="progress">
-                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="85">85%</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section><!--/#about-us-->
 
-  <section id="portfolio">
+  <!-- <section id="portfolio">
     <div class="container">
       <div class="row">
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
@@ -588,14 +574,15 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
       <div id="portfolio-single">
       </div>
     </div><!-- /#portfolio-single-wrap -->
-  </section><!--/#portfolio-->
+  <!-- </section><!--/#portfolio-->
 
-  <section id="team">
+  <section id="services">
     <div class="container">
       <div class="row">
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
-          <h2>The Team</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam</p>
+          <h2>Ada apa aja di <span class="warna-title">loopinc.id</span></h2>
+          <p class="paragraph-address-space">Membantumu merancang masa depan adalah misi kami.</p>
+          <p class="paragraph-address-space">Kenali dirimu, rancang masa depanmu, <span class="warna-title">loopinc.id</span> akan selalu ada buatmu sampai kamu bekerja nanti!</p>
         </div>
       </div>
       <div class="team-members">
@@ -603,14 +590,24 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
               <div class="member-image">
-                <img class="img-responsive" src="images/team/1.jpg" alt="">
+                <img class="img-responsive" src="{{ url('landingpage/images/millenials_pic11.png') }}" alt="">
               </div>
               <div class="member-info">
-                <h3>Marian Dixon</h3>
-                <h4>CEO &amp; Founder</h4>
-                <p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                <h3>Guidance</h3>
+                <!-- <h4>CEO &amp; Founder</h4> -->
+                <p>Tim kami telah
+                    merancang
+                    pendekatan yang
+                    dapat kamu jadikan
+                    acuan dalam
+                    merancang masa
+                    depanmu.
+
+                    You are the planner
+                    of your future!
+                </p>
               </div>
-              <div class="social-icons">
+              <!-- <div class="social-icons">
                 <ul>
                   <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                   <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -618,20 +615,32 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
                   <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
                   <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="500ms">
               <div class="member-image">
-                <img class="img-responsive" src="images/team/2.jpg" alt="">
+                <img class="img-responsive" src="{{ url('landingpage/images/plus-and-minus.jpg') }}" alt="">
               </div>
               <div class="member-info">
-                <h3>Lawrence Lane</h3>
-                <h4>UI/UX Designer</h4>
-                <p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                <h3>Know Well</h3>
+                <!-- <h4>UI/UX Designer</h4> -->
+                <p>
+                  Kenali lebih dalam tentang
+                  dirimu, mulai dari gaya belajar,
+                  kepribadian, jurusan di SMA,
+                  Jurusan di Perguruan Tinggi,
+                  serta rekomendasi karir yang
+                  pas buatmu.
+
+                  Kenali juga kelebihan dan area
+                  yang perlu kamu kembangkan
+                  di lingkup pekerjaan, agar lebih
+                  siap kerja.
+                </p>
               </div>
-              <div class="social-icons">
+              <!-- <div class="social-icons">
                 <ul>
                   <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                   <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -639,20 +648,30 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
                   <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
                   <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="800ms">
               <div class="member-image">
-                <img class="img-responsive" src="images/team/3.jpg" alt="">
+                <img class="img-responsive" src="{{ url('landingpage/images/improve.png') }}" alt="">
               </div>
               <div class="member-info">
-                <h3>Lois Clark</h3>
-                <h4>Developer</h4>
-                <p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                <h3>Improve</h3>
+                <!-- <h4>Developer</h4> -->
+                <p>
+                  Dapatkan konten
+                  pembelajaran
+                  (non-akademik) yang dapat
+                  menjadi bekal kamu untuk
+                  lebih siap menghadapi masa
+                  depan, baik di lingkup
+                  sekolah/kampus, lingkungan
+                  sosial, kehidupan personal,
+                  maupun pekerjaan.
+                </p>
               </div>
-              <div class="social-icons">
+              <!-- <div class="social-icons">
                 <ul>
                   <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                   <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -660,20 +679,33 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
                   <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
                   <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="1100ms">
               <div class="member-image">
-                <img class="img-responsive" src="images/team/4.jpg" alt="">
+                <img class="img-responsive" src="{{ url('landingpage/images/mentoring.jpg') }}" alt="">
               </div>
               <div class="member-info">
-                <h3>Marian Dixon</h3>
-                <h4>Support Manager</h4>
-                <p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                <h3>Mentoring</h3>
+                <!-- <h4>Support Manager</h4> -->
+                <p>
+                  Tim Mentor siap membantu
+                  kamu untuk berdiskusi
+                  mengenai rancangan masa
+                  depanmu. Terdiri dari mentor
+                  berpengalaman yang telah
+                  sukses di bidangnya. Ada
+                  Pengusaha, Psikolog,
+                  Mahasiswa Berprestasi,
+                  Executive Muda, dan
+                  sebagainya. Mentor juga
+                  dapat membantumu di area
+                  personal.
+                </p>
               </div>
-              <div class="social-icons">
+              <!-- <div class="social-icons">
                 <ul>
                   <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                   <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
@@ -681,7 +713,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
                   <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
                   <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -689,7 +721,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
     </div>
   </section><!--/#team-->
 
-  <section id="features" class="parallax">
+  <!-- <section id="features" class="parallax">
     <div class="container">
       <div class="row count">
         <div class="col-sm-12 col-xs-12 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="300ms">
@@ -712,11 +744,11 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
           <h3>24/7</h3>
           <p>Fast Support</p>
         </div> -->
-      </div>
+      <!-- </div>
     </div>
   </section><!--/#features-->
 
-  <section id="pricing">
+  <!-- <section id="pricing">
     <div class="container">
       <div class="row">
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
@@ -791,7 +823,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
     </div>
   </section><!--/#pricing-->
 
-  <section id="twitter" class="parallax">
+  <!-- <section id="twitter" class="parallax">
     <div>
       <a class="twitter-left-control" href="#twitter-carousel" role="button" data-slide="prev"><i class="fa fa-angle-left"></i></a>
       <a class="twitter-right-control" href="#twitter-carousel" role="button" data-slide="next"><i class="fa fa-angle-right"></i></a>
@@ -821,7 +853,7 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
     </div>
   </section><!--/#twitter-->
 
-  <section id="blog">
+  <!-- <section id="blog">
     <div class="container">
       <div class="row">
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
@@ -918,14 +950,64 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
     </div>
   </section><!--/#blog-->
 
+  <section id="about-us" class="parallax">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="about-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+            <h2 style="text-align:center">Mengapa <span class="warna-title">loopinc.id</span></h2>
+            <p style="text-align:center">Didukung tim Psikolog, Praktisi Pendidikan, dan Praktisi Manajemen Sumber Daya Manusia, loopinc.id
+mengintegrasikan berbagai disiplin ilmu, penelitian dan juga teknologi untuk membantu siswa SMP,
+SMA/SMK, Mahasiswa, dan Lulusan Universitas untuk lebih rinci dalam mempersiapkan masa depan.
+
+Tidak hanya memberikan rekomendasi, loopinc.id juga menyediakan konten pengembangan diri, dalam
+rangka mempersiapkan individu untuk lebih siap menghadapi dunia kerja, beradaptasi di lingkungan sosial,
+dan memberikan dukungan pada aspek kehidupan personal.</p>
+            <p style="text-align:center">Para mentor loopinc.id tidak hanya kompeten dalam memberikan sudut pandang yang lebih luas tentang
+berbagai peluang yang dapat ditindaklanjuti oleh siswa/mahasiswa di masa depan, namun juga mampu
+mendampingi siswa/mahasiswa untuk melakukan akselerasi diri untuk menjadi individu yang lebih efektif.</p>
+          </div>
+        </div>
+        <!-- <div class="col-sm-6">
+          <div class="our-skills wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+            <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+              <p class="lead">User Experiances</p>
+              <div class="progress">
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="95">95%</div>
+              </div>
+            </div>
+            <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="400ms">
+              <p class="lead">Web Design</p>
+              <div class="progress">
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="75">75%</div>
+              </div>
+            </div>
+            <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
+              <p class="lead">Programming</p>
+              <div class="progress">
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="60">60%</div>
+              </div>
+            </div>
+            <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+              <p class="lead">Fun</p>
+              <div class="progress">
+                <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="85">85%</div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </section><!--/#about-us-->
+
   <section id="contact">
-    <div id="google-map" class="wow fadeIn" data-latitude="-6.2084385" data-longitude="106.7620422" data-wow-duration="1000ms" data-wow-delay="400ms"></div>
+    <!-- <div id="google-map" class="wow fadeIn" data-latitude="-6.2084385" data-longitude="106.7620422" data-wow-duration="1000ms" data-wow-delay="400ms"></div> -->
     <div id="contact-us" class="parallax">
       <div class="container">
         <div class="row">
           <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <h2>Hubungi Kami</h2>
-            <!-- <p></p> -->
+            <h2>Kontak <span class="warna-title">loopinc.id</span></h2>
+            <p><span class="warna-title">loopinc.id</span> terbuka pada saran, komentar, maupun peluang kerja sama dari berbagai pihak.</p>
           </div>
         </div>
         <div class="contact-form wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
@@ -935,20 +1017,32 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
                 <div class="row  wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama" required="required">
+                      <input type="text" name="nama_depan" id="nama_depan" class="form-control" placeholder="Nama Depan" required="required">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <input type="text" name="institusi" id="institusi" class="form-control" placeholder="Institusi" required="required">
+                      <input type="text" name="nama_belakang" id="nama_belakang" class="form-control" placeholder="Nama Belakang" required="required">
+                    </div>
+                  </div>
+                </div>
+                <div class="row  wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="email" name="email" id="email" class="form-control" placeholder="Email" required="required">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <input type="text" name="no_pe" id="no_pe" class="form-control" placeholder="Nomor Telepon" required="required">
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <input type="text" name="no_pe" id="no_pe" class="form-control" placeholder="Nomor Telepon" required="required">
+                  <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject" required="required">
                 </div>
                 <div class="form-group">
-                  <textarea name="kebutuhan" id="kebutuhan" class="form-control" rows="4" placeholder="Kebutuhan" required="required"></textarea>
+                  <textarea name="kebutuhan" id="kebutuhan" class="form-control" rows="4" placeholder="Pesan" required="required"></textarea>
                 </div>
                 <div class="form-group">
                   <button type="submit" id="kirim_button" class="btn-submit">Kirim</button>
@@ -957,15 +1051,20 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
             </div>
             <div class="col-sm-6">
               <div class="contact-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-                <p>Loopinc.id menyediakan paket khusus untuk kerja sama dengan sekolah dan kampus. Untuk informasi
-    lebih lanjut, silakan tinggalkan data diri Anda :</p>
+                <p>Business Inquiry :</p>
                 <ul class="address">
-                  <li><i class="fa fa-map-marker"></i> <span> Address:</span> Infiniti Office, Permata Regency, Ruko D/37, Kembangan Jakarta Barat 11630 </li>
-                  <li><i class="fa fa-phone"></i> <span> Loopinc Call Centre:</span> 081288291187 / 021 58905002  </li>
+                  <li><p>
+                    Senin-Jumat (09.00-18.00 WIB)
+                  </p></li>
+                  <li><i class="fa fa-phone"></i> <span> Loopinc Call Centre:</span> +62 812-8829-1187  </li>
                   <li><i class="fa fa-envelope"></i> <span> Email:</span><a href="mailto:hello@loopinc.id"> hello@loopinc.id</a>
-                    <p>
-                      (Layanan Pada Hari Kerja, Senin-Jumat Pukul 10.00-16.00 WIB)
+                  <li><i class="fa fa-map-marker"></i> <span> Address:</span>
+                    <p class="paragraph-address-space">
+                      PT. Lingkar Optima Indonesia (loopinc.id)
                     </p>
+                    <p class="paragraph-address-space">Infiniti Office - Ruko Permata Regency D/37, Jl. H. Kelik, RT.1/RW.6, Srengseng, Kembangan, Kota Jakarta Barat, DKI Jakarta</p>
+                    <p class="paragraph-address-space">11630</p>
+                    <p class="paragraph-address-space">(021) 58905002</p>
                   </li>
                   <!-- <li><i class="fa fa-globe"></i> <span> Website:</span> <a href="#">www.sitename.com</a></li> -->
                 </ul>
@@ -984,10 +1083,10 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
         </div>
         <div class="social-icons">
           <ul>
-            <li><a class="linkedin" href="#"><i class="fa fa-instagram"></i></a></li>
-            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-            <!-- <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li> -->
+            <li><a class="linkedin" href="https://www.instagram.com/loopinc.id/"><i class="fa fa-instagram"></i></a></li>
+            <li><a class="facebook" href="https://www.facebook.com/loopinc.loopinc.5"><i class="fa fa-facebook"></i></a></li>
+            <li><a class="twitter" href="https://twitter.com/LoopincIndo"><i class="fa fa-twitter"></i></a></li>
+            <li><a class="facebook" href="https://www.youtube.com/channel/UCezCoDxr5mSd1TS9Vbopz3A?view_as=subscriber"><i class="fa fa-youtube"></i></a></li>
             <!-- <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
             <li><a class="tumblr" href="#"><i class="fa fa-tumblr-square"></i></a></li> -->
           </ul>
@@ -1083,23 +1182,33 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
         });
         e.preventDefault();
 
-        var varNama      = $("#nama").val();
-        var varInstitusi = $("#institusi").val();
+        var varNamaDep   = $("#nama_depan").val();
+        var varNamaBel   = $("#nama_belakang").val();
+        var varEmail     = $("#email").val();
         var varNoPe      = $("#no_pe").val();
+        var varSub       = $("#subject").val();
         var varKebutuhan = $("#kebutuhan").val();
 
-        if(varNama == ""){
+        if(varNamaDep == ""){
           Swal.fire({
             type: 'info',
-            title: 'Nama masih kosong',
+            title: 'Nama Depan masih kosong',
             showConfirmButton: true,
             timer: 3000
           });
         }
-        else if (varInstitusi == "") {
+        else if (varNamaBel == "") {
           Swal.fire({
             type: 'info',
-            title: 'Institusi masih kosong',
+            title: 'Nama Depan masih kosong',
+            showConfirmButton: true,
+            timer: 3000
+          });
+        }
+        else if (varEmail == "") {
+          Swal.fire({
+            type: 'info',
+            title: 'Email masih kosong',
             showConfirmButton: true,
             timer: 3000
           });
@@ -1112,10 +1221,18 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
             timer: 3000
           });
         }
+        else if (varSub == "") {
+          Swal.fire({
+            type: 'info',
+            title: 'Subject masih kosong',
+            showConfirmButton: true,
+            timer: 3000
+          });
+        }
         else if (varKebutuhan == "") {
           Swal.fire({
             type: 'info',
-            title: 'Kebutuhan masih kosong',
+            title: 'Pesan masih kosong',
             showConfirmButton: true,
             timer: 3000
           });
@@ -1129,21 +1246,25 @@ kemampuan kamu dalam bekerja. SIMPLE - GAK PAKE LAMA.</p>
               dataType  : "JSON",
               // cache     : true,
               data      : {
-                "nama"     : varNama,
-                "institusi": varInstitusi,
-                "no_pe"    : varNoPe,
-                "kebutuhan": varKebutuhan
+                "nama_depan"    : varNamaDep,
+                "nama_belakang" : varNamaBel,
+                "email"         : varEmail,
+                "no_pe"         : varNoPe,
+                "subject"       : varSub,
+                "kebutuhan"     : varKebutuhan
               },
               success:function(data){
-                $("#nama").val("");
-                $("#institusi").val("");
+                $("#nama_depan").val("");
+                $("#nama_belakang").val("");
+                $("#email").val("");
                 $("#no_pe").val("");
+                $("#subject").val("");
                 $("#kebutuhan").val("");
 
                 if(data.response == "success"){
                   Swal.fire({
                     type: 'success',
-                    title: 'Halo '+varNama+', tunggu respon dari kami ya',
+                    title: 'Tim loopinc.id akan segera menghubungi Anda.',
                     showConfirmButton: true,
                     timer: 3000
                   })

@@ -6,6 +6,8 @@
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<!-- Font-->
+	<link rel="shortcut icon" type="image/x-icon" href="{!! asset('images/icon.png') !!}">
+	
 	<link rel="stylesheet" type="text/css" href="{!! asset('continueregister/css/montserrat-font.css') !!}">
 	<link rel="stylesheet" type="text/css" href="{!! asset('continueregister/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css') !!}">
 	<!-- Main Style Css -->

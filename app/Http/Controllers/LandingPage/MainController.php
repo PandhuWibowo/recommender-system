@@ -31,17 +31,21 @@ class MainController extends Controller
   }
 
   public function store(Request $request){
-    $nama     = ucwords(trim($request->nama));
-    $institusi= ucwords(trim($request->institusi));
-    $no_pe    = $request->no_pe;
-    $kebutuhan= ucfirst(trim($request->kebutuhan));
+    $namaDepan      = ucwords(trim($request->nama_depan));
+    $namaBelakang   = ucwords(trim($request->nama_belakang));
+    $email          = lcfirst(trim($request->email));
+    $noPe           = $request->no_pe;
+    $subject        = ucfirst(trim($request->subject));
+    $kebutuhan      = ucfirst(trim($request->kebutuhan));
 
     $partnership = new Partnership([
-      "id"        => Uuid::generate()->string,
-      "nama"      => $nama,
-      "institusi" => $institusi,
-      "no_pe"     => $no_pe,
-      "kebutuhan" => $kebutuhan
+      "id"            => Uuid::generate()->string,
+      "nama_depan"    => $namaDepan,
+      "nama_belakang" => $namaBelakang,
+      "email"         => $email,
+      "no_pe"         => $noPe,
+      "subject"       => $subject,
+      "kebutuhan"     => $kebutuhan
     ]);
 
     if($partnership->save()){
@@ -50,7 +54,7 @@ class MainController extends Controller
         "ip_address"  => $request->ip(),
         "browser"     => BrowserDetect::browserName(),
         "action"      => "Visitor|Store|Success",
-        "data"        => $nama." telah mengirim pesan untuk bekerja sama",
+        "data"        => $namaDepan." ".$namaBelakang." telah mengirim pesan untuk bekerja sama",
         "link"        => url()->current()
       ]);
 
