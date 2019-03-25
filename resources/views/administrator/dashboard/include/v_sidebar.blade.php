@@ -63,6 +63,15 @@
                               </ul>
                           </li>
                           <li>
+                              <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Testimonial</span></a>
+                              <ul class="submenu-angle" aria-expanded="false">
+                                  <li><a title="Testimonial" href="{{ url('backend/pages/testimonial') }}"><span class="mini-sub-pro">Testimonial</span></a></li>
+                                  <!-- <li><a title="Add Students" href="add-student.html"><span class="mini-sub-pro">Add Student</span></a></li>
+                                  <li><a title="Edit Students" href="edit-student.html"><span class="mini-sub-pro">Edit Student</span></a></li>
+                                  <li><a title="Students Profile" href="student-profile.html"><span class="mini-sub-pro">Student Profile</span></a></li> -->
+                              </ul>
+                          </li>
+                          <li>
                               <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Histories</span></a>
                               <ul class="submenu-angle" aria-expanded="false">
                                   <li><a title="All Histories" href="{{ url('backend/pages/histories') }}"><span class="mini-sub-pro">Log Histories</span></a></li>

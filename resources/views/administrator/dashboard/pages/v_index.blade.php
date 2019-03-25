@@ -236,7 +236,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="analytics-edu-wrap ant-res-b-30 reso-mg-b-30">
-                            <img src="{!! asset('images/icon.png') !!}" class="position-img" alt="Loopinc.id">
+                            <img src="{!! asset('images/icon.png') !!}" class="position-img img-responsive" alt="Loopinc.id">
                         </div>
                     </div>
                 </div>

@@ -115,8 +115,13 @@ Route::prefix('backend/pages')->group(function () {
       ["index","show"]
     ]);
 
+    //Partnerships
     Route::put("partnerships/update","Dashboard\LandingPageController@update");
 
+    //Testimonial
+    Route::get("testimonial","Dashboard\TestimoniController@index");
+    Route::post("testimonial/store","Dashboard\TestimoniController@store");
+    Route::delete("testimonial/delete","Dashboard\TestimoniController@destroy");
 });
 
 Route::prefix('user/pages')->group(function () {

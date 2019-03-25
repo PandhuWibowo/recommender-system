@@ -75,6 +75,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
 
@@ -109,6 +110,33 @@
      opacity: 1;
 
     }
+
+    #myModal.modal.fade .modal-dialog {
+
+     -moz-transform: scale(0.3) ;
+     -webkit-transform: scale(0.3) ;
+     -o-transform: scale(0.3) ;
+     -ms-transform: scale(0.3) ;
+     transform: scale(0.3) ;
+     opacity: 1;
+
+    }
+
+    #myModal.modal.fade.in .modal-dialog {
+        -moz-transform: scale(1) ;
+       -webkit-transform: scale(1) ;
+       -o-transform: scale(1) ;
+       -ms-transform: scale(1) ;
+       transform: scale(1) ;
+       opacity: 1;
+
+    }
+
+
+    div#myModal {
+        background: rgba(255, 255, 255, 1);
+    }
+
     .modal-dialog.fullwidth--box {
         width: 90%;
         margin: 0 auto;
@@ -133,6 +161,21 @@
 
 
     div#myModal--effect-fullwidth {
+        background: rgba(255, 255, 255, 1);
+    }
+
+    #myModal.modal.fade.in .modal-dialog {
+        -moz-transform: scale(1) ;
+       -webkit-transform: scale(1) ;
+       -o-transform: scale(1) ;
+       -ms-transform: scale(1) ;
+       transform: scale(1) ;
+       opacity: 1;
+
+    }
+
+
+    div#myModal {
         background: rgba(255, 255, 255, 1);
     }
 
@@ -163,6 +206,95 @@
       padding: 0px 4px;
       margin-left: 10px;
     }
+    </style>
+
+    <!-- Drag and Drop Gambar -->
+    <style>
+      .file-upload-content {
+        display: none;
+        text-align: center;
+      }
+
+      .file-upload-input {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .image-upload-wrap {
+        margin-top: 20px;
+        border: 4px dashed #1FB264;
+        position: relative;
+      }
+
+      .image-dropping,
+      .image-upload-wrap:hover {
+        background-color: #1FB264;
+        border: 4px dashed #ffffff;
+      }
+
+      .image-title-wrap {
+        padding: 0 15px 15px 15px;
+        color: #222;
+      }
+
+      .drag-text {
+        text-align: center;
+      }
+
+      .drag-text h3 {
+        font-weight: 100;
+        text-transform: uppercase;
+        color: #15824B;
+        padding: 60px 0;
+      }
+
+      .file-upload-image {
+        max-height: 200px;
+        max-width: 200px;
+        margin: auto;
+        padding: 20px;
+      }
+
+      .remove-image {
+        width: 200px;
+        margin: 0;
+        color: #fff;
+        background: #cd4535;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        border-bottom: 4px solid #b02818;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .remove-image:hover {
+        background: #c13b2a;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+      }
+
+      .remove-image:active {
+        border: 0;
+        transition: all .2s ease;
+      }
+    </style>
+
+    <style>
+      .myImg {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 50px;
+      }
     </style>
 </head>
 
@@ -216,6 +348,69 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
+                                            <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
+                                              Add New
+                                            </a>
+
+                                            <div class="modal fade fullwidth" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                              <div class="modal-dialog fullwidth--box " role="document">
+                                                 <div class="modal-content no--shadow">
+                                                   <form class="" action="{{ url('backend/pages/testimonial/store') }}" enctype="multipart/form-data" method="POST">
+                                                    <div class="modal-header">
+                                                      <div class="alert alert-danger print-error-msg" style="display:none">
+                                                        <ul></ul>
+                                                      </div>
+                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                       <h4 class="modal-title" id="myModalLabel"></h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <!-- Start Upload Button -->
+                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                        <div class="form-group">
+                                                          <div class="image-upload-wrap">
+                                                            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="foto" id="foto" />
+                                                            <div class="drag-text">
+                                                              <h3>Drag and drop a file or select add Image</h3>
+                                                            </div>
+                                                          </div>
+                                                          <div class="file-upload-content">
+                                                            <img class="file-upload-image" src="#" alt="your image" />
+                                                            <div class="image-title-wrap">
+                                                              <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                        <!-- Start Textbox -->
+                                                        <div class="form-group">
+                                                          <label for="inputlg">Full Name</label>
+                                                          <select class="" id="nama_testi" name="nama_testi">
+                                                            <option value=""></option>
+                                                            @foreach($users as $row)
+                                                              <option value="{{Crypt::encrypt($row->id)}}">{{$row->firstname}} {{$row->lastname}}</option>
+
+                                                            @endforeach
+                                                          </select>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                          <label for="inputlg">College/School</label>
+                                                          <input class="form-control" id="nama_instansi" type="text" name="nama_instansi">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label>Opini</label>
+                                                            <textarea class="form-control" rows="5" id="pendapat_testimoni" style="height: 150px;" name="pendapat_testimoni" placeholder="Opini"></textarea>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                       <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                                       <button type="submit" class="btn btn-primary" id="btn-save">Save</button>
+                                                    </div>
+                                                    </form>
+                                                 </div>
+                                              </div>
+                                           </div>
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
@@ -261,52 +456,54 @@
                                       <thead>
                                         <tr>
                                           <th>#</th>
-                                          <th>Nama</th>
-                                          <!-- <th>Nomor Telepon</th> -->
-                                          <th>Kebutuhan</th>
-                                          <th>Status</th>
+                                          <th>Photo</th>
+                                          <th>Name</th>
+                                          <th>Agency/School</th>
+                                          <th>Opini</th>
+                                          <!-- <th>Status</th> -->
                                           <th>Action</th>
                                         </tr>
                                       </thead>
                                       <tbody>
 
-                                        @foreach($partnerships as $key=>$row)
+                                        @foreach($testimoni as $key=>$row)
                                           <tr>
                                             <td>{{$key+1}}</td>
-                                            <td>{{ $row->nama_depan }} {{ $row->nama_belakang}}</td>
-                                            <td>
+                                            <td align="center">
                                               <?php
-                                                $words = explode(" ", $row->kebutuhan);
-                                                echo implode(" ", array_splice($words, 0, 7));
-                                               ?>
-                                            </td>
-                                            <td>
-                                              <?php
-                                                if($row->status == "Baru"){
+                                                if($row->foto == ""){
                                                   ?>
-                                                  <span class="message badge">{{$row->status}}</span>
+                                                    <img id="myImg" class="img-responsive myImg" width="50%" src="https://www.nicepng.com/png/detail/413-4138963_unknown-person-unknown-person-png.png" alt="unknown" />
                                                   <?php
                                                 }else{
                                                   ?>
-                                                  <span class="done badge">{{$row->status}}</span>
+                                                    <img id="myImg" class="img-responsive myImg" width="50%" src="{!! asset('images/images-testimoni/'.$row->foto) !!}" alt="{{$row->foto}}" />
                                                   <?php
                                                 }
                                               ?>
                                             </td>
+                                            <td>{{ ucfirst($row->get_user->firstname) }} {{ ucfirst($row->get_user->lastname) }}</td>
+                                            <td>{{ ucfirst($row->nama_instansi) }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-id="{{Crypt::encrypt($row->id)}}" data-no_pe="{{ $row->no_pe }}" data-nama="{{$row->nama_depan}} {{$row->nama_belakang}}" data-email="{{$row->email}}" data-subject="{{$row->subject}}" data-kebutuhan="{{$row->kebutuhan}}"><i class="fa fa-eye"></i></a>
+                                              <?php
+                                                $words = explode(" ", ucfirst($row->pendapat_testimoni));
+                                                echo implode(" ", array_splice($words, 0, 7));
+                                               ?>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-warning btn_view" data-id="{{Crypt::encrypt($row->id)}}" data-foto="{{ $row->foto }}" data-nama_testi="{{ ucfirst($row->get_user->firstname) }} {{ ucfirst($row->get_user->lastname) }}" data-nama_instansi="{{$row->nama_instansi}}" data-pendapat_testimoni="{{$row->pendapat_testimoni}}"><i class="fa fa-eye"></i></a>
                                             </td>
                                           </tr>
-
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
                                             <th>#</th>
-                                            <th>Nama</th>
-                                            <!-- <th>Nomor Telepon</th> -->
-                                            <th>Kebutuhan</th>
-                                            <th>Status</th>
+                                            <th>Photo</th>
+                                            <th>Name</th>
+                                            <th>Agency/School</th>
+                                            <th>Opini</th>
+                                            <!-- <th>Status</th> -->
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -320,33 +517,38 @@
                                                <h4 class="modal-title" id="myModalLabel"></h4>
                                             </div>
                                             <div class="modal-body">
-                                               <!-- <img width="100%" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/8.jpg" alt="" /> -->
-                                               <table>
-                                                 <tr>
-                                                   <td>Phone</td>
-                                                   <td>:</td>
-                                                   <td id="nope"></td>
-                                                 </tr>
-                                                 <tr>
-                                                   <td>Subject</td>
-                                                   <td>:</td>
-                                                   <td id="subject"></td>
-                                                 </tr>
-                                                 <tr>
-                                                   <td>Message</td>
-                                                   <td>:</td>
-                                                   <td id="message"></td>
-                                                 </tr>
-                                               </table>
+                                              <table>
+                                                <tr>
+                                                  <td>Photo</td>
+                                                  <td>:</td>
+                                                  <td>
+                                                    <img id="imagepreview" class="img-responsive imagepreview" width="50%" src="" alt="" />
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td>Full Name</td>
+                                                  <td>:</td>
+                                                  <td id="user"></td>
+                                                </tr>
+                                                <tr>
+                                                  <td>School/College</td>
+                                                  <td>:</td>
+                                                  <td id="instansi"></td>
+                                                </tr>
+                                                <tr>
+                                                  <td>Opini</td>
+                                                  <td>:</td>
+                                                  <td id="opini"></td>
+                                                </tr>
+                                              </table>
                                             </div>
                                             <div class="modal-footer">
-                                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                               <button type="button" class="btn btn-default upload-image" data-dismiss="modal">Close</button>
                                                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                                             </div>
                                          </div>
                                       </div>
                                    </div>
-
                                 </div>
                             </div>
                         </div>
@@ -432,6 +634,8 @@
     <!-- main JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/main.js') !!}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" charset="utf-8"></script>
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
@@ -445,6 +649,15 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" charset="utf-8"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
+    <!-- Untuk Nama -->
+    <script>
+        $(document).ready(function () {
+            $("#nama_testi").select2({
+                placeholder: "Please Select Full Name",
+                width: '100%'
+            });
+        });
+    </script>
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myCompetencies').DataTable({
@@ -464,19 +677,107 @@
     </script>
 
     <script type="text/javascript">
+      $("body").on("click",".upload-image",function(e){
+        $(this).parents("form").ajaxForm(options);
+      });
+
+      var options = {
+        complete: function(response)
+        {
+          console.log("test");
+          // if(response.response == "success"){
+          //   window.location.href="{{ url('backend/pages/testimonial') }}";
+          // }
+            // if($.isEmptyObject(response.responseJSON.error)){
+            //     $("input[name='nama_testi']").val('');
+            //     $("input[name='nama_instansi']").val('');
+            //     $("input[name='pendapat_testimoni']").val('');
+            //     alert('Image has been successfully saved.');
+            // }else{
+            //     printErrorMsg(response.responseJSON.error);
+            // }
+        }
+      };
+
+      function printErrorMsg (msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display','block');
+        $.each( msg, function( key, value ) {
+            $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+        });
+      }
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#myCompetencies").on("click", ".btn_view", function(){
+          var varNamaTesti  = $(this).data("nama_testi");
+          var varNamaIns    = $(this).data("nama_instansi");
+          var varOpini      = $(this).data("pendapat_testimoni");
+          var varFoto       = $(this).data('foto');
+
+          //
+          // imagepreview
+          // $("#imagepreview").attr("src","http://imaging.nikon.com/lineup/dslr/df/img/sample/img_01.jpg");
+          $('#imagepreview').attr('src', "{!! asset('images/images-testimoni/') !!}/"+varFoto).css({ 'max-width': '500px', 'width': '50%' });
+          document.getElementById('user').innerHTML=varNamaTesti;
+          document.getElementById('instansi').innerHTML=varNamaIns;
+          document.getElementById('opini').innerHTML=varOpini;
+
+
+          $("#myModal--effect-fullwidth").modal("show");
+        });
+      });
+    </script>
+    <script type="text/javascript">
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('.image-upload-wrap').hide();
+
+          $('.file-upload-image').attr('src', e.target.result);
+          $('.file-upload-content').show();
+
+          $('.image-title').html(input.files[0].name);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+
+      } else {
+        removeUpload();
+      }
+      }
+
+      function removeUpload() {
+      $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+      $('.file-upload-content').hide();
+      $('.image-upload-wrap').show();
+      }
+      $('.image-upload-wrap').bind('dragover', function () {
+        $('.image-upload-wrap').addClass('image-dropping');
+      });
+      $('.image-upload-wrap').bind('dragleave', function () {
+        $('.image-upload-wrap').removeClass('image-dropping');
+      });
+
+    </script>
+
+    <script type="text/javascript">
       $(document).ready(function(){
         $("#myCompetencies").on("click", ".btn_edit",function(){
           var varId         = $(this).data("id");
           var varNama       = $(this).data("nama");
-          var varEmail      = $(this).data("email");
+          var varInstitusi  = $(this).data("institusi");
           var varNoPe       = $(this).data("no_pe");
           var varKebutuhan  = $(this).data("kebutuhan");
-          var varSubject    = $(this).data("subject");
+
           try {
-            document.getElementById('myModalLabel').innerHTML=varNama + " - " + varEmail;
+            document.getElementById('myModalLabel').innerHTML=varNama + " - " + varInstitusi;
             document.getElementById('nope').innerHTML=varNoPe;
             document.getElementById('message').innerHTML=varKebutuhan;
-            document.getElementById('subject').innerHTML=varSubject;
+
 
             $("#myModal--effect-fullwidth").modal("show");
 
@@ -511,6 +812,8 @@
         });
       });
     </script>
+
+
 </body>
 
 </html>
