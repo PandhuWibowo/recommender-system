@@ -17,6 +17,8 @@ use App\Http\Models\Assesment;
 use App\Http\Models\Partnership;
 use App\Http\Models\ModelLogs\KerjaSama;
 use BrowserDetect;
+use App\Http\Models\Testimoni;
+
 
 /**
  * MainController
@@ -27,7 +29,8 @@ class MainController extends Controller
 
   public function index(Request $request){
     $countAssessments = Assesment::all()->count();
-    return view("landingpage.v_index", compact("countAssessments"));
+    $testimoni = Testimoni::orderBy("created_at","desc")->limit(4)->get();
+    return view("landingpage.v_index", compact("countAssessments","testimoni"));
   }
 
   public function store(Request $request){

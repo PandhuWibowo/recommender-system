@@ -183,6 +183,13 @@
     .center-position{
       margin-left: 37%;
     }
+
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
   </style>
   @include("items.meta")
 
@@ -720,6 +727,62 @@
       </div>
     </div>
   </section><!--/#team-->
+
+  <section id="services">
+    <div class="container">
+      <div class="row">
+        <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
+          <h2>Apa kata mereka tentang <span class="warna-title">loopinc.id</span></h2>
+          <!-- <p class="paragraph-address-space">Membantumu merancang masa depan adalah misi kami.</p>
+          <p class="paragraph-address-space">Kenali dirimu, rancang masa depanmu, <span class="warna-title">loopinc.id</span> akan selalu ada buatmu sampai kamu bekerja nanti!</p> -->
+        </div>
+      </div>
+      <div class="team-members">
+        <div class="row">
+          @foreach($testimoni as $row)
+            <div class="col-sm-3">
+              <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="member-image">
+                  <?php
+                    if($row->foto == ""){
+                      ?>
+                        <img class="img-circle center img-responsive" src="https://www.nicepng.com/png/detail/413-4138963_unknown-person-unknown-person-png.png" alt="">
+                      <?php
+                    }else{
+                      ?>
+                        <img class="img-circle center img-responsive" src="{!! asset('images/images-testimoni/'.$row->foto) !!}" alt="">
+                      <?php
+                    }
+                  ?>
+                </div>
+                <div class="member-info">
+                  <h3 style="text-transform:none;">{{ ucfirst($row->get_user->firstname) }} {{ ucfirst($row->get_user->lastname) }}</h3>
+                  <!-- <h4>CEO &amp; Founder</h4> -->
+                  <p style="font-weight: normal;">
+                    {{ucfirst($row->nama_instansi)}}
+                  </p>
+
+                  <p>
+                    {{ucfirst($row->pendapat_testimoni)}}
+                  </p>
+                </div>
+                <!-- <div class="social-icons">
+                  <ul>
+                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
+                  </ul>
+                </div> -->
+              </div>
+            </div>
+
+          @endforeach
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- <section id="features" class="parallax">
     <div class="container">
