@@ -190,6 +190,13 @@
       margin-right: auto;
       width: 50%;
     }
+
+    .pesan-error-kosong {
+        display: block;
+        text-align: center;
+        line-height: 150%;
+        font-size: .85em;
+    }
   </style>
   @include("items.meta")
 
@@ -739,46 +746,56 @@
       </div>
       <div class="team-members">
         <div class="row">
-          @foreach($testimoni as $row)
-            <div class="col-sm-3">
-              <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
-                <div class="member-image">
-                  <?php
-                    if($row->foto == ""){
-                      ?>
-                        <img class="img-circle center img-responsive" src="https://www.nicepng.com/png/detail/413-4138963_unknown-person-unknown-person-png.png" alt="">
-                      <?php
-                    }else{
-                      ?>
-                        <img class="img-circle center img-responsive" src="{!! asset('images/images-testimoni/'.$row->foto) !!}" alt="">
-                      <?php
-                    }
-                  ?>
-                </div>
-                <div class="member-info">
-                  <h3 style="text-transform:none;">{{ ucfirst($row->get_user->firstname) }} {{ ucfirst($row->get_user->lastname) }}</h3>
-                  <!-- <h4>CEO &amp; Founder</h4> -->
-                  <p style="font-weight: normal;">
-                    {{ucfirst($row->nama_instansi)}}
-                  </p>
-
-                  <p>
-                    {{ucfirst($row->pendapat_testimoni)}}
-                  </p>
-                </div>
-                <!-- <div class="social-icons">
-                  <ul>
-                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-                    <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
-                  </ul>
-                </div> -->
+          @if(count($testimoni) <= 0)
+          <div class="col-sm-12">
+            <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
+              <div class="member-info">
+                <h2 for="" class="pesan-error-kosong">Oops, datanya masih kosong sampai saat ini.</h2>
               </div>
             </div>
+          </div>
+          @else
+            @foreach($testimoni as $row)
+              <div class="col-sm-3">
+                <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
+                  <div class="member-image">
+                    <?php
+                      if($row->foto == ""){
+                        ?>
+                          <img class="img-circle center img-responsive" src="https://www.nicepng.com/png/detail/413-4138963_unknown-person-unknown-person-png.png" alt="">
+                        <?php
+                      }else{
+                        ?>
+                          <img class="img-circle center img-responsive" src="{!! asset('images/images-testimoni/'.$row->foto) !!}" alt="">
+                        <?php
+                      }
+                    ?>
+                  </div>
+                  <div class="member-info">
+                    <h3 style="text-transform:none;">{{ ucfirst($row->get_user->firstname) }} {{ ucfirst($row->get_user->lastname) }}</h3>
+                    <!-- <h4>CEO &amp; Founder</h4> -->
+                    <p style="font-weight: normal;">
+                      {{ucfirst($row->nama_instansi)}}
+                    </p>
 
-          @endforeach
+                    <p>
+                      {{ucfirst($row->pendapat_testimoni)}}
+                    </p>
+                  </div>
+                  <!-- <div class="social-icons">
+                    <ul>
+                      <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                      <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                      <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                      <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                      <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                  </div> -->
+                </div>
+              </div>
+
+            @endforeach
+          @endif
         </div>
       </div>
     </div>

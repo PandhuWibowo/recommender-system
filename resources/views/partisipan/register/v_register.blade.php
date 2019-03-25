@@ -160,7 +160,7 @@
 				<form class="login100-form validate-form" autocomplete="off">
 
 					<span class="login100-form-title p-b-49">
-						Loopinc.id
+						Sign Up Loopinc.id
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Firstname is required">
