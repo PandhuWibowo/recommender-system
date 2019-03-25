@@ -77,6 +77,42 @@ class TestimoniController extends Controller
   }
 
   public function destroy(Request $request){
+    $txtId    = Crypt::decrypt($request->id);
+    $data = Testimoni::where('id', $txtId)->first();
 
+    if(Testimoni::where('id',$txtId)->delete()){
+      // $log = new Assessment([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Delete Assessment Type - Delete|Success",
+      //   "data"        => "Berhasil menghapus data Assessment Type - Assessment Type ID : ".$data->id.", Name : ".ucwords(trim($data->nama)).", No Urut Assessment : ".$data->no_urut_assesment,
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $log->save();
+      return response()->json(
+        array(
+          'response'  => "success"
+        )
+      );
+    }else{
+      // $log = new Assessment([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Delete Assessment Type - Delete|Failed",
+      //   "data"        => "Gagal menghapus data Assessment Type - Assessment Type ID : ".$data->id.", Name : ".ucwords(trim($data->nama)).", No Urut Assessment : ".$data->no_urut_assesment,
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $log->save();
+
+      return response()->json(
+        array(
+          'response'  => "failed"
+        )
+      );
+    }
   }
 }

@@ -492,6 +492,7 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-warning btn_view" data-id="{{Crypt::encrypt($row->id)}}" data-foto="{{ $row->foto }}" data-nama_testi="{{ ucfirst($row->get_user->firstname) }} {{ ucfirst($row->get_user->lastname) }}" data-nama_instansi="{{$row->nama_instansi}}" data-pendapat_testimoni="{{$row->pendapat_testimoni}}"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-danger btn_delete" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-trash"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -684,18 +685,17 @@
       var options = {
         complete: function(response)
         {
-          console.log("test");
           // if(response.response == "success"){
           //   window.location.href="{{ url('backend/pages/testimonial') }}";
           // }
-            // if($.isEmptyObject(response.responseJSON.error)){
-            //     $("input[name='nama_testi']").val('');
-            //     $("input[name='nama_instansi']").val('');
-            //     $("input[name='pendapat_testimoni']").val('');
-            //     alert('Image has been successfully saved.');
-            // }else{
-            //     printErrorMsg(response.responseJSON.error);
-            // }
+            if($.isEmptyObject(response.responseJSON.error)){
+                $("input[name='nama_testi']").val('');
+                $("input[name='nama_instansi']").val('');
+                $("input[name='pendapat_testimoni']").val('');
+                alert('Image has been successfully saved.');
+            }else{
+                printErrorMsg(response.responseJSON.error);
+            }
         }
       };
 
@@ -708,6 +708,7 @@
       }
     </script>
     <script type="text/javascript">
+      // Masukin data ke modal
       $(document).ready(function(){
         $("#myCompetencies").on("click", ".btn_view", function(){
           var varNamaTesti  = $(this).data("nama_testi");
@@ -715,39 +716,88 @@
           var varOpini      = $(this).data("pendapat_testimoni");
           var varFoto       = $(this).data('foto');
 
-          //
-          // imagepreview
-          // $("#imagepreview").attr("src","http://imaging.nikon.com/lineup/dslr/df/img/sample/img_01.jpg");
           $('#imagepreview').attr('src', "{!! asset('images/images-testimoni/') !!}/"+varFoto).css({ 'max-width': '500px', 'width': '50%' });
           document.getElementById('user').innerHTML=varNamaTesti;
           document.getElementById('instansi').innerHTML=varNamaIns;
           document.getElementById('opini').innerHTML=varOpini;
 
-
           $("#myModal--effect-fullwidth").modal("show");
+        });
+
+        $("#myCompetencies").on("click", ".btn_delete", function(){
+          var varId = $(this).data("id");
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+
+          try {
+            swal({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if(result.value){
+                $.ajax({
+                  type      : "DELETE",
+                  url       : "{{ url('backend/pages/testimonial/delete') }}",
+                  async     : true,
+                  dataType  : "JSON",
+                  data      : {
+                    id      : varId
+                  },
+                  success:function(data){
+                    // console.log(data);
+                    $("#editModal").modal("hide")
+                    if(data.response == "success"){
+                      swal(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                      ).then(function(){
+                        window.location = "{{ url('backend/pages/testimonial') }}";
+                      });
+                    }
+                  },
+                  error:function(data){
+                    console.log(data);
+                  }
+                });
+              }
+            });
+          } catch (e) {
+            console.log(e);
+          } finally {
+
+          }
         });
       });
     </script>
     <script type="text/javascript">
-    function readURL(input) {
-      if (input.files && input.files[0]) {
+      function readURL(input) {
+        if (input.files && input.files[0]) {
 
-        var reader = new FileReader();
+          var reader = new FileReader();
 
-        reader.onload = function(e) {
-          $('.image-upload-wrap').hide();
+          reader.onload = function(e) {
+            $('.image-upload-wrap').hide();
 
-          $('.file-upload-image').attr('src', e.target.result);
-          $('.file-upload-content').show();
+            $('.file-upload-image').attr('src', e.target.result);
+            $('.file-upload-content').show();
 
-          $('.image-title').html(input.files[0].name);
-        };
+            $('.image-title').html(input.files[0].name);
+          };
 
-        reader.readAsDataURL(input.files[0]);
+          reader.readAsDataURL(input.files[0]);
 
-      } else {
-        removeUpload();
-      }
+        } else {
+          removeUpload();
+        }
       }
 
       function removeUpload() {
@@ -777,7 +827,6 @@
             document.getElementById('myModalLabel').innerHTML=varNama + " - " + varInstitusi;
             document.getElementById('nope').innerHTML=varNoPe;
             document.getElementById('message').innerHTML=varKebutuhan;
-
 
             $("#myModal--effect-fullwidth").modal("show");
 
@@ -812,8 +861,5 @@
         });
       });
     </script>
-
-
 </body>
-
 </html>
