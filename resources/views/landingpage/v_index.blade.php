@@ -217,6 +217,8 @@
         background-repeat:   no-repeat;
         background-size:     cover;
     }
+
+    /* Grid 5 Columns */
   </style>
   @include("items.meta")
 
@@ -756,7 +758,7 @@
   </section><!--/#team-->
 
   <section id="services">
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
           <h2>Apa kata mereka tentang <span class="warna-title">loopinc.id</span></h2>
@@ -765,9 +767,8 @@
         </div>
       </div>
       <div class="team-members">
-        <div class="container">
-          <div class="row">
-            @if(count($testimoni) <= 0)
+        <div class="row">
+          @if(count($testimoni) <= 0)
           <div class="col-sm-12">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
               <div class="member-info">
@@ -777,8 +778,7 @@
           </div>
           @else
             @foreach($testimoni as $row)
-              <div style="margin-left:150px;">
-                  <div class="col-sm-2">
+              <div class="col-md-2">
                 <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
                   <div class="member-image">
                     <?php
@@ -815,11 +815,9 @@
                   </div> -->
                 </div>
               </div>
-              </div>
 
             @endforeach
           @endif
-          </div>
         </div>
       </div>
     </div>
