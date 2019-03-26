@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Models\User;
 use App\Http\Models\Testimoni;
 use App\Http\Models\ModelLogs\DirectPage;
+use App\Http\Models\ModelLogs\Testimonial;
 use BrowserDetect;
 
 /**
@@ -67,6 +68,17 @@ class TestimoniController extends Controller
         'pendapat_testimoni'=> $input['pendapat_testimoni']
       ]);
 
+      $log = new Testimonial([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Delete Testimonial - Delete|Success",
+        "data"        => "Berhasil menyimpan data Testimoni - Testimonial ID : ".$input['foto'].",".Crypt::decrypt($input['nama_testi']).",".$input['nama_instansi'].",".$input['pendapat_testimoni'],
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
+
       // return response()->json(['response'=>'success']);
       return Redirect::to("backend/pages/testimonial");
       exit();
@@ -81,32 +93,32 @@ class TestimoniController extends Controller
     $data = Testimoni::where('id', $txtId)->first();
 
     if(Testimoni::where('id',$txtId)->delete()){
-      // $log = new Assessment([
-      //   "user_id"     => Session::get("id"),
-      //   "ip_address"  => $request->ip(),
-      //   "browser"     => BrowserDetect::browserName(),
-      //   "action"      => "Delete Assessment Type - Delete|Success",
-      //   "data"        => "Berhasil menghapus data Assessment Type - Assessment Type ID : ".$data->id.", Name : ".ucwords(trim($data->nama)).", No Urut Assessment : ".$data->no_urut_assesment,
-      //   "link"        => url()->current()
-      // ]);
-      //
-      // $log->save();
+      $log = new Testimonial([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Delete Testimonial - Delete|Success",
+        "data"        => "Berhasil menghapus data Testimoni - Testimonial ID : ".$data->id,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
       return response()->json(
         array(
           'response'  => "success"
         )
       );
     }else{
-      // $log = new Assessment([
-      //   "user_id"     => Session::get("id"),
-      //   "ip_address"  => $request->ip(),
-      //   "browser"     => BrowserDetect::browserName(),
-      //   "action"      => "Delete Assessment Type - Delete|Failed",
-      //   "data"        => "Gagal menghapus data Assessment Type - Assessment Type ID : ".$data->id.", Name : ".ucwords(trim($data->nama)).", No Urut Assessment : ".$data->no_urut_assesment,
-      //   "link"        => url()->current()
-      // ]);
-      //
-      // $log->save();
+      $log = new Testimonial([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Delete Testimonial - Delete|Failed",
+        "data"        => "Gagal menghapus data Testimoni - Testimonial Type ID : ".$data->id,
+        "link"        => url()->current()
+      ]);
+
+      $log->save();
 
       return response()->json(
         array(
