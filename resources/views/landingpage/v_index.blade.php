@@ -197,6 +197,26 @@
         line-height: 150%;
         font-size: .85em;
     }
+
+    .img {
+        position: relative;
+        float: left;
+        width:  300px;
+        height: 300px;
+        background-position: 100% 100%;
+        background-repeat:   no-repeat;
+        background-size:     cover;
+    }
+
+    .imgAbout{
+        position: relative;
+        float: left;
+        width:  300px;
+        height: 300px;
+        background-position: 100% 100%;
+        background-repeat:   no-repeat;
+        background-size:     cover;
+    }
   </style>
   @include("items.meta")
 
@@ -604,7 +624,7 @@
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
               <div class="member-image">
-                <img class="img-responsive" src="{{ url('landingpage/images/millenials_pic11.png') }}" alt="">
+                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/millenials_pic11.png') }}" alt="">
               </div>
               <div class="member-info">
                 <h3>Guidance</h3>
@@ -635,7 +655,7 @@
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="500ms">
               <div class="member-image">
-                <img class="img-responsive" src="{{ url('landingpage/images/plus-and-minus.jpg') }}" alt="">
+                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/plus-and-minus.jpg') }}" alt="">
               </div>
               <div class="member-info">
                 <h3>Know Well</h3>
@@ -668,7 +688,7 @@
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="800ms">
               <div class="member-image">
-                <img class="img-responsive" src="{{ url('landingpage/images/improve.png') }}" alt="">
+                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/improve.png') }}" alt="">
               </div>
               <div class="member-info">
                 <h3>Improve</h3>
@@ -699,7 +719,7 @@
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="1100ms">
               <div class="member-image">
-                <img class="img-responsive" src="{{ url('landingpage/images/mentoring.jpg') }}" alt="">
+                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/mentoring.jpg') }}" alt="">
               </div>
               <div class="member-info">
                 <h3>Mentoring</h3>
@@ -762,11 +782,11 @@
                     <?php
                       if($row->foto == ""){
                         ?>
-                          <img class="img-circle center img-responsive" src="https://www.nicepng.com/png/detail/413-4138963_unknown-person-unknown-person-png.png" alt="">
+                          <img class="img-circle center img-responsive img" src="https://www.nicepng.com/png/detail/413-4138963_unknown-person-unknown-person-png.png" alt="">
                         <?php
                       }else{
                         ?>
-                          <img class="img-circle center img-responsive" src="{!! asset('images/images-testimoni/'.$row->foto) !!}" alt="">
+                          <img class="img-circle center img-responsive img" src="{!! asset('images/images-testimoni/'.$row->foto) !!}" alt="">
                         <?php
                       }
                     ?>
