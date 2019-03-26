@@ -63,7 +63,8 @@ class RegisterController extends Controller
       // // if($request->hasFile('image')){
       //   $txtImage     = $request->file('image');
       //   $txtImageName = "PA-".time().'.'.$txtImage->getClientOriginalExtension();
-        $confirmation_code = str_random(30);
+        $confirmation_code  = str_random(30);
+        $fullName           = ucfirst(trim($request->firstname))." ".ucfirst(trim($request->lastname));
         $users = User::create([
           'id'                    => Uuid::generate()->string,
           'firstname'             => ucfirst(trim($request->firstname)),
@@ -100,7 +101,7 @@ class RegisterController extends Controller
         ]);
 
         if($logRegister->save()){
-          Mail::send('administrator.dashboard.pages.email_page.verify', ['confirmation_code' => $confirmation_code], function($m) {
+          Mail::send('administrator.dashboard.pages.email_page.verify', ['confirmation_code' => $confirmation_code, 'fullName' => $fullName], function($m) {
               $m->from('no-reply@loopinc.id', 'Loopinc.id');
               $m->to(Input::get('email'), Input::get('firstname').' '.Input::get('lastname'))
                   ->subject('Confirm your account at this email');

@@ -29,16 +29,23 @@
               email goes here
 
               -->
-              <div class="mui-divider-bottom">
+              <!-- <div class="mui-divider-bottom">
               <img style="width:300px" src="{!! asset('images/icon.png') !!}">
               <h3 style="margin-top: -5px!important; margin-bottom: 16px!important; color: grey!important;">DISCOVER YOUR SELF</h3>
-              <div class="mui-divider-bottom"></div>
+              <div class="mui-divider-bottom"></div> -->
 
-              <p style="padding:20px; text-align:left;">
-              Welcome<br><br>
-              You have to verification your email in link below before you use that account.</p>
-              <a href="{{ URL::to('user/pages/register/verify/' . $confirmation_code) }}" class="mui-btn mui-btn-primary mui-btn-lg">Verification Link</a>
+              <p style="text-align:left;">
+                Dear {{$fullName}},
+              </p>
+              <p style="text-align:left;">Terima Kasih telah melakukan registrasi di <a href="http://loopinc.id/">LOOPINC.ID</a> </p>
+              <p style="text-align:left;">Lakukan verifikasi untuk bisa mengakses account-mu.</p>
+              <a style="text-align:left;" href="{{ URL::to('user/pages/register/verify/' . $confirmation_code) }}" class="mui-btn mui-btn-primary mui-btn-lg">KLIK</a>
               <br><br>
+
+              <p style="text-align:left;">Selamat Merancang Masa Depan ! <br> </p>
+
+              <p style="text-align:left;">Salam,</p>
+              <p style="font-weight: bold;text-align:left;">Loopinc Team</p>
               </div>
 
             </div>
