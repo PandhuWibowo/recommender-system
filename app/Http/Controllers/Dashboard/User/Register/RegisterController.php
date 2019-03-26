@@ -143,7 +143,7 @@ class RegisterController extends Controller
     if(!$id)
     {
         $user = User::where('confirmation_code', $id)->first();
-        echo "Link not registered";
+        return view("administrator.dashboard.pages.email_page.check_link.v_wrong_link");
 
         $logFP = new Register([
           "email"       => trim($user->email),
@@ -161,7 +161,7 @@ class RegisterController extends Controller
 
         if (!$user)
         {
-            echo "Link not registered";
+            // echo "Link not registered";
             $logFP = new Register([
               "email"       => "",
               "ip_address"  => $request->ip(),
@@ -172,6 +172,8 @@ class RegisterController extends Controller
             ]);
 
             $logFP->save();
+
+            return view("administrator.dashboard.pages.email_page.check_link.v_wrong_link");
         }else{
           $logFP = new Register([
             "email"       => trim($user->email),
