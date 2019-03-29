@@ -88,6 +88,56 @@ class TestimoniController extends Controller
 
   }
 
+  public function update(Request $request){
+    $varId = Crypt::decrypt($request->edit_id);
+    $varTestiName = $request->edit_nama_testi;
+    $varInstaName = ucfirst(trim($request->edit_nama_instansi));
+    $varOpini     = ucfirst(trim($request->edit_pendapat_testimoni));
+    $varFoto      = $request->hasFile('foto');
+
+    if($varFoto){
+      //TODO: Update data dengan foto baru
+      $validator = Validator::make($request->all(), [
+        'edit_foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'edit_nama_testi' => 'required',
+        'edit_nama_instansi' => 'required',
+        'edit_pendapat_testimoni' => 'required',
+      ]);
+
+      if($validator->passes()){
+        $input = $request->all();
+
+        // images-testimoni
+        $input['foto'] = time().'.'.$request->foto->getClientOriginalExtension();
+        $request->foto->move(public_path('images/images-testimoni'), $input['foto']);
+
+        $elUpdate                     = Testimoni::findOrFail($varId);
+        $elUpdate->nama_testi         = $varTestiName;
+        $elUpdate->nama_instansi      = $varInstaName;
+        $elUpdate->pendapat_testimoni = $varOpini;
+        $elUpdate->foto               = $input['foto'];
+
+        $elUpdate->save();
+        Session::flash("success","Oops, success for updated :)");
+        return Redirect::to("backend/pages/testimonial");
+        exit();
+      }
+    }else{
+      // TODO: Ambil string gambar dari database
+      $cekStringGambar              = Testimoni::where('id', $varId)->first();
+      $elUpdate                     = Testimoni::findOrFail($varId);
+      $elUpdate->nama_testi         = $varTestiName;
+      $elUpdate->nama_instansi      = $varInstaName;
+      $elUpdate->pendapat_testimoni = $varOpini;
+      $elUpdate->foto               = $cekStringGambar->foto;
+
+      $elUpdate->save();
+      Session::flash("failed","Oops, failed for updated :(");
+      return Redirect::to("backend/pages/testimonial");
+      exit();
+    }
+  }
+
   public function destroy(Request $request){
     $txtId    = Crypt::decrypt($request->id);
     $data = Testimoni::where('id', $txtId)->first();

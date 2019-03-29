@@ -122,6 +122,13 @@ Route::prefix('backend/pages')->group(function () {
     Route::get("testimonial","Dashboard\TestimoniController@index");
     Route::post("testimonial/store","Dashboard\TestimoniController@store");
     Route::delete("testimonial/delete","Dashboard\TestimoniController@destroy");
+    Route::put("testimonial/update","Dashboard\TestimoniController@update");
+
+    //Feature
+    Route::get("features","Dashboard\FiturController@index");
+    Route::post("features/store","Dashboard\FiturController@store");
+    Route::delete("features/delete","Dashboard\FiturController@destroy");
+    Route::put("features/update","Dashboard\FiturController@update");
 });
 
 Route::prefix('user/pages')->group(function () {

@@ -426,10 +426,26 @@
                                         </ul>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="container">
+              @if(Session::has('success'))
+                <div class="alert alert-info">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                  <strong>Success!</strong> {{Session::get('success')}}
+                </div>
+              @elseif(Session::has('failed'))
+                <div class="alert alert-warning">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                  <strong>Failed!</strong> {{Session::get('failed')}}
+                </div>
+              @endif
+
             </div>
         </div>
         <!-- Static Table Start -->
@@ -553,6 +569,8 @@
                                       </div>
                                    </div>
 
+                                   <!-- // TODO: Updating testimonial form -->
+
                                    <!-- Modal Edit -->
                                    <div id="modalEdit" class="modal fade" role="dialog">
                                     <div class="modal-dialog modal-lg">
@@ -563,53 +581,58 @@
                                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                                           <h4 class="modal-title">Edit : Testimonial</h4>
                                         </div>
-                                        <div class="modal-body">
-                                          <form class="" autocomplete="off" action="" method="post">
-                                            <div class="form-group">
-                                              <input type="hidden" class="form-control" id="edit_id" name="id" required readonly>
-                                            </div>
+                                        <form class="" autocomplete="off" action="{{ url('backend/pages/testimonial/update') }}" method="POST" enctype="multipart/form-data">
+                                          {{ csrf_field() }}
+                                          {{ method_field('PUT') }}
 
-                                            <div class="form-group">
-                                              <div class="image-upload-wrap">
-                                                <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="foto" id="foto" />
-                                                <div class="drag-text">
-                                                  <h3>Drag and drop a file or select add Image</h3>
+                                          <div class="modal-body">
+                                              <div class="form-group">
+                                                <input type="hidden" class="form-control" id="edit_id" name="edit_id" required readonly>
+                                              </div>
+
+                                              <div class="form-group">
+                                                <div class="image-upload-wrap">
+                                                  <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="foto" id="foto" />
+                                                  <div class="drag-text">
+                                                    <h3>Drag and drop a file or select add Image</h3>
+                                                  </div>
+                                                </div>
+                                                <div class="file-upload-content">
+                                                  <img class="file-upload-image" src="#" alt="your image" />
+                                                  <div class="image-title-wrap">
+                                                    <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                                  </div>
                                                 </div>
                                               </div>
-                                              <div class="file-upload-content">
-                                                <img class="file-upload-image" src="#" alt="your image" />
-                                                <div class="image-title-wrap">
-                                                  <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                                                </div>
+
+                                              <div class="form-group">
+                                                <label for="participant">Participant</label>
+                                                <select class="" id="edit_nama_testi" name="edit_nama_testi">
+                                                  <option value=""></option>
+                                                  @foreach($users as $row)
+                                                    <option value="{{$row->id}}">{{$row->firstname}} {{$row->lastname}}</option>
+
+                                                  @endforeach
+                                                </select>
                                               </div>
-                                            </div>
 
-                                            <div class="form-group">
-                                              <label for="participant">Participant</label>
-                                              <select class="" id="edit_nama_testi" name="edit_nama_testi">
-                                                <option value=""></option>
-                                                @foreach($users as $row)
-                                                  <option value="{{$row->id}}">{{$row->firstname}} {{$row->lastname}}</option>
+                                              <div class="form-group">
+                                                  <label for="agency">Agency/School</label>
+                                                  <input type="text" class="form-control" name="edit_nama_instansi" id="edit_nama_instansi" value="">
+                                              </div>
 
-                                                @endforeach
-                                              </select>
-                                            </div>
+                                              <div class="form-group">
+                                                <label for="opini">Opini</label>
+                                                <textarea class="form-control" style="height:40%;" id="edit_pendapat_testimoni" name="edit_pendapat_testimoni"></textarea>
+                                              </div>
 
-                                            <div class="form-group">
-                                                <label for="agency">Agency/School</label>
-                                                <input type="text" class="form-control" name="edit_nama_instansi" id="edit_nama_instansi" value="">
-                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" id="btn_update" class="btn btn-primary">Save</button>
+                                          </div>
 
-                                            <div class="form-group">
-                                              <label for="opini">Opini</label>
-                                              <textarea class="form-control" style="height:40%;" id="edit_pendapat_testimoni" name="edit_pendapat_testimoni"></textarea>
-                                            </div>
-                                          </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                          <button type="submit" id="btn_update" class="btn btn-primary">Save</button>
-                                        </div>
+                                        </form>
                                       </div>
                                     </div>
                                   </div>
@@ -947,10 +970,9 @@
           $("#modalEdit").modal("show");
         });
 
-        // TODO: Updating testimonial form
-        $("#btn_update").on("click", function(e){
-
-        });
+        // $("#btn_update").on("click", function(e){
+        //
+        // });
       });
     </script>
 </body>
