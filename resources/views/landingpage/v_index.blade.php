@@ -211,11 +211,16 @@
     .imgAbout{
         position: relative;
         float: left;
-        width:  300px;
-        height: 300px;
+        width:  18em;
+        height: 18em;
         background-position: 100% 100%;
         background-repeat:   no-repeat;
         background-size:     cover;
+    }
+
+    #services h1 {
+        font-weight: bold;
+        text-transform:uppercase;
     }
 
     /* Grid 5 Columns */
@@ -233,7 +238,7 @@
   <header id="home">
     <div id="home-slider" class="carousel slide carousel-fade" data-ride="carousel">
       <div class="carousel-inner">
-        <div class="item active" style="background-image: url(landingpage/images/millenials_pic9.jpg)">
+        <div class="item active imgSlider" style="background-image: url(landingpage/images/blog.png)">
           <div class="col-xs-12 col-md-8 caption">
             <img src="" class="img-responsive" alt="">
             <h1 class="animated fadeInLeftBig paragraph-address-space terra-cotta">Selamat Datang di <span>Loopinc.id</span></h1>
@@ -243,14 +248,14 @@
             <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Kenali dirimu sendiri</a> -->
           </div>
         </div>
-        <div class="item" style="background-image: url(landingpage/images/millenials_pic9.jpg)">
+        <div class="item" style="background-image: url(landingpage/images/blog.png)">
           <div class="col-xs-12 col-md-8 caption">
             <h4 class="animated fadeInLeftBig terra-cotta" style="font-style: italic;text-transform:none;"> “The future belongs to those who prepare for it today” <span style="font-style: normal;">(Malcolm X)</span></h4>
             <!-- <p class="animated fadeInRightBig"></p> -->
             <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Kenali dirimu sendiri</a> -->
           </div>
         </div>
-        <div class="item" style="background-image: url(landingpage/images/millenials_pic9.jpg)">
+        <div class="item" style="background-image: url(landingpage/images/blog.png)">
           <div class="col-xs-12 col-md-8 caption">
             <h4 style="font-style: oblique;text-transform:none;text-align:right;" class="paragraph-address-space animated fadeInLeftBig terra-cotta">“87% persen mahasiswa di Indonesia salah jurusan”</h4>
             <p class="paragraph-address-space animated fadeInRightBig terra-cotta" style="text-transform:none;text-align:right;">Irene Guntur, M.Psi., Psi., CGA,</p>
@@ -629,7 +634,7 @@
                 <img class="img-responsive imgAbout" src="{{ url('landingpage/images/millenials_pic11.png') }}" alt="">
               </div>
               <div class="member-info">
-                <h3>Guidance</h3>
+                <h1>Guidance</h1>
                 <!-- <h4>CEO &amp; Founder</h4> -->
                 <p>Tim kami telah
                     merancang
@@ -660,7 +665,7 @@
                 <img class="img-responsive imgAbout" src="{{ url('landingpage/images/plus-and-minus.jpg') }}" alt="">
               </div>
               <div class="member-info">
-                <h3>Know Well</h3>
+                <h1>Know Well</h1>
                 <!-- <h4>UI/UX Designer</h4> -->
                 <p>
                   Kenali lebih dalam tentang
@@ -693,7 +698,7 @@
                 <img class="img-responsive imgAbout" src="{{ url('landingpage/images/improve.png') }}" alt="">
               </div>
               <div class="member-info">
-                <h3>Improve</h3>
+                <h1>Improve</h1>
                 <!-- <h4>Developer</h4> -->
                 <p>
                   Dapatkan konten
@@ -721,10 +726,10 @@
           <div class="col-sm-3">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="1100ms">
               <div class="member-image">
-                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/mentoring.jpg') }}" alt="">
+                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/mentoring_pic.png') }}" alt="">
               </div>
               <div class="member-info">
-                <h3>Mentoring</h3>
+                <h1>Mentoring</h1>
                 <!-- <h4>Support Manager</h4> -->
                 <p>
                   Tim Mentor siap membantu
