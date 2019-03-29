@@ -628,135 +628,53 @@
       </div>
       <div class="team-members">
         <div class="row">
-          <div class="col-sm-3">
+          @if(count($feature) <=0)
+          <div class="col-sm-12">
             <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
-              <div class="member-image">
-                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/millenials_pic11.png') }}" alt="">
-              </div>
               <div class="member-info">
-                <h1>Guidance</h1>
-                <!-- <h4>CEO &amp; Founder</h4> -->
-                <p>Tim kami telah
-                    merancang
-                    pendekatan yang
-                    dapat kamu jadikan
-                    acuan dalam
-                    merancang masa
-                    depanmu.
+                <h2 for="" class="pesan-error-kosong">Oops, datanya masih kosong sampai saat ini.</h2>
+              </div>
+            </div>
+          </div>
+          @else
+            @foreach($feature as $row)
+            <div class="col-sm-3">
+              <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div class="member-image">
+                  <!-- <img class="img-responsive imgAbout" src="{{ url('landingpage/images/millenials_pic11.png') }}" alt=""> -->
+                  <?php
+                    if($row->image == ""){
+                      ?>
+                        <img class="img-responsive imgAbout" src="https://extension.illinois.edu/stain/stains-hi/235.jpg" alt="">
+                      <?php
+                    }else{
+                      ?>
+                        <img class="img-responsive imgAbout" src="{!! asset('images/images-feature/'.$row->image) !!}" alt="">
+                      <?php
+                    }
+                  ?>
+                </div>
+                <div class="member-info">
+                  <h1>{{$row->title}}</h1>
+                  <!-- <h4>CEO &amp; Founder</h4> -->
+                  <p>
+                    {{$row->description}}
+                  </p>
+                </div>
+                <!-- <div class="social-icons">
+                  <ul>
+                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
+                  </ul>
+                </div> -->
+              </div>
+            </div>
+            @endforeach
+          @endif
 
-                    You are the planner
-                    of your future!
-                </p>
-              </div>
-              <!-- <div class="social-icons">
-                <ul>
-                  <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                  <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-                  <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
-                </ul>
-              </div> -->
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="500ms">
-              <div class="member-image">
-                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/plus-and-minus.jpg') }}" alt="">
-              </div>
-              <div class="member-info">
-                <h1>Know Well</h1>
-                <!-- <h4>UI/UX Designer</h4> -->
-                <p>
-                  Kenali lebih dalam tentang
-                  dirimu, mulai dari gaya belajar,
-                  kepribadian, jurusan di SMA,
-                  Jurusan di Perguruan Tinggi,
-                  serta rekomendasi karir yang
-                  pas buatmu.
-
-                  Kenali juga kelebihan dan area
-                  yang perlu kamu kembangkan
-                  di lingkup pekerjaan, agar lebih
-                  siap kerja.
-                </p>
-              </div>
-              <!-- <div class="social-icons">
-                <ul>
-                  <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                  <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-                  <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
-                </ul>
-              </div> -->
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="800ms">
-              <div class="member-image">
-                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/improve.png') }}" alt="">
-              </div>
-              <div class="member-info">
-                <h1>Improve</h1>
-                <!-- <h4>Developer</h4> -->
-                <p>
-                  Dapatkan konten
-                  pembelajaran
-                  (non-akademik) yang dapat
-                  menjadi bekal kamu untuk
-                  lebih siap menghadapi masa
-                  depan, baik di lingkup
-                  sekolah/kampus, lingkungan
-                  sosial, kehidupan personal,
-                  maupun pekerjaan.
-                </p>
-              </div>
-              <!-- <div class="social-icons">
-                <ul>
-                  <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                  <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-                  <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
-                </ul>
-              </div> -->
-            </div>
-          </div>
-          <div class="col-sm-3">
-            <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="1100ms">
-              <div class="member-image">
-                <img class="img-responsive imgAbout" src="{{ url('landingpage/images/mentoring_pic.png') }}" alt="">
-              </div>
-              <div class="member-info">
-                <h1>Mentoring</h1>
-                <!-- <h4>Support Manager</h4> -->
-                <p>
-                  Tim Mentor siap membantu
-                  kamu untuk berdiskusi
-                  mengenai rancangan masa
-                  depanmu. Terdiri dari mentor
-                  berpengalaman yang telah
-                  sukses di bidangnya. Ada
-                  Pengusaha, Psikolog,
-                  Mahasiswa Berprestasi,
-                  Executive Muda, dan
-                  sebagainya. Mentor juga
-                  dapat membantumu di area
-                  personal.
-                </p>
-              </div>
-              <!-- <div class="social-icons">
-                <ul>
-                  <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                  <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-                  <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
-                </ul>
-              </div> -->
-            </div>
-          </div>
         </div>
       </div>
     </div>

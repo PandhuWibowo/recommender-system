@@ -18,6 +18,7 @@ use App\Http\Models\Partnership;
 use App\Http\Models\ModelLogs\KerjaSama;
 use BrowserDetect;
 use App\Http\Models\Testimoni;
+use App\Http\Models\Fitur;
 
 
 /**
@@ -29,8 +30,9 @@ class MainController extends Controller
 
   public function index(Request $request){
     $countAssessments = Assesment::all()->count();
-    $testimoni = Testimoni::orderBy("created_at","desc")->limit(4)->get();
-    return view("landingpage.v_index", compact("countAssessments","testimoni"));
+    $feature    = Fitur::orderBy("created_at","asc")->limit(4)->get();
+    $testimoni  = Testimoni::orderBy("created_at","desc")->limit(4)->get();
+    return view("landingpage.v_index", compact("countAssessments","testimoni","feature"));
   }
 
   public function store(Request $request){
