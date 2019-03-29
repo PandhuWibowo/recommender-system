@@ -382,7 +382,7 @@
                                                         </div>
                                                         <!-- Start Textbox -->
                                                         <div class="form-group">
-                                                          <label for="inputlg">Full Name</label>
+                                                          <label for="inputlg">Participant</label>
                                                           <select class="" id="nama_testi" name="nama_testi">
                                                             <option value=""></option>
                                                             @foreach($users as $row)
@@ -421,7 +421,7 @@
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">Results</span>
+                                            <li><span class="bread-blod">Testimonial</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -492,6 +492,7 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-warning btn_view" data-id="{{Crypt::encrypt($row->id)}}" data-foto="{{ $row->foto }}" data-nama_testi="{{ ucfirst($row->get_user->firstname) }} {{ ucfirst($row->get_user->lastname) }}" data-nama_instansi="{{$row->nama_instansi}}" data-pendapat_testimoni="{{$row->pendapat_testimoni}}"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-info btnEdit" data-id="{{Crypt::encrypt($row->id)}}" data-nama_testi_id="{{$row->nama_testi}}" data-foto="{{ $row->foto }}" data-nama_testi="{{ ucfirst($row->get_user->firstname) }} {{ ucfirst($row->get_user->lastname) }}" data-nama_instansi="{{$row->nama_instansi}}" data-pendapat_testimoni="{{$row->pendapat_testimoni}}"><i class="fa fa-edit"></i></a>
                                                 <a class="btn btn-danger btn_delete" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-trash"></i></a>
                                             </td>
                                           </tr>
@@ -510,6 +511,7 @@
                                       </tfoot>
                                     </table>
 
+                                    <!-- View Modal -->
                                     <div class="modal fade fullwidth" id="myModal--effect-fullwidth" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                       <div class="modal-dialog fullwidth--box " role="document">
                                          <div class="modal-content no--shadow">
@@ -550,6 +552,68 @@
                                          </div>
                                       </div>
                                    </div>
+
+                                   <!-- Modal Edit -->
+                                   <div id="modalEdit" class="modal fade" role="dialog">
+                                    <div class="modal-dialog modal-lg">
+
+                                      <!-- Modal content-->
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                          <h4 class="modal-title">Edit : Testimonial</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form class="" autocomplete="off" action="" method="post">
+                                            <div class="form-group">
+                                              <input type="hidden" class="form-control" id="edit_id" name="id" required readonly>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <div class="image-upload-wrap">
+                                                <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="foto" id="foto" />
+                                                <div class="drag-text">
+                                                  <h3>Drag and drop a file or select add Image</h3>
+                                                </div>
+                                              </div>
+                                              <div class="file-upload-content">
+                                                <img class="file-upload-image" src="#" alt="your image" />
+                                                <div class="image-title-wrap">
+                                                  <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label for="participant">Participant</label>
+                                              <select class="" id="edit_nama_testi" name="edit_nama_testi">
+                                                <option value=""></option>
+                                                @foreach($users as $row)
+                                                  <option value="{{$row->id}}">{{$row->firstname}} {{$row->lastname}}</option>
+
+                                                @endforeach
+                                              </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="agency">Agency/School</label>
+                                                <input type="text" class="form-control" name="edit_nama_instansi" id="edit_nama_instansi" value="">
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label for="opini">Opini</label>
+                                              <textarea class="form-control" style="height:40%;" id="edit_pendapat_testimoni" name="edit_pendapat_testimoni"></textarea>
+                                            </div>
+                                          </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                          <button type="submit" id="btn_update" class="btn btn-primary">Save</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
                                 </div>
                             </div>
                         </div>
@@ -656,6 +720,11 @@
             $("#nama_testi").select2({
                 placeholder: "Please Select Full Name",
                 width: '100%'
+            });
+
+            $("#edit_nama_testi").select2({
+                placeholder: "Please Select Full Name",
+                width:  '100%'
             });
         });
     </script>
@@ -858,6 +927,29 @@
           } finally {
 
           }
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        //TODO: Showing data into edit's testimonial modal
+        $("#myCompetencies").on("click", ".btnEdit",function(){
+          var varId         = $(this).data("id");
+          var varTestiName  = $(this).data("nama_testi_id");
+          var varInstaName  = $(this).data("nama_instansi");
+          var varPendaTes   = $(this).data("pendapat_testimoni");
+          // console.log(varTestiName);
+          $("#edit_nama_testi").val(varTestiName).trigger("change");
+          $("#edit_nama_instansi").val(varInstaName);
+          $("#edit_pendapat_testimoni").val(varPendaTes);
+          $("#edit_id").val(varId);
+          $("#modalEdit").modal("show");
+        });
+
+        // TODO: Updating testimonial form
+        $("#btn_update").on("click", function(e){
+
         });
       });
     </script>
