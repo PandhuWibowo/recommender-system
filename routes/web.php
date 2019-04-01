@@ -186,6 +186,14 @@ Route::prefix('error/page')->group(function () {
   Route::get('500', ['as' => '500', 'uses' => 'ErrorPage\ErrorController@fatal']);
 });
 
+//Call Execute clear cache
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
+
 //URL for Logs
 Route::prefix("logs")->group(function(){
 
