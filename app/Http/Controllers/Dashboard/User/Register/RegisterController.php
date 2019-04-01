@@ -104,7 +104,7 @@ class RegisterController extends Controller
           Mail::send('administrator.dashboard.pages.email_page.verify', ['confirmation_code' => $confirmation_code, 'fullName' => $fullName], function($m) {
               $m->from('no-reply@loopinc.id', 'Loopinc.id');
               $m->to(Input::get('email'), Input::get('firstname').' '.Input::get('lastname'))
-                  ->subject('Confirm your account at this email');
+                  ->subject('Confirm your account');
           });
 
           return response()->json(

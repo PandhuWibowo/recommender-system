@@ -89,6 +89,7 @@ class UserController extends Controller
         'password'          => 'required|min:6|max:30',
         'confirm_password'  => 'required|same:password'
       );
+      $fullName           = ucfirst(trim($request->firstname))." ".ucfirst(trim($request->lastname));
 
       $validator = Validator::make(Input::all(), $rules);
       request()->validate([
@@ -129,10 +130,10 @@ class UserController extends Controller
           if($users->save()){
 
 
-            Mail::send('administrator.dashboard.pages.email_page.verify', ['confirmation_code' => $confirmation_code], function($m) {
+            Mail::send('administrator.dashboard.pages.email_page.verify', ['confirmation_code' => $confirmation_code, 'fullName' => $fullName], function($m) {
                 $m->from('no-reply@loopinc.id', 'Loopinc.id');
                 $m->to(Input::get('email'), Input::get('firstname').' '.Input::get('lastname'))
-                    ->subject('Confirm your account at this email');
+                    ->subject('Confirm your account');
             });
 
             $log = new Participant([
