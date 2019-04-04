@@ -235,12 +235,12 @@
   <!--.preloader-->
   <div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
   <!--/.preloader-->
-
+<!-- col-xs-12 col-md-8  -->
   <header id="home">
     <div id="home-slider" class="carousel slide carousel-fade" data-ride="carousel">
       <div class="carousel-inner">
         <div class="item active imgSlider" style="background-image: url(landingpage/images/hitam.png)">
-          <div class="col-xs-12 col-md-8 caption">
+          <div class="caption">
             <h1 class="animated fadeInLeftBig paragraph-address-space terra-cotta">Selamat Datang di <span>Loopinc.id</span></h1>
             <p class="animated fadeInRightBig paragraph-address-space terra-cotta" style="text-transform:none;">Temukan rekomendasi jurusan dan karir yang pas buatmu.</p>
             <p class="terra-cotta animated fadeInLeftBig" style="text-transform:none;">Persiapkan dirimu di dunia kerja dengan konten pengembangan diri.</p>
@@ -249,20 +249,20 @@
           </div>
         </div>
         <div class="item" style="background-image: url(landingpage/images/hitam.png)">
-          <div class="col-xs-12 col-md-8 caption">
+          <div class="caption">
             <h4 class="animated fadeInLeftBig terra-cotta" style="font-style: italic;text-transform:none;"> “The future belongs to those who prepare for it today” <span style="font-style: normal;">(Malcolm X)</span></h4>
             <!-- <p class="animated fadeInRightBig"></p>
             <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Kenali dirimu sendiri</a> -->
           </div>
         </div>
         <div class="item" style="background-image: url(landingpage/images/hitam.png)">
-          <div class="col-xs-12 col-md-8 caption">
-            <h4 style="font-style: oblique;text-transform:none;text-align:right;" class="paragraph-address-space animated fadeInLeftBig terra-cotta">“87% persen mahasiswa di Indonesia salah jurusan”</h4>
-            <p class="paragraph-address-space animated fadeInRightBig terra-cotta" style="text-transform:none;text-align:right;">Irene Guntur, M.Psi., Psi., CGA,</p>
-            <p class="paragraph-address-space animated fadeInRightBig terra-cotta" style="text-transform:none;text-align:right;">Educational Psychologist dari Integrity Development Flexibility (IDF)</p>
+          <div class="caption">
+            <h4 style="font-style: oblique;text-transform:none;" class="paragraph-address-space animated fadeInLeftBig terra-cotta">“87% persen mahasiswa di Indonesia salah jurusan”</h4>
+            <p class="paragraph-address-space animated fadeInRightBig terra-cotta" style="text-transform:none;">Irene Guntur, M.Psi., Psi., CGA,</p>
+            <p class="paragraph-address-space animated fadeInRightBig terra-cotta" style="text-transform:none;">Educational Psychologist dari Integrity Development Flexibility (IDF)</p>
 
-            <p class="space-paragraph animated fadeInRightBig terra-cotta" style="text-transform:none;text-align:right;">Kenali dirimu disini, temukan jurusan yang paling pas buatmu.</p>
-            <p class="terra-cotta animated fadeInRightBig center-position">ONLINE, INSTANT, GAK PAKE LAMA</p>
+            <p class="space-paragraph animated fadeInRightBig terra-cotta" style="text-transform:none;">Kenali dirimu disini, temukan jurusan yang paling pas buatmu.</p>
+            <p class="terra-cotta animated fadeInRightBig">ONLINE, INSTANT, GAK PAKE LAMA</p>
 
             <!-- <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Kenali dirimu sendiri</a> -->
           </div>
