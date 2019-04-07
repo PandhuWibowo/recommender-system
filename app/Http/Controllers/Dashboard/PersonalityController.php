@@ -61,11 +61,93 @@ class PersonalityController extends Controller
 
   }
 
-  public function update(){
+  public function update(Request $request){
+    $id           = Crypt::decrypt($request->id);
+    $nama         = $request->nama;
+    $assesmentId  = Crypt::decrypt($request->assessment_id);
+    $kodeNama     = $request->kode_nama;
 
+    $userPersons                = Personality::find($id);
+    $userPersons->nama          = $nama;
+    $userPersons->assessment_id  = $assesmentId;
+    $userPersons->kode_nama     = $kodeNama;
+
+    if($userPersons->save()){
+      // $log = new Ua([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Update User Assessment - Update|Success",
+      //   "data"        => "Berhasil mengubah data User Assessment - User Assessment ID : ".$request->id.", User ID : ".$request->user_id.", Assessment ID : ".$request->assesment_id.
+      //                     ", Maxattempt : ".$request->maxattempt,
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $log->save();
+      return response()->json(
+        array(
+          "response"  => "success"
+        )
+      );
+    }else{
+      // $log = new Ua([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Update User Assessment - Update|Failed",
+      //   "data"        => "Gagal mengubah data User Assessment - User Assessment ID : ".$request->id.", User ID : ".$request->user_id.", Assessment ID : ".$request->assesment_id.
+      //                     ", Maxattempt : ".$request->maxattempt,
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $log->save();
+      return response()->json(
+        array(
+          "response"  => "failed"
+        )
+      );
+    }
   }
 
-  public function destroy(){
+  public function destroy(Request $request){
+    $txtId    = Crypt::decrypt($request->id);
+    // $data = Personality::where('id', $txtId)->first();
+
+    if(Personality::where('id',$txtId)->delete()){
+      // $log = new Ua([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Delete User Assessment - Delete|Success",
+      //   "data"        => "Berhasil menghapus data User Assessment - User Assessment ID : ".$data->id.", User ID : ".$data->user_id.", Assessment ID : ".$data->assesment_id.", Status : ".$data->status.
+      //                     ", Maxattempt : ".$data->maxattempt.", Attempt : ".$data->attempt,
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $log->save();
+      return response()->json(
+        array(
+          'response'  => "success"
+        )
+      );
+    }else{
+      // $log = new Ua([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Delete User Assessment - Delete|Failed",
+      //   "data"        => "Gagal menghapus data User Assessment - User Assessment ID : ".$data->id.", User ID : ".$data->user_id.", Assessment ID : ".$data->assesment_id.", Status : ".$data->status.
+      //                     ", Maxattempt : ".$data->maxattempt.", Attempt : ".$data->attempt,
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $log->save();
+      return response()->json(
+        array(
+          'response'  => "failed"
+        )
+      );
+    }
 
   }
 }

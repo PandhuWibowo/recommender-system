@@ -85,7 +85,11 @@
       }
       input[type="text"] {
         width: 1100em;
-    }
+      }
+
+      #edit_nama, #edit_kode_nama, #edit_personality_id, #edit_assessment_id{
+          width: 100%;
+      }
     </style>
 </head>
 
@@ -233,7 +237,7 @@
                                             <td>{{ $row->nama }}</td>
                                             <td>{{ $row->kode_nama }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-assessment_id="{{ Crypt::encrypt($row->assessment_id) }}" data-nama="{{$row->nama}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-assessment_id="{{ Crypt::encrypt($row->assessment_id) }}" data-nama="{{$row->nama}}" data-id="{{Crypt::encrypt($row->id)}}" data-kode_nama="{{$row->kode_nama}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -255,21 +259,29 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Type of Assesments</h4>
+                                            <h4 class="modal-title">Edit Personality</h4>
                                             <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
                                           <div class="modal-body">
                                             <div class="form-group">
-                                              <input type="hidden" class="form-control" autocomplete="off" id="id_jenis_assesments" required>
+                                              <input type="hidden" class="form-control" autocomplete="off" id="edit_personality_id" required>
                                             </div>
                                             <div class="form-group">
-                                              <label for="usr">Name of Assesments</label>
-                                              <input type="text" class="form-control" autocomplete="off" id="name_jenis_assesments" required>
+                                                <label for="">Assessment Type</label>
+                                                <select class="js-states form-control" name="edit_assessment_id" id="edit_assessment_id">
+                                                    @foreach($jenisAssessments as $row)
+                                                        <option value="{{Crypt::encrypt($row->id)}}">{{$row->nama}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="usr">Personality Name</label>
+                                              <input type="text" class="form-control" autocomplete="off" id="edit_nama" required>
                                             </div>
                                             <!-- no_urut_assesment -->
                                             <div class="form-group">
-                                              <label for="usr">Sequence Number to</label>
-                                              <input type="number" min="1" class="form-control" autocomplete="off" id="no_urut_assesment" required>
+                                              <label for="usr">Personality Code</label>
+                                              <input type="text" class="form-control" autocomplete="off" id="edit_kode_nama" required>
                                             </div>
                                           </div>
                                           <div class="modal-footer">
@@ -400,7 +412,7 @@
     </script>
 
     <script type="text/javascript">
-    $(".js-example-placeholder-multiple").select2({
+    $(".js-example-placeholder-multiple, #edit_assessment_id").select2({
         placeholder: "Select a Assessment Type"
     });
     </script>
@@ -408,18 +420,20 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $("#myAssesments").on("click", ".btn_edit",function(){
-          var varId     = $(this).data("id");
-          var varName   = $(this).data("nama");
-          var varNoUrut = $(this).data("no");
+          var varAssessmentId   = $(this).data("assessment_id");
+          var varNama           = $(this).data("nama");
+          var varKodeNama       = $(this).data("kode_nama");
+          var varId             = $(this).data("id");
           try {
-            $("#id_jenis_assesments").val(varId);
-            $("#name_jenis_assesments").val(varName);
-            $("#no_urut_assesment").val(varNoUrut);
+            $("#edit_nama").val(varNama);
+            $("#edit_kode_nama").val(varKodeNama);
+            $("#edit_personality_id").val(varId);
+            $("#edit_assessment_id").val(varAssessmentId).trigger("change");
             $("#editModal").modal("show");
           } catch (e) {
             console.log(e);
           } finally {
-
+              
           }
         });
 
@@ -480,25 +494,25 @@
                   kode_nama     : varKodeNama
                 },
                 success:function(data){
-                    console.log(data);
-                  // $("#myModal").modal("hide");
-                  // if(data.response == "success"){
-                  //   swal({
-                  //     type : "success",
-                  //     title: "Success",
-                  //     text : "Data's has been saved",
-                  //     timer: 3000
-                  //   }).then(function(){
-                  //     window.location = "{{ url('backend/pages/personalities') }}";
-                  //   })
-                  // }else{
-                  //   swal({
-                  //     type : "error",
-                  //     title: "Error",
-                  //     text : "Failed saving the data",
-                  //     timer: 3000
-                  //   })
-                  // }
+                    // console.log(data);
+                  $("#myModal").modal("hide");
+                  if(data.response == "success"){
+                    swal({
+                      type : "success",
+                      title: "Success",
+                      text : "Data's has been saved",
+                      timer: 3000
+                    }).then(function(){
+                      window.location = "{{ url('backend/pages/personalities') }}";
+                    })
+                  }else{
+                    swal({
+                      type : "error",
+                      title: "Error",
+                      text : "Failed saving the data",
+                      timer: 3000
+                    })
+                  }
                 },
                 error:function(data){
                   console.log(data);
@@ -518,19 +532,21 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varId     = $("#id_jenis_assesments").val();
-          var varName   = $("#name_jenis_assesments").val();
-          var varNoUrut = $("#no_urut_assesment").val();
+          var varId             = $("#edit_personality_id").val();
+          var varAssessmentId   = $("#edit_assessment_id").val();
+          var varNama           = $("#edit_nama").val();
+          var varKodeNama       = $("#edit_kode_nama").val();
           try {
             $.ajax({
               type    : "PUT",
-              url     : "{{ url('backend/pages/assesments/update') }}",
+              url     : "{{ url('backend/pages/personalities/update') }}",
               async   : true,
               dataType: "JSON",
               data    : {
-                id                : varId,
-                nama              : varName,
-                no_urut_assesment : varNoUrut
+                id                  : varId,
+                nama                : varNama,
+                kode_nama           : varKodeNama,
+                assessment_id       : varAssessmentId
               },
               success:function(data){
                 $("#editModal").modal("hide");
@@ -538,10 +554,10 @@
                   swal({
                     type : "success",
                     title: "Success",
-                    text : "Name of Assesment has been updated",
+                    text : "Personality has been updated",
                     timer: 3000
                   }).then(function(){
-                    window.location = "{{ url('backend/pages/assesments') }}";
+                    window.location = "{{ url('backend/pages/personalities') }}";
                   })
                 }else{
                   swal({
@@ -569,7 +585,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
           });
-          var varId = $("#id_jenis_assesments").val();
+          var varId = $("#edit_personality_id").val();
           try {
             swal({
               title: 'Are you sure?',
@@ -583,7 +599,7 @@
               if(result.value){
                 $.ajax({
                   type      : "DELETE",
-                  url       : "{{ url('backend/pages/assesments/delete') }}",
+                  url       : "{{ url('backend/pages/personalities/delete') }}",
                   async     : true,
                   dataType  : "JSON",
                   data      : {
@@ -598,7 +614,7 @@
                         'Your file has been deleted.',
                         'success'
                       ).then(function(){
-                        window.location = "{{ url('backend/pages/assesments') }}";
+                        window.location = "{{ url('backend/pages/personalities') }}";
                       });
                     }
                   },
