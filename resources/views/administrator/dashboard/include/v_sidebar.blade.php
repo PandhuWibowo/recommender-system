@@ -43,15 +43,15 @@
                           <li>
                               <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Assesments</span></a>
                               <ul class="submenu-angle" aria-expanded="false">
+                                  <li><a title="All Jenis Assesments" href="{{ url('backend/pages/assesments') }}"><span class="mini-sub-pro">Type of Assesments</span></a></li>
+                                  <li><a title="All User Assesments" href="{{ url('backend/pages/userassessments') }}"><span class="mini-sub-pro">User Assesments</span></a></li>
                                   <li>
                                       <a class="has-arrow" aria-expanded="false"><span class="mini-click-non">Assesment's 1</span></a>
                                       <ul class="submenu-angle" aria-expanded="false">
-                                          <li><a title="All Jenis Assesments" href="{{ url('backend/pages/assesments') }}"><span class="mini-sub-pro">Type of Assesments</span></a></li>
                                           <li><a title="All Jenis Competencies" href="{{ url('backend/pages/competencies') }}"><span class="mini-sub-pro">Type of Competencies</span></a></li>
                                           <li><a title="All Jenis Row Scores" href="{{ url('backend/pages/rowscores') }}"><span class="mini-sub-pro">Row Scores</span></a></li>
                                           <li><a title="All Questions" href="{{ url('backend/pages/questions') }}"><span class="mini-sub-pro">Questions</span></a></li>
                                           <li><a title="All Description of Score" href="{{ url('backend/pages/scoredescriptions') }}"><span class="mini-sub-pro">Description of Scores</span></a></li>
-                                          <li><a title="All User Assesments" href="{{ url('backend/pages/userassessments') }}"><span class="mini-sub-pro">User Assesments</span></a></li>
                                           <li><a title="Description Results" href="{{ url("backend/pages/descriptionresults") }}"><span class="mini-sub-pro">Description Results</span></a></li>
                                           <li><a title="Configuration" href="{{ url("backend/pages/configurations") }}"><span class="mini-sub-pro">Configurations</span></a></li>
                                       </ul>
