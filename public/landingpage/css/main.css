@@ -47,7 +47,8 @@ h3 {
 .parallax h4,
 .parallax h5,
 .parallax h6, .parallax p {
-  color: #000;
+  /* color: #000; */
+  color: #fff;
   font-weight: bold;
 }
 
@@ -63,8 +64,8 @@ h3 {
 .parallax textarea:hover {
   /* font-weight: 300;
   color: #fff; */
-
-  color: #000;
+  color: #fff;
+  /* color: #000; */
   font-weight: bold;
 }
 
@@ -893,7 +894,7 @@ section {
 }
 
 #contact-us {
-  background-image:url(../images/millenials_pic10.jpg);
+  background-image:url(../images/hitam.png);
   padding-bottom: 90px;
 }
 
@@ -935,9 +936,9 @@ ul.address {
 }
 
 .contact-info ul li a {
-  /* color: #fff; */
+  color: #fff;
 
-  color: #000;
+  /* color: #000; */
   font-weight: bold;
 }
 

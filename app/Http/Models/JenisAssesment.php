@@ -14,4 +14,8 @@ class JenisAssesment extends Model{
   public function data_pertanyaan(){
     return $this->hasMany('App\Http\Models\Pertanyaan');
   }
+
+  public function data_kepribadian(){
+    return $this->hasMany('App\Http\Models\Personality');
+  }
 }
