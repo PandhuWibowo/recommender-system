@@ -76,11 +76,16 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style media="screen">
       .btn {
          border-radius: 0px !important;
       }
+      input[type="text"] {
+        width: 1100em;
+    }
     </style>
 </head>
 
@@ -134,36 +139,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                          <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
-                                            Add New
-                                          </a>
-                                          <!-- Modal -->
-                                          <div id="myModal" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
 
-                                              <!-- Modal content-->
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                  <h4 class="modal-title">New Type of Assesments</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <div class="form-group">
-                                                    <label for="usr">Name of Assesments</label>
-                                                    <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required>
-                                                  </div>
-                                                  <div class="form-group">
-                                                    <label for="usr">Number to</label>
-                                                    <input type="number" min="1" class="form-control" autocomplete="off" id="nomor_urut" required>
-                                                  </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                                </div>
-                                              </div>
-
-                                            </div>
-                                          </div>
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
@@ -185,6 +161,48 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Selfhood Form Start -->
+        <div class="data-table-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sparkline13-list">
+                            <div class="sparkline13-hd">
+                                <div class="main-sparkline13-hd">
+                                    <h1>Personalities <span class="table-project-n">Form</span></h1>
+                                </div>
+                            </div>
+                            <div class="sparkline13-graph">
+                                <div class="form-group">
+                                  <label for="assessmenttype">Assessment Type</label>
+                                  <select class="js-example-placeholder-multiple js-states form-control" name="assessment_id[]" id="assessment_id" multiple="multiple">
+                                      <?php foreach ($jenisAssessments as $key => $row): ?>
+                                          <option value="{{$row->id}}">{{$row->nama}}</option>
+                                      <?php endforeach; ?>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <label for="usr">Personality Name</label>
+                                  <input type="text" class="form-control nama" autofocus="on" autocomplete="off" id="nama" name="nama[]" data-role="tagsinput" required>
+                                </div>
+                                <div class="form-group">
+                                  <label for="usr">Personality Code</label>
+                                  <input type="text" class="form-control kode_nama" autocomplete="off" id="kode_nama" name="kode_nama[]" data-role="tagsinput" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" name="btn_save" id="btn_save" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Selfhood Form End -->
+
         <!-- Static Table Start -->
         <div class="data-table-area mg-b-15">
             <div class="container-fluid">
@@ -198,13 +216,7 @@
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
+
                                     <table id="myAssesments" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
@@ -261,7 +273,7 @@
                                             </div>
                                           </div>
                                           <div class="modal-footer">
-                                            <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
+                                            <button type="submit" id="btn_edit" class="btn btn-primary">Save</button>
                                           </div>
                                         </div>
 
@@ -365,6 +377,11 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js" charset="utf-8"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        // $(".nama, .kode_nama").tagsManager();
+    </script>
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myAssesments').DataTable({
@@ -380,6 +397,12 @@
           }
         });
       });
+    </script>
+
+    <script type="text/javascript">
+    $(".js-example-placeholder-multiple").select2({
+        placeholder: "Select a Assessment Type"
+    });
     </script>
 
     <script type="text/javascript">
@@ -399,60 +422,83 @@
 
           }
         });
-        $("#btn_save").on("click", function(){
+
+        // TODO: Saving kepribadian
+        $("#btn_save").on("click", function(e){
+          e.preventDefault();
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varName   = $("#jenis_assesments").val();
-          var varNoUrut = $("#nomor_urut").val();
+          var selectedJenisAss  = $("select[name=\'assessment_id[]\']").map(function() {
+            return $(this).val();
+          }).toArray();
+          // var varNama  = $("input[name=\'nama[]\']").map(function() {
+          //   return $(this).val();
+          // }).toArray();
+          // var varKodeNama  = $("input[name=\'kode_nama[]\']").map(function() {
+          //   return $(this).val();
+          // }).toArray();
+
+          var varNama       = $("#nama").val();
+          var varKodeNama   = $("#kode_nama").val();
           try {
-            if(varName == ""){
+            if(selectedJenisAss == ""){
               swal({
                 type    : "info",
                 title   : "Empty",
-                text    : "Type of Assesment is required",
+                text    : "Assessmnet Type is required",
                 timer   : 3000
               });
             }
-            else if(varNoUrut == ""){
+            else if(varNama == ""){
               swal({
                 type    : "info",
                 title   : "Empty",
-                text    : "Sequence Number to is required",
+                text    : "Name is required",
                 timer   : 3000
               });
+            }
+            else if (varKodeNama == "") {
+                swal({
+                  type    : "info",
+                  title   : "Empty",
+                  text    : "Code Name is required",
+                  timer   : 3000
+                });
             }
             else{
               $.ajax({
                 type    : "POST",
-                url     : "{{ url('backend/pages/assesments/store') }}",
+                url     : "{{ url('backend/pages/personalities') }}",
                 async   : true,
                 dataType: "JSON",
                 data    : {
-                  nama              : varName,
-                  no_urut_assesment : varNoUrut
+                  "assessment_id[]" : selectedJenisAss,
+                  nama          : varNama,
+                  kode_nama     : varKodeNama
                 },
                 success:function(data){
-                  $("#myModal").modal("hide");
-                  if(data.response == "success"){
-                    swal({
-                      type : "success",
-                      title: "Success",
-                      text : "Data's has been saved",
-                      timer: 3000
-                    }).then(function(){
-                      window.location = "{{ url('backend/pages/assesments') }}";
-                    })
-                  }else{
-                    swal({
-                      type : "error",
-                      title: "Error",
-                      text : "Failed saving the data",
-                      timer: 3000
-                    })
-                  }
+                    console.log(data);
+                  // $("#myModal").modal("hide");
+                  // if(data.response == "success"){
+                  //   swal({
+                  //     type : "success",
+                  //     title: "Success",
+                  //     text : "Data's has been saved",
+                  //     timer: 3000
+                  //   }).then(function(){
+                  //     window.location = "{{ url('backend/pages/personalities') }}";
+                  //   })
+                  // }else{
+                  //   swal({
+                  //     type : "error",
+                  //     title: "Error",
+                  //     text : "Failed saving the data",
+                  //     timer: 3000
+                  //   })
+                  // }
                 },
                 error:function(data){
                   console.log(data);

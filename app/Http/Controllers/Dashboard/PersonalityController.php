@@ -32,7 +32,32 @@ class PersonalityController extends Controller
     return view("administrator.dashboard.pages.kepribadian.v_index", compact("jenisAssessments","personalities"));
   }
 
-  public function store(){
+  public function store(Request $request){
+    $assesmentId      = $request->assessment_id;
+    $nama             = $request->nama;
+    $kodeNama         = $request->kode_nama;
+
+    $explodeNama      = explode(",", $nama);
+    $explodeKodeNama  = explode(",", $kodeNama);
+    for($i=0;$i<count($assesmentId);$i++){
+      for($j=0;$j<count($explodeNama);$j++){
+        for ($k=0; $k < count($explodeKodeNama); $k++) {
+          $persons = new Personality([
+            'id'                => Uuid::generate()->string,
+            'assessment_id'     => $assesmentId[$i],
+            'nama'              => $explodeNama[$j],
+            'kode_nama'         => $explodeKodeNama[$k]
+          ]);
+          $persons->save();
+        }
+      }
+    }
+
+    return response()->json(
+      array(
+        "response"  => "success"
+      )
+    );
 
   }
 
