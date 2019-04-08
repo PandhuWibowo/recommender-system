@@ -60,6 +60,7 @@
                                       <a class="has-arrow" aria-expanded="false"><span class="mini-click-non">Assesment's 2</span></a>
                                       <ul class="submenu-angle" aria-expanded="false">
                                           <li><a title="All Personalities" href="{{ url('backend/pages/personalities') }}"><span class="mini-sub-pro">Personalities</span></a></li>
+                                          <li><a title="All Selfhood Questions" href="{{ url('backend/pages/selfhood/questions') }}"><span class="mini-sub-pro">Questions</span></a></li>
                                       </ul>
                                   </li>
                               </ul>

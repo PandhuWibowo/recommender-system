@@ -133,7 +133,8 @@ Route::prefix('backend/pages')->group(function () {
     //Personalities
     Route::resource("personalities","Dashboard\PersonalityController");
 
-    Route::resource("selfhood/questions","Dashboard\SelfhoodQuestionController")
+    Route::resource("selfhood/questions","Dashboard\SelfhoodQuestionController");
+    Route::get("selfhood/questions/add","Dashboard\SelfhoodQuesitonController@add");
 });
 
 Route::prefix('user/pages')->group(function () {

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\JenisAssesment;
 use App\Http\Models\SelfhoodJawaban;
 use App\Http\Models\SelfhoodPertanyaan;
+use App\Http\Models\Personality;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -25,7 +26,9 @@ use BrowserDetect;
 class SelfhoodQuestionController extends Controller
 {
   public function index(){
-
+    $jenisAssessments  = JenisAssesment::orderBy("created_at","asc")->get();
+    $persons          = Personality::orderBy("created_at","asc")->get();
+    return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.v_index", compact("jenisAssessments","persons"));
   }
 
   public function show($assessmentId, $kepribadianId, $pertanyaanKepribadianId){
@@ -45,6 +48,6 @@ class SelfhoodQuestionController extends Controller
   }
 
   public function destroy(Request $request){
-    
+
   }
 }
