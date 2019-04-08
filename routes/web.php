@@ -132,6 +132,8 @@ Route::prefix('backend/pages')->group(function () {
 
     //Personalities
     Route::resource("personalities","Dashboard\PersonalityController");
+
+    Route::resource("selfhood/questions","Dashboard\SelfhoodQuestionController")
 });
 
 Route::prefix('user/pages')->group(function () {
