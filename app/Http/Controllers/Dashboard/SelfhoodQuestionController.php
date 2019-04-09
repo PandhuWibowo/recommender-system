@@ -31,10 +31,12 @@ class SelfhoodQuestionController extends Controller
     return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.v_index", compact("questions"));
   }
 
-  public function view($assessmentId, $kepribadianId, $pertanyaanKepribadianId){
+  public function edit($assessmentId, $pertanyaanKepribadianId){
+    $decryptAssessmentId            = Crypt::decrypt($assessmentId);
+    $decryptPertanyaanKepribadianId = Crypt::decrypt($pertanyaanKepribadianId);
     $jenisAssessments = JenisAssesment::orderBy("created_at","asc")->get();
     $persons          = Personality::orderBy("created_at","asc")->get();
-    // $questions        =
+
     return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.detail.v_view-update", compact("jenisAssessments","persons","questions"));
   }
 

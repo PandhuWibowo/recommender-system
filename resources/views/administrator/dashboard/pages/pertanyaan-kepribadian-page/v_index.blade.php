@@ -184,15 +184,25 @@
                                             <td>
                                               {{$row->getJenisAssessment->nama}}
                                             </td>
-
+																						<td>
 																							@foreach($row->getJawabans as $row2)
-																								@if(count($row2) <= 1)
-																									<td>{{$row2->opsi_jawaban}}</td>
-																								@else
-																									
+																								@if(count($row2) == 1)
+																									{{$row2->opsi_jawaban}}
+																									<?php break;?>
 																								@endif
 																							@endforeach
-																							<td></td>
+																							</td>
+																							<td>
+																								@foreach($row->getJawabans as $row2)
+																									@if(count($row2) == 1)
+																										{{$row2->code_opsi_jawaban}}
+																										<?php break;?>
+																									@endif
+																								@endforeach
+																							</td>
+																							<td>
+																								<a href="{{ url('backend/pages/selfhood/questions/'.Crypt::encrypt($row->assessment_id).'/'.Crypt::encrypt($row->id).'/edit') }}" class="btn btn-warning btn_edit"><i class="fa fa-edit"></i></a>
+																							</td>
                                           </tr>
                                         @endforeach
                                       </tbody>
