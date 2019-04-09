@@ -266,6 +266,8 @@
 	                                                </div>
 
 																								@endforeach
+																								<input type="hidden" name="" id="count" value="{{count($editSoal->getJawabans)}}">
+
                                               </div>
 
                                               <div class="copy hide">
