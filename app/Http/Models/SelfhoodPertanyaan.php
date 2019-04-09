@@ -16,6 +16,6 @@ class SelfhoodPertanyaan extends Model{
   }
 
   public function getJawaban(){
-    return $this->hasMany("App\Http\Models\SelfhoodJawaban");
+    return $this->hasMany(SelfhoodJawaban::class);
   }
 }

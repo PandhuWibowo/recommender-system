@@ -138,6 +138,9 @@ Route::prefix('backend/pages')->group(function () {
     Route::get("selfhood/questions/add","Dashboard\SelfhoodQuestionController@add");
     Route::get("selfhood/questions/{assessmentId}/{kepribadianId}/{pertanyaanKepribadianId}","Dashboard\SelfhoodQuestionController@view");
     Route::post("selfhood/questions/filter","Dashboard\SelfhoodQuestionController@filterKepribadian");
+    Route::post("selfhood/questions/store","Dashboard\SelfhoodQuestionController@store");
+    Route::match(array('PUT', 'PATCH'), 'selfhood/questions/update',"Dashboard\SelfhoodQuestionController@update");
+
 });
 
 Route::prefix('user/pages')->group(function () {

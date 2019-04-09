@@ -265,12 +265,12 @@
 
 												<div class="chosen-select-single mg-b-20">
                                                     <label>Answer</label>
-                                                    <textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
+                                                    <textarea class="form-control" rows="5" id="opsi_jawaban" name="opsi_jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
                                                 </div>
 
                                                 <div class="chosen-select-single mg-b-20">
                                                     <label>Personality Code</label>
-                                                    <input type="text" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
+                                                    <input type="text" class="form-control" id="code_opsi_jawaban" name="code_opsi_jawaban[]" placeholder="Personality Code">
                                                 </div>
                                               </div>
 
@@ -287,12 +287,12 @@
 
 												<div class="chosen-select-single mg-b-20">
                                                     <label>Answer</label>
-                                                    <textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
+                                                    <textarea class="form-control" rows="5" id="opsi_jawaban" name="opsi_jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
                                                 </div>
 
                                                 <div class="chosen-select-single mg-b-20">
-                                                    <label>Score</label>
-                                                    <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
+                                                    <label>Personality Code</label>
+                                                    <input type="text" class="form-control" id="code_opsi_jawaban" name="code_opsi_jawaban[]" placeholder="Personality Code">
                                                 </div>
 
                                                 <div class="input-group-btn">

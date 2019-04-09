@@ -26,8 +26,9 @@ use BrowserDetect;
 class SelfhoodQuestionController extends Controller
 {
   public function index(){
-    $questions        = SelfhoodJawaban::all();
-    return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.v_index", compact("jenisAssessments","persons","questions"));
+    $questions = SelfhoodPertanyaan::orderBy("no_urut_pertanyaan","asc")->get();
+
+    return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.v_index", compact("questions"));
   }
 
   public function view($assessmentId, $kepribadianId, $pertanyaanKepribadianId){
@@ -55,6 +56,7 @@ class SelfhoodQuestionController extends Controller
     return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.v_view-add", compact("jenisAssessments","persons","questions","kasihNomorUrut"));
   }
 
+  // TODO: filtering assessment_id untuk kepribadian_id
   public function filterKepribadian(Request $request){
     $assId        = Crypt::decrypt($request->id);
     $kepribadians  = Personality::where("assessment_id", $assId)->orderBy("nama","asc")->get();
@@ -65,7 +67,78 @@ class SelfhoodQuestionController extends Controller
   }
 
   public function store(Request $request){
+    $rules = array(
+      'kepribadian_id'    => 'required',
+      'assesment_id'      => 'required',
+      'no_urut_pertanyaan'=> 'required',
+      'opsi_jawaban'      => 'required',
+      'code_opsi_jawaban' => 'required'
+    );
 
+    $validator = Validator::make(Input::all(), $rules);
+
+    if ($validator->fails()) {
+      $messages = $validator->messages();
+      return Redirect::to('backend/pages/selfhood/questions')
+        ->withErrors($validator);
+        exit();
+    }
+    else{
+      Session::put('assesment_id', $request->assesment_id);
+      $pertanyaan = new SelfhoodPertanyaan([
+        'id'                => Uuid::generate()->string,
+        // 'nama'              => ucfirst(trim($request->nama)),
+        'assessment_id'     => trim(Crypt::decrypt($request->assesment_id)),
+        // 'kode_nama'         => ucfirst(trim($request->kode_nama)),
+        'no_urut_pertanyaan'=> trim($request->no_urut_pertanyaan)
+      ]);
+      $pertanyaan->save();
+
+      $pertanyaan->id;
+
+      for($i=0;$i<count($request->opsi_jawaban);$i++){
+        if($request->opsi_jawaban[$i] == "" && $request->code_opsi_jawaban[$i] == ""){
+          continue;
+        }else{
+          $queryNoUrut      = SelfhoodJawaban::select("no_urut_jawaban_kepribadian")->where("assessment_id", Session::get("assessment_id"))->get(); //TODO: membuat nomor urut
+
+          if(count($queryNoUrut) == 0){
+            $kasihNomorUrut = 1;
+          }
+          else{
+            $arrNoUrutTerakhir= $queryNoUrut->toArray();
+
+            $maxNoUrutTerakhir= max($arrNoUrutTerakhir);
+            $kasihNomorUrut = $maxNoUrutTerakhir+1;
+          }
+
+          $jawaban  = new SelfhoodJawaban([
+            'kepribadian_id'              => Crypt::decrypt($request->kepribadian_id[$i]),
+            'pertanyaan_kepribadian_id'   => $pertanyaan->id,
+            'assessment_id'               => trim(Crypt::decrypt($request->assesment_id)),
+            'opsi_jawaban'                => $request->opsi_jawaban[$i],
+            'code_opsi_jawaban'           => $request->code_opsi_jawaban[$i],
+            'no_urut_jawaban_kepribadian' => $kasihNomorUrut+$i
+          ]);
+
+          $jawaban->save();
+        }
+      }
+
+      // $logPages = new Question([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Store Pertanyaan - Store|Success",
+      //   "data"        => "Berhasil menyimpan pertanyaan baru",
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $logPages->save();
+
+      Session::flash("success","Your question has been saved");
+      return Redirect::to('backend/pages/selfhood/questions');
+    }
   }
 
   public function update(Request $request){
