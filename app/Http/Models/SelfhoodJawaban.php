@@ -15,7 +15,11 @@ class SelfhoodJawaban extends Model{
     return $this->belongsTo(JenisAssesment::class,"assessment_id");
   }
 
-  public function getJawaban(){
+  public function getPertanyaan(){
     return $this->belongsTo(SelfhoodPertanyaan::class,"pertanyaan_kepribadian_id");
+  }
+
+  public function getKepribadian(){
+    return $this->belongsTo(Personality::class, "kepribadian_id");
   }
 }

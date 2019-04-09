@@ -26,17 +26,42 @@ use BrowserDetect;
 class SelfhoodQuestionController extends Controller
 {
   public function index(){
-    $jenisAssessments  = JenisAssesment::orderBy("created_at","asc")->get();
-    $persons          = Personality::orderBy("created_at","asc")->get();
-    return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.v_index", compact("jenisAssessments","persons"));
+    $questions        = SelfhoodJawaban::all();
+    return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.v_index", compact("jenisAssessments","persons","questions"));
   }
 
-  public function show($assessmentId, $kepribadianId, $pertanyaanKepribadianId){
-
+  public function view($assessmentId, $kepribadianId, $pertanyaanKepribadianId){
+    $jenisAssessments = JenisAssesment::orderBy("created_at","asc")->get();
+    $persons          = Personality::orderBy("created_at","asc")->get();
+    // $questions        =
+    return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.detail.v_view-update", compact("jenisAssessments","persons","questions"));
   }
 
   public function add(){
+    $jenisAssessments = JenisAssesment::orderBy("created_at","asc")->get(); //TODO: mengeluarkan jenis assessment
+    $persons          = Personality::orderBy("created_at","asc")->get(); //TODO: mengeluarkan personality
+    $queryNoUrut      = SelfhoodPertanyaan::select("no_urut_pertanyaan")->where("assessment_id", Session::get("assessment_id"))->get(); //TODO: membuat nomor urut
 
+    if(count($queryNoUrut) == 0){
+      $kasihNomorUrut = 1;
+    }
+    else{
+      $arrNoUrutTerakhir= $queryNoUrut->toArray();
+
+      $maxNoUrutTerakhir= max($arrNoUrutTerakhir);
+      $kasihNomorUrut = $maxNoUrutTerakhir+1;
+    }
+
+    return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.v_view-add", compact("jenisAssessments","persons","questions","kasihNomorUrut"));
+  }
+
+  public function filterKepribadian(Request $request){
+    $assId        = Crypt::decrypt($request->id);
+    $kepribadians  = Personality::where("assessment_id", $assId)->orderBy("nama","asc")->get();
+    foreach ($kepribadians as $key => $value) {
+      $output = '<option value="'.Crypt::encrypt($value->id).'">'.$value->nama.'</option>';
+      echo $output;
+    }
   }
 
   public function store(Request $request){

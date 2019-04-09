@@ -111,8 +111,8 @@
                                     <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
                                         <div class="menu-switcher-pro">
                                             <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-												<i class="educate-icon educate-nav"></i>
-											</button>
+																							<i class="educate-icon educate-nav"></i>
+																						</button>
                                         </div>
                                     </div>
 
@@ -171,42 +171,38 @@
                                       <thead>
                                           <tr>
                                               <th>#</th>
-                                              <th>Questions</th>
-                                              <th>Name of Assesments</th>
-                                              <th>Competencies</th>
-                                              <th>Raw Scores</th>
-                                              <th>Action</th>
+																							<th>Assessment</th>
+																							<th>Personality</th>
+																							<th>Personality Code</th>
+																							<th>Action</th>
                                           </tr>
                                       </thead>
                                       <tbody>
-                                        <?php $no=1;?>
-                                        @foreach($pertanyaan as $key=>$row)
+                                        @foreach($questions as $key=>$row)
                                           <tr>
-                                            <td>{{$no}}</td>
+                                            <td>{{$key+1}}</td>
                                             <td>
-                                              <?php
-                                                $words = explode(" ", $row->pertanyaan);
-                                                echo implode(" ", array_splice($words, 0, 5));
-                                               ?>
+                                              {{$row->getJenisAssessment->nama}}
                                             </td>
-                                            <td>{{ $row->get_assesment->nama }}</td>
-                                            <td>{{ $row->get_kompetensi->kompetensi }}</td>
-                                            <td>{{ $row->get_rowscore->nama_rowscore }}</td>
+                                            <td>
+																							{{ $row->getKepribadian->nama }}
+																						</td>
+																						<td>
+																							{{ $row->getKepribadian->kode_nama }}
+																						</td>
                                             <td>
                                               <a href="{{ url('backend/pages/questions/'.Crypt::encrypt($row->id)) }}" class="btn btn-warning btn_edit" <?php foreach($row->data_jawabans as $key=>$row2): ;?>data-nilai<?php echo $key;?>="{{$row2->nilai}}" data-jawaban<?php echo $key;?>="{{$row2->jawaban}}" data-jawaban_id<?php echo $key;?>="{{Crypt::encrypt($row2->id)}}"<?php endforeach;?>data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
-                                          <?php $no++;?>
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>#</th>
-                                            <th>Questions</th>
-                                            <th>Name of Assesments</th>
-                                            <th>Competencies</th>
-                                            <th>Raw Scores</th>
-                                            <th>Action</th>
+																						<th>#</th>
+																						<th>Assessment</th>
+																						<th>Personality</th>
+																						<th>Personality Code</th>
+																						<th>Action</th>
                                           </tr>
                                       </tfoot>
                                     </table>

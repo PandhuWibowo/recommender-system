@@ -115,26 +115,29 @@ Route::prefix('backend/pages')->group(function () {
       ["index","show"]
     ]);
 
-    //Partnerships
+    //TODO: Partnerships
     Route::put("partnerships/update","Dashboard\LandingPageController@update");
 
-    //Testimonial
+    //TODO: Testimonial
     Route::get("testimonial","Dashboard\TestimoniController@index");
     Route::post("testimonial/store","Dashboard\TestimoniController@store");
     Route::delete("testimonial/delete","Dashboard\TestimoniController@destroy");
     Route::put("testimonial/update","Dashboard\TestimoniController@update");
 
-    //Features
+    //TODO: Features
     Route::get("features","Dashboard\FiturController@index");
     Route::post("features/store","Dashboard\FiturController@store");
     Route::delete("features/delete","Dashboard\FiturController@destroy");
     Route::put("features/update","Dashboard\FiturController@update");
 
-    //Personalities
+    //TODO: Personalities
     Route::resource("personalities","Dashboard\PersonalityController");
 
-    Route::resource("selfhood/questions","Dashboard\SelfhoodQuestionController");
-    Route::get("selfhood/questions/add","Dashboard\SelfhoodQuesitonController@add");
+    //TODO: Pertanyaan kepribadian
+    Route::get("selfhood/questions","Dashboard\SelfhoodQuestionController@index");
+    Route::get("selfhood/questions/add","Dashboard\SelfhoodQuestionController@add");
+    Route::get("selfhood/questions/{assessmentId}/{kepribadianId}/{pertanyaanKepribadianId}","Dashboard\SelfhoodQuestionController@view");
+    Route::post("selfhood/questions/filter","Dashboard\SelfhoodQuestionController@filterKepribadian");
 });
 
 Route::prefix('user/pages')->group(function () {
@@ -177,32 +180,27 @@ Route::prefix('user/pages')->group(function () {
       ["index","show"]
     ]);
 
-    // user/pages/prints/pdf
-
+    //TODO: Cetak PDF
     Route::get("prints/{id}/pdf","Dashboard\User\DashboardUser\HistoriesController@printPdf");
 });
 
+// TODO: Store for helping people problem
 Route::prefix("main")->group(function() {
   Route::post("process/sent","LandingPage\MainController@store");
 });
 
-//Grouping error Page
+//TODO: Grouping error Page
 Route::prefix('error/page')->group(function () {
   Route::get('404', ['as' => '404', 'uses' => 'ErrorPage\ErrorController@notfound']);
   Route::get('500', ['as' => '500', 'uses' => 'ErrorPage\ErrorController@fatal']);
 });
 
-//Call Execute clear cache
+//TODO: Call Execute clear cache
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('config:clear');
     $exitCode = Artisan::call('cache:clear');
     $exitCode = Artisan::call('config:cache');
     return 'DONE'; //Return anything
-});
-
-//URL for Logs
-Route::prefix("logs")->group(function(){
-
 });
 
 // Auth::routes();
