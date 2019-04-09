@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class SelfhoodJawaban extends Model{
   use SoftDeletes;
-  protected $fillable = ['kepribadian_id','pertanyaan_kepribadian_id','assessment_id','opsi_jawaban','code_opsi_jawaban','no_urut_jawaban_kepribadian'];
+  protected $fillable = ['id','kepribadian_id','selfhood_pertanyaan_id','assessment_id','opsi_jawaban','code_opsi_jawaban','no_urut_jawaban_kepribadian'];
   protected $table = "jawaban_kepribadians";
-  // protected $primaryKey = 'id';
+  protected $primaryKey = 'id';
   public $incrementing = false;
 
   public function getJenisAssessment(){
@@ -16,7 +16,7 @@ class SelfhoodJawaban extends Model{
   }
 
   public function getPertanyaan(){
-    return $this->belongsTo(SelfhoodPertanyaan::class,"pertanyaan_kepribadian_id");
+    return $this->belongsTo(SelfhoodPertanyaan::class,"selfhood_pertanyaan_id");
   }
 
   public function getKepribadian(){

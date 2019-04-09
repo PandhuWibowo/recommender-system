@@ -26,7 +26,7 @@ use BrowserDetect;
 class SelfhoodQuestionController extends Controller
 {
   public function index(){
-    $questions = SelfhoodPertanyaan::orderBy("no_urut_pertanyaan","asc")->get();
+    $questions = SelfhoodPertanyaan::with("getJawabans")->orderBy("no_urut_pertanyaan","asc")->get();
 
     return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.v_index", compact("questions"));
   }
@@ -113,8 +113,9 @@ class SelfhoodQuestionController extends Controller
           }
 
           $jawaban  = new SelfhoodJawaban([
+            // 'id'                => Uuid::generate()->string,
             'kepribadian_id'              => Crypt::decrypt($request->kepribadian_id[$i]),
-            'pertanyaan_kepribadian_id'   => $pertanyaan->id,
+            'selfhood_pertanyaan_id'      => $pertanyaan->id,
             'assessment_id'               => trim(Crypt::decrypt($request->assesment_id)),
             'opsi_jawaban'                => $request->opsi_jawaban[$i],
             'code_opsi_jawaban'           => $request->code_opsi_jawaban[$i],

@@ -15,7 +15,7 @@ class SelfhoodPertanyaan extends Model{
     return $this->belongsTo(JenisAssesment::class,"assessment_id");
   }
 
-  public function getJawaban(){
+  public function getJawabans(){
     return $this->hasMany(SelfhoodJawaban::class);
   }
 }

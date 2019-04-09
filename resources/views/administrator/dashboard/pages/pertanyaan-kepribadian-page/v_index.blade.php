@@ -185,12 +185,14 @@
                                               {{$row->getJenisAssessment->nama}}
                                             </td>
 
-                                            <td>
-																							@foreach($row->getJawaban as $row2)
-																								{{$row2->opsi_jawaban}}
-																								<?php exit();?>
+																							@foreach($row->getJawabans as $row2)
+																								@if(count($row2) <= 1)
+																									<td>{{$row2->opsi_jawaban}}</td>
+																								@else
+																									
+																								@endif
 																							@endforeach
-                                            </td>
+																							<td></td>
                                           </tr>
                                         @endforeach
                                       </tbody>
