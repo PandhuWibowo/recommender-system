@@ -152,11 +152,125 @@ class SelfhoodQuestionController extends Controller
   }
 
   public function update(Request $request){
+    $rules = array(
+      // 'kepribadian_id'    => 'required',
+      'assesment_id'      => 'required',
+      'no_urut_pertanyaan'=> 'required',
+      // 'opsi_jawaban'      => 'required',
+      // 'code_opsi_jawaban' => 'required'
+    );
 
+    $validator = Validator::make(Input::all(), $rules);
+
+    if ($validator->fails()) {
+      $messages = $validator->messages();
+      return Redirect::to('backend/pages/selfhood/questions')
+        ->withErrors($validator);
+        exit();
+    }
+    else{
+      $questions                      = SelfhoodPertanyaan::find(Crypt::decrypt($request->id));
+      $questions->assessment_id       = Crypt::decrypt($request->assesment_id);
+      $questions->no_urut_pertanyaan  = $request->no_urut_pertanyaan;
+      $questions->save();
+
+      SelfhoodJawaban::where("selfhood_pertanyaan_id", Crypt::decrypt($request->id))->delete();
+
+      for($i=0;$i<count($request->opsi_jawaban);$i++){
+        if($request->opsi_jawaban[$i] == "" && $request->code_opsi_jawaban[$i] == ""){
+          continue;
+        }else{
+          $queryNoUrut      = SelfhoodJawaban::select("no_urut_jawaban_kepribadian")->where("assessment_id", Crypt::decrypt($request->assesment_id))->get(); //TODO: membuat nomor urut
+
+          if(count($queryNoUrut) == 0){
+            $kasihNomorUrut = 1;
+          }
+          $jawaban  = new SelfhoodJawaban([
+            // 'id'                => Uuid::generate()->string,
+            'kepribadian_id'              => Crypt::decrypt($request->kepribadian_id[$i]),
+            'selfhood_pertanyaan_id'      => Crypt::decrypt($request->id),
+            'assessment_id'               => trim(Crypt::decrypt($request->assesment_id)),
+            'opsi_jawaban'                => $request->opsi_jawaban[$i],
+            'code_opsi_jawaban'           => $request->code_opsi_jawaban[$i],
+            'no_urut_jawaban_kepribadian' => $kasihNomorUrut+$i
+          ]);
+
+          $jawaban->save();
+        }
+      }
+
+      // dd(Crypt::decrypt($request->assesment_id));
+
+      Session::flash("success","Your question has been saved");
+      return Redirect::to('backend/pages/selfhood/questions');
+    }
   }
 
   public function destroy(Request $request){
+    $varPertanyaanId          = Crypt::decrypt($request->id);
+    // $varAssessmentId          = Crypt::decrypt($request->assessment_id);
+    // $varSelfhoodPertanyaanId  = Crypt::decrypt($request->selfhood_pertanyaan_id);
+    // $varKepribadianId         = Crypt::decrypt($request->kepribadian_id);
+    $checkId                  = SelfhoodJawaban::where('selfhood_pertanyaan_id', $varPertanyaanId)->pluck("selfhood_pertanyaan_id");
+    if(count($checkId) > 0){
+      // $log = new Pertanyaan([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Cek Pertanyaan",
+      //   "data"        => "Tidak ditemukan pertanyaan disini",
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $log->save();
+      return response()->json(
+        array(
+          'response'  => "failed"
+          // 'response'  => "success"
+        )
+      );
+    }else{
+      $data = SelfhoodPertanyaan::where('id', $varPertanyaanId)->first();
 
+      if(SelfhoodPertanyaan::where('id',$varPertanyaanId)->delete()){
+        // $log = new Question([
+        //   "user_id"     => Session::get("id"),
+        //   "ip_address"  => $request->ip(),
+        //   "browser"     => BrowserDetect::browserName(),
+        //   "action"      => "Delete Pertanyaan - Delete|Success",
+        //   "data"        => "Berhasil menghapus data Pertanyaan - Pertanyaan ID : ".$data->id.", Pertanyaan : ".$data->pertanyaan.", Assessment ID : ".$data->assesment_id.", Kompetensi ID : ".$data->kompetensi_id.
+        //                     ", Row Score ID : ".$data->rowscore_id.", No Urut Pertanyaan : ".$data->no_urut_pertanyaan,
+        //   "link"        => url()->current()
+        // ]);
+        //
+        // $log->save();
+
+        return response()->json(
+          array(
+            'response'  => "success"
+          )
+        );
+      }else{
+        // $log = new Question([
+        //   "user_id"     => Session::get("id"),
+        //   "ip_address"  => $request->ip(),
+        //   "browser"     => BrowserDetect::browserName(),
+        //   "action"      => "Delete Pertanyaan - Delete|Failed",
+        //   "data"        => "Gagal menghapus data Pertanyaan - Pertanyaan ID : ".$data->id.", Pertanyaan : ".$data->pertanyaan.", Assessment ID : ".$data->assesment_id.", Kompetensi ID : ".$data->kompetensi_id.
+        //                     ", Row Score ID : ".$data->rowscore_id.", No Urut Pertanyaan : ".$data->no_urut_pertanyaan,
+        //   "link"        => url()->current()
+        // ]);
+        //
+        // $log->save();
+
+        return response()->json(
+          array(
+            'response'  => "failed"
+          )
+        );
+      }
+
+    }
   }
 
   public function destroyAnswer(Request $request){

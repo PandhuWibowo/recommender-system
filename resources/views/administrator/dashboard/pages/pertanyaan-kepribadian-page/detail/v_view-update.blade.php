@@ -130,8 +130,8 @@
                                     <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
                                         <div class="menu-switcher-pro">
                                             <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-												<i class="educate-icon educate-nav"></i>
-											</button>
+																							<i class="educate-icon educate-nav"></i>
+																						</button>
                                         </div>
                                     </div>
                                     @include('administrator.dashboard.include.v_menu-navbar')
@@ -152,17 +152,14 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">Add Question</span>
+                                            <li><span class="bread-blod">Edit Question</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -182,16 +179,18 @@
                         <div class="sparkline10-list mg-tb-30 responsive-mg-t-0 table-mg-t-pro-n dk-res-t-pro-0 nk-ds-n-pro-t-0">
                             <div class="sparkline10-hd">
                                 <div class="main-sparkline10-hd">
-                                    <h1>Add Question</h1>
+																		<button type="button" class="btn btn-danger" id="btn_delete_pertanyaan" data-id="{{Crypt::encrypt($editSoal->id)}}">Delete Question</button>
+
+                                    <h1>Edit Question</h1>
                                 </div>
                             </div>
                             <div class="sparkline10-graph">
                                 <div class="input-knob-dial-wrap">
                                     <div class="row">
 
-                                        <form action="{{ url('backend/pages/selfhood/questions/store') }}" method="post" autocomplete="off">
+                                        <form action="{{ url('backend/pages/selfhood/questions/update') }}" method="post" autocomplete="off">
                                           {{ csrf_field() }}
-                                          {{ method_field('POST') }}
+                                          {{ method_field('PUT') }}
                                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                               @if($errors->has('pertanyaan'))
                                                 <div class="alert alert-danger alert-dismissable">
@@ -211,6 +210,12 @@
                                                     <strong>Oh snap!</strong> {{$errors->first('success')}}
                                                 </div>
                                               @endif
+																							<div class="chosen-select-single mg-b-20">
+																								<input type="hidden" class="form-control" id="id" name="id" placeholder="Id" value="{{Crypt::encrypt($editSoal->id)}}" readonly>
+                                                <!-- <input type="hidden" class="form-control" id="assessment_id" name="assessment_id" placeholder="Assessment Id" value="{{Crypt::encrypt($editSoal->assessment_id)}}" readonly> -->
+
+                                                  <!-- <textarea class="form-control" rows="5" id="jawaban_id" style="height: 150px;" name="jawaban_id" placeholder="Question"></textarea> -->
+                                              </div>
                                               <div class="chosen-select-single mg-b-20">
                                                   <label>Assesment Type</label>
                                                   <select data-placeholder="Choose Assesment Type" id="assesment_id" name="assesment_id" class="chosen-select" tabindex="-1">
@@ -227,7 +232,7 @@
                                               </div>
 
                                               <div class="input-group-btn inline-option form-group">
-                                                  <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                                  <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add </button>
                                               </div>
 
                                               <!-- <div class="inline-option">
@@ -270,7 +275,6 @@
                                                   </div>
 																								@endforeach
 																								<input type="hidden" name="" id="count" value="{{count($editSoal->getJawabans)}}">
-
                                               </div>
 
                                               <div class="copy hide">
@@ -459,6 +463,66 @@
 
 					  }
 					});
+
+					$("#btn_delete_pertanyaan").on("click", function(){
+	          $.ajaxSetup({
+	            headers: {
+	              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	            }
+	          });
+
+	          var varPertanyaanId = $(this).data("id");
+
+	          try {
+	            swal({
+	              title: 'Are you sure?',
+	              text: "You won't be able to revert this!",
+	              type: 'warning',
+	              showCancelButton: true,
+	              confirmButtonColor: '#3085d6',
+	              cancelButtonColor: '#d33',
+	              confirmButtonText: 'Yes, delete it!'
+	            }).then((result) => {
+	              if(result.value){
+	                $.ajax({
+	                  type      : "DELETE",
+	                  url       : "{{ url('backend/pages/selfhood/questions/delete') }}",
+	                  async     : true,
+	                  dataType  : "JSON",
+	                  data      : {
+	                    id      : varPertanyaanId
+	                  },
+	                  success:function(data){
+	                    console.log(data);
+	                    if(data.response == "success"){
+	                      swal(
+	                        'Deleted!',
+	                        'Your file has been deleted.',
+	                        'success'
+	                      ).then(function(){
+	                        window.location = "{{ url('backend/pages/selfhood/questions') }}";
+	                      });
+	                    }
+	                    else if (data.response == "failed") {
+	                      swal(
+	                        'Failed!',
+	                        'The question failed to be deleted.',
+	                        'error'
+	                      );
+	                    }
+	                  },
+	                  error:function(data){
+	                    console.log(data);
+	                  }
+	                });
+	              }
+	            });
+	          } catch (e) {
+	            console.log(e);
+	          } finally {
+
+	          }
+	        });
 
 					$(".btn_delete").on("click", function(){
 						$.ajaxSetup({

@@ -41,15 +41,15 @@ class PersonalityController extends Controller
     $explodeKodeNama  = explode(",", $kodeNama);
     for($i=0;$i<count($assesmentId);$i++){
       for($j=0;$j<count($explodeNama);$j++){
-        for ($k=0; $k < count($explodeKodeNama); $k++) {
+        // for ($k=0; $k < count($explodeKodeNama); $k++) {
           $persons = new Personality([
             'id'                => Uuid::generate()->string,
             'assessment_id'     => $assesmentId[$i],
             'nama'              => $explodeNama[$j],
-            'kode_nama'         => $explodeKodeNama[$k]
+            'kode_nama'         => $explodeKodeNama[$j]
           ]);
           $persons->save();
-        }
+        // }
       }
     }
 
