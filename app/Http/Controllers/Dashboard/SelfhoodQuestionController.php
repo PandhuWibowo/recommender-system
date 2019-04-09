@@ -34,10 +34,17 @@ class SelfhoodQuestionController extends Controller
   public function edit($assessmentId, $pertanyaanKepribadianId){
     $decryptAssessmentId            = Crypt::decrypt($assessmentId);
     $decryptPertanyaanKepribadianId = Crypt::decrypt($pertanyaanKepribadianId);
-    $jenisAssessments = JenisAssesment::orderBy("created_at","asc")->get();
-    $persons          = Personality::orderBy("created_at","asc")->get();
+    $jenisAssessments               = JenisAssesment::orderBy("created_at","asc")->get();
+    $persons                        = Personality::orderBy("created_at","asc")->get();
+    $editSoal                       = SelfhoodPertanyaan::join("jawaban_kepribadians as jk","pertanyaan_kepribadians.id","=","jk.selfhood_pertanyaan_id")
+                                                        ->where("id", $decryptPertanyaanKepribadianId)
+                                                        ->where("pertanyaan_kepribadians.assessment_id", $decryptAssessmentId)
+                                                        ->first();
+    // dd($editSoal);
+    $jenisKepByAssId                = Personality::where("assessment_id", $decryptAssessmentId)->get();
 
-    return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.detail.v_view-update", compact("jenisAssessments","persons","questions"));
+    // dd($jenisKepByAssId);
+    return view("administrator.dashboard.pages.pertanyaan-kepribadian-page.detail.v_view-update", compact("jenisAssessments","persons","questions","assessmentId","pertanyaanKepribadianId","editSoal","jenisKepByAssId"));
   }
 
   public function add(){

@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -130,8 +129,8 @@
                                     <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
                                         <div class="menu-switcher-pro">
                                             <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-                    													<i class="educate-icon educate-nav"></i>
-                    												</button>
+												<i class="educate-icon educate-nav"></i>
+											</button>
                                         </div>
                                     </div>
                                     @include('administrator.dashboard.include.v_menu-navbar')
@@ -152,10 +151,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
+                                            
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

@@ -205,18 +205,7 @@
                                                     <strong>Oh snap!</strong> {{$errors->first('assesment_id')}}
                                                 </div>
                                               @endif
-                                              @if($errors->has('kompetensi_id'))
-                                                <div class="alert alert-danger alert-dismissable">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                    <strong>Oh snap!</strong> {{$errors->first('kompetensi_id')}}
-                                                </div>
-                                              @endif
-                                              @if($errors->has('rowscore_id'))
-                                                <div class="alert alert-danger alert-dismissable">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                    <strong>Oh snap!</strong> {{$errors->first('rowscore_id')}}
-                                                </div>
-                                              @endif
+                                              
                                               @if($errors->has('success'))
                                                 <div class="alert alert-danger alert-dismissable">
                                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -226,11 +215,11 @@
                                               <div class="chosen-select-single mg-b-20">
                                                   <label>Assesment Type</label>
                                                   <select data-placeholder="Choose Assesment Type" id="assesment_id" name="assesment_id" class="chosen-select" tabindex="-1">
-													<option value="" selected disabled>Choose select Personality</option>
-													@foreach($jenisAssessments as $row)
+																										<option value="" selected disabled>Choose select Personality</option>
+																										@foreach($jenisAssessments as $row)
                                                       <option value="{{Crypt::encrypt($row->id)}}" <?php echo (Session::get("assesment_id") == $row->id) ? "selected" : "";?>>{{$row->nama}}</option>
                                                     @endforeach
-												  </select>
+												  												</select>
                                               </div>
 
                                               <div class="chosen-select-single mg-b-20">
