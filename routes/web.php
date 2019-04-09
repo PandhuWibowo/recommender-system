@@ -140,7 +140,7 @@ Route::prefix('backend/pages')->group(function () {
     Route::post("selfhood/questions/filter","Dashboard\SelfhoodQuestionController@filterKepribadian");
     Route::post("selfhood/questions/store","Dashboard\SelfhoodQuestionController@store");
     Route::match(array('PUT', 'PATCH'), 'selfhood/questions/update',"Dashboard\SelfhoodQuestionController@update");
-
+    Route::delete("selfhood/questions/answers/delete","Dashboard\SelfhoodQuestionController@destroyAnswer");
 });
 
 Route::prefix('user/pages')->group(function () {

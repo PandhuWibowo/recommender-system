@@ -158,4 +158,46 @@ class SelfhoodQuestionController extends Controller
   public function destroy(Request $request){
 
   }
+
+  public function destroyAnswer(Request $request){
+    $varAssessmentId          = Crypt::decrypt($request->assessment_id);
+    $varSelfhoodPertanyaanId  = Crypt::decrypt($request->selfhood_pertanyaan_id);
+    $varKepribadianId         = Crypt::decrypt($request->kepribadian_id);
+
+    $data = SelfhoodJawaban::where('assessment_id', $varAssessmentId)->where("selfhood_pertanyaan_id", $varSelfhoodPertanyaanId)->where("kepribadian_id", $varKepribadianId)->first();
+
+    if(SelfhoodJawaban::where('assessment_id', $varAssessmentId)->where("selfhood_pertanyaan_id", $varSelfhoodPertanyaanId)->where("kepribadian_id", $varKepribadianId)->delete()){
+      // $log = new Answer([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Delete Jawaban - Delete|Success",
+      //   "data"        => "Berhasil menghapus data Jawaban - Jawaban ID : ".$data->id.", Pertanyaan ID : ".$data->pertanyaan_id.", Jawaban : ".$data->jawaban.", Nilai : ".$data->nilai,
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $log->save();
+      return response()->json(
+        array(
+          'response'  => "success"
+        )
+      );
+    }else{
+      // $log = new Answer([
+      //   "user_id"     => Session::get("id"),
+      //   "ip_address"  => $request->ip(),
+      //   "browser"     => BrowserDetect::browserName(),
+      //   "action"      => "Delete Jawaban - Delete|Failed",
+      //   "data"        => "Gagal menghapus data Jawaban - Jawaban ID : ".$data->id.", Pertanyaan ID : ".$data->pertanyaan_id.", Jawaban : ".$data->jawaban.", Nilai : ".$data->nilai,
+      //   "link"        => url()->current()
+      // ]);
+      //
+      // $log->save();
+      return response()->json(
+        array(
+          'response'  => "failed"
+        )
+      );
+    }
+  }
 }

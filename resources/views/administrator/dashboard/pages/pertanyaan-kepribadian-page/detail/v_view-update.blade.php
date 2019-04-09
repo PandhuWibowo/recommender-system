@@ -226,7 +226,7 @@
                                                   <input class="form-control" type="number" min="1" id="no_urut_pertanyaan" name="no_urut_pertanyaan" placeholder="Sequence Number to" value="{{$editSoal->no_urut_pertanyaan}}">
                                               </div>
 
-                                              <div class="input-group-btn inline-option">
+                                              <div class="input-group-btn inline-option form-group">
                                                   <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                               </div>
 
@@ -265,6 +265,9 @@
 	                                                    <input type="text" class="form-control" id="code_opsi_jawaban" name="code_opsi_jawaban[]" placeholder="Personality Code" value="{{$valJawaban->code_opsi_jawaban}}">
 	                                                </div>
 
+																									<div class="input-group-btn">
+                                                      <button class="btn btn-danger btn_delete" data-assessment_id="{{Crypt::encrypt($valJawaban->assessment_id)}}" data-selfhood_pertanyaan_id="{{Crypt::encrypt($valJawaban->selfhood_pertanyaan_id)}}" data-kepribadian_id="{{Crypt::encrypt($valJawaban->kepribadian_id)}}" type="button"><i class="glyphicon glyphicon-remove"></i> Remove </button>
+                                                  </div>
 																								@endforeach
 																								<input type="hidden" name="" id="count" value="{{count($editSoal->getJawabans)}}">
 
@@ -277,7 +280,9 @@
 																									<select style="width:100%;" id="kepribadian_id" name="kepribadian_id[]" class="kepribadian_id form-control">
 																										<!-- TODO: Call personality by Assessment ID -->
 																										<option value="" selected disabled>Choose select Personality</option>
-
+																										@foreach($jenisKepByAssId as $valJAss)
+																											<option value="{{Crypt::encrypt($valJAss->id)}}">{{$valJAss->nama}} - {{$valJAss->kode_nama}}</option>
+																										@endforeach
 																									</select>
 																								</div>
 
@@ -404,6 +409,7 @@
     <script src="{!! asset('assets/assets_admin/js/main.js') !!}"></script>
     <!-- tawk chat JS
 		============================================ -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <!-- <script src="js/tawk-chat.js"></script> -->
     <script>
         $(document).ready(function () {
@@ -417,42 +423,98 @@
             //     allowClear: true
             // });
 
-			// TODO: Calling kepribadian_id by assessment_id
-			$("#assesment_id").on("change", function(){
-			  $.ajaxSetup({
-				  headers: {
-					  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				  }
-			  });
-			  var assessmentId = $(this).val();
-			  // console.log(assessmentId);
-			  try {
-				$.ajax({
-				  type      : "POST",
-				  url       : "{{ url('backend/pages/selfhood/questions/filter') }}",
-				  async     : true,
-				  // dataType  : "JSON",
-				  data      : {
-					id      : assessmentId
-				  },
-				  success:function(data){
-					// console.log(data);
-					// var html = "";
-					// for(var i = 0;i<data.length;i++){
-					  // html = ;
-					  $(".kepribadian_id").html(data);
-					// }
-				  },
-				  error:function(data){
-					console.log(data);
-				  }
-				});
-			  }catch(e){
-				console.log(e);
-			  }finally{
+					// TODO: Calling kepribadian_id by assessment_id
+					$("#assesment_id").on("change", function(){
+					  $.ajaxSetup({
+						  headers: {
+							  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						  }
+					  });
+					  var assessmentId = $(this).val();
+					  // console.log(assessmentId);
+					  try {
+						$.ajax({
+						  type      : "POST",
+						  url       : "{{ url('backend/pages/selfhood/questions/filter') }}",
+						  async     : true,
+						  // dataType  : "JSON",
+						  data      : {
+							id      : assessmentId
+						  },
+						  success:function(data){
+							// console.log(data);
+							// var html = "";
+							// for(var i = 0;i<data.length;i++){
+							  // html = ;
+							  $(".kepribadian_id").html(data);
+							// }
+						  },
+						  error:function(data){
+							console.log(data);
+						  }
+						});
+					  }catch(e){
+						console.log(e);
+					  }finally{
 
-			  }
-			});
+					  }
+					});
+
+					$(".btn_delete").on("click", function(){
+						$.ajaxSetup({
+							headers: {
+								'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+							}
+						});
+						var varAssesmentId  		= $(this).data("assessment_id");
+						var varSelfPertanyaanId	= $(this).data("selfhood_pertanyaan_id");
+						var varKepribadianId		= $(this).data("kepribadian_id");
+
+						try {
+							swal({
+								title: 'Are you sure?',
+								text: "You won't be able to revert this!",
+								type: 'warning',
+								showCancelButton: true,
+								confirmButtonColor: '#3085d6',
+								cancelButtonColor: '#d33',
+								confirmButtonText: 'Yes, delete it!'
+							}).then((result) => {
+								if(result.value){
+									$.ajax({
+										type      : "DELETE",
+										url       : "{{ url('backend/pages/selfhood/questions/answers/delete') }}",
+										async     : true,
+										dataType  : "JSON",
+										data      : {
+											assessment_id      			: varAssesmentId,
+											selfhood_pertanyaan_id	: varSelfPertanyaanId,
+											kepribadian_id					: varKepribadianId
+										},
+										success:function(data){
+											// console.log(data);
+											if(data.response == "success"){
+												swal(
+													'Deleted!',
+													'Your file has been deleted.',
+													'success'
+												).then(function(){
+													window.location = "{{ url('backend/pages/selfhood/questions') }}"+"/"+varAssesmentId+"/"+varSelfPertanyaanId+"/edit";
+												});
+											}
+										},
+										error:function(data){
+											console.log(data);
+										}
+									});
+								}
+							});
+						} catch (e) {
+							console.log(e);
+						} finally {
+
+						}
+					});
         });
     </script>
 
