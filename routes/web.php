@@ -139,9 +139,11 @@ Route::prefix('backend/pages')->group(function () {
     Route::get("selfhood/questions/{assessmentId}/{pertanyaanKepribadianId}/edit","Dashboard\SelfhoodQuestionController@edit");
     Route::post("selfhood/questions/filter","Dashboard\SelfhoodQuestionController@filterKepribadian");
     Route::post("selfhood/questions/store","Dashboard\SelfhoodQuestionController@store");
+    // Route::post("selfhood/questions/validations","Dashboard\SelfhoodQuestionController@validation");
     Route::match(array('PUT', 'PATCH'), 'selfhood/questions/update',"Dashboard\SelfhoodQuestionController@update");
     Route::delete("selfhood/questions/answers/delete","Dashboard\SelfhoodQuestionController@destroyAnswer");
     Route::delete("selfhood/questions/delete","Dashboard\SelfhoodQuestionController@destroy");
+
 });
 
 Route::prefix('user/pages')->group(function () {

@@ -9,6 +9,7 @@ use App\Http\Models\JenisAssesment;
 use App\Http\Models\SelfhoodJawaban;
 use App\Http\Models\SelfhoodPertanyaan;
 use App\Http\Models\Personality;
+use App\Http\Models\Pertanyaan;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -50,13 +51,13 @@ class SelfhoodQuestionController extends Controller
   public function add(){
     $jenisAssessments = JenisAssesment::orderBy("created_at","asc")->get(); //TODO: mengeluarkan jenis assessment
     $persons          = Personality::orderBy("created_at","asc")->get(); //TODO: mengeluarkan personality
-    $queryNoUrut      = SelfhoodPertanyaan::select("no_urut_pertanyaan")->where("assessment_id", Session::get("assessment_id"))->get(); //TODO: membuat nomor urut
+    $noUrutTerakhir   = SelfhoodPertanyaan::where("assessment_id", Session::get("assesment_id"))->pluck("no_urut_pertanyaan");
 
-    if(count($queryNoUrut) == 0){
+    if(count($noUrutTerakhir) == 0){
       $kasihNomorUrut = 1;
     }
     else{
-      $arrNoUrutTerakhir= $queryNoUrut->toArray();
+      $arrNoUrutTerakhir= $noUrutTerakhir->toArray();
 
       $maxNoUrutTerakhir= max($arrNoUrutTerakhir);
       $kasihNomorUrut = $maxNoUrutTerakhir+1;
@@ -74,6 +75,20 @@ class SelfhoodQuestionController extends Controller
       echo $output;
     }
   }
+
+  // public function validation(Request $request){
+  //   $varAssessmentId    = Crypt::decrypt($request->id);
+  //   $tablesPertanyaan1  = Pertanyaan::where("assesment_id", $varAssessmentId)->count();
+  //   $tablesPertanyaan2  = SelfhoodPertanyaan::where("assessment_id", $varAssessmentId)->count();
+  //
+  //   if($tablesPertanyaan1 > 0 || $tablesPertanyaan2 > 0){
+  //     return response()->json(
+  //         array(
+  //           "response"  => "exist"
+  //         )
+  //     );
+  //   }
+  // }
 
   public function store(Request $request){
     $rules = array(
@@ -93,7 +108,7 @@ class SelfhoodQuestionController extends Controller
         exit();
     }
     else{
-      Session::put('assesment_id', $request->assesment_id);
+      Session::put('assesment_id', Crypt::decrypt($request->assesment_id));
       $pertanyaan = new SelfhoodPertanyaan([
         'id'                => Uuid::generate()->string,
         // 'nama'              => ucfirst(trim($request->nama)),
@@ -101,26 +116,24 @@ class SelfhoodQuestionController extends Controller
         // 'kode_nama'         => ucfirst(trim($request->kode_nama)),
         'no_urut_pertanyaan'=> trim($request->no_urut_pertanyaan)
       ]);
-      $pertanyaan->save();
 
-      $pertanyaan->id;
+      $pertanyaan->save();
 
       for($i=0;$i<count($request->opsi_jawaban);$i++){
         if($request->opsi_jawaban[$i] == "" && $request->code_opsi_jawaban[$i] == ""){
           continue;
         }else{
-          $queryNoUrut      = SelfhoodJawaban::select("no_urut_jawaban_kepribadian")->where("assessment_id", Session::get("assessment_id"))->get(); //TODO: membuat nomor urut
+          $noUrutTerakhir   = SelfhoodJawaban::where("assessment_id", Session::get("assesment_id"))->pluck("no_urut_jawaban_kepribadian");
 
-          if(count($queryNoUrut) == 0){
+          if(count($noUrutTerakhir) == 0){
             $kasihNomorUrut = 1;
           }
           else{
-            $arrNoUrutTerakhir= $queryNoUrut->toArray();
+            $arrNoUrutTerakhir= $noUrutTerakhir->toArray();
 
             $maxNoUrutTerakhir= max($arrNoUrutTerakhir);
             $kasihNomorUrut = $maxNoUrutTerakhir+1;
           }
-
           $jawaban  = new SelfhoodJawaban([
             // 'id'                => Uuid::generate()->string,
             'kepribadian_id'              => Crypt::decrypt($request->kepribadian_id[$i]),
@@ -128,7 +141,7 @@ class SelfhoodQuestionController extends Controller
             'assessment_id'               => trim(Crypt::decrypt($request->assesment_id)),
             'opsi_jawaban'                => $request->opsi_jawaban[$i],
             'code_opsi_jawaban'           => $request->code_opsi_jawaban[$i],
-            'no_urut_jawaban_kepribadian' => $kasihNomorUrut+$i
+            'no_urut_jawaban_kepribadian' => $kasihNomorUrut
           ]);
 
           $jawaban->save();

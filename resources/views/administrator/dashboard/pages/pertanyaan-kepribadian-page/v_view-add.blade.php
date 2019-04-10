@@ -121,7 +121,7 @@
             </div>
         </div>
         <div class="header-advance-area">
-            <div class="header-top-area">
+					<div class="header-top-area">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -130,8 +130,8 @@
                                     <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
                                         <div class="menu-switcher-pro">
                                             <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-												<i class="educate-icon educate-nav"></i>
-											</button>
+																							<i class="educate-icon educate-nav"></i>
+																						</button>
                                         </div>
                                     </div>
                                     @include('administrator.dashboard.include.v_menu-navbar')
@@ -205,7 +205,7 @@
                                                     <strong>Oh snap!</strong> {{$errors->first('assesment_id')}}
                                                 </div>
                                               @endif
-                                              
+
                                               @if($errors->has('success'))
                                                 <div class="alert alert-danger alert-dismissable">
                                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -244,15 +244,15 @@
                                               <div class="model-answer"></div>
                                               <div class="model-truefalse"></div> -->
                                               <div class="after-add-more type_answer">
-												<div class="chosen-select-single mg-b-20">
-	                                                <label>Personality Type</label>
-	                                                <select style="width:100%;" id="kepribadian_id" name="kepribadian_id[]" class="kepribadian_id form-control">
-														<!-- TODO: Call personality by Assessment ID -->
-														<option value="" selected disabled>Choose select Personality</option>
-													</select>
-	                                            </div>
+																								<div class="chosen-select-single mg-b-20">
+		                                                <label>Personality Type</label>
+		                                                <select style="width:100%;" id="kepribadian_id" name="kepribadian_id[]" class="kepribadian_id form-control">
+																											<!-- TODO: Call personality by Assessment ID -->
+																											<option value="" selected disabled>Choose select Personality</option>
+																										</select>
+		                                            </div>
 
-												<div class="chosen-select-single mg-b-20">
+																								<div class="chosen-select-single mg-b-20">
                                                     <label>Answer</label>
                                                     <textarea class="form-control" rows="5" id="opsi_jawaban" name="opsi_jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
                                                 </div>
@@ -265,33 +265,33 @@
 
                                               <div class="copy hide">
                                                 <div class="control-group input-group" style="margin-top:10px">
-												<div class="chosen-select-single mg-b-20">
-													<label>Personality Type</label>
-													<select style="width:100%;" id="kepribadian_id" name="kepribadian_id[]" class="kepribadian_id form-control">
-														<!-- TODO: Call personality by Assessment ID -->
-														<option value="" selected disabled>Choose select Personality</option>
+																									<div class="chosen-select-single mg-b-20">
+																										<label>Personality Type</label>
+																										<select style="width:100%;" id="kepribadian_id" name="kepribadian_id[]" class="kepribadian_id form-control">
+																											<!-- TODO: Call personality by Assessment ID -->
+																											<option value="" selected disabled>Choose select Personality</option>
 
-													</select>
-												</div>
+																										</select>
+																									</div>
 
-												<div class="chosen-select-single mg-b-20">
+																									<div class="chosen-select-single mg-b-20">
                                                     <label>Answer</label>
                                                     <textarea class="form-control" rows="5" id="opsi_jawaban" name="opsi_jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
-                                                </div>
+                                                	</div>
 
-                                                <div class="chosen-select-single mg-b-20">
-                                                    <label>Personality Code</label>
-                                                    <input type="text" class="form-control" id="code_opsi_jawaban" name="code_opsi_jawaban[]" placeholder="Personality Code">
-                                                </div>
+	                                                <div class="chosen-select-single mg-b-20">
+	                                                    <label>Personality Code</label>
+	                                                    <input type="text" class="form-control" id="code_opsi_jawaban" name="code_opsi_jawaban[]" placeholder="Personality Code">
+	                                                </div>
 
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-                                                </div>
-                                              </div>
+	                                                <div class="input-group-btn">
+	                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+	                                                </div>
+	                                              </div>
                                               </div>
 
                                               <div class="form-group">
-												  <button type="submit" id="btn_save" class="btn btn-primary">Save</button>
+												  											<button type="submit" id="btn_save" class="btn btn-primary">Save</button>
                                               </div>
                                           </div>
                                         </form>
@@ -398,6 +398,7 @@
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js" charset="utf-8"></script>
     <script>
         $(document).ready(function () {
             $(".assesment_id").select2({
@@ -409,6 +410,46 @@
             //     placeholder: "Choose Personality Type",
             //     allowClear: true
             // });
+			//TODO: Validation assessment type to similar
+			// $("#assesment_id").on("change", function(){
+			// 	var varAssessmentId = $(this).val();
+			// 	$.ajaxSetup({
+			// 	  headers: {
+			// 		  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			// 	  }
+			//   });
+			//
+			// 	try {
+			// 		$.ajax({
+			// 		  type      : "POST",
+			// 		  url       : "{{ url('backend/pages/selfhood/questions/validations') }}",
+			// 		  async     : true,
+			// 		  dataType  : "JSON",
+			// 		  data      : {
+			// 				id      : varAssessmentId
+			// 		  },
+			// 		  success:function(data){
+			// 				// console.log(data);
+			// 				if(data.response == "exist"){
+			// 					swal(
+			// 						'Exits!',
+			// 						'Your Assessment is exist in another questions',
+			// 						'info'
+			// 					)
+			// 				}else{
+			// 					console.log(data);
+			// 				}
+			// 		  },
+			// 		  error:function(data){
+			// 				console.log(data);
+			// 		  }
+			// 		});
+			//   }catch(e){
+			// 		console.log(e);
+			//   }finally{
+			//
+			//   }
+			// });
 
 			// TODO: Calling kepribadian_id by assessment_id
 			$("#assesment_id").on("change", function(){
@@ -420,28 +461,28 @@
 			  var assessmentId = $(this).val();
 			  // console.log(assessmentId);
 			  try {
-				$.ajax({
-				  type      : "POST",
-				  url       : "{{ url('backend/pages/selfhood/questions/filter') }}",
-				  async     : true,
-				  // dataType  : "JSON",
-				  data      : {
-					id      : assessmentId
-				  },
-				  success:function(data){
-					// console.log(data);
-					// var html = "";
-					// for(var i = 0;i<data.length;i++){
-					  // html = ;
-					  $(".kepribadian_id").html(data);
-					// }
-				  },
-				  error:function(data){
-					console.log(data);
-				  }
-				});
+					$.ajax({
+					  type      : "POST",
+					  url       : "{{ url('backend/pages/selfhood/questions/filter') }}",
+					  async     : true,
+					  // dataType  : "JSON",
+					  data      : {
+						id      : assessmentId
+					  },
+					  success:function(data){
+						// console.log(data);
+						// var html = "";
+						// for(var i = 0;i<data.length;i++){
+						  // html = ;
+						  $(".kepribadian_id").html(data);
+						// }
+					  },
+					  error:function(data){
+						console.log(data);
+					  }
+					});
 			  }catch(e){
-				console.log(e);
+					console.log(e);
 			  }finally{
 
 			  }
