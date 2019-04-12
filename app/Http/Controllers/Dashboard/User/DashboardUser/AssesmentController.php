@@ -13,6 +13,7 @@ use App\Http\Models\Pertanyaan;
 use App\Http\Models\SelfhoodPertanyaan;
 use App\Http\Models\UserAssessment;
 use App\Http\Models\Configuration;
+use App\Http\Models\ConfigurationTwo;
 use App\Http\Models\Kompetensi;
 use App\Http\Models\PertanyaanAssesment;
 use Illuminate\Support\Facades\Crypt;
@@ -161,9 +162,29 @@ class AssesmentController extends Controller
 
     }
     else if($tablePertanyaan2 > 0){
-      echo "heloo";
-    }else{
+      // TODO: Show limit isi page
+      $limit = ConfigurationTwo::pluck("konfigurasi2")->first();
 
+      //TODO: Show Questions by assessment_id dengan urutan berdasarkan nomer urut
+      $questions = SelfhoodPertanyaan::with("getJawabans")->where("assessment_id", $decryptId)->orderBy("no_urut_pertanyaan","asc")->get();
+
+      // TODO: Count all questions
+      $countQuestions = count($questions);
+
+      //TODO: Show Assessment Name
+      $competencyType = Pertanyaan::where("assesment_id", $decryptId)
+                                  ->join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
+                                  ->pluck("ja.nama")
+                                  ->first();
+
+      //TODO: Lempar halaman pertanyaan tipe dua
+      return view("partisipan.dashboard.assesment.v_question2", compact("limit","questions","countQuestions","competencyType"));
+    }else{
+      echo noticePage();
     }
+  }
+
+  public function noticePage(){
+    echo "Nothing happened here";
   }
 }
