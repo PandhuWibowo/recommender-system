@@ -104,6 +104,8 @@ Route::prefix('backend/pages')->group(function () {
     //Configurations
     Route::resource("configurations","Dashboard\ConfigurationController");
 
+    // TODO: Configurations2
+    Route::resource("configurations/session/two","Dashboard\ConfigurationTwoController");
     //Competencies Result
     // Route::get("competenciesresults","Dashboard\CompetenciesResultController@index");
 

@@ -10,6 +10,7 @@ use App\Http\Models\User;
 use App\Http\Models\JenisAssesment;
 use App\Http\Models\Assesment;
 use App\Http\Models\Pertanyaan;
+use App\Http\Models\SelfhoodPertanyaan;
 use App\Http\Models\UserAssessment;
 use App\Http\Models\Configuration;
 use App\Http\Models\Kompetensi;
@@ -112,57 +113,57 @@ class AssesmentController extends Controller
   }
 
   public function show($id, $assId, Request $request){
-    $decryptId    = Crypt::decrypt($id);
-    $decryptAssId = Crypt::decrypt($assId);
+    $decryptId    = Crypt::decrypt($id); //TODO: Jenis Assessment ID
+    $decryptAssId = Crypt::decrypt($assId); //TODO: Assessment ID
 
     // dd($decryptId);
-    //Paginate total number
-    $limit = Configuration::pluck("konfigurasi")->first();
+    $tablePertanyaan1 = Pertanyaan::where("assesment_id", $decryptId)->count();
+    $tablePertanyaan2 = SelfhoodPertanyaan::where("assessment_id", $decryptId)->count();
 
-    $questions    = Pertanyaan::with(['get_rowscore' => function ($q) {
-                                  $q->orderBy('no_urut_rowscore', 'desc');
-                                }])
-                              ->with(['get_kompetensi' => function ($q) {
-                                  $q->orderBy('no_urut_kompetensi', 'ASC');
-                                }])
-                              ->with("get_assesment")
-                              ->where("assesment_id", $decryptId)
-                              // ->orderBy("rowscores.no_urut_rowscore","asc")
-                              ->orderBy("no_urut_pertanyaan","asc")
-                              ->get();
-    $countQuestions = count($questions);
+    if($tablePertanyaan1 > 0){
+      //Paginate total number
+      $limit = Configuration::pluck("konfigurasi")->first();
 
-    $hasilJawaban = PertanyaanAssesment::where("ass_id", $decryptAssId)->pluck("jawaban_id");
-    // dd($hasilJawaban);
+      $questions    = Pertanyaan::with(['get_rowscore' => function ($q) {
+                                    $q->orderBy('no_urut_rowscore', 'desc');
+                                  }])
+                                ->with(['get_kompetensi' => function ($q) {
+                                    $q->orderBy('no_urut_kompetensi', 'ASC');
+                                  }])
+                                ->with("get_assesment")
+                                ->where("assesment_id", $decryptId)
+                                // ->orderBy("rowscores.no_urut_rowscore","asc")
+                                ->orderBy("no_urut_pertanyaan","asc")
+                                ->get();
+      $countQuestions = count($questions);
 
-    //Penentuan Assessment
-    $competencyType = Pertanyaan::where("assesment_id", $decryptId)
-                                ->join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
-                                ->pluck("ja.nama")
-                                ->first();
+      $hasilJawaban = PertanyaanAssesment::where("ass_id", $decryptAssId)->pluck("jawaban_id");
+      // dd($hasilJawaban);
 
-    //                           // ->sortBy(function($noUrutRowScore) {
-    //                           //      return $noUrutRowScore->get_rowscore->no_urut_rowscore;
-    //                           // })
-    //                           // ->sortBy(function($noUrutKompetensi) {
-    //                           //      return $noUrutKompetensi->get_kompetensi->no_urut_kompetensi;
-    //                           // });
-    //
-    //                           // ->orderBy("kompetensis.no_urut_kompetensi","as")
-    //                           // ->sortByDesc("rowscores.no_urut_rowscore");
-    //
+      //Penentuan Assessment
+      $competencyType = Pertanyaan::where("assesment_id", $decryptId)
+                                  ->join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
+                                  ->pluck("ja.nama")
+                                  ->first();
 
-    $logPages = new DirectPage([
-      "user_id"     => Session::get("id"),
-      "ip_address"  => $request->ip(),
-      "browser"     => BrowserDetect::browserName(),
-      "action"      => "Quis",
-      "data"        => Session::get("email")." mengunjungi halaman Quis dengan detail Id Assessment : ".$decryptId,
-      "link"        => url()->current()
-    ]);
+      $logPages = new DirectPage([
+        "user_id"     => Session::get("id"),
+        "ip_address"  => $request->ip(),
+        "browser"     => BrowserDetect::browserName(),
+        "action"      => "Quis",
+        "data"        => Session::get("email")." mengunjungi halaman Quis dengan detail Id Assessment : ".$decryptId,
+        "link"        => url()->current()
+      ]);
 
-    $logPages->save();
+      $logPages->save();
 
-    return view("partisipan.dashboard.assesment.v_question", compact("hasilJawaban","questions","decryptAssId","countQuestions","competencyType", "limit"));
+      return view("partisipan.dashboard.assesment.v_question", compact("hasilJawaban","questions","decryptAssId","countQuestions","competencyType", "limit"));
+
+    }
+    else if($tablePertanyaan2 > 0){
+      echo "heloo";
+    }else{
+
+    }
   }
 }
