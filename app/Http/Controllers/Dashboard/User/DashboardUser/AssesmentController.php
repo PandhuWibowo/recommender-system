@@ -176,6 +176,8 @@ class AssesmentController extends Controller
                                   ->join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
                                   ->pluck("ja.nama")
                                   ->first();
+      //TODO: Show answer result
+      // $hasilJawaban = PertanyaanAssesment::where("ass_id", $decryptAssId)->pluck("jawaban_id");
 
       //TODO: Lempar halaman pertanyaan tipe dua
       return view("partisipan.dashboard.assesment.v_question2", compact("limit","questions","countQuestions","competencyType"));

@@ -175,7 +175,7 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Personalities <span class="table-project-n">Form</span></h1>
+                                    <h1>Typical Scale <span class="table-project-n">Form</span></h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
@@ -188,11 +188,11 @@
                                   </select>
                                 </div>
                                 <div class="form-group">
-                                  <label for="usr">Personality Name</label>
+                                  <label for="usr">Typical Scale Name</label>
                                   <input type="text" class="form-control nama" autofocus="on" autocomplete="off" id="nama" name="nama[]" data-role="tagsinput" required>
                                 </div>
                                 <div class="form-group">
-                                  <label for="usr">Personality Code</label>
+                                  <label for="usr">Typical Scale Code</label>
                                   <input type="text" class="form-control kode_nama" autocomplete="off" id="kode_nama" name="kode_nama[]" data-role="tagsinput" required>
                                 </div>
 
@@ -215,7 +215,7 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Personalities <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Typical Scale <span class="table-project-n">Data</span> Table</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
@@ -225,8 +225,8 @@
                                       <thead>
                                           <tr>
                                               <th>Name of Assesment</th>
-                                              <th>Personality</th>
-                                              <th>Personality Code</th>
+                                              <th>Typical Scale</th>
+                                              <th>Typical Scale Code</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -245,8 +245,8 @@
                                       <tfoot>
                                           <tr>
                                               <th>Name of Assesment</th>
-                                              <th>Personality</th>
-                                              <th>Personality Code</th>
+                                              <th>Typical Scale</th>
+                                              <th>Typical Scale Code</th>
                                               <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -259,7 +259,7 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Personality</h4>
+                                            <h4 class="modal-title">Edit Typical Scale</h4>
                                             <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
                                           <div class="modal-body">
@@ -275,12 +275,12 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                              <label for="usr">Personality Name</label>
+                                              <label for="usr">Typical Scale Name</label>
                                               <input type="text" class="form-control" autocomplete="off" id="edit_nama" required>
                                             </div>
                                             <!-- no_urut_assesment -->
                                             <div class="form-group">
-                                              <label for="usr">Personality Code</label>
+                                              <label for="usr">Typical Scale Code</label>
                                               <input type="text" class="form-control" autocomplete="off" id="edit_kode_nama" required>
                                             </div>
                                           </div>
@@ -433,7 +433,7 @@
           } catch (e) {
             console.log(e);
           } finally {
-              
+
           }
         });
 

@@ -135,7 +135,7 @@ class SelfhoodQuestionController extends Controller
             $kasihNomorUrut = $maxNoUrutTerakhir+1;
           }
           $jawaban  = new SelfhoodJawaban([
-            // 'id'                => Uuid::generate()->string,
+            'id'                          => Uuid::generate()->string,
             'kepribadian_id'              => Crypt::decrypt($request->kepribadian_id[$i]),
             'selfhood_pertanyaan_id'      => $pertanyaan->id,
             'assessment_id'               => trim(Crypt::decrypt($request->assesment_id)),
@@ -199,7 +199,7 @@ class SelfhoodQuestionController extends Controller
             $kasihNomorUrut = 1;
           }
           $jawaban  = new SelfhoodJawaban([
-            // 'id'                => Uuid::generate()->string,
+            'id'                          => Uuid::generate()->string,
             'kepribadian_id'              => Crypt::decrypt($request->kepribadian_id[$i]),
             'selfhood_pertanyaan_id'      => Crypt::decrypt($request->id),
             'assessment_id'               => trim(Crypt::decrypt($request->assesment_id)),

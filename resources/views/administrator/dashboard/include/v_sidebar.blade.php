@@ -59,7 +59,7 @@
                                   <li>
                                       <a class="has-arrow" aria-expanded="false"><span class="mini-click-non">Typical Scale</span></a>
                                       <ul class="submenu-angle" aria-expanded="false">
-                                          <li><a title="All Personalities" href="{{ url('backend/pages/personalities') }}"><span class="mini-sub-pro">Personalities</span></a></li>
+                                          <li><a title="All Personalities" href="{{ url('backend/pages/personalities') }}"><span class="mini-sub-pro">Form</span></a></li>
                                           <li><a title="All Selfhood Questions" href="{{ url('backend/pages/selfhood/questions') }}"><span class="mini-sub-pro">Questions</span></a></li>
                                           <li><a title="Configuration" href="{{ url("backend/pages/configurations/session/two") }}"><span class="mini-sub-pro">Configurations</span></a></li>
                                       </ul>
