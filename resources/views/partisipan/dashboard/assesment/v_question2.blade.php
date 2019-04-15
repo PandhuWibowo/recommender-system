@@ -230,6 +230,57 @@
           border-radius: 0;
           background: #e2725b;
       }
+
+     .input-group, .opsi_jawaban{
+        cursor: pointer;
+      }
+
+      .form-radio
+      {
+           -webkit-appearance: none;
+           -moz-appearance: none;
+           appearance: none;
+           display: inline-block;
+           position: relative;
+           background-color: #f1f1f1;
+           color: #666;
+           /* top: 10px; */
+           height: 25px;
+           width: 30px;
+           border: 0;
+           border-radius: 50px;
+           cursor: pointer;
+           margin-right: 7px;
+           outline: none;
+      }
+      .form-radio:checked::before
+      {
+           position: absolute;
+           font: 13px/1 'Open Sans', sans-serif;
+           left: 11px;
+           top: 3px;
+           content: '\02143';
+           transform: rotate(40deg);
+           color:#fff;
+      }
+      .form-radio:hover
+      {
+           background-color: #f7f7f7;
+      }
+      .form-radio:checked
+      {
+           background-color: #e2725b;
+      }
+      label
+      {
+           font: 15px/1.7 'Open Sans', sans-serif;
+           color: #333;
+           -webkit-font-smoothing: antialiased;
+           -moz-osx-font-smoothing: grayscale;
+           cursor: pointer;
+      }
+
+
     </style>
 </head>
 
@@ -283,6 +334,142 @@
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
                                             </form> -->
+                                            <!-- Trigger the modal with a button -->
+                                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalInfos" data-backdrop="static" data-keyboard="false">Check the rules</button>
+                                            <!-- Modal -->
+                                            <div id="modalInfos" class="modal fade" role="dialog">
+                                              <div class="modal-dialog modal-lg">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                                    <h4 class="modal-title">
+                                                      <center>INSTRUKSI</center>
+                                                    </h4>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <span>Tes ini terdiri dari 16 set soal. Dalam setiap set soal, terdapat 4 pernyataan.</span><br>
+                                                    <span>Kerjakan setiap set soal yang ada dengan tahapan sebagai berikut : 	</span>
+                                                    <table>
+                                                      <thead>
+                                                        <tr>
+                                                          <th></th>
+                                                          <th></th>
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        <tr>
+                                                          <td>1.</td>
+                                                          <td>&nbsp Baca dengan seksama seluruh pernyataan yang ada di tiap set soal.</td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td>2.</td>
+                                                          <td>&nbsp Pilih 1 dari 4 pernyataan yang Anda anggap PALING menggambarkan diri Anda terkait aktivitas belajar. Hal ini dapat mencakup hal yang paling sering Anda lakukan ataupun yang paling Anda sukai. </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td>3.</td>
+                                                          <td>&nbsp Untuk setiap set soal, Anda hanya boleh memilih 1 pernyataan yang PALING menggambarkan diri Anda terkait aktivitas belajar. </td>
+                                                        </tr>
+                                                        <tr>
+                                                          <td>4.</td>
+                                                          <td>&nbsp Pastikan hanya ada 1 pernyataan yang Anda klik, jangan ada set soal yang terlewat. Seluruh set soal harus terjawab.</td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                    <p>
+                                                      <center>Pada situasi tertentu, memang tidak mudah menemukan pernyataan yang benar-benar PALING menggambarkan diri Anda terkait aktivitas belajar.. Pilihlah yang paling mendekati. TIDAK ADA JAWABAN YANG BENAR MAUPUN SALAH DALAM TES INI. Pilihlah pernyataan yang menurut Anda paling sesuai dengan penilaian Anda terhadap diri Anda terkait aktivitas belajar.	</center>
+                                                    </p>
+                                                    <p>
+                                                      <center>Mohon mengerjakan tes ini dengan sungguh-sungguh, dan tidak terdistraksi (terganggu) dengan aktivitas lain. Jawablah secara spontan, tidak terlalu lama dipikirkan, dan jadilah diri sendiri. Hasil akan semakin akurat apabila Anda jujur terhadap diri Anda sendiri dan menjawab dengan apa adanya. </center>
+                                                    </p>
+
+                                                    <p>
+                                                      <label for="">
+                                                        <center>
+                                                          <b>
+                                                            SELAMAT MENGERJAKAN
+                                                          </b>
+                                                        </center>
+                                                      </label>
+                                                    </p>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" id="put-cache-info" data-dismiss="modal" assessmentid="{{$decryptAssId}}">Mengerti</button>
+                                                  </div>
+                                                </div>
+
+                                              </div>
+                                            </div>
+                                            @if($updateAssessmentCache[0] == "2")
+
+                                            @else
+                                              <!-- Modal -->
+                                              <div id="modalInfo" class="modal fade" role="dialog">
+                                                <div class="modal-dialog modal-lg">
+
+                                                  <!-- Modal content-->
+                                                  <div class="modal-content">
+                                                    <div class="modal-header">
+                                                      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                                      <h4 class="modal-title">
+                                                        <center>INSTRUKSI</center>
+                                                      </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                      <span>Tes ini terdiri dari 16 set soal. Dalam setiap set soal, terdapat 4 pernyataan.</span><br>
+                                                      <span>Kerjakan setiap set soal yang ada dengan tahapan sebagai berikut : 	</span>
+                                                      <table>
+                                                        <thead>
+                                                          <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                          </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                          <tr>
+                                                            <td>1.</td>
+                                                            <td>&nbsp Baca dengan seksama seluruh pernyataan yang ada di tiap set soal.</td>
+                                                          </tr>
+                                                          <tr>
+                                                            <td>2.</td>
+                                                            <td>&nbsp Pilih 1 dari 4 pernyataan yang Anda anggap PALING menggambarkan diri Anda terkait aktivitas belajar. Hal ini dapat mencakup hal yang paling sering Anda lakukan ataupun yang paling Anda sukai. </td>
+                                                          </tr>
+                                                          <tr>
+                                                            <td>3.</td>
+                                                            <td>&nbsp Untuk setiap set soal, Anda hanya boleh memilih 1 pernyataan yang PALING menggambarkan diri Anda terkait aktivitas belajar. </td>
+                                                          </tr>
+                                                          <tr>
+                                                            <td>4.</td>
+                                                            <td>&nbsp Pastikan hanya ada 1 pernyataan yang Anda klik, jangan ada set soal yang terlewat. Seluruh set soal harus terjawab.</td>
+                                                          </tr>
+                                                        </tbody>
+                                                      </table>
+                                                      <p>
+                                                        <center>Pada situasi tertentu, memang tidak mudah menemukan pernyataan yang benar-benar PALING menggambarkan diri Anda terkait aktivitas belajar.. Pilihlah yang paling mendekati. TIDAK ADA JAWABAN YANG BENAR MAUPUN SALAH DALAM TES INI. Pilihlah pernyataan yang menurut Anda paling sesuai dengan penilaian Anda terhadap diri Anda terkait aktivitas belajar.	</center>
+                                                      </p>
+                                                      <p>
+                                                        <center>Mohon mengerjakan tes ini dengan sungguh-sungguh, dan tidak terdistraksi (terganggu) dengan aktivitas lain. Jawablah secara spontan, tidak terlalu lama dipikirkan, dan jadilah diri sendiri. Hasil akan semakin akurat apabila Anda jujur terhadap diri Anda sendiri dan menjawab dengan apa adanya. </center>
+                                                      </p>
+
+                                                      <p>
+                                                        <label for="">
+                                                          <center>
+                                                            <b>
+                                                              SELAMAT MENGERJAKAN
+                                                            </b>
+                                                          </center>
+                                                        </label>
+                                                      </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                      <button type="button" class="btn btn-primary" id="put-cache-info" data-dismiss="modal" assessmentid="{{$decryptAssId}}">Mengerti</button>
+                                                    </div>
+                                                  </div>
+
+                                                </div>
+                                              </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -313,6 +500,7 @@
 
                                 </div>
                             </div>
+
                             <div class="sparkline12-graph">
                                 <div class="basic-login-form-ad">
                                     <div class="row">
@@ -322,7 +510,7 @@
                                                   <div class="sparkline8-list">
                                                       <div class="sparkline8-graph">
                                                           <div class="static-table-list">
-                                                              <table class="table table-striped dataTable" id="datatables">
+                                                              <table class="table dataTable" id="datatables">
                                                                   <thead>
                                                                       <tr>
                                                                           <th width="5%" style="text-align:center;"></th>
@@ -337,38 +525,40 @@
                                                                       <?php $no = 1;?>
                                                                       @foreach($questions as $row)
                                                                         <tr>
-                                                                            <td width="5%" style="text-align:center;">{{$no}}</td>
-                                                                            <!-- <td>{{$row->get_kompetensi->kompetensi}}</td> -->
-                                                                            <td style="text-align:justify;">
-                                                                              <!-- Menampilkan jawaban -->
-                                                                              <div class="form-group-inner">
-                                                                                  <div class="row">
-                                                                                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                          <div class="bt-df-checkbox pull-left">
-                                                                                              @foreach($row->getJawabans as $key2=>$row2)
-                                                                                                <div class="row">
-                                                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                                      <!-- i-checks -->
-                                                                                                        <div class="pull-left">
-                                                                                                              <!-- <input type="hidden" value="{{$decryptAssId}}" class="assessmentid"  name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
-                                                                                                              <input type="hidden" value="{{$row2->pertanyaan_id}}" class="pertanyaanid" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
-                                                                                                              <input type="hidden" value="{{$row2->id}}" class="jawabanid" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required> -->
+                                                                          <td width="5%" style="text-align:center;">{{$no}}</td>
 
-                                                                                                              <input type="radio" value="{{$row2->opsi_jawaban}}" class="opsi_jawaban" name="opsi_jawaban{{$x}}" id="opsi_jawaban{{$x}}">
-                                                                                                              <!-- assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->pertanyaan_id}}" jawabanid="{{$row2->id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?> -->
-                                                                                                        </div>
-                                                                                                        <div class="jawaban">{{ucfirst($row2->opsi_jawaban)}}</div>
+                                                                          <td style="text-align:justify;">
+                                                                            <div class="form-group-inner">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                              @endforeach
-                                                                                              <!-- <input type="text" name="count" id="count" value="{{$x}}"> -->
+                                                                                          @foreach($row->getJawabans as $key2=>$row2)
+
+                                                                                          <div class="has-feedback">
+                                                                                              <label class="input-group">
+                                                                                                  <span class="input-group-addon">
+                                                                                                    <input type="hidden" value="{{$decryptAssId}}" class="assessmentid"  name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
+                                                                                                    <input type="hidden" value="{{$row2->selfhood_pertanyaan_id}}" class="pertanyaanid" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
+                                                                                                    <input type="hidden" value="{{$row2->id}}" class="jawabanid" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
+                                                                                                    <input type="hidden" value="{{$row2->kepribadian_id}}" class="kepribadian_id" name="kepribadian_id{{$x}}" id="kepribadian_id{{$x}}" required>
+
+                                                                                                    <input type="radio" style="display:inline;" value="{{$row2->code_opsi_jawaban}}" class="opsi_jawaban form-radio" name="opsi_jawaban{{$x}}" id="opsi_jawaban{{$x}}" assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->selfhood_pertanyaan_id}}" jawabanid="{{$row2->id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?>>
+
+                                                                                                  </span>
+                                                                                                  <div class="form-control form-control-static">
+                                                                                                    {{ucfirst($row2->opsi_jawaban)}}
+                                                                                                  </div>
+                                                                                                  <span class="glyphicon form-control-feedback "></span>
+                                                                                              </label>
                                                                                           </div>
-                                                                                      </div>
-                                                                                  </div>
-                                                                              </div>
+                                                                                            <!-- assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->pertanyaan_id}}" jawabanid="{{$row2->id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?> -->
 
-                                                                            </td>
+                                                                                          @endforeach
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                          </td>
                                                                         </tr>
                                                                         <?php $no++;?>
                                                                         <?php $x++;?>
@@ -376,7 +566,10 @@
                                                                   </tbody>
                                                               </table>
 
-                                                              <button type="button" class="btn btn-primary" id="btn_save" data-count="{{$x}}">Save</button>
+                                                              <div style="margin-top: 20px;">
+                                                                <button style="margin-left:50%;" type="button" class="btn btn-primary" id="btn_save" data-count="{{$x}}">Save</button>
+                                                              </div>
+
                                                           </div>
                                                       </div>
                                                   </div>
@@ -492,31 +685,73 @@
           "pagingType": "simple",
           // "sPaginationType": "full_numbers",
           "searching": false,
-          "pageLength": {{$limit}},
+          "pageLength": {{$batas}},
           "info":     false,
           dom: 'Bfrtip',
           "ordering": false,
-          stateSave: true,
-          // "bJQueryUI": true,
-          "fnStateSave": function (oSettings, oData) {
-              localStorage.setItem('offersDataTables', JSON.stringify(oData));
-          },
-          "fnStateLoad": function (oSettings) {
-              return JSON.parse(localStorage.getItem('offersDataTables'));
-          }
+          // stateSave: true,
+          // // "bJQueryUI": true,
+          // "fnStateSave": function (oSettings, oData) {
+          //     localStorage.setItem('offersDataTables', JSON.stringify(oData));
+          // },
+          // "fnStateLoad": function (oSettings) {
+          //     return JSON.parse(localStorage.getItem('offersDataTables'));
+          // }
         });
 
-        $(document).on("click", ".nilai", function() {
+        $(window).load(function(){
+          $('#modalInfo').modal(
+            {backdrop: 'static', keyboard: false}
+          );
+        });
+
+        $(document).ready(function(){
+          $("#put-cache-info").on("click", function(){
+            $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+            });
+
+            var varAssId         = $(this).attr("assessmentid");
+
+            try {
+              $.ajax({
+                type      : "PUT",
+                url       : "{{ url('user/pages/selfhood/questions/update/cache/info') }}",
+                async     : true,
+                dataType  : "JSON",
+                cache     : true,
+                data      : {
+                  id          : varAssId,
+                  modal_info  : "2"
+                },
+                success:function(data){
+                  console.log(data);
+                },
+                error:function(data){
+                  console.log(data);
+                }
+              });
+            } catch (e) {
+              console.log(e);
+            } finally {
+
+            }
+          });
+        });
+
+        $(document).on("click", ".opsi_jawaban", function() {
           $.ajaxSetup({
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
           });
-          var varNilai         = table.$(this).val();
+          var varOpsiJawaban   = table.$(this).val();
           var varAssId         = table.$(this).attr("assessmentid");
           var varPertanyaanId  = table.$(this).attr("pertanyaanid");
           var varJawabanId     = table.$(this).attr("jawabanid");
-          // console.log("Nilai : "+varNilai);
+          // console.log(varOpsiJawaban);
           // console.log("Assessment ID : "+varAssId);
           // console.log("Pertanyaan ID : "+varPertanyaanId);
           // console.log("Jawaban ID : "+varJawabanId);
@@ -524,15 +759,15 @@
           try {
             $.ajax({
               type      : "POST",
-              url       : "{{ url('user/pages/questions/store') }}",
+              url       : "{{ url('user/pages/selfhood/questions/store') }}",
               async     : true,
               dataType  : "JSON",
               cache     : true,
               data      : {
-                ass_id        : varAssId,
-                nilai         : varNilai,
-                pertanyaan_id : varPertanyaanId,
-                jawaban_id    : varJawabanId
+                ass_id            : varAssId,
+                nilai             : varOpsiJawaban,
+                pertanyaan_id     : varPertanyaanId,
+                jawaban_id        : varJawabanId
               },
               success:function(data){
                 console.log(data);

@@ -177,6 +177,8 @@ Route::prefix('user/pages')->group(function () {
     Route::put("questions/update","Dashboard\User\DashboardUser\QuestionController@update");
     Route::post("questions/store","Dashboard\User\DashboardUser\QuestionController@store");
 
+    Route::post("selfhood/questions/store","Dashboard\User\DashboardUser\QuestionController@storeJawaban");
+    Route::match(array("PUT","PATCH"), "selfhood/questions/update/cache/info", "Dashboard\User\DashboardUser\QuestionController@updateCacheInfo");
     Route::get("results/final/{id}","Dashboard\User\DashboardUser\ResultController@show");
 
     Route::get("forgot/password/sendemail","Dashboard\User\ForgotPassword\ForgotPasswordController@index");

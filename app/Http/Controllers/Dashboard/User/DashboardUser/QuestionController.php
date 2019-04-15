@@ -117,6 +117,110 @@ class QuestionController extends Controller
     }
   }
 
+  public function storeJawaban(Request $request){
+    $assesmentId      = $request->ass_id;
+    $pertanyaanId     = $request->pertanyaan_id;
+    $jawabanId        = $request->jawaban_id;
+    $nilai            = $request->nilai;
+
+    $check = PertanyaanAssesment::where("ass_id", $assesmentId)->where("pertanyaan_id", $pertanyaanId)->get();
+
+    if(count($check) <= 0){
+      $pertanyaanAssesment  = new PertanyaanAssesment([
+        "id"            => Uuid::generate()->string,
+        "ass_id"        => $assesmentId,
+        "pertanyaan_id" => $pertanyaanId,
+        "jawaban_id"    => $jawabanId,
+        "nilai"         => $nilai
+      ]);
+
+      if($pertanyaanAssesment->save()){
+        // $logPages = new LogUserMC([
+        //   "user_id"     => Session::get("id"),
+        //   "ip_address"  => $request->ip(),
+        //   "browser"     => BrowserDetect::browserName(),
+        //   "action"      => "Store Jawaban PG|Success",
+        //   "data"        => Session::get("email")." berhasil menyimpan jawaban ".$pertanyaanAssesment->id." - ".$jawabanId,
+        //   "link"        => url()->current()
+        // ]);
+        //
+        // $logPages->save();
+
+        return response()->json(
+          array(
+            "response"  => "success:store"
+          )
+        );
+      }else{
+        // $logPages = new LogUserMC([
+        //   "user_id"     => Session::get("id"),
+        //   "ip_address"  => $request->ip(),
+        //   "browser"     => BrowserDetect::browserName(),
+        //   "action"      => "Store Jawaban PG|Failed",
+        //   "data"        => Session::get("email")." gagal menyimpan jawaban ".$jawabanId,
+        //   "link"        => url()->current()
+        // ]);
+        //
+        // $logPages->save();
+        return response()->json(
+          array(
+            "response"  => "failed:store"
+          )
+        );
+      }
+    }else{
+      $pertanyaanAssesment = PertanyaanAssesment::where("ass_id", $assesmentId)->where("pertanyaan_id", $pertanyaanId)->first();
+      $pertanyaanAssesment->jawaban_id = $jawabanId;
+
+      if($pertanyaanAssesment->save()){
+        // $logPages = new LogUserMC([
+        //   "user_id"     => Session::get("id"),
+        //   "ip_address"  => $request->ip(),
+        //   "browser"     => BrowserDetect::browserName(),
+        //   "action"      => "Update Jawaban PG|Success",
+        //   "data"        => Session::get("email")." berhasil mengubah jawaban ".$jawabanId,
+        //   "link"        => url()->current()
+        // ]);
+        //
+        // $logPages->save();
+        return response()->json(
+          array(
+            "response"  => "success:update"
+          )
+        );
+      }
+      else{
+        // $logPages = new LogUserMC([
+        //   "user_id"     => Session::get("id"),
+        //   "ip_address"  => $request->ip(),
+        //   "browser"     => BrowserDetect::browserName(),
+        //   "action"      => "Update Jawaban PG|Failed",
+        //   "data"        => Session::get("email")." gagal mengubah jawaban ".$jawabanId,
+        //   "link"        => url()->current()
+        // ]);
+
+        // $logPages->save();
+
+        return response()->json(
+          array(
+            "response"  => "failed:update"
+          )
+        );
+      }
+    }
+  }
+
+  public function updateCacheInfo(Request $request){
+    $modalInfo  = $request->modal_info;
+    $assId      = $request->id;
+
+    $updateAssessmentCache = Assesment::find($assId);
+    $updateAssessmentCache->modal_info = $modalInfo;
+
+    $updateAssessmentCache->save();
+
+  }
+
   public function update(Request $request){
     $assesmentId  = $request->id;
     $selesai      = $request->selesai;

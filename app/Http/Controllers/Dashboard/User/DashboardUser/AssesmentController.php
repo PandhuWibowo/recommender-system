@@ -163,7 +163,7 @@ class AssesmentController extends Controller
     }
     else if($tablePertanyaan2 > 0){
       // TODO: Show limit isi page
-      $limit = ConfigurationTwo::pluck("konfigurasi2")->first();
+      $batas = ConfigurationTwo::pluck("konfigurasi2")->first();
 
       //TODO: Show Questions by assessment_id dengan urutan berdasarkan nomer urut
       $questions = SelfhoodPertanyaan::with("getJawabans")->where("assessment_id", $decryptId)->orderBy("no_urut_pertanyaan","asc")->get();
@@ -172,15 +172,18 @@ class AssesmentController extends Controller
       $countQuestions = count($questions);
 
       //TODO: Show Assessment Name
-      $competencyType = Pertanyaan::where("assesment_id", $decryptId)
-                                  ->join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
+      $competencyType = SelfhoodPertanyaan::where("assessment_id", $decryptId)
+                                  ->join("jenis_assesments as ja","pertanyaan_kepribadians.assessment_id","=","ja.id")
                                   ->pluck("ja.nama")
                                   ->first();
       //TODO: Show answer result
-      // $hasilJawaban = PertanyaanAssesment::where("ass_id", $decryptAssId)->pluck("jawaban_id");
+      $hasilJawaban = PertanyaanAssesment::where("ass_id", $decryptAssId)->pluck("jawaban_id");
 
+      //TODO: check cache
+      $updateAssessmentCache = Assesment::where("id", $decryptAssId)->pluck("modal_info");
+      // dd($updateAssessmentCache);
       //TODO: Lempar halaman pertanyaan tipe dua
-      return view("partisipan.dashboard.assesment.v_question2", compact("limit","questions","countQuestions","competencyType"));
+      return view("partisipan.dashboard.assesment.v_question2", compact("batas","questions","countQuestions","competencyType","hasilJawaban","decryptAssId","updateAssessmentCache"));
     }else{
       echo noticePage();
     }
