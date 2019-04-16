@@ -241,7 +241,7 @@
                                               </div>
 
                                               <div class="chosen-select-single mg-b-20">
-                                                  <label>RowScores Type</label>
+                                                  <label>Raw Scores Type</label>
                                                   <select data-placeholder="Choose Competency Type" id="rowscore_id" name="rowscore_id" class="chosen-select" tabindex="-1">
                                                     @foreach($rowscore as $row)
                                                       <option value="{{$row->id}}" <?php echo (Session::get("rowscore_id") == $row->id) ? "selected" : "";?>>{{$row->nama_rowscore}}</option>
