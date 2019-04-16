@@ -186,7 +186,7 @@
                                         @foreach($dataPenjelasanTypes as $key => $row)
                                           <tr>
                                             <td>{{ $row->getKepribadian->nama }}</td>
-                                            <td>{{ $row->getType->keterangan_tipe_1 }}</td>
+                                            <td>{!! $row->getType->keterangan_tipe_1 !!}</td>
                                             <td>
                                                 <?php
                                                   $words = explode(" ", $row->penjelasan_tipe_1);
@@ -200,7 +200,7 @@
                                                  ?>
                                             </td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-kepribadian_id="{{ Crypt::encrypt($row->kepribadian_id) }}" data-tipe_id="{{ Crypt::encrypt($row->tipe_id) }}" data-penjelasan_tipe_1="{{$row->penjelasan_tipe_1}}" data-penjelasan_tipe_2="{{$row->penjelasan_tipe_2}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-kepribadian_id="{{ $row->kepribadian_id }}" data-tipe_id="{{ $row->tipe_id }}" data-penjelasan_tipe_1="{{$row->penjelasan_tipe_1}}" data-penjelasan_tipe_2="{{$row->penjelasan_tipe_2}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -285,17 +285,17 @@
                                               <select id="edit_kepribadian_id" name="edit_kepribadian_id" class="chosen-select" tabindex="-1">
                                                   <option value=""></option>
                                                   @foreach($dataPersonalities as $row)
-                                                    <option value="{{Crypt::encrypt($row->id)}}">{{$row->nama}}</option>
+                                                    <option value="{{$row->id}}">{{$row->nama}}</option>
                                                   @endforeach
     										  </select>
-                                            </div
+                                          </div>
                                             <div class="form-group">
                                               <label for="usr">Type</label>
                                               <!-- <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required> -->
                                               <select id="edit_tipe_id" name="edit_tipe_id" class="chosen-select" tabindex="-1">
                                                   <option value=""></option>
-                                                  @foreach($dataPersonalities as $row)
-                                                    <option value="{{Crypt::encrypt($row->id)}}">{!! $row->keterangan_tipe_1 !!}</option>
+                                                  @foreach($dataTypes as $row)
+                                                    <option value="{{$row->id}}">{!! $row->keterangan_tipe_1 !!}</option>
                                                   @endforeach
     										  </select>
                                             </div>
@@ -538,9 +538,10 @@
                   kepribadian_id        : varKepribadianId,
                   tipe_id               : varTipeId,
                   penjelasan_tipe_1     : varPenjelasanTipe1,
-                  penjelasan_tipe_1     : varPenjelasanTipe2
+                  penjelasan_tipe_2     : varPenjelasanTipe2
                 },
                 success:function(data){
+                    // console.log(data);
                   $("#myModal").modal("hide");
                   if(data.response == "success"){
                     swal({
@@ -579,20 +580,22 @@
               }
           });
           var varId                 = $("#edit_id").val();
-          var varAssessmentId       = $("#edit_assesment_id").val();
-          var varKeteranganTipe1    = CKEDITOR.instances["edit_keterangan_tipe_1"].getData();
-          var varKeteranganTipe2    = CKEDITOR.instances["edit_keterangan_tipe_2"].getData();
+          var varKepribadianId      = $("#edit_kepribadian_id").val();
+          var varTipeId             = $("#edit_tipe_id").val();
+          var varPenjelasanTipe1    = CKEDITOR.instances["edit_penjelasan_tipe_1"].getData();
+          var varPenjelasanTipe2    = CKEDITOR.instances["edit_penjelasan_tipe_2"].getData();
           try {
             $.ajax({
               type    : "PUT",
-              url     : "{{ url('backend/pages/types/update') }}",
+              url     : "{{ url('backend/pages/model/types/update') }}",
               async   : true,
               dataType: "JSON",
               data    : {
-                id                : varId,
-                assessment_id     : varAssessmentId,
-                keterangan_tipe_1 : varKeteranganTipe1,
-                keterangan_tipe_2 : varKeteranganTipe2
+                id                  : varId,
+                kepribadian_id      : varKepribadianId,
+                tipe_id             : varTipeId,
+                penjelasan_tipe_1   : varPenjelasanTipe1,
+                penjelasan_tipe_2   : varPenjelasanTipe2
               },
               success:function(data){
                 $("#editModal").modal("hide");
@@ -603,7 +606,7 @@
                     text : "Type has been updated",
                     timer: 3000
                   }).then(function(){
-                    window.location = "{{ url('backend/pages/types') }}";
+                    window.location = "{{ url('backend/pages/model/types') }}";
                   })
                 }else{
                   swal({
@@ -645,7 +648,7 @@
               if(result.value){
                 $.ajax({
                   type      : "DELETE",
-                  url       : "{{ url('backend/pages/types/delete') }}",
+                  url       : "{{ url('backend/pages/model/types/delete') }}",
                   async     : true,
                   dataType  : "JSON",
                   data      : {
@@ -660,7 +663,7 @@
                         'Your file has been deleted.',
                         'success'
                       ).then(function(){
-                        window.location = "{{ url('backend/pages/types') }}";
+                        window.location = "{{ url('backend/pages/model/types') }}";
                       });
                     }
                   },

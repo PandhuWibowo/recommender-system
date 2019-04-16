@@ -16,6 +16,6 @@ class PenjelasanType extends Model{
   }
 
   public function getType(){
-    return $this->belongsTo(Tipe::class, "tipe_id");
+    return $this->belongsTo(Type::class, "tipe_id");
   }
 }

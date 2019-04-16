@@ -109,9 +109,10 @@ class PenjelasanTipeController extends Controller
   public function update(Request $request){
     $rules = array(
       'id'                => 'required',
-      'assessment_id'    => 'required',
-      'keterangan_tipe_1' => 'required',
-      'keterangan_tipe_2' => 'required'
+      'kepribadian_id'    => 'required',
+      'tipe_id'           => 'required',
+      'penjelasan_tipe_1' => 'required',
+      'penjelasan_tipe_2' => 'required'
     );
     $validator = Validator::make(Input::all(), $rules);
 
@@ -124,10 +125,11 @@ class PenjelasanTipeController extends Controller
       );
     }
     else{
-      $assesment                    = Type::findOrFail(Crypt::decrypt($request->id));
-      $assesment->assessment_id     = $request->assessment_id;
-      $assesment->keterangan_tipe_1 = $request->keterangan_tipe_1;
-      $assesment->keterangan_tipe_2 = $request->keterangan_tipe_2;
+      $assesment                    = PenjelasanType::findOrFail(Crypt::decrypt($request->id));
+      $assesment->kepribadian_id    = $request->kepribadian_id;
+      $assesment->tipe_id           = $request->tipe_id;
+      $assesment->penjelasan_tipe_1 = $request->penjelasan_tipe_1;
+      $assesment->penjelasan_tipe_2 = $request->penjelasan_tipe_2;
       if($assesment->save()){
         // $log = new Assessment([
         //   "user_id"     => Session::get("id"),
@@ -167,9 +169,9 @@ class PenjelasanTipeController extends Controller
   }
   public function destroy(Request $request){
     $txtId    = Crypt::decrypt($request->id);
-    $data = Type::where('id', $txtId)->first();
+    $data = PenjelasanType::where('id', $txtId)->first();
 
-    if(Type::where('id',$txtId)->delete()){
+    if(PenjelasanType::where('id',$txtId)->delete()){
       // $log = new Assessment([
       //   "user_id"     => Session::get("id"),
       //   "ip_address"  => $request->ip(),
