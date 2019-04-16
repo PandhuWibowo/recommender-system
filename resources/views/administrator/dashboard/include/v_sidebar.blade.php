@@ -57,6 +57,7 @@
                                           <li><a title="All Selfhood Questions" href="{{ url('backend/pages/selfhood/questions') }}"><span class="mini-sub-pro">Questions</span></a></li>
                                           <li><a title="Configurations" href="{{ url("backend/pages/configurations/session/two") }}"><span class="mini-sub-pro">Configurations</span></a></li>
                                           <li><a title="Types" href="{{ url("backend/pages/types") }}"><span class="mini-sub-pro">Types</span></a></li>
+                                          <li><a title="Model Types" href="{{ url("backend/pages/model/types") }}"><span class="mini-sub-pro">Detail Types</span></a></li>
                                       </ul>
                                   </li>
                               </ul>

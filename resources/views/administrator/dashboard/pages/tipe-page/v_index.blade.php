@@ -166,7 +166,7 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Type of Assesments <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Type <span class="table-project-n">Data</span> Table</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
@@ -266,7 +266,7 @@
                                                 <input type="hidden" name="edit_id" value="" id="edit_id">
                                             </div>
                                             <div class="form-group">
-                                              <label for="usr">Name of Assesments</label>
+                                              <label for="usr">Assessment Type</label>
                                               <!-- <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required> -->
                                               <select data-placeholder="Choose Assesment Type" id="edit_assesment_id" name="assesment_id" class="chosen-select" tabindex="-1">
                                                   <option value=""></option>
