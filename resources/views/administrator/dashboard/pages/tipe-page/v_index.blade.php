@@ -137,34 +137,7 @@
                                           <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
                                             Add New
                                           </a>
-                                          <!-- Modal -->
-                                          <div id="myModal" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
-
-                                              <!-- Modal content-->
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                  <h4 class="modal-title">New Type of Assesments</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <div class="form-group">
-                                                    <label for="usr">Name of Assesments</label>
-                                                    <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required>
-                                                  </div>
-                                                  <div class="form-group">
-                                                    <label for="usr">Number to</label>
-                                                    <input type="number" min="1" class="form-control" autocomplete="off" id="nomor_urut" required>
-                                                  </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                                </div>
-                                              </div>
-
-                                            </div>
-                                          </div>
-                                            <!-- <form role="search" class="sr-input-func">
+                                                                                      <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
                                             </form> -->
@@ -203,29 +176,60 @@
                                       <thead>
                                           <tr>
                                               <th>Assessment Name</th>
-                                              <th>Sequence Number to</th>
+                                              <th>Description Type 1</th>
+                                              <th>Description Type 2</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
                                       <tbody>
-                                        @foreach($dataAssesments as $key=>$row)
+                                        @foreach($dataType as $key => $row)
                                           <tr>
-                                            <td>{{ $row->nama }}</td>
-                                            <td>{{ $row->no_urut_assesment }}</td>
+                                            <td>{{ $row->getAssessment->nama }}</td>
+                                            <td>{{ $row->keterangan_tipe_1 }}</td>
+                                            <td>{{ $row->keterangan_tipe_2 }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-no="{{ $row->no_urut_assesment }}" data-nama="{{$row->nama}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-assessment_id="{{ Crypt::encrypt($row->assessment_id) }}" data-keterangan_tipe_1="{{$row->keterangan_tipe_1}}" data-keterangan_tipe_2="{{$row->keterangan_tipe_2}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>Name of Assesment</th>
-                                            <th>Sequence Number to</th>
-                                            <th>Action</th>
+                                              <th>Assessment Name</th>
+                                              <th>Description Type 1</th>
+                                              <th>Description Type 2</th>
+                                              <th>Action</th>
                                           </tr>
                                       </tfoot>
                                     </table>
+                                    <!-- Modal -->
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                      <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">New Type of Assesments</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="form-group">
+                                              <label for="usr">Name of Assesments</label>
+                                              <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="usr">Number to</label>
+                                              <input type="number" min="1" class="form-control" autocomplete="off" id="nomor_urut" required>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" id="btn_save" class="btn btn-primary">Save</button>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
                                     <!-- Modal -->
                                     <div id="editModal" class="modal fade" role="dialog">
                                       <div class="modal-dialog">

@@ -139,50 +139,7 @@
                                           <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
                                             Add New
                                           </a>
-                                          <!-- Modal -->
-                                          <div id="myModal" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
 
-                                              <!-- Modal content-->
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                  <h4 class="modal-title">New Description Result</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <div class="form-group">
-                                                    <label>Description Score</label>
-                                                    <select class="form-control js-example-basic-multiple chosen-select" name="keterangan_id" id="keterangan_id" tabindex="-1">
-                                                      <option></option>
-                                                      @foreach($keteranganNilai as $row)
-                                                        <option value="{{$row->id}}">{{$row->range_score}}</option>
-                                                      @endforeach
-                                                    </select>
-                                                  </div>
-
-                                                  <div class="form-group">
-                                                    <label>Competency</label>
-                                                    <select class="form-control js-example-basic-multiple chosen-select" name="kompetensi_id" id="kompetensi_id" tabindex="-1">
-                                                      <option></option>
-                                                      @foreach($kompetensi as $row)
-                                                        <option value="{{$row->id}}">{{$row->kompetensi}}</option>
-                                                      @endforeach
-                                                    </select>
-                                                  </div>
-
-                                                  <div class="form-group res-mg-t-15">
-                                                    <label for="usr">Competency Result</label>
-                                                    <textarea name="hasil_kompetensi" id="hasil_kompetensi" placeholder="Competency Result"></textarea>
-                                                  </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                                </div>
-                                              </div>
-
-                                            </div>
-                                          </div>
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
@@ -254,6 +211,52 @@
                                           </tr>
                                       </tfoot>
                                     </table>
+
+                                    <!-- Modal -->
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                      <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">New Description Result</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="form-group">
+                                              <label>Description Score</label>
+                                              <select class="form-control js-example-basic-multiple chosen-select" name="keterangan_id" id="keterangan_id" tabindex="-1">
+                                                <option></option>
+                                                @foreach($keteranganNilai as $row)
+                                                  <option value="{{$row->id}}">{{$row->range_score}}</option>
+                                                @endforeach
+                                              </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                              <label>Competency</label>
+                                              <select class="form-control js-example-basic-multiple chosen-select" name="kompetensi_id" id="kompetensi_id" tabindex="-1">
+                                                <option></option>
+                                                @foreach($kompetensi as $row)
+                                                  <option value="{{$row->id}}">{{$row->kompetensi}}</option>
+                                                @endforeach
+                                              </select>
+                                            </div>
+
+                                            <div class="form-group res-mg-t-15">
+                                              <label for="usr">Competency Result</label>
+                                              <textarea name="hasil_kompetensi" id="hasil_kompetensi" placeholder="Competency Result"></textarea>
+                                            </div>
+
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" id="btn_save" class="btn btn-primary">Save</button>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                    
                                     <!-- Modal -->
                                     <div id="editModal" class="modal fade" role="dialog">
                                       <div class="modal-dialog">

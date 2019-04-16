@@ -139,47 +139,7 @@
                                           <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
                                             Add New
                                           </a>
-                                          <!-- Modal -->
-                                          <div id="myModal" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
 
-                                              <!-- Modal content-->
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                  <h4 class="modal-title">New Score Description</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <div class="form-group">
-                                                    <label for="usr">Range Score</label>
-                                                    <input type="number" min="1" class="form-control" autofocus="on" autocomplete="off" id="range_score" required>
-                                                  </div>
-                                                  <div class="form-group">
-                                                    <label for="usr">Description</label>
-                                                    <input type="text" class="form-control" autocomplete="off" id="description" required>
-                                                  </div>
-
-                                                  <!-- <div class="form-group res-mg-t-15">
-                                                    <label for="usr">Description Type</label>
-                                                    <textarea name="jenisketerangan" id="jenisketerangan" placeholder="Description Type"></textarea>
-                                                  </div> -->
-                                                  <div class="chosen-select-single mg-b-20">
-                                                    <label>Description Type</label>
-                                                    <select data-placeholder="Choose Description Type" width="100%" id="jenis_keterangan" name="jenis_keterangan" class="jenis_keterangan">
-                                                      <option value=""></option>
-                                                      <option value="Kekuatan">Kekuatan</option>
-                                                      <option value="Pengembangan">Pengembangan</option>
-                                                    </select>
-                                                  </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                                </div>
-                                              </div>
-
-                                            </div>
-                                          </div>
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
@@ -251,6 +211,49 @@
                                           </tr>
                                       </tfoot>
                                     </table>
+
+                                    <!-- Modal -->
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                      <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">New Score Description</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="form-group">
+                                              <label for="usr">Range Score</label>
+                                              <input type="number" min="1" class="form-control" autofocus="on" autocomplete="off" id="range_score" required>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="usr">Description</label>
+                                              <input type="text" class="form-control" autocomplete="off" id="description" required>
+                                            </div>
+
+                                            <!-- <div class="form-group res-mg-t-15">
+                                              <label for="usr">Description Type</label>
+                                              <textarea name="jenisketerangan" id="jenisketerangan" placeholder="Description Type"></textarea>
+                                            </div> -->
+                                            <div class="chosen-select-single mg-b-20">
+                                              <label>Description Type</label>
+                                              <select data-placeholder="Choose Description Type" width="100%" id="jenis_keterangan" name="jenis_keterangan" class="jenis_keterangan">
+                                                <option value=""></option>
+                                                <option value="Kekuatan">Kekuatan</option>
+                                                <option value="Pengembangan">Pengembangan</option>
+                                              </select>
+                                            </div>
+
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" id="btn_save" class="btn btn-primary">Save</button>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
                                     <!-- Modal -->
                                     <div id="editModal" class="modal fade" role="dialog">
                                       <div class="modal-dialog">

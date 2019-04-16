@@ -352,65 +352,7 @@
                                               Add New
                                             </a>
 
-                                            <div class="modal fade fullwidth" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                              <div class="modal-dialog fullwidth--box " role="document">
-                                                 <div class="modal-content no--shadow">
-                                                   <form class="" action="{{ url('backend/pages/testimonial/store') }}" enctype="multipart/form-data" method="POST">
-                                                    <div class="modal-header">
-                                                      <div class="alert alert-danger print-error-msg" style="display:none">
-                                                        <ul></ul>
-                                                      </div>
-                                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                       <h4 class="modal-title" id="myModalLabel"></h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <!-- Start Upload Button -->
-                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <div class="form-group">
-                                                          <div class="image-upload-wrap">
-                                                            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="foto" id="foto" />
-                                                            <div class="drag-text">
-                                                              <h3>Drag and drop a file or select add Image</h3>
-                                                            </div>
-                                                          </div>
-                                                          <div class="file-upload-content">
-                                                            <img class="file-upload-image" src="#" alt="your image" />
-                                                            <div class="image-title-wrap">
-                                                              <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                        <!-- Start Textbox -->
-                                                        <div class="form-group">
-                                                          <label for="inputlg">Participant</label>
-                                                          <select class="" id="nama_testi" name="nama_testi">
-                                                            <option value=""></option>
-                                                            @foreach($users as $row)
-                                                              <option value="{{Crypt::encrypt($row->id)}}">{{$row->firstname}} {{$row->lastname}}</option>
 
-                                                            @endforeach
-                                                          </select>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                          <label for="inputlg">College/School</label>
-                                                          <input class="form-control" id="nama_instansi" type="text" name="nama_instansi">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label>Opini</label>
-                                                            <textarea class="form-control" rows="5" id="pendapat_testimoni" style="height: 150px;" name="pendapat_testimoni" placeholder="Opini"></textarea>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                       <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-                                                       <button type="submit" class="btn btn-primary" id="btn-save">Save</button>
-                                                    </div>
-                                                    </form>
-                                                 </div>
-                                              </div>
-                                           </div>
                                             <!-- <form role="search" class="sr-input-func">
                                                 <input type="text" placeholder="Search..." class="search-int form-control">
                                                 <a href="#"><i class="fa fa-search"></i></a>
@@ -526,6 +468,67 @@
                                           </tr>
                                       </tfoot>
                                     </table>
+
+                                    <!-- Modal Store -->
+                                    <div class="modal fade fullwidth" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                      <div class="modal-dialog fullwidth--box " role="document">
+                                         <div class="modal-content no--shadow">
+                                           <form class="" action="{{ url('backend/pages/testimonial/store') }}" enctype="multipart/form-data" method="POST">
+                                            <div class="modal-header">
+                                              <div class="alert alert-danger print-error-msg" style="display:none">
+                                                <ul></ul>
+                                              </div>
+                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                               <h4 class="modal-title" id="myModalLabel"></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Start Upload Button -->
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <div class="form-group">
+                                                  <div class="image-upload-wrap">
+                                                    <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="foto" id="foto" />
+                                                    <div class="drag-text">
+                                                      <h3>Drag and drop a file or select add Image</h3>
+                                                    </div>
+                                                  </div>
+                                                  <div class="file-upload-content">
+                                                    <img class="file-upload-image" src="#" alt="your image" />
+                                                    <div class="image-title-wrap">
+                                                      <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <!-- Start Textbox -->
+                                                <div class="form-group">
+                                                  <label for="inputlg">Participant</label>
+                                                  <select class="" id="nama_testi" name="nama_testi">
+                                                    <option value=""></option>
+                                                    @foreach($users as $row)
+                                                      <option value="{{Crypt::encrypt($row->id)}}">{{$row->firstname}} {{$row->lastname}}</option>
+
+                                                    @endforeach
+                                                  </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                  <label for="inputlg">College/School</label>
+                                                  <input class="form-control" id="nama_instansi" type="text" name="nama_instansi">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Opini</label>
+                                                    <textarea class="form-control" rows="5" id="pendapat_testimoni" style="height: 150px;" name="pendapat_testimoni" placeholder="Opini"></textarea>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                               <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                                               <button type="submit" class="btn btn-primary" id="btn-save">Save</button>
+                                            </div>
+                                            </form>
+                                         </div>
+                                      </div>
+                                   </div>
 
                                     <!-- View Modal -->
                                     <div class="modal fade fullwidth" id="myModal--effect-fullwidth" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

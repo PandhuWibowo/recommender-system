@@ -11,7 +11,7 @@ class Type extends Model{
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
-  public function getType(){
+  public function getAssessment(){
     return $this->belongsTo(JenisAssesment::class, "assessment_id");
   }
 }
