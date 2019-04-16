@@ -146,6 +146,11 @@ Route::prefix('backend/pages')->group(function () {
     Route::delete("selfhood/questions/answers/delete","Dashboard\SelfhoodQuestionController@destroyAnswer");
     Route::delete("selfhood/questions/delete","Dashboard\SelfhoodQuestionController@destroy");
 
+    // TODO: Tipe bagian pertanyaan ke 2
+    Route::resource("types","Dashboard\TipeController");
+
+    // TODO: Penjelasan tipe bagian pertanyaan ke 2
+    Route::resource("model/types","Dashboard\PenjelasanTipeController");
 });
 
 Route::prefix('user/pages')->group(function () {
