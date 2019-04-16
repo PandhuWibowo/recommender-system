@@ -198,7 +198,7 @@
                                                  ?>
                                             </td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-assessment_id="{{ Crypt::encrypt($row->assessment_id) }}" data-keterangan_tipe_1="{{$row->keterangan_tipe_1}}" data-keterangan_tipe_2="{{$row->keterangan_tipe_2}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-assessment_id="{{ $row->assessment_id }}" data-keterangan_tipe_1="{{$row->keterangan_tipe_1}}" data-keterangan_tipe_2="{{$row->keterangan_tipe_2}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -263,7 +263,7 @@
                                           </div>
                                           <div class="modal-body">
                                             <div class="form-group">
-                                                <input type="text" name="edit_id" value="" id="edit_id">
+                                                <input type="hidden" name="edit_id" value="" id="edit_id">
                                             </div>
                                             <div class="form-group">
                                               <label for="usr">Name of Assesments</label>
@@ -271,7 +271,7 @@
                                               <select data-placeholder="Choose Assesment Type" id="edit_assesment_id" name="assesment_id" class="chosen-select" tabindex="-1">
                                                   <option value=""></option>
                                                   @foreach($jenisAssessments as $row)
-                                                    <option value="{{Crypt::encrypt($row->id)}}">{{$row->nama}}</option>
+                                                    <option value="{{$row->id}}">{{$row->nama}}</option>
                                                   @endforeach
     										  </select>
                                             </div>
@@ -429,12 +429,16 @@
       $(document).ready(function(){
 
         $("#myAssesments").on("click", ".btn_edit",function(){
-          var varId     = $(this).data("id");
-          // var varName   = $(this).data("nama");
-          // var varNoUrut = $(this).data("no");
+          var varId                 = $(this).data("id");
+          var varAssessmentId       = $(this).data("assessment_id");
+          var varKeteranganTipe1    = $(this).data("keterangan_tipe_1");
+          var varKeteranganTipe2    = $(this).data("keterangan_tipe_2");
           try {
             $("#edit_id").val(varId);
-            // $("#name_jenis_assesments").val(varName);
+            $("#edit_assesment_id").val(varAssessmentId).trigger("change");
+            CKEDITOR.instances['edit_keterangan_tipe_1'].setData(varKeteranganTipe1);
+            CKEDITOR.instances['edit_keterangan_tipe_2'].setData(varKeteranganTipe2);
+
             // $("#no_urut_assesment").val(varNoUrut);
             $("#editModal").modal("show");
           } catch (e) {
@@ -528,19 +532,21 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varId     = $("#id_jenis_assesments").val();
-          var varName   = $("#name_jenis_assesments").val();
-          var varNoUrut = $("#no_urut_assesment").val();
+          var varId                 = $("#edit_id").val();
+          var varAssessmentId       = $("#edit_assesment_id").val();
+          var varKeteranganTipe1    = CKEDITOR.instances["edit_keterangan_tipe_1"].getData();
+          var varKeteranganTipe2    = CKEDITOR.instances["edit_keterangan_tipe_2"].getData();
           try {
             $.ajax({
               type    : "PUT",
-              url     : "{{ url('backend/pages/assesments/update') }}",
+              url     : "{{ url('backend/pages/types/update') }}",
               async   : true,
               dataType: "JSON",
               data    : {
                 id                : varId,
-                nama              : varName,
-                no_urut_assesment : varNoUrut
+                assessment_id     : varAssessmentId,
+                keterangan_tipe_1 : varKeteranganTipe1,
+                keterangan_tipe_2 : varKeteranganTipe2
               },
               success:function(data){
                 $("#editModal").modal("hide");
@@ -548,16 +554,16 @@
                   swal({
                     type : "success",
                     title: "Success",
-                    text : "Name of Assesment has been updated",
+                    text : "Type has been updated",
                     timer: 3000
                   }).then(function(){
-                    window.location = "{{ url('backend/pages/assesments') }}";
+                    window.location = "{{ url('backend/pages/types') }}";
                   })
                 }else{
                   swal({
                     type : "error",
                     title: "Error",
-                    text : "Failed updaing the data",
+                    text : "Failed updating the data",
                     timer: 3000
                   })
                 }
@@ -579,7 +585,7 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
           });
-          var varId = $("#id_jenis_assesments").val();
+          var varId = $("#edit_id").val();
           try {
             swal({
               title: 'Are you sure?',
@@ -593,7 +599,7 @@
               if(result.value){
                 $.ajax({
                   type      : "DELETE",
-                  url       : "{{ url('backend/pages/assesments/delete') }}",
+                  url       : "{{ url('backend/pages/types/delete') }}",
                   async     : true,
                   dataType  : "JSON",
                   data      : {
@@ -608,7 +614,7 @@
                         'Your file has been deleted.',
                         'success'
                       ).then(function(){
-                        window.location = "{{ url('backend/pages/assesments') }}";
+                        window.location = "{{ url('backend/pages/types') }}";
                       });
                     }
                   },
