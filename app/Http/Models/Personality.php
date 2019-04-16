@@ -14,4 +14,8 @@ class Personality extends Model{
   public function getJenisAssessment(){
     return $this->belongsTo(JenisAssesment::class,"assessment_id");
   }
+
+  public function getPenjelasanType(){
+    return $this->hasMany("App\Http\Models\PenjelasanType");
+  }
 }

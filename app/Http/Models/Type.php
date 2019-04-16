@@ -14,4 +14,8 @@ class Type extends Model{
   public function getAssessment(){
     return $this->belongsTo(JenisAssesment::class, "assessment_id");
   }
+
+  public function getPenjelasanType(){
+    return $this->hasMany("App\Http\Models\PenjelasanType");
+  }
 }

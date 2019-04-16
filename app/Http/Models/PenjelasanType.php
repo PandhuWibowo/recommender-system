@@ -11,7 +11,11 @@ class PenjelasanType extends Model{
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
+  public function getKepribadian(){
+    return $this->belongsTo(Personality::class, "kepribadian_id");
+  }
+
   public function getType(){
-    return $this->belongsTo(JenisAssesment::class, "assessment_id");
+    return $this->belongsTo(Tipe::class, "tipe_id");
   }
 }
