@@ -36,12 +36,15 @@ class TipeController extends Controller
     $logPages->save();
 
     $dataType = Type::all();
-    return view("administrator.dashboard.pages.tipe-page.v_index", compact("dataType"));
+    $jenisAssessments = JenisAssesment::orderBy("nama","asc")->where("model","2")->get();
+    return view("administrator.dashboard.pages.tipe-page.v_index", compact("dataType","jenisAssessments"));
   }
 
   public function store(Request $request){
     $rules = array(
-      'nama'  => 'required'
+      'assessment_id'      => 'required',
+      'keterangan_tipe_1'  => 'required',
+      'keterangan_tipe_2'  => 'required'
     );
     $validator = Validator::make(Input::all(), $rules);
 
@@ -54,22 +57,23 @@ class TipeController extends Controller
       );
     }
     else{
-      $assesment = new JenisAssesment([
+      $assesment = new Type([
         'id'                => Uuid::generate()->string,
-        'nama'              => ucwords(trim($request->nama)),
-        'no_urut_assesment' => trim($request->no_urut_assesment)
+        'assessment_id'     => Crypt::decrypt($request->assessment_id),
+        'keterangan_tipe_1' => trim($request->keterangan_tipe_1),
+        'keterangan_tipe_2' => trim($request->keterangan_tipe_2)
       ]);
       if($assesment->save()){
-        $log = new Assessment([
-          "user_id"     => Session::get("id"),
-          "ip_address"  => $request->ip(),
-          "browser"     => BrowserDetect::browserName(),
-          "action"      => "Storing Assessment Type - Store|Success",
-          "data"        => "Berhasil menyimpan data baru Assessment Type - Assessment Type ID : ".$request->id.", Nama : ".ucwords(trim($request->nama)).", No Urut Assessment : ".$request->no_urut_assesment,
-          "link"        => url()->current()
-        ]);
-
-        $log->save();
+        // $log = new Assessment([
+        //   "user_id"     => Session::get("id"),
+        //   "ip_address"  => $request->ip(),
+        //   "browser"     => BrowserDetect::browserName(),
+        //   "action"      => "Storing Assessment Type - Store|Success",
+        //   "data"        => "Berhasil menyimpan data baru Assessment Type - Assessment Type ID : ".$request->id.", Nama : ".ucwords(trim($request->nama)).", No Urut Assessment : ".$request->no_urut_assesment,
+        //   "link"        => url()->current()
+        // ]);
+        //
+        // $log->save();
 
         return response()->json(
             array(
@@ -77,16 +81,16 @@ class TipeController extends Controller
             )
         );
       }else{
-        $log = new Assessment([
-          "user_id"     => Session::get("id"),
-          "ip_address"  => $request->ip(),
-          "browser"     => BrowserDetect::browserName(),
-          "action"      => "Storing Assessment Type - Store|Failed",
-          "data"        => "Gagal menyimpan data baru Assessment Type - Assessment Type ID : ".$request->id.", Nama : ".ucwords(trim($request->nama)).", No Urut Assessment : ".$request->no_urut_assesment,
-          "link"        => url()->current()
-        ]);
-
-        $log->save();
+        // $log = new Assessment([
+        //   "user_id"     => Session::get("id"),
+        //   "ip_address"  => $request->ip(),
+        //   "browser"     => BrowserDetect::browserName(),
+        //   "action"      => "Storing Assessment Type - Store|Failed",
+        //   "data"        => "Gagal menyimpan data baru Assessment Type - Assessment Type ID : ".$request->id.", Nama : ".ucwords(trim($request->nama)).", No Urut Assessment : ".$request->no_urut_assesment,
+        //   "link"        => url()->current()
+        // ]);
+        //
+        // $log->save();
         return response()->json(
             array(
               'response' => "failed"

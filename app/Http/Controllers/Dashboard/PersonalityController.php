@@ -27,6 +27,7 @@ class PersonalityController extends Controller
   public function index(){
     $jenisAssessments   = JenisAssesment::select("id","nama")
                                       ->orderBy("nama","asc")
+                                      ->where("model","2")
                                       ->get();
     $personalities      = Personality::all();
     return view("administrator.dashboard.pages.kepribadian.v_index", compact("jenisAssessments","personalities"));

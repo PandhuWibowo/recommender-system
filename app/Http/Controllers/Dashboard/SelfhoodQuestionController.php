@@ -35,10 +35,10 @@ class SelfhoodQuestionController extends Controller
   public function edit($assessmentId, $pertanyaanKepribadianId){
     $decryptAssessmentId            = Crypt::decrypt($assessmentId);
     $decryptPertanyaanKepribadianId = Crypt::decrypt($pertanyaanKepribadianId);
-    $jenisAssessments               = JenisAssesment::orderBy("created_at","asc")->get();
+    $jenisAssessments               = JenisAssesment::orderBy("nama","asc")->where("model","2")->get();
     $persons                        = Personality::orderBy("created_at","asc")->get();
     $editSoal                       = SelfhoodPertanyaan::join("jawaban_kepribadians as jk","pertanyaan_kepribadians.id","=","jk.selfhood_pertanyaan_id")
-                                                        ->where("id", $decryptPertanyaanKepribadianId)
+                                                        ->where("selfhood_pertanyaan_id", $decryptPertanyaanKepribadianId)
                                                         ->where("pertanyaan_kepribadians.assessment_id", $decryptAssessmentId)
                                                         ->first();
     // dd($editSoal);
@@ -49,7 +49,7 @@ class SelfhoodQuestionController extends Controller
   }
 
   public function add(){
-    $jenisAssessments = JenisAssesment::orderBy("created_at","asc")->get(); //TODO: mengeluarkan jenis assessment
+    $jenisAssessments = JenisAssesment::orderBy("nama","asc")->where("model","2")->get(); //TODO: mengeluarkan jenis assessment
     $persons          = Personality::orderBy("created_at","asc")->get(); //TODO: mengeluarkan personality
     $noUrutTerakhir   = SelfhoodPertanyaan::where("assessment_id", Session::get("assesment_id"))->pluck("no_urut_pertanyaan");
 
@@ -135,7 +135,7 @@ class SelfhoodQuestionController extends Controller
             $kasihNomorUrut = $maxNoUrutTerakhir+1;
           }
           $jawaban  = new SelfhoodJawaban([
-            'id'                          => Uuid::generate()->string,
+            'jawaban_id'                  => Uuid::generate()->string,
             'kepribadian_id'              => Crypt::decrypt($request->kepribadian_id[$i]),
             'selfhood_pertanyaan_id'      => $pertanyaan->id,
             'assessment_id'               => trim(Crypt::decrypt($request->assesment_id)),
@@ -193,13 +193,13 @@ class SelfhoodQuestionController extends Controller
         if($request->opsi_jawaban[$i] == "" && $request->code_opsi_jawaban[$i] == ""){
           continue;
         }else{
-          $queryNoUrut      = SelfhoodJawaban::select("no_urut_jawaban_kepribadian")->where("assessment_id", Crypt::decrypt($request->assesment_id))->get(); //TODO: membuat nomor urut
-
+          $queryNoUrut      = SelfhoodJawaban::select("no_urut_jawaban_kepribadian")->where("assessment_id", Crypt::decrypt($request->assesment_id))->where("selfhood_pertanyaan_id", Crypt::decrypt($request->assesment_id))->get(); //TODO: membuat nomor urut
+          // dd(count($queryNoUrut));
           if(count($queryNoUrut) == 0){
-            $kasihNomorUrut = 1;
+            $kasihNomorUrut = 0;
           }
           $jawaban  = new SelfhoodJawaban([
-            'id'                          => Uuid::generate()->string,
+            'jawaban_id'                  => Uuid::generate()->string,
             'kepribadian_id'              => Crypt::decrypt($request->kepribadian_id[$i]),
             'selfhood_pertanyaan_id'      => Crypt::decrypt($request->id),
             'assessment_id'               => trim(Crypt::decrypt($request->assesment_id)),

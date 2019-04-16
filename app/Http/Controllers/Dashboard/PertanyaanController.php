@@ -39,7 +39,7 @@ class PertanyaanController extends Controller
     ]);
 
     $logPages->save();
-    $jenisAssessments = JenisAssesment::orderBy("nama","asc")->get();
+    $jenisAssessments = JenisAssesment::orderBy("nama","asc")->where("model","1")->get();
     $pertanyaan = Pertanyaan::orderBy("no_urut_pertanyaan")->get();
     // $pertanyaan = Pertanyaan::with("get_assesment")->with("get_kompetensi")->with("get_rowscore");
     return view("administrator.dashboard.pages.pertanyaan-page.v_index", compact("pertanyaan","jenisAssessments"));
@@ -70,7 +70,7 @@ class PertanyaanController extends Controller
 
     $logPages->save();
 
-    $assesments = JenisAssesment::all();
+    $assesments = JenisAssesment::orderBy("nama","asc")->where("model","1")->get();
     $kompetensi = Kompetensi::all();
     $rowscore   = RowScore::all();
     return view("administrator.dashboard.pages.pertanyaan-page.add-pertanyaan",compact("assesments","kompetensi","rowscore","kasihNomorUrut"));
@@ -88,7 +88,7 @@ class PertanyaanController extends Controller
 
     $logPages->save();
 
-    $assesments = JenisAssesment::all();
+    $assesments = JenisAssesment::orderBy("nama","asc")->where("model","1")->get();
     $kompetensi = Kompetensi::all();
     $rowscore   = RowScore::all();
     $pertanyaan = Pertanyaan::findOrFail(Crypt::decrypt($id));

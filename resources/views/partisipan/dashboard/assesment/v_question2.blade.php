@@ -542,7 +542,7 @@
                                                                                                     <input type="hidden" value="{{$row2->id}}" class="jawabanid" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
                                                                                                     <input type="hidden" value="{{$row2->kepribadian_id}}" class="kepribadian_id" name="kepribadian_id{{$x}}" id="kepribadian_id{{$x}}" required>
 
-                                                                                                    <input type="radio" style="display:inline;" value="{{$row2->code_opsi_jawaban}}" class="opsi_jawaban form-radio" name="opsi_jawaban{{$x}}" id="opsi_jawaban{{$x}}" assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->selfhood_pertanyaan_id}}" jawabanid="{{$row2->id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?>>
+                                                                                                    <input type="radio" style="display:inline;" value="{{$row2->code_opsi_jawaban}}" class="opsi_jawaban form-radio" name="opsi_jawaban{{$x}}" id="opsi_jawaban{{$x}}" assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->selfhood_pertanyaan_id}}" jawabanid="{{$row2->jawaban_id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?>>
 
                                                                                                   </span>
                                                                                                   <div class="form-control form-control-static">
