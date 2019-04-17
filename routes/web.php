@@ -185,7 +185,7 @@ Route::prefix('user/pages')->group(function () {
     Route::post("selfhood/questions/store","Dashboard\User\DashboardUser\QuestionController@storeJawaban");
     Route::match(array("PUT","PATCH"), "selfhood/questions/update/cache/info", "Dashboard\User\DashboardUser\QuestionController@updateCacheInfo");
     Route::get("results/final/{id}","Dashboard\User\DashboardUser\ResultController@show");
-    Route::get("result/final/types/two/{id}","Dashboard\User\DashboardUser\ResultController@soalKedua");
+    Route::get("results/final/model/second/{id}","Dashboard\User\DashboardUser\ResultController@soalKedua");
 
     Route::get("forgot/password/sendemail","Dashboard\User\ForgotPassword\ForgotPasswordController@index");
     Route::post("forgot/password/sent","Dashboard\User\ForgotPassword\ForgotPasswordController@sendEmail");

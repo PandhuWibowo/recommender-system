@@ -219,6 +219,12 @@ class QuestionController extends Controller
 
     $updateAssessmentCache->save();
 
+    return response()->json(
+        array(
+          "response" => "success"
+        )
+    );
+
   }
 
   public function update(Request $request){

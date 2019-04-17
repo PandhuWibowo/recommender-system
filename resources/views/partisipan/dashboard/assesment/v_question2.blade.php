@@ -727,8 +727,11 @@
                   modal_info  : "2"
                 },
                 success:function(data){
-                  $("#put_cache_info").hide("modal");
-                  console.log(data);
+                  // $("#modalInfo").modal("hide");
+                  if(data.response === "success"){
+                    $('#modalInfo').modal('toggle');
+                    console.log(data);
+                  }
                 },
                 error:function(data){
                   console.log(data);
@@ -872,7 +875,7 @@
                           title     : "Success",
                           timer     : 3000,
                         }).then(function(){
-                          window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
+                          window.location.href="{{ url('user/pages/results/final/model/second') }}"+"/"+data.assId;
                         });
                       }
                     },

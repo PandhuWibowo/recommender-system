@@ -11,23 +11,16 @@ class PertanyaanAssesment extends Model{
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
-  // public function get_assesment(){
-  //     return $this->belongsTo(JenisAssesment::class,'assesment_id');
-  // }
-  //
-  // public function get_kompetensi(){
+  public function getAssessment(){
+      return $this->belongsTo(Assessment::class,'ass_id');
+  }
+
+  // public function getPertanyaan(){
   //   return $this->belongsTo(Kompetensi::class, 'kompetensi_id');
   // }
   //
-  // public function get_rowscore(){
+  // public function getJawaban(){
   //   return $this->belongsTo(RowScore::class, 'rowscore_id');
   // }
-  //
-  // public function data_jawabans(){
-  //   return $this->hasMany('App\Http\Models\Jawaban');
-  // }
-  //
-  // public function get_jawaban(){
-  //   return $this->hasMany(Jawaban::class);
-  // }
+
 }

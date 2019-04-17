@@ -12,6 +12,7 @@ use App\Http\Models\AssessmentKompetensi;
 use App\Http\Models\RowScore;
 use App\Http\Models\KeteranganNilai;
 use App\Http\Models\HasilAssKom;
+use App\Http\Models\PertanyaanAssesment;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -192,14 +193,13 @@ class ResultController extends Controller
           $hasilNilaiAssKoms->save();
 
         }
-
-
         // echo $row->kId."-".$row->kKompetensi."- 0 <br/>";
       }
       // $kompetensiFinal->save();
     }
   }
 
+    // TODO: Bagian table keterangan nilai
     $rangeScore = KeteranganNilai::orderBy("range_score")->get();
 
     $cetakHasilAsskomsKekuatan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
@@ -243,8 +243,24 @@ class ResultController extends Controller
   }
 
   public function soalKedua($id, Request $request){
+    // TODO: menghilangkan error
+    error_reporting(0);
     $assId  = Crypt::decrypt($id);
-    
-    return view("partisipan.dashboard.result.v_index_soal_dua", compact(""));
+
+    //TODO: Count max result
+    $sql    = PertanyaanAssesment::selectRaw("jk.kepribadian_id as typical_scale, count(nilai) as max_of_result")
+                                 ->join("jawaban_kepribadians as jk","pertanyaan_assesments.jawaban_id","=","jk.jawaban_id")
+                                 ->where("pertanyaan_assesments.ass_id", $assId)
+                                 ->groupBy("jk.kepribadian_id")
+                                 // ->max("count(nilai) as max_of_result")
+                                 ->get();
+    // $countResult = $sql;
+    $arrResult = $sql->toArray();
+
+
+    dd($arrResult);
+    $query  = PertanyaanAssesment::where("ass_id", $assId)->get();
+    // dd($query);
+    return view("partisipan.dashboard.result.v_index_soal_dua", compact("assId","query","arrResult"));
   }
 }
