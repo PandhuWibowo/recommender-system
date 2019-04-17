@@ -463,7 +463,7 @@
                                                       </p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                      <button type="button" class="btn btn-primary" id="put-cache-info" data-dismiss="modal" assessmentid="{{$decryptAssId}}">Mengerti</button>
+                                                      <button type="button" class="btn btn-primary" id="put_cache_info" assessmentid="{{$decryptAssId}}">Mengerti</button>
                                                     </div>
                                                   </div>
 
@@ -542,7 +542,7 @@
                                                                                                     <input type="hidden" value="{{$row2->id}}" class="jawabanid" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
                                                                                                     <input type="hidden" value="{{$row2->kepribadian_id}}" class="kepribadian_id" name="kepribadian_id{{$x}}" id="kepribadian_id{{$x}}" required>
 
-                                                                                                    <input type="radio" style="display:inline;" value="{{$row2->code_opsi_jawaban}}" class="opsi_jawaban form-radio" name="opsi_jawaban{{$x}}" id="opsi_jawaban{{$x}}" assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->selfhood_pertanyaan_id}}" jawabanid="{{$row2->jawaban_id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?>>
+                                                                                                    <input type="radio" style="display:inline;" value="{{$row2->code_opsi_jawaban}}" class="opsi_jawaban form-radio" name="opsi_jawaban{{$x}}" id="opsi_jawaban{{$x}}" assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->selfhood_pertanyaan_id}}" jawabanid="{{$row2->jawaban_id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->jawaban_id) ? 'checked' : '';?>>
 
                                                                                                   </span>
                                                                                                   <div class="form-control form-control-static">
@@ -706,7 +706,7 @@
         });
 
         $(document).ready(function(){
-          $("#put-cache-info").on("click", function(){
+          $("#put_cache_info").on("click", function(){
             $.ajaxSetup({
               headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -727,6 +727,7 @@
                   modal_info  : "2"
                 },
                 success:function(data){
+                  $("#put_cache_info").hide("modal");
                   console.log(data);
                 },
                 error:function(data){
@@ -807,7 +808,7 @@
             var varJenisAssesmentId  = table.$("input[name=assessmentid"+i+"]").val();
             var varPertanyaanId      = table.$("input[name=pertanyaanid"+i+"]").val();
             var varJawabanId         = table.$("input[name=jawabanid"+i+"]").val();
-            var varNilai             = table.$("input[name=nilai"+i+"]:checked").val();
+            var varNilai             = table.$("input[name=opsi_jawaban"+i+"]:checked").val();
             if(varNilai == "" || varNilai == undefined){
               swal({
                 type      : "info",

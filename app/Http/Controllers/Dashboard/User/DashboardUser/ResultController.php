@@ -241,4 +241,10 @@ class ResultController extends Controller
 
     return view("partisipan.dashboard.result.v_index", compact("cetakSaran","resultAssKom","rowscores","rangeScore","cetakHasilAsskomsKekuatan","cetakHasilAsskomsPengembangan","id"));
   }
+
+  public function soalKedua($id, Request $request){
+    $assId  = Crypt::decrypt($id);
+    
+    return view("partisipan.dashboard.result.v_index_soal_dua", compact(""));
+  }
 }
