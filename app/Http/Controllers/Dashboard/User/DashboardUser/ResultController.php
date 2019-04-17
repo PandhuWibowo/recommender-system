@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 // use App\Http\Models\User;
 use App\Http\Models\HasilKompetensi;
 use App\Http\Models\AssessmentKompetensi;
+use App\Http\Models\Assesment;
 use App\Http\Models\RowScore;
 use App\Http\Models\KeteranganNilai;
 use App\Http\Models\HasilAssKom;
@@ -248,17 +249,22 @@ class ResultController extends Controller
     $assId  = Crypt::decrypt($id);
 
     //TODO: Count max result
-    $sql    = PertanyaanAssesment::selectRaw("jk.kepribadian_id as typical_scale, count(nilai) as max_of_result")
+    $sql    = PertanyaanAssesment::select(DB::raw("nama, jk.kepribadian_id as typical_scale, count(nilai) as max_of_result"))
                                  ->join("jawaban_kepribadians as jk","pertanyaan_assesments.jawaban_id","=","jk.jawaban_id")
+                                 ->join("kepribadians as k","jk.kepribadian_id","=","k.id")
                                  ->where("pertanyaan_assesments.ass_id", $assId)
                                  ->groupBy("jk.kepribadian_id")
                                  // ->max("count(nilai) as max_of_result")
                                  ->get();
     // $countResult = $sql;
-    $arrResult = $sql->toArray();
+    $arrResult = $sql->toArray(); //TODO: membuat ke dalam bentuk array
+    $maxResult = max($arrResult); //TODO: nentuin yang tertinggi pada jawaban
 
-
-    dd($arrResult);
+    // TODO: menampilkan nama jenis assessment
+    $sqlJenisAssessment   = Assesment::join("jenis_assesments","assesments.assesment_id","=","jenis_assesments.id")
+                                      ->where("assesments.id", $assId)
+                                      ->pluck("nama");
+    dd($maxResult);
     $query  = PertanyaanAssesment::where("ass_id", $assId)->get();
     // dd($query);
     return view("partisipan.dashboard.result.v_index_soal_dua", compact("assId","query","arrResult"));
