@@ -375,53 +375,14 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                          <!-- <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
-                                            Add New
-                                          </a> -->
-                                          <!-- Modal -->
-                                          <!-- <div id="myModal" class="modal fade" role="dialog">
-                                            <div class="modal-dialog"> -->
-
-                                              <!-- Modal content-->
-                                              <!-- <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                  <h4 class="modal-title">New Score Description</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <div class="form-group">
-                                                    <label for="usr">Range Score</label>
-                                                    <input type="number" min="1" class="form-control" autofocus="on" autocomplete="off" id="range_score" required>
-                                                  </div>
-                                                  <div class="form-group">
-                                                    <label for="usr">Description</label>
-                                                    <input type="text" class="form-control" autocomplete="off" id="description" required>
-                                                  </div>
-
-                                                  <div class="form-group res-mg-t-15">
-                                                    <label for="usr">Description Type</label>
-                                                    <textarea name="jenisketerangan" id="jenisketerangan" placeholder="Description Type"></textarea>
-                                                  </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                                </div>
-                                              </div>
-
-                                            </div>
-                                          </div> -->
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
+                                          <!-- //TODO: Tidak Diisi apa-apa -->
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">Customers Chance</span>
+                                            <li><span class="bread-blod">Assessment Permission</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -448,7 +409,7 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="dual-list-box-inner">
-                                                <form id="form" action="#" class="wizard-big" autocomplete="off">
+                                                <form id="form" action="#" class="wizard-big" autocomplete="off" method="post">
                                                     <!-- Users -->
                                                     <div class="form-group">
                                                       <select class="form-control dual_select user_id" multiple name="user_id[]" id="user_id">
@@ -473,7 +434,7 @@
                                                       <input class="form-control" type="number" min="1" id="maxattempt" name="maxattempt" placeholder="Maxattempt" value="1">
                                                     </div>
                                                     <div class="form-group">
-                                                      <button type="button" name="btn_save" id="btn_save" class="btn btn-primary">Add</button>
+                                                      <button type="submit" name="btn_save" id="btn_save" class="btn btn-primary">Add</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -495,19 +456,11 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Customers Chance <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Assessment Permissions <span class="table-project-n">Data</span> Table</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
-
                                     <table id="myAssesments" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
 
@@ -528,9 +481,8 @@
                                                   <input type="submit" value="Disable" disabled class="btn btn-info" id="buttonClass2">
                                                 </div>
                                               </th>
-                                              <th>Customers</th>
-                                              <th>Assesments Type</th>
-                                              <!-- <th>Status</th> -->
+                                              <th>Name</th>
+                                              <th>Assesment Type</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -545,7 +497,8 @@
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="">
-                                                            <input type="hidden" name="uniq_id" id="uniq_id" name="uniq_id" class="uniq_id" value="{{$row->id}}" readonly>
+                                                            <input type="hidden" name="user_id_permission" id="user_id_permission" class="uniq_id" value="{{$row->user_id}}" readonly>
+                                                            <input type="hidden" name="jenis_assessment_id_permission" id="jenis_assessment_id_permission" class="uniq_id" value="{{$row->jenis_assessment_id}}" readonly>
                                                             <label>
                                                                <input type="checkbox" value="0" id="status_" class="chk" name="status_">
                                                             </label>
@@ -566,11 +519,8 @@
                                             </td>
                                             <td>{{ $row->get_users->firstname }} {{ $row->get_users->lastname }}</td>
                                             <td>{{ $row->get_jenisAssessments->nama }}</td>
-                                            <!-- <td>
-
-                                            </td> -->
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-maxattempt="{{ $row->maxattempt }}" data-attempt="{{ $row->attempt }}" data-user_id="{{ $row->user_id }}" data-id="{{$row->id}}" data-assesment_id="{{$row->assesment_id}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-maxattempt="{{ $row->maxattempt }}" data-attempt="{{ $row->attempt }}" data-user_id="{{ $row->user_id }}" data-jenis_assessment_id="{{$row->jenis_assessment_id}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                           <?php $no++;?>
@@ -579,9 +529,8 @@
                                       <tfoot>
                                           <tr>
                                             <th width="5">For Activation</th>
-                                            <th>Customers</th>
-                                            <th>Assesments Type</th>
-                                            <!-- <th>Status</th> -->
+                                            <th>Name</th>
+                                            <th>Assesment Type</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -596,14 +545,10 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Customers Chance Edit</h4>
+                                            <h4 class="modal-title">Permission Chance Edit</h4>
                                             <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
                                           <div class="modal-body">
-                                            <div class="form-group">
-                                              <input type="hidden" class="form-control" autocomplete="off" id="edit_id" required>
-                                            </div>
-
                                             <div class="chosen-select-single mg-b-20">
                                               <label>Participants</label>
                                               <select data-placeholder="Choose Participants" width="100%" id="edit_user_id" name="edit_user_id" class="edit_user_id">
@@ -818,9 +763,14 @@
                    // hidden_uniq_id : $(row).find("input[name=uniq_id]").val()
             }).get();
 
-            var checkboxUniqId = $("table input[name=status_]:checked").map(function() {
+            var checkboxUserIdPermission = $("table input[name=status_]:checked").map(function() {
                 row = $(this).closest("tr");
-                return $(row).find("input[name=uniq_id]").val();
+                return $(row).find("input[name=user_id_permission]").val();
+            }).get();
+
+            var checkboxJenisIdPermission = $("table input[name=status_]:checked").map(function() {
+                row = $(this).closest("tr");
+                return $(row).find("input[name=jenis_assessment_id_permission]").val();
             }).get();
 
             //Proses ke controller
@@ -830,8 +780,9 @@
               async     : true,
               dataType  : "JSON",
               data      : {
-                "id[]"      : checkboxUniqId,
-                "status[]"  : checkboxValues
+                "user_id[]"             : checkboxUserIdPermission,
+                "status[]"              : checkboxValues,
+                "jenis_assessment_id[]" : checkboxJenisIdPermission
               },
               success:function(data){
                 if(data.response == "success"){
@@ -873,9 +824,14 @@
                    // hidden_uniq_id : $(row).find("input[name=uniq_id]").val()
             }).get();
 
-            var checkboxUniqId = $("table input[name=status_]:checked").map(function() {
+            var checkboxUserIdPermission = $("table input[name=status_]:checked").map(function() {
                 row = $(this).closest("tr");
-                return $(row).find("input[name=uniq_id]").val();
+                return $(row).find("input[name=user_id_permission]").val();
+            }).get();
+
+            var checkboxJenisIdPermission = $("table input[name=status_]:checked").map(function() {
+                row = $(this).closest("tr");
+                return $(row).find("input[name=jenis_assessment_id_permission]").val();
             }).get();
 
             //Proses ke controller
@@ -885,8 +841,9 @@
               async     : true,
               dataType  : "JSON",
               data      : {
-                "id[]"      : checkboxUniqId,
-                "status[]"  : checkboxValues
+                "user_id[]"             : checkboxUserIdPermission,
+                "status[]"              : checkboxValues,
+                "jenis_assessment_id[]" : checkboxJenisIdPermission
               },
               success:function(data){
                 if(data.response == "success"){
@@ -926,9 +883,10 @@
     </script>
 
     <script type="text/javascript">
-      //Storing into database for add user for quiz activation
+      //TODO: Storing into database for add user for quiz activation
       $(document).ready(function(){
-        $("#btn_save").on("click", function(){
+        $("#btn_save").on("click", function(e){
+          e.preventDefault();
           $.ajaxSetup({
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -954,7 +912,7 @@
             swal({
               type    : "info",
               title   : "Required",
-              text    : "New User is required",
+              text    : "Users is required",
               timer   : 3000
             });
           }
@@ -982,9 +940,9 @@
                 async     : true,
                 dataType  : "JSON",
                 data      : {
-                  "user_id[]"     : selectedUser,
-                  "assesment_id[]": selectedJenisAss,
-                  maxattempt      : maxAttempt
+                  "user_id[]"             : selectedUser,
+                  "jenis_assessment_id[]" : selectedJenisAss,
+                  maxattempt              : maxAttempt
                 },
                 success:function(data){
                   if(data.response == "success"){
@@ -995,6 +953,14 @@
                     }).then(function(){
                       window.location.href="{{ url('backend/pages/userassessments') }}";
                     });
+                  }
+                  else if (data.response == "errors") {
+                    swal({
+                      type      : "info",
+                      title     : "Required",
+                      text      : data.errors,
+                      timer     : 3000,
+                    })
                   }
                 },
                 error:function(data){
@@ -1045,7 +1011,7 @@
           var varMaxattempt       = $(this).data("maxattempt");
           var varAttempt          = $(this).data("attempt");
           var varUserId           = $(this).data("user_id");
-          var varAssessmentId     = $(this).data("assesment_id");
+          var varAssessmentId     = $(this).data("jenis_assessment_id");
 
           $("#edit_id").val(varId);
           $("#edit_maxattempt").val(varMaxattempt);
@@ -1066,7 +1032,6 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $("#btn_update").on("click", function(){
-          var varId           = $("#edit_id").val();
           var varUserId       = $("#edit_user_id").val();
           var varAssessmentId = $("#edit_assesment_id").val();
           var varMaxattempt   = $("#edit_maxattempt").val();
@@ -1103,14 +1068,13 @@
                 async     : true,
                 dataType  : "JSON",
                 data      : {
-                  id            : varId,
-                  user_id       : varUserId,
-                  assesment_id  : varAssessmentId,
-                  maxattempt    : varMaxattempt
+                  user_id               : varUserId,
+                  jenis_assessment_id   : varAssessmentId,
+                  maxattempt            : varMaxattempt
                 },
                 success:function(data){
-                  $("#editModal").modal("hide")
                   if(data.response == "success"){
+                    $("#editModal").modal("hide")
                     swal({
                       type      : "success",
                       title     : "Updated",
@@ -1154,12 +1118,14 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $("#btn_hps").on("click", function(){
+          var varUserId       = $("#edit_user_id").val();
+          var varAssessmentId = $("#edit_assesment_id").val();
           $.ajaxSetup({
             headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
           });
-          var varId = $("#edit_id").val();
+
           try {
             swal({
               title: 'Are you sure?',
@@ -1177,12 +1143,12 @@
                   async     : true,
                   dataType  : "JSON",
                   data      : {
-                    id      : varId
+                    user_id             : varUserId,
+                    jenis_assessment_id : varAssessmentId
                   },
                   success:function(data){
-                    // console.log(data);
-                    $("#editModal").modal("hide")
                     if(data.response == "success"){
+                      $("#editModal").modal("hide")
                       swal(
                         'Deleted!',
                         'Your data has been deleted.',
