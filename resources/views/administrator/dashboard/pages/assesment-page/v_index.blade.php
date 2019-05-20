@@ -198,19 +198,21 @@
 
                                         <!-- Modal content-->
                                         <div class="modal-content">
-                                          <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">New Assessment Type</h4>
-                                          </div>
-                                          <div class="modal-body">
-                                            <div class="form-group">
-                                              <label for="usr">Assessment Name</label>
-                                              <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required>
-                                            </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                          </div>
+                                          <form class="" action="" method="post">
+											  <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">New Assessment Type</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                <div class="form-group">
+                                                  <label for="usr">Assessment Name</label>
+                                                  <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required>
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="submit" id="btn_save" class="btn btn-primary">Save</button>
+                                              </div>
+                                          </form>
                                         </div>
 
                                       </div>
@@ -222,23 +224,25 @@
 
                                         <!-- Modal content-->
                                         <div class="modal-content">
-                                          <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Assessment Type</h4>
-                                            <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
-                                          </div>
-                                          <div class="modal-body">
-                                            <div class="form-group">
-                                              <input type="hidden" class="form-control" autocomplete="off" id="id_jenis_assesments" required>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="usr">Assessment Name</label>
-                                              <input type="text" class="form-control" autocomplete="off" id="name_jenis_assesments" required>
-                                            </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
-                                          </div>
+                                          <form class="" action="" method="post">
+											  <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Edit Assessment Type</h4>
+                                                <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
+                                              </div>
+                                              <div class="modal-body">
+                                                <div class="form-group">
+                                                  <input type="hidden" class="form-control" autocomplete="off" id="id_jenis_assesments" required>
+                                                </div>
+                                                <div class="form-group">
+                                                  <label for="usr">Assessment Name</label>
+                                                  <input type="text" class="form-control" autocomplete="off" id="name_jenis_assesments" required>
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="submit" id="btn_edit" class="btn btn-primary">Save</button>
+                                              </div>
+                                          </form>
                                         </div>
 
                                       </div>
@@ -373,7 +377,8 @@
 
           }
         });
-        $("#btn_save").on("click", function(){
+        $("#btn_save").on("click", function(e){
+		  e.preventDefault();
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -438,7 +443,8 @@
           }
         });
 
-        $("#btn_edit").on("click", function(){
+        $("#btn_edit").on("click", function(e){
+		  e.preventDefault();
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
