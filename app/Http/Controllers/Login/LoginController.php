@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 use App\Http\Models\LoginAuth;
-use App\Http\Models\ModelLogs\Login;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use BrowserDetect;
 // use Auth;
 /**
  * Login Controller
@@ -21,7 +19,7 @@ class LoginController extends Controller
 {
   public function index(){
     if(!Session::get('login')){
-      Session::flash('must-login', 'You have sign in first!');
+      Session::flash('must-login', 'You have to sign in first!');
       return redirect('backend/pages/signin');
     }else{
       return redirect('backend/pages/home');
@@ -35,11 +33,12 @@ class LoginController extends Controller
   }
 
   public function auth_process(Request $request){
+    ini_set('memory_limit', '-1');
     $txtEmail   = strtolower(trim($request->email));
     $txtPassword= trim($request->password);
 
     $data = LoginAuth::where('email', $txtEmail)->where('active', '1')->first();
-    if(count((array)$data) > 0){
+    if($data->count() > 0){
       if(Hash::check($txtPassword,$data->password)){
         Session::put('first_name', $data->firstname);
         Session::put('last_name', $data->lastname);
@@ -52,17 +51,6 @@ class LoginController extends Controller
         Session::put('id', $data->id);
         Session::put('login', TRUE);
 
-        $logLogin = new Login([
-          "user_id"     => $data->id,
-          "ip_address"  => $request->ip(),
-          "browser"     => BrowserDetect::browserName(),
-          "action"      => "Login Button",
-          "data"        => $txtEmail." melakukan signin dengan password ".$txtPassword.".",
-          "link"        => url()->current()
-        ]);
-
-        $logLogin->save();
-
         return response()->json(
           array(
             "response"  => "success",
@@ -71,17 +59,6 @@ class LoginController extends Controller
         );
 
       }else{
-        $logLogin = new Login([
-          "user_id"     => $data->id,
-          "ip_address"  => $request->ip(),
-          "browser"     => BrowserDetect::browserName(),
-          "action"      => "Login Button",
-          "data"        => $txtEmail." tidak bisa melakukan signin dengan password ".$txtPassword.". Karena password salah.",
-          "link"        => url()->current()
-        ]);
-
-        $logLogin->save();
-
         return response()->json(
           array(
             'error' => "Oops, Password doesn't match"
@@ -89,19 +66,6 @@ class LoginController extends Controller
         );
       }
     }else{
-      // return response()->json(count((array)$data));
-
-      $logLogin = new Login([
-        "user_id"     => "undefined",
-        "ip_address"  => $request->ip(),
-        "browser"     => BrowserDetect::browserName(),
-        "action"      => "Login Button",
-        "data"        => $txtEmail." dengan password ".$txtPassword.". belum terdaftar dalam database.",
-        "link"        => url()->current()
-      ]);
-
-      $logLogin->save();
-
       return response()->json(
         array(
           // count((array)$data)
@@ -112,20 +76,10 @@ class LoginController extends Controller
   }
 
   public function mm_logout(Request $request){
-      $logLogOut = new Login([
-        "user_id"     => Session::get("id"),
-        "ip_address"  => $request->ip(),
-        "browser"     => BrowserDetect::browserName(),
-        "action"      => "Log Out Button",
-        "data"        => Session::get("email")." telah keluar.",
-        "link"        => url()->current()
-      ]);
-
-      $logLogOut->save();
       Session::flush();
       Session::flash('logout','You are already out');
       return redirect('backend/pages/signin');
   }
 
-  
+
 }

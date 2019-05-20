@@ -273,7 +273,25 @@
 </html>
 
 <script type="text/javascript">
-	//Allow letters only in textbox : firstname, lastname, nickname
+	$('body').on('keydown', '#firstname, #lastname', function(e) {
+		var self = $(this)
+			, form = self.parents('form:eq(0)')
+			, focusable
+			, next
+			;
+		if (e.keyCode == 13) {
+				focusable = form.find('input,a,select,button,textarea').filter(':visible');
+				next = focusable.eq(focusable.index(this)+1);
+				if (next.length) {
+						next.focus();
+				} else {
+						form.submit();
+				}
+				return false;
+		}
+	});
+
+	//TODO: Allow letters only in textbox : firstname, lastname, nickname
 	$(function() {
 		$('#firstname, #lastname').keydown(function(e) {
 			if (e.shiftKey || e.ctrlKey || e.altKey) {
@@ -287,7 +305,7 @@
 		});
 	});
 
-	//Allow numbers only in textbox such as phone
+	//TODO: Allow numbers only in textbox such as phone
 	$(document).ready(function(){
 		$('input[name="phone"]').keyup(function(e)
 															{
@@ -299,7 +317,7 @@
 		});
 	});
 
-	//Giving capital in first word for tenses
+	//TODO: Giving capital in first word for tenses
 	function ucfirst(str,force){
 		str=force ? str.toLowerCase() : str;
 		return str.replace(/(\b)([a-zA-Z])/,
@@ -308,7 +326,7 @@
 			 });
 	 }
 
-	 //Action is here - Process call ucfirst methode
+	 //TODO: Action is here - Process call ucfirst methode
 	 $('#firstname, #lastname').keyup(function(evt){
 
 			// force: true to lower case all letter except first
@@ -417,28 +435,28 @@
 								phone                 : varPhone
 							},
 							success:function(data){
-								$("#firstname").val("");
-								$("#lastname").val("");
-								$("#password").val("");
-								$("#confirm_password").val("");
-								$("#email").val("");
-								$("#phone").val("");
-
 								if(data.response == "success"){
+									$("#firstname").val("");
+									$("#lastname").val("");
+									$("#password").val("");
+									$("#confirm_password").val("");
+									$("#email").val("");
+									$("#phone").val("");
+
 									swal({
 										type      : "success",
 										title     : "Saved",
-										text      : "Please check your email first for activation your account",
+										text      : "Please check your email first for activation your account (Inbox or Spam)",
 										timer     : 3000
 									}).then(function(){
 										window.location = "{{ url('user/pages/register') }}";
 									});
 								}
-								else{
+								else if(data.response == "failed"){
 									swal({
 										type      : "error",
 										title     : "Error",
-										text      : "Oops, Cannot be saved your data",
+										text      : data.errors,
 										timer     : 3000
 									});
 								}

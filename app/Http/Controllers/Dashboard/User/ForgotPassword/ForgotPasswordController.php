@@ -13,7 +13,6 @@ use Mail;
 use Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Models\ModelLogs\ForgotPassword;
 use BrowserDetect;
 
 /**
@@ -34,35 +33,12 @@ class ForgotPasswordController extends Controller
     $user = User::where("email", $email)->select("email","id")->first();
 
     if($user == null || $user == ""){
-      $logFP = new ForgotPassword([
-        "email"       => trim($request->email),
-        "ip_address"  => $request->ip(),
-        "browser"     => BrowserDetect::browserName(),
-        "action"      => "ForgotPassword Button",
-        "data"        => trim($request->email)." tidak ada di database",
-        "link"        => url()->current()
-      ]);
-
-      $logFP->save();
-
       Session::flash("failed-reset-password","Email has not been at our database");
       return redirect("backend/pages/signin");
     }else{
       $update = User::findOrFail($user->id);
       $update->code_reset_password  = $confirmation_code;
       $update->save();
-
-      $logFP = new ForgotPassword([
-        "email"       => trim($request->email),
-        "ip_address"  => $request->ip(),
-        "browser"     => BrowserDetect::browserName(),
-        "action"      => "ForgotPassword Button",
-        "data"        => trim($request->email)." melakukan lupa password yang dikirim di email",
-        "link"        => url()->current()
-      ]);
-
-      $logFP->save();
-
       Mail::send('administrator.dashboard.pages.email_page.reset', ['code_reset_password' => $confirmation_code], function($m) {
           $m->from('no-reply@loopinc.id', 'Loopinc.id');
           $m->to(Input::get('email'))
@@ -81,47 +57,14 @@ class ForgotPasswordController extends Controller
         $user = User::where('code_reset_password', $id)->first();
 
         echo "Link not registered";
-
-        $logFP = new ForgotPassword([
-          "email"       => trim($user->email),
-          "ip_address"  => $request->ip(),
-          "browser"     => BrowserDetect::browserName(),
-          "action"      => "ForgotPassword Button",
-          "data"        => trim($request->email)." Link tidak terdaftar",
-          "link"        => url()->current()
-        ]);
-
-        $logFP->save();
     }
 
         $user = User::where('code_reset_password', $id)->first();
 
         if (!$user)
         {
-            echo "Link not registered";
-
-            $logFP = new ForgotPassword([
-              "email"       => trim($user->email),
-              "ip_address"  => $request->ip(),
-              "browser"     => BrowserDetect::browserName(),
-              "action"      => "ForgotPassword Button",
-              "data"        => trim($user->email)." Link tidak terdaftar",
-              "link"        => url()->current()
-            ]);
-
-            $logFP->save();
+          echo "Link not registered";
         }else{
-          $logFP = new ForgotPassword([
-            "email"       => trim($user->email),
-            "ip_address"  => $request->ip(),
-            "browser"     => BrowserDetect::browserName(),
-            "action"      => "Link ForgotPassword Button",
-            "data"        => trim($user->email)." pergi ke halaman Reset Password",
-            "link"        => url()->current()
-          ]);
-
-          $logFP->save();
-
           return view('administrator.dashboard.pages.email_page.reset_form', compact("user","id"));
         }
   }
@@ -139,17 +82,6 @@ class ForgotPasswordController extends Controller
       //Rumus Session
       // Session::put('st_firstname', $request->firstname);
       $messages = $validator->messages();
-
-      $logFP = new ForgotPassword([
-        "email"       => trim($request->email),
-        "ip_address"  => $request->ip(),
-        "browser"     => BrowserDetect::browserName(),
-        "action"      => "Submit ForgotPassword Button",
-        "data"        => $messages,
-        "link"        => url()->current()
-      ]);
-
-      $logFP->save();
       return Redirect::to('user/pages/changepassword/'.Crypt::decrypt($request->code_reset_password))
         ->withErrors($validator);
     }else{
@@ -158,17 +90,6 @@ class ForgotPasswordController extends Controller
       $update->password             = Hash::make($request->password);
       $update->code_reset_password  = Crypt::decrypt($request->code_reset_password);
       $update->save();
-
-      $logFP = new ForgotPassword([
-        "email"       => trim($request->email),
-        "ip_address"  => $request->ip(),
-        "browser"     => BrowserDetect::browserName(),
-        "action"      => "Submit ForgotPassword Button",
-        "data"        => "Berhasil ForgotPassword diubah",
-        "link"        => url()->current()
-      ]);
-
-      $logFP->save();
 
       Session::flash("changed","You has been changed");
       return redirect("backend/pages/signin");

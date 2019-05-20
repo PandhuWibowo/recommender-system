@@ -1,4 +1,8 @@
 <?php
+if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
+    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+}
+
 header('Access-Control-Allow-Origin: *');
 //Access-Control-Allow-Origin: *
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
@@ -6,8 +10,7 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Autho
 
 // auth
 //Administrator Routing
-Route::get("/","LandingPage\MainController@index");
-Route::get("/direct","Login\LoginController@index");
+Route::get("/","Login\LoginController@index");
 
 Route::prefix('backend/pages')->group(function () {
 
