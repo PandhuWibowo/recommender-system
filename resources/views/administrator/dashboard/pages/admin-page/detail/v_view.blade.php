@@ -184,11 +184,11 @@
                                       </div>
                                       <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
                                           <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
-                                              <p><b>Username</b><br />
-                                                @if($detailAdministrator->username != "")
-                                                  {{$detailAdministrator->username}}
+                                              <p><b>Phone</b><br />
+                                                @if($detailAdministrator->phone != "")
+                                                  {{$detailAdministrator->phone}}
                                                 @else
-                                                  <span class="badge"><i class="fa fa-exclamation"></i> Username is empty</span>
+                                                  <span class="badge"><i class="fa fa-exclamation"></i> Phone is empty</span>
                                                 @endif
                                               </p>
                                           </div>
@@ -209,19 +209,6 @@
                                           </div>
                                       </div>
                                       <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
-                                          <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
-                                              <p><b>Phone</b><br />
-                                                @if($detailAdministrator->phone != "")
-                                                  {{$detailAdministrator->phone}}
-                                                @else
-                                                  <span class="badge"><i class="fa fa-exclamation"></i> Phone is empty</span>
-                                                @endif
-                                              </p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="col-lg-12">
                                           <div class="address-hr">
                                               <p><b>Address</b><br />
                                                 @if($detailAdministrator->address != "")
@@ -295,66 +282,7 @@
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                                                        <div class="address-hr biography">
-                                                            <p><b>Username</b><br />
-                                                              @if($detailAdministrator->username != "")
-                                                                {{$detailAdministrator->username}}
-                                                              @else
-                                                                <span class="badge"><i class="fa fa-exclamation"></i> Username is empty</span>
-                                                              @endif
-                                                            </p>
-                                                        </div>
-                                                    </div>
                                                 </div>
-                                                <!-- <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="content-profile">
-                                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras
-                                                                dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras
-                                                                dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras
-                                                                dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
-                                                <!-- <div class="row mg-b-15">
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="skill-title">
-                                                                    <h2>Skill Set</h2>
-                                                                    <hr />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="progress-skill">
-                                                            <h2>Java</h2>
-                                                            <div class="progress progress-mini">
-                                                                <div style="width: 90%;" class="progress-bar progress-yellow"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="progress-skill">
-                                                            <h2>Php</h2>
-                                                            <div class="progress progress-mini">
-                                                                <div style="width: 80%;" class="progress-bar progress-green"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="progress-skill">
-                                                            <h2>Apps</h2>
-                                                            <div class="progress progress-mini">
-                                                                <div style="width: 70%;" class="progress-bar progress-blue"></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="progress-skill">
-                                                            <h2>C#</h2>
-                                                            <div class="progress progress-mini">
-                                                                <div style="width: 60%;" class="progress-bar progress-red"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                                 <div class="row mg-b-15">
                                                     <div class="col-lg-12">
                                                         <div class="row">
@@ -455,18 +383,12 @@
                                                               <input name="last_name" type="text" class="form-control" placeholder="Last Name" value="{{$detailAdministrator->lastname}}">
                                                           </div>
                                                           <div class="form-group">
-                                                              <input name="nick_name" type="text" class="form-control" placeholder="Nick Name" value="{{$detailAdministrator->nickname}}">
-                                                          </div>
-                                                          <div class="form-group">
                                                               <input name="address" type="text" class="form-control" placeholder="Address" value="{{$detailAdministrator->address}}">
                                                           </div>
                                                       </div>
                                                       <div class="col-lg-6">
                                                         <div class="form-group">
                                                             <input name="email" type="email" class="form-control" placeholder="Email" value="{{$detailAdministrator->email}}" readonly>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="username" type="text" class="form-control" placeholder="Username" value="{{$detailAdministrator->username}}">
                                                         </div>
                                                         <div class="form-group">
                                                             <input name="phone" type="text" class="form-control" placeholder="Phone" value="{{$detailAdministrator->phone}}">
@@ -476,9 +398,6 @@
                                                         </div>
                                                         <div class="file-upload-inner ts-forms">
                                                             <div class="input prepend-big-btn">
-                                                                <!-- <label class="icon-right" for="prepend-big-btn">
-                                                                  <i class="fa fa-download"></i>
-                                                                </label> -->
                                                                 <div class="file-button">
                                                                     Browse
                                                                     <input name="image" type="file" onchange="document.getElementById('prepend-big-btn').value = this.value;">

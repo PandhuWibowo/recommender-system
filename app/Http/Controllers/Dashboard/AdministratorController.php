@@ -98,31 +98,18 @@ class AdministratorController extends Controller
       $decryptId            = trim(Crypt::decrypt($txtIdAdmin));
       $txtFirstName         = ucfirst(trim($request->first_name));
       $txtLastName          = ucfirst(trim($request->last_name));
-      $txtNickName          = ucfirst(trim($request->nick_name));
       $txtAddress           = ucfirst(trim($request->address));
       $txtEmail             = strtolower(trim($request->email));
-      $txtUsername          = trim($request->username);
       $txtPhone             = trim($request->phone);
-      // $txtLevel             = trim($request->level);
-      //Config Upload File
-      request()->validate([
-          'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-      ]);
-      // $txtImage             = $request->file('image');
-      // $txtOriginalExtension = $txtImage->getClientOriginalExtension();
-      $txtImageName             = "PA-".time().'.'.request()->image->getClientOriginalExtension();
       if(!$request->hasFile('image')){
         $updateUsers            = LoginAuth::findOrFail($decryptId);
 
         $updateUsers->firstname = $txtFirstName;
         $updateUsers->lastname  = $txtLastName;
-        $updateUsers->nickname  = $txtNickName;
         $updateUsers->address   = $txtAddress;
         $updateUsers->phone     = $txtPhone;
         $updateUsers->email     = $txtEmail;
-        $updateUsers->username  = $txtUsername;
         if($updateUsers->save()){
-          // request()->image->move(public_path('images/images-admin'), $txtImageName);
           Session::flash("success","Anda telah berhasil mengubah datanya.");
           return redirect("backend/pages/administrator/".$txtIdAdmin);
           exit();
@@ -133,14 +120,17 @@ class AdministratorController extends Controller
           exit();
         }
       }else{
+        request()->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $txtImageName             = "PA-".time().'.'.request()->image->getClientOriginalExtension();
+
         $updateUsers            = LoginAuth::findOrFail($decryptId);
         $updateUsers->firstname = $txtFirstName;
         $updateUsers->lastname  = $txtLastName;
-        $updateUsers->nickname  = $txtNickName;
         $updateUsers->address   = $txtAddress;
         $updateUsers->phone     = $txtPhone;
         $updateUsers->email     = $txtEmail;
-        $updateUsers->username  = $txtUsername;
         $updateUsers->image     = $txtImageName;
 
         if($updateUsers->save()){
