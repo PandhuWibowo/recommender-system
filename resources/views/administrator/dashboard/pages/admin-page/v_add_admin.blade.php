@@ -170,12 +170,6 @@
                                   <strong>Oh snap!</strong> {{$errors->first('email')}}
                               </div>
                             @endif
-                            @if($errors->has('username'))
-                              <div class="alert alert-danger alert-dismissable">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                  <strong>Oh snap!</strong> {{$errors->first('username')}}
-                              </div>
-                            @endif
                             @if($errors->has('phone'))
                               <div class="alert alert-danger alert-dismissable">
                                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -234,33 +228,17 @@
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="form-group">
-                                                                    <input name="firstname" type="text" class="form-control" placeholder="First Name" required />
+                                                                    <input name="firstname" type="text" class="form-control" placeholder="First Name" required value="<?php echo (Session::has('firstname_new')) ? Session::get('firstname_new') : '' ?>" />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input name="lastname" type="text" class="form-control" placeholder="Last Name" required />
+                                                                    <input name="lastname" type="text" class="form-control" placeholder="Last Name" required value="<?php echo (Session::has('lastname_new')) ? Session::get('lastname_new') : '' ?>" />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input name="nickname" type="text" class="form-control" placeholder="Nick Name (Options)" />
+                                                                    <input name="email" type="email" class="form-control" placeholder="Email" required value="<?php echo (Session::has('email_new')) ? Session::get('email_new') : '' ?>" />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input name="email" type="email" class="form-control" placeholder="Email" required />
+                                                                    <input name="phone" type="text" class="form-control" placeholder="Phone" maxlength="15" required value="<?php echo (Session::has('phone_new')) ? Session::get('phone_new') : '' ?>" />
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <input name="username" type="text" class="form-control" maxlength="20" placeholder="Username" required />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <input name="phone" type="text" class="form-control" placeholder="Phone" maxlength="15" required />
-                                                                </div>
-
-                                                                <!-- <div class="form-group">
-                                                                    <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                                </div> -->
-                                                                <!-- <div class="form-group">
-                                                                    <input name="postcode" id="postcode" type="text" class="form-control" placeholder="Postcode">
-                                                                </div> -->
-
-                                                            </div>
-                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="file-upload-inner ts-forms">
                                                                     <div class="input prepend-big-btn">
                                                                         <!-- <label class="icon-right" for="prepend-big-btn">
@@ -273,11 +251,22 @@
                                                                         <input type="text" id="prepend-big-btn" placeholder="no file selected" required>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
                                                                 <div class="form-group">
                                                                     <input name="level" type="text" class="form-control" placeholder="Level" value="Super Admin" required readonly/>
                                                                 </div>
                                                                 <div class="form-group res-mg-t-15">
-                                                                    <textarea name="address" placeholder="Address"></textarea>
+                                                                    <textarea name="address" placeholder="Address">
+                                                                        <?php
+                                                                            if(Session::has("address_new")){
+                                                                                ?>
+                                                                                    {{Session::get("address_new")}}
+                                                                                <?php
+                                                                            }
+                                                                        ?>
+                                                                    </textarea>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <input name="password" id="password" type="password" class="form-control" placeholder="Password" required />
