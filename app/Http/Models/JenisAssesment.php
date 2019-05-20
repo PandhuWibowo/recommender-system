@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class JenisAssesment extends Model{
   use SoftDeletes;
-  protected $fillable = ['id','nama','no_urut_assesment'];
-  protected $table = "jenis_assesments";
+  protected $fillable = ['id','nama'];
+  protected $table = "jenis_assessments";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
@@ -15,11 +15,11 @@ class JenisAssesment extends Model{
     return $this->hasMany('App\Http\Models\Pertanyaan');
   }
 
-  public function data_kepribadian(){
-    return $this->hasMany('App\Http\Models\Personality');
-  }
-
-  public function getType(){
-    return $this->hasMany("App\Http\Models\Type");
-  }
+  // public function data_kepribadian(){
+  //   return $this->hasMany('App\Http\Models\Personality');
+  // }
+  //
+  // public function getType(){
+  //   return $this->hasMany("App\Http\Models\Type");
+  // }
 }

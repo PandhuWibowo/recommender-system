@@ -39,8 +39,6 @@ class RegisterController extends Controller
     $validator = Validator::make(Input::all(), $rules);
 
     if ($validator->fails()) {
-      //Rumus Session
-      // Session::put('st_firstname', $request->firstname);
       $message = $validator->getMessageBag()->toArray();
       if(!empty($message["email"])){
         return response()->json(

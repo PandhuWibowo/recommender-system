@@ -164,18 +164,11 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Users <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Administrators <span class="table-project-n">Data</span> Table</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
                                     <table id="myAdministrator" class="table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>

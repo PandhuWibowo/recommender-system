@@ -111,8 +111,8 @@
                                     <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
                                         <div class="menu-switcher-pro">
                                             <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-                    													<i class="educate-icon educate-nav"></i>
-                    												</button>
+												<i class="educate-icon educate-nav"></i>
+											</button>
                                         </div>
                                     </div>
 
@@ -137,17 +137,13 @@
                                           <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">
                                             Add New
                                           </a>
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">All Type of Assesments</span>
+                                            <li><span class="bread-blod">All of Assessment Type</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -166,23 +162,15 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Type of Assesments <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Assessment Type <span class="table-project-n">Data</span> Tables</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
                                     <table id="myAssesments" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
-                                              <th>Name of Assesment</th>
-                                              <th>Sequence Number to</th>
+                                              <th>Assessment Name</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -190,17 +178,15 @@
                                         @foreach($dataAssesments as $key=>$row)
                                           <tr>
                                             <td>{{ $row->nama }}</td>
-                                            <td>{{ $row->no_urut_assesment }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-no="{{ $row->no_urut_assesment }}" data-nama="{{$row->nama}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-nama="{{$row->nama}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>Name of Assesment</th>
-                                            <th>Sequence Number to</th>
+                                            <th>Assessment Name</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -214,16 +200,12 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">New Type of Assesments</h4>
+                                            <h4 class="modal-title">New Assessment Type</h4>
                                           </div>
                                           <div class="modal-body">
                                             <div class="form-group">
-                                              <label for="usr">Name of Assesments</label>
+                                              <label for="usr">Assessment Name</label>
                                               <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_assesments" required>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="usr">Number to</label>
-                                              <input type="number" min="1" class="form-control" autocomplete="off" id="nomor_urut" required>
                                             </div>
                                           </div>
                                           <div class="modal-footer">
@@ -242,7 +224,7 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Type of Assesments</h4>
+                                            <h4 class="modal-title">Edit Assessment Type</h4>
                                             <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
                                           <div class="modal-body">
@@ -250,13 +232,8 @@
                                               <input type="hidden" class="form-control" autocomplete="off" id="id_jenis_assesments" required>
                                             </div>
                                             <div class="form-group">
-                                              <label for="usr">Name of Assesments</label>
+                                              <label for="usr">Assessment Name</label>
                                               <input type="text" class="form-control" autocomplete="off" id="name_jenis_assesments" required>
-                                            </div>
-                                            <!-- no_urut_assesment -->
-                                            <div class="form-group">
-                                              <label for="usr">Sequence Number to</label>
-                                              <input type="number" min="1" class="form-control" autocomplete="off" id="no_urut_assesment" required>
                                             </div>
                                           </div>
                                           <div class="modal-footer">
@@ -386,11 +363,9 @@
         $("#myAssesments").on("click", ".btn_edit",function(){
           var varId     = $(this).data("id");
           var varName   = $(this).data("nama");
-          var varNoUrut = $(this).data("no");
           try {
             $("#id_jenis_assesments").val(varId);
             $("#name_jenis_assesments").val(varName);
-            $("#no_urut_assesment").val(varNoUrut);
             $("#editModal").modal("show");
           } catch (e) {
             console.log(e);
@@ -405,21 +380,12 @@
               }
           });
           var varName   = $("#jenis_assesments").val();
-          var varNoUrut = $("#nomor_urut").val();
           try {
             if(varName == ""){
               swal({
                 type    : "info",
                 title   : "Empty",
-                text    : "Type of Assesment is required",
-                timer   : 3000
-              });
-            }
-            else if(varNoUrut == ""){
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Sequence Number to is required",
+                text    : "Assessment Name is required",
                 timer   : 3000
               });
             }
@@ -430,8 +396,7 @@
                 async   : true,
                 dataType: "JSON",
                 data    : {
-                  nama              : varName,
-                  no_urut_assesment : varNoUrut
+                  nama	: varName
                 },
                 success:function(data){
                   $("#myModal").modal("hide");
@@ -439,19 +404,27 @@
                     swal({
                       type : "success",
                       title: "Success",
-                      text : "Data's has been saved",
+                      text : "Data has been saved",
                       timer: 3000
                     }).then(function(){
                       window.location = "{{ url('backend/pages/assesments') }}";
                     })
-                  }else{
-                    swal({
-                      type : "error",
-                      title: "Error",
-                      text : "Failed saving the data",
-                      timer: 3000
-                    })
+				  }else if(data.response == "errors"){
+					swal({
+	                    type : "error",
+	                    title: "Error",
+	                    text : data.errors,
+	                    timer: 3000
+					});
                   }
+				  else{
+					swal({
+  	                    type : "error",
+  	                    title: "Error",
+  	                    text : "Failed",
+  	                    timer: 3000
+  					});
+				  }
                 },
                 error:function(data){
                   console.log(data);
@@ -473,42 +446,58 @@
           });
           var varId     = $("#id_jenis_assesments").val();
           var varName   = $("#name_jenis_assesments").val();
-          var varNoUrut = $("#no_urut_assesment").val();
+
           try {
-            $.ajax({
-              type    : "PUT",
-              url     : "{{ url('backend/pages/assesments/update') }}",
-              async   : true,
-              dataType: "JSON",
-              data    : {
-                id                : varId,
-                nama              : varName,
-                no_urut_assesment : varNoUrut
-              },
-              success:function(data){
-                $("#editModal").modal("hide");
-                if(data.response == "success"){
-                  swal({
-                    type : "success",
-                    title: "Success",
-                    text : "Name of Assesment has been updated",
-                    timer: 3000
-                  }).then(function(){
-                    window.location = "{{ url('backend/pages/assesments') }}";
-                  })
-                }else{
-                  swal({
-                    type : "error",
-                    title: "Error",
-                    text : "Failed updaing the data",
-                    timer: 3000
-                  })
-                }
-              },
-              error:function(data){
-                console.log(data);
-              }
-            })
+			if(varName == ""){
+	          swal({
+	            type    : "info",
+	            title   : "Empty",
+	            text    : "Assessment Name is required",
+	            timer   : 3000
+	          });
+			}else{
+				$.ajax({
+	              type    : "PUT",
+	              url     : "{{ url('backend/pages/assesments/update') }}",
+	              async   : true,
+	              dataType: "JSON",
+	              data    : {
+	                id                : varId,
+	                nama              : varName,
+	              },
+	              success:function(data){
+	                if(data.response == "success"){
+					  $("#editModal").modal("hide");
+	                  swal({
+	                    type : "success",
+	                    title: "Success",
+	                    text : "Data has been updated",
+	                    timer: 3000
+	                  }).then(function(){
+	                    window.location = "{{ url('backend/pages/assesments') }}";
+					  });
+				  	}else if(data.response == "errors"){
+	                  swal({
+	                    type : "error",
+	                    title: "Error",
+	                    text : data.errors,
+	                    timer: 3000
+					  });
+				  	}
+				  	else{
+					  swal({
+  	                    type : "error",
+  	                    title: "Error",
+  	                    text : 'Data has not been updated yet',
+  	                    timer: 3000
+					  });
+					}
+	              },
+	              error:function(data){
+	                console.log(data);
+	              }
+			  });
+		  	}
           } catch (e) {
             console.log(e);
           } finally {

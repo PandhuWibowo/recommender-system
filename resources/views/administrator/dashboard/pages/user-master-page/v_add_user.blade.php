@@ -124,10 +124,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
+                                            <!-- //TODO: NULL Action -->
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -170,12 +167,6 @@
                                   <strong>Oh snap!</strong> {{$errors->first('email')}}
                               </div>
                             @endif
-                            @if($errors->has('username'))
-                              <div class="alert alert-danger alert-dismissable">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                  <strong>Oh snap!</strong> {{$errors->first('username')}}
-                              </div>
-                            @endif
                             @if($errors->has('phone'))
                               <div class="alert alert-danger alert-dismissable">
                                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -206,18 +197,6 @@
                                   <strong>Oh snap!</strong> {{$errors->first('confirm_password')}}
                               </div>
                             @endif
-
-                            <!-- @if(Session::has('success'))
-                              <div class="alert alert-info alert-dismissable">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                  <strong>Oh yeaahh!</strong> {{Session::get('success')}}
-                              </div>
-                            @elseif(Session::has('error'))
-                              <div class="alert alert-danger alert-dismissable">
-                                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                  <strong>Oh snap!</strong> {{Session::get('error')}}
-                              </div>
-                            @endif -->
                         </div>
                     </div>
                 </div>
@@ -246,38 +225,19 @@
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="form-group">
-                                                                    <input name="firstname" type="text" class="form-control" placeholder="First Name" required />
+                                                                    <input name="firstname" type="text" class="form-control" placeholder="First Name" required value="<?php echo (Session::has('firstname_user_new')) ? Session::get('firstname_user_new') : ''?>" />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input name="lastname" type="text" class="form-control" placeholder="Last Name" required />
+                                                                    <input name="lastname" type="text" class="form-control" placeholder="Last Name" required value="<?php echo (Session::has('lastname_user_new')) ? Session::get('lastname_user_new') : ''?>" />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input name="nickname" type="text" class="form-control" placeholder="Nick Name (Options)" />
+                                                                    <input name="email" type="email" class="form-control" placeholder="Email" required value="<?php echo (Session::has('email_user_new')) ? Session::get('email_user_new') : ''?>" />
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input name="email" type="email" class="form-control" placeholder="Email" required />
+                                                                    <input name="phone" type="text" class="form-control" placeholder="Phone" maxlength="15" required value="<?php echo (Session::has('phone_user_new')) ? Session::get('phone_user_new') : ''?>" />
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <input name="username" type="text" class="form-control" maxlength="20" placeholder="Username" required />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <input name="phone" type="text" class="form-control" placeholder="Phone" maxlength="15" required />
-                                                                </div>
-
-                                                                <!-- <div class="form-group">
-                                                                    <input name="finish" id="finish" type="text" class="form-control" placeholder="Date of Birth">
-                                                                </div> -->
-                                                                <!-- <div class="form-group">
-                                                                    <input name="postcode" id="postcode" type="text" class="form-control" placeholder="Postcode">
-                                                                </div> -->
-
-                                                            </div>
-                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="file-upload-inner ts-forms">
                                                                     <div class="input prepend-big-btn">
-                                                                        <!-- <label class="icon-right" for="prepend-big-btn">
-                                                                          <i class="fa fa-download"></i>
-                                                                        </label> -->
                                                                         <div class="file-button">
                                                                             Browse
                                                                             <input name="image" type="file" onchange="document.getElementById('prepend-big-btn').value = this.value;">
@@ -285,11 +245,13 @@
                                                                         <input type="text" id="prepend-big-btn" placeholder="no file selected" required>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                 <div class="form-group">
                                                                     <input name="level" type="text" class="form-control" placeholder="Level" value="Participant" required readonly/>
                                                                 </div>
                                                                 <div class="form-group res-mg-t-15">
-                                                                    <textarea name="address" placeholder="Address"></textarea>
+                                                                    <textarea name="address" placeholder="Address"><?php echo (Session::has('address_user_new')) ? Session::get('address_user_new') : ''?></textarea>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <input name="password" id="password" type="password" class="form-control" placeholder="Password" required />
@@ -312,62 +274,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="product-tab-list tab-pane fade" id="reviews">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="review-content-section">
-                                                <div class="row">
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <form id="acount-infor" action="#" class="acount-infor">
-                                                            <div class="devit-card-custom">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="form-control" name="email" placeholder="Email">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <input name="phoneno" type="number" class="form-control" placeholder="Phone">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <input name="password" type="password" class="form-control" placeholder="Password">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <input name="confarmpassword" type="password" class="form-control" placeholder="Confirm Password">
-                                                                </div>
-                                                                <a href="#" class="btn btn-primary waves-effect waves-light">Submit</a>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="product-tab-list tab-pane fade" id="INFORMATION">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="review-content-section">
-                        												<div class="row">
-                        													<div class="col-lg-12">
-                        														<div class="devit-card-custom">
-                        															<div class="form-group">
-                        																<input type="url" class="form-control" placeholder="Facebook URL">
-                        															</div>
-                        															<div class="form-group">
-                        																<input type="url" class="form-control" placeholder="Twitter URL">
-                        															</div>
-                        															<div class="form-group">
-                        																<input type="url" class="form-control" placeholder="Google Plus">
-                        															</div>
-                        															<div class="form-group">
-                        																<input type="url" class="form-control" placeholder="Linkedin URL">
-                        															</div>
-                        															<button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
-                        														</div>
-                        													</div>
-                        												</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
                             </div>
                         </div>
                     </div>
