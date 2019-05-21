@@ -6,21 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Pertanyaan extends Model{
   use SoftDeletes;
-  protected $fillable = ['id','pertanyaan','assesment_id','kompetensi_id','rowscore_id','no_urut_pertanyaan'];
+  protected $fillable = ['id','pertanyaan','jenis_assessment_id','kompetensi_id'];
   protected $table = "pertanyaans";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
   public function get_assesment(){
-      return $this->belongsTo(JenisAssesment::class,'assesment_id');
+      return $this->belongsTo(JenisAssesment::class,'jenis_assessment_id');
   }
 
   public function get_kompetensi(){
     return $this->belongsTo(Kompetensi::class, 'kompetensi_id');
-  }
-
-  public function get_rowscore(){
-    return $this->belongsTo(RowScore::class, 'rowscore_id');
   }
 
   public function data_jawabans(){

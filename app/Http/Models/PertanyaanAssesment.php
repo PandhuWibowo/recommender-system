@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class PertanyaanAssesment extends Model{
   use SoftDeletes;
-  protected $fillable = ['id','ass_id','pertanyaan_id','jawaban_id','nilai'];
+  protected $fillable = ['assessment_id','pertanyaan_id','nilai'];
   protected $table = "pertanyaan_assesments";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
   public function getAssessment(){
-      return $this->belongsTo(Assessment::class,'ass_id');
+      return $this->belongsTo(Assessment::class,'assessment_id');
   }
 
   // public function getPertanyaan(){

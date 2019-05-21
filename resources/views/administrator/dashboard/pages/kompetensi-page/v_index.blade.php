@@ -137,18 +137,13 @@
                                           <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
                                             Add New
                                           </a>
-
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">All Type of Competencies</span>
+                                            <li><span class="bread-blod">All of Competencies Type</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -167,24 +162,16 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Type of Competencies <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Competency Type<span class="table-project-n">Data</span> Table</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
                                     <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
-                                              <th>Name of Competencies</th>
+                                              <th>Competencies Name</th>
                                               <th>Definition</th>
-                                              <th>Sequence Number to</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -192,20 +179,23 @@
                                         @foreach($dataKompetensis as $key=>$row)
                                           <tr>
                                             <td>{{ $row->kompetensi }}</td>
-                                            <td>{!! $row->definisi !!}</td>
-                                            <td>{{ $row->no_urut_kompetensi }}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-no="{{$row->no_urut_kompetensi}}" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}" data-definition="{!!$row->definisi!!}" data-p_mandiri="{!!$row->p_mandiri!!}" data-p_bermitra="{!!$row->p_bermitra!!}" data-t_pelatihan="{!!$row->t_pelatihan!!}"><i class="fa fa-edit"></i></a>
+                                                <?php
+                                                  $words = explode(" ", $row->definisi);
+                                                  echo implode(" ", array_splice($words, 0, 5));
+                                                 ?>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-warning btn_edit" data-kompetensi="{{$row->kompetensi}}" data-id="{{Crypt::encrypt($row->id)}}" data-definition="{!!$row->definisi!!}" data-p_mandiri="{!!$row->p_mandiri!!}" data-p_bermitra="{!!$row->p_bermitra!!}" data-t_pelatihan="{!!$row->t_pelatihan!!}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>Name of Competencies</th>
-                                            <th>Definition</th>
-                                            <th>Sequence Number to</th>
-                                            <th>Action</th>
+                                              <th>Competencies Name</th>
+                                              <th>Definition</th>
+                                              <th>Action</th>
                                           </tr>
                                       </tfoot>
                                     </table>
@@ -218,47 +208,45 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">New Type of Competencies</h4>
+                                            <h4 class="modal-title">New Competency Name</h4>
                                           </div>
-                                          <div class="modal-body">
-                                            <div class="form-group">
-                                              <label for="usr">Name of Competencies</label>
-                                              <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_competencies" required>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="usr">Sequence Number to</label>
-                                              <input type="number" min="1" class="form-control" autocomplete="off" id="no_urut_kompetensi" required>
-                                            </div>
+                                          <form class="" action="" method="post">
+                                              <div class="modal-body">
+                                                <div class="form-group">
+                                                  <label for="usr">Competency Name</label>
+                                                  <input type="text" class="form-control" autofocus="on" autocomplete="off" id="jenis_competencies" required>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Definition</label>
-                                              <textarea name="definisi" id="definisi" placeholder="Definition"></textarea>
-                                            </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Definition</label>
+                                                  <textarea name="definisi" id="definisi" placeholder="Definition" required></textarea>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Self Directed Development</label>
-                                              <textarea name="p_mandiri" id="p_mandiri" placeholder="Self Development"></textarea>
-                                            </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Self Directed Development</label>
+                                                  <textarea name="p_mandiri" id="p_mandiri" placeholder="Self Development" required></textarea>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Partnership Development Activity</label>
-                                              <textarea name="p_bermitra" id="p_bermitra" placeholder="Partner Development"></textarea>
-                                            </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Partnership Development Activity</label>
+                                                  <textarea name="p_bermitra" id="p_bermitra" placeholder="Partner Development" required></textarea>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Training Theme</label>
-                                              <textarea name="t_pelatihan" id="t_pelatihan" placeholder="Training Theme"></textarea>
-                                            </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Training Theme</label>
+                                                  <textarea name="t_pelatihan" id="t_pelatihan" placeholder="Training Theme" required></textarea>
+                                                </div>
 
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                          </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="submit" id="btn_save" class="btn btn-primary">Save</button>
+                                              </div>
+                                          </form>
                                         </div>
 
                                       </div>
                                     </div>
-                                    
+
                                     <!-- Modal -->
                                     <div id="editModal" class="modal fade" role="dialog">
                                       <div class="modal-dialog">
@@ -267,46 +255,43 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">New Type of Competencies</h4>
+                                            <h4 class="modal-title">Edit Competency Type</h4>
                                             <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
-                                          <div class="modal-body">
-                                            <div class="form-group">
-                                              <input type="hidden" class="form-control" autocomplete="off" id="id_jenis_competencies" required>
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="usr">Name of Competencies</label>
-                                              <input type="text" class="form-control" autocomplete="off" id="name_jenis_competencies" required>
-                                            </div>
-                                            <!-- no_urut_kompetensi -->
-                                            <div class="form-group">
-                                              <label for="usr">Sequence Number to</label>
-                                              <input type="number" min="1" class="form-control" autocomplete="off" id="edit_no_urut_kompetensi" required>
-                                            </div>
+                                          <form class="" action="" method="post">
+                                              <div class="modal-body">
+                                                <div class="form-group">
+                                                  <input type="hidden" class="form-control" autocomplete="off" id="id_jenis_competencies" required>
+                                                </div>
+                                                <div class="form-group">
+                                                  <label for="usr">Competency Name</label>
+                                                  <input type="text" class="form-control" autocomplete="off" id="name_jenis_competencies" required>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Definition</label>
-                                              <textarea name="edit_definisi" id="edit_definisi" placeholder="Definition"></textarea>
-                                            </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Definition</label>
+                                                  <textarea name="edit_definisi" id="edit_definisi" placeholder="Definition"></textarea>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Self Directed Development</label>
-                                              <textarea name="edit_p_mandiri" id="edit_p_mandiri" placeholder="Self Development"></textarea>
-                                            </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Self Directed Development</label>
+                                                  <textarea name="edit_p_mandiri" id="edit_p_mandiri" placeholder="Self Development"></textarea>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Partnership Development Activity</label>
-                                              <textarea name="edit_p_bermitra" id="edit_p_bermitra" placeholder="Partner Development"></textarea>
-                                            </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Partnership Development Activity</label>
+                                                  <textarea name="edit_p_bermitra" id="edit_p_bermitra" placeholder="Partner Development"></textarea>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Training Theme</label>
-                                              <textarea name="edit_t_pelatihan" id="edit_t_pelatihan" placeholder="Training Theme"></textarea>
-                                            </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
-                                          </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Training Theme</label>
+                                                  <textarea name="edit_t_pelatihan" id="edit_t_pelatihan" placeholder="Training Theme"></textarea>
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="submit" id="btn_edit" class="btn btn-primary">Save</button>
+                                              </div>
+                                          </form>
                                         </div>
 
                                       </div>
@@ -463,11 +448,7 @@
             $("#id_jenis_competencies").val(varId);
             $("#name_jenis_competencies").val(varName);
             $("#edit_no_urut_kompetensi").val(varNoUrut);
-            // $("#edit_definisi").val(varDefinisi);
             CKEDITOR.instances['edit_definisi'].setData(varDefinisi);
-            // $("#edit_p_mandiri").val(varPMandiri);
-            // $("#edit_p_bermitra").val(varPMitra);
-            // $("#edit_t_pelatihan").val(varTTheme);
             CKEDITOR.instances['edit_p_mandiri'].setData(varPMandiri);
             CKEDITOR.instances['edit_p_bermitra'].setData(varPMitra);
             CKEDITOR.instances['edit_t_pelatihan'].setData(varTTheme);
@@ -485,7 +466,8 @@
         });
 
         //Insert data baru
-        $("#btn_save").on("click", function(){
+        $("#btn_save").on("click", function(e){
+          e.preventDefault();
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -493,7 +475,6 @@
           });
 
           var varName     = $("#jenis_competencies").val();
-          var varNoUrut   = $("#no_urut_kompetensi").val();
           var varDefinisi = CKEDITOR.instances["definisi"].getData();
           var varPMandiri = CKEDITOR.instances["p_mandiri"].getData();
           var varPMitra   = CKEDITOR.instances["p_bermitra"].getData();
@@ -505,14 +486,6 @@
                 type    : "info",
                 title   : "Empty",
                 text    : "Competencies is required",
-                timer   : 3000
-              });
-            }
-            else if(varNoUrut == ""){
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Sequence Number is required",
                 timer   : 3000
               });
             }
@@ -556,24 +529,32 @@
                 dataType: "JSON",
                 data    : {
                   kompetensi        : varName,
-                  no_urut_kompetensi: varNoUrut,
                   definisi          : varDefinisi,
                   p_mandiri         : varPMandiri,
                   p_bermitra        : varPMitra,
                   t_pelatihan       : varTTheme
                 },
                 success:function(data){
-                  $("#myModal").modal("hide");
                   if(data.response == "success"){
+                    $("#myModal").modal("hide");
                     swal({
                       type : "success",
                       title: "Success",
-                      text : "Data's has been saved",
+                      text : "Data has been saved",
                       timer: 3000
                     }).then(function(){
                       window.location = "{{ url('backend/pages/competencies') }}";
                     })
-                  }else{
+                  }
+                  else if (data.response == "errors") {
+                    swal({
+                      type : "info",
+                      title: "Required",
+                      text : data.errors,
+                      timer: 3000
+                    })
+                  }
+                  else{
                     swal({
                       type : "error",
                       title: "Error",
@@ -594,7 +575,8 @@
           }
         });
 
-        $("#btn_edit").on("click", function(){
+        $("#btn_edit").on("click", function(e){
+          e.preventDefault(e);
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -603,7 +585,6 @@
 
           var varId       = $("#id_jenis_competencies").val();
           var varName     = $("#name_jenis_competencies").val();
-          var varNoUrut   = $("#edit_no_urut_kompetensi").val();
           var varDefinisi = CKEDITOR.instances["edit_definisi"].getData();
           var varPMandiri = CKEDITOR.instances["edit_p_mandiri"].getData();
           var varPMitra   = CKEDITOR.instances["edit_p_bermitra"].getData();
@@ -618,24 +599,33 @@
               data    : {
                 id                  : varId,
                 kompetensi          : varName,
-                no_urut_kompetensi  : varNoUrut,
                 definisi            : varDefinisi,
                 p_mandiri           : varPMandiri,
                 p_bermitra          : varPMitra,
                 t_pelatihan         : varTTheme
               },
               success:function(data){
-                $("#editModal").modal("hide");
+
                 if(data.response == "success"){
+                  $("#editModal").modal("hide");
                   swal({
                     type : "success",
                     title: "Success",
-                    text : "Data's has been updated",
+                    text : "Data has been updated",
                     timer: 3000
                   }).then(function(){
                     window.location = "{{ url('backend/pages/competencies') }}";
                   })
-                }else{
+                }
+                else if (data.response == "errors") {
+                  swal({
+                    type : "info",
+                    title: "Required",
+                    text : data.errors,
+                    timer: 3000
+                  })
+                }
+                else{
                   swal({
                     type : "error",
                     title: "Error",
@@ -683,11 +673,11 @@
                   },
                   success:function(data){
                     // console.log(data);
-                    $("#editModal").modal("hide")
                     if(data.response == "success"){
+                      $("#editModal").modal("hide")
                       swal(
                         'Deleted!',
-                        'Your file has been deleted.',
+                        'Data has been deleted.',
                         'success'
                       ).then(function(){
                         window.location = "{{ url('backend/pages/competencies') }}";

@@ -129,8 +129,8 @@
                                     <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
                                         <div class="menu-switcher-pro">
                                             <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-												<i class="educate-icon educate-nav"></i>
-											</button>
+																							<i class="educate-icon educate-nav"></i>
+																						</button>
                                         </div>
                                     </div>
                                     @include('administrator.dashboard.include.v_menu-navbar')
@@ -151,14 +151,14 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                            
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">Add Question</span>
+                                            <li><span class="bread-blod">Edit Question</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -179,7 +179,7 @@
                             <div class="sparkline10-hd">
                                 <div class="main-sparkline10-hd">
                                     <button type="button" class="btn btn-danger" id="btn_delete_pertanyaan" data-id="{{Crypt::encrypt($pertanyaan->id)}}">Delete Question</button>
-                                    <h1>Add Question</h1>
+                                    <h1>Edit Question</h1>
                                 </div>
                             </div>
                             <div class="sparkline10-graph">
@@ -196,10 +196,10 @@
                                                     <strong>Oh snap!</strong> {{$errors->first('pertanyaan')}}
                                                 </div>
                                               @endif
-                                              @if($errors->has('assesment_id'))
+                                              @if($errors->has('jenis_assessment_id'))
                                                 <div class="alert alert-danger alert-dismissable">
                                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                    <strong>Oh snap!</strong> {{$errors->first('assesment_id')}}
+                                                    <strong>Oh snap!</strong> {{$errors->first('jenis_assessment_id')}}
                                                 </div>
                                               @endif
                                               @if($errors->has('kompetensi_id'))
@@ -208,13 +208,12 @@
                                                     <strong>Oh snap!</strong> {{$errors->first('kompetensi_id')}}
                                                 </div>
                                               @endif
-                                              @if($errors->has('rowscore_id'))
-                                                <div class="alert alert-danger alert-dismissable">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                    <strong>Oh snap!</strong> {{$errors->first('rowscore_id')}}
-                                                </div>
-                                              @endif
-
+																							@if(Session::get('success'))
+                                               <div class="alert alert-primary alert-dismissable">
+                                                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                   <strong>Yeaay!</strong> {{Session::get('success')}}
+                                               </div>
+                                             	@endif
                                               <div class="chosen-select-single mg-b-20">
                                                   <input type="hidden" class="form-control" id="id" name="id" placeholder="Id" value="{{Crypt::encrypt($pertanyaan->id)}}" readonly>
 
@@ -222,26 +221,19 @@
                                               </div>
                                               <div class="chosen-select-single mg-b-20">
                                                   <label>Assesment Type</label>
-                                                  <select data-placeholder="Choose Assesment Type" id="assesment_id" name="assesment_id" class="chosen-select" tabindex="-1">
-                                                    @foreach($assesments as $row)
-                                                      <option value="{{$row->id}}" <?php echo ($row->id == $pertanyaan->assesment_id) ? "selected" : "";?>>{{$row->nama}}</option>
+                                                  <select data-placeholder="Choose Assessment Type" id="jenis_assessment_id" name="jenis_assessment_id" class="chosen-select" tabindex="-1">
+																										<option value=""></option>
+																										@foreach($assesments as $row)
+                                                      <option value="{{$row->id}}" <?php echo ($row->id == $pertanyaan->jenis_assessment_id) ? "selected" : "";?>>{{$row->nama}}</option>
                                                     @endforeach
                         													</select>
                                               </div>
                                               <div class="chosen-select-single mg-b-20">
                                                   <label>Competencies Type</label>
                                                   <select data-placeholder="Choose Competency Type" id="kompetensi_id" name="kompetensi_id" class="chosen-select" tabindex="-1">
-                                                    @foreach($kompetensi as $row)
+																										<option value=""></option>
+																										@foreach($kompetensi as $row)
                                                       <option value="{{$row->id}}" <?php echo ($row->id == $pertanyaan->kompetensi_id) ? "selected" : "";?>>{{$row->kompetensi}}</option>
-                                                    @endforeach
-                        													</select>
-                                              </div>
-
-                                              <div class="chosen-select-single mg-b-20">
-                                                  <label>RowScores Type</label>
-                                                  <select data-placeholder="Choose Competency Type" id="rowscore_id" name="rowscore_id" class="chosen-select" tabindex="-1">
-                                                    @foreach($rowscore as $row)
-                                                      <option value="{{$row->id}}" <?php echo ($row->id == $pertanyaan->rowscore_id) ? "selected" : "";?>>{{$row->nama_rowscore}}</option>
                                                     @endforeach
                         													</select>
                                               </div>
@@ -251,27 +243,10 @@
                                                   <textarea class="form-control" rows="5" id="pertanyaan" style="height: 150px;" name="pertanyaan" placeholder="Question">{{$pertanyaan->pertanyaan}}</textarea>
                                               </div>
 
-                                              <div class="chosen-select-single mg-b-20">
-                                                  <label>Sequence Number to</label>
-                                                  <input class="form-control" type="number" min="1" id="no_urut_pertanyaan" name="no_urut_pertanyaan" placeholder="Sequence Number to" value="{{$pertanyaan->no_urut_pertanyaan}}">
-                                              </div>
-
                                               <div class="input-group-btn inline-option">
                                                   <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                               </div>
 
-                                              <div class="inline-option">
-                                                <div class="chosen-select-single mg-b-20">
-                                                    <select data-placeholder="Choose Answer Model (Option)" data-jawaban_id="{{Crypt::encrypt($pertanyaan->id)}}" id="model_answer" name="model_answer" class="chosen-select" tabindex="-1">
-                                                      <option></option>
-                                                      <option value="1">Setuju/Tidak Setuju</option>
-                                                      <option value="2">Benar/Salah</option>
-                          													</select>
-                                                </div>
-                                              </div>
-
-                                              <div class="model-answer"></div>
-                                              <div class="model-truefalse"></div>
                                               <div class="after-add-more type_answer">
                                                 <div class="control-group" style="margin-top:10px">
                                                 <?php $h = 0;?>
@@ -300,25 +275,25 @@
 
                                               <div class="copy hide">
                                                 <div class="control-group input-group" style="margin-top:10px">
-                                                <div class="chosen-select-single mg-b-20">
-                                                    <label>Answer</label>
-                                                    <textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
-                                                </div>
+	                                                <div class="chosen-select-single mg-b-20">
+	                                                    <label>Answer</label>
+	                                                    <textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
+	                                                </div>
 
-                                                <div class="chosen-select-single mg-b-20">
-                                                    <label>Score</label>
-                                                    <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
-                                                </div>
+	                                                <div class="chosen-select-single mg-b-20">
+	                                                    <label>Score</label>
+	                                                    <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
+	                                                </div>
 
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-                                                </div>
+	                                                <div class="input-group-btn">
+	                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove" tabIndex="-1"></i> Remove</button>
+	                                                </div>
+	                                              </div>
                                               </div>
+
+                                              <div class="form-group">
+																								<button type="submit" id="btn_save" class="btn btn-primary">Save</button>
                                               </div>
-
-                                              <br>
-                                              <button type="submit" id="btn_save" class="btn btn-primary">Save</button>
-
                                           </div>
                                         </form>
                                     </div>

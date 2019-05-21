@@ -152,10 +152,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -199,10 +196,10 @@
                                                     <strong>Oh snap!</strong> {{$errors->first('pertanyaan')}}
                                                 </div>
                                               @endif
-                                              @if($errors->has('assesment_id'))
+                                              @if($errors->has('jenis_assessment_id'))
                                                 <div class="alert alert-danger alert-dismissable">
                                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                    <strong>Oh snap!</strong> {{$errors->first('assesment_id')}}
+                                                    <strong>Oh snap!</strong> {{$errors->first('jenis_assessment_id')}}
                                                 </div>
                                               @endif
                                               @if($errors->has('kompetensi_id'))
@@ -211,42 +208,29 @@
                                                     <strong>Oh snap!</strong> {{$errors->first('kompetensi_id')}}
                                                 </div>
                                               @endif
-                                              @if($errors->has('rowscore_id'))
-                                                <div class="alert alert-danger alert-dismissable">
+                                              @if(Session::get('success'))
+                                                <div class="alert alert-primary alert-dismissable">
                                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                    <strong>Oh snap!</strong> {{$errors->first('rowscore_id')}}
-                                                </div>
-                                              @endif
-                                              @if($errors->has('success'))
-                                                <div class="alert alert-danger alert-dismissable">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                    <strong>Oh snap!</strong> {{$errors->first('success')}}
+                                                    <strong>Yeaay!</strong> {{Session::get('success')}}
                                                 </div>
                                               @endif
                                               <div class="chosen-select-single mg-b-20">
-                                                  <label>Assesment Type</label>
-                                                  <select data-placeholder="Choose Assesment Type" id="assesment_id" name="assesment_id" class="chosen-select" tabindex="-1">
+                                                  <label>Assessment Type</label>
+                                                  <select data-placeholder="Choose Assessment Type" id="jenis_assessment_id" name="jenis_assessment_id" class="chosen-select" tabindex="-1">
+                                                      <option value=""></option>
                                                     @foreach($assesments as $row)
-                                                      <option value="{{$row->id}}" <?php echo (Session::get("assesment_id") == $row->id) ? "selected" : "";?>>{{$row->nama}}</option>
+                                                      <option value="{{$row->id}}" <?php echo (Session::get("tanya_assessment_id") == $row->id) ? "selected" : "";?>>{{$row->nama}}</option>
                                                     @endforeach
-                        													</select>
+                        						  </select>
                                               </div>
                                               <div class="chosen-select-single mg-b-20">
                                                   <label>Competencies Type</label>
                                                   <select data-placeholder="Choose Competency Type" id="kompetensi_id" name="kompetensi_id" class="chosen-select" tabindex="-1">
+                                                      <option value=""></option>
                                                     @foreach($kompetensi as $row)
-                                                      <option value="{{$row->id}}" <?php echo (Session::get("kompetensi_id") == $row->id) ? "selected" : "";?>>{{$row->kompetensi}}</option>
+                                                      <option value="{{$row->id}}" <?php echo (Session::get("tanya_kompetensi_id") == $row->id) ? "selected" : "";?>>{{$row->kompetensi}}</option>
                                                     @endforeach
-                        													</select>
-                                              </div>
-
-                                              <div class="chosen-select-single mg-b-20">
-                                                  <label>Raw Scores Type</label>
-                                                  <select data-placeholder="Choose Competency Type" id="rowscore_id" name="rowscore_id" class="chosen-select" tabindex="-1">
-                                                    @foreach($rowscore as $row)
-                                                      <option value="{{$row->id}}" <?php echo (Session::get("rowscore_id") == $row->id) ? "selected" : "";?>>{{$row->nama_rowscore}}</option>
-                                                    @endforeach
-                        													</select>
+												  </select>
                                               </div>
 
                                               <div class="chosen-select-single mg-b-20">
@@ -254,27 +238,10 @@
                                                   <textarea class="form-control" rows="5" id="pertanyaan" style="height: 150px;" name="pertanyaan" placeholder="Question"></textarea>
                                               </div>
 
-                                              <div class="chosen-select-single mg-b-20">
-                                                  <label>Sequence Number to</label>
-                                                  <input class="form-control" type="number" min="1" id="no_urut_pertanyaan" name="no_urut_pertanyaan" placeholder="Sequence Number to" value="{{$kasihNomorUrut}}">
-                                              </div>
-
                                               <div class="input-group-btn inline-option">
                                                   <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
                                               </div>
 
-                                              <div class="inline-option">
-                                                <div class="chosen-select-single mg-b-20">
-                                                    <select data-placeholder="Choose Answer Model (Option)" id="model_answer" name="model_answer" class="chosen-select" tabindex="-1">
-                                                      <option></option>
-                                                      <option value="1">Setuju/Tidak Setuju</option>
-                                                      <option value="2">Benar/Salah</option>
-                          													</select>
-                                                </div>
-                                              </div>
-
-                                              <div class="model-answer"></div>
-                                              <div class="model-truefalse"></div>
                                               <div class="after-add-more type_answer">
                                                 <div class="chosen-select-single mg-b-20">
                                                     <label>Answer</label>
@@ -288,24 +255,26 @@
                                               </div>
 
                                               <div class="copy hide">
-                                                <div class="control-group input-group" style="margin-top:10px">
-                                                <div class="chosen-select-single mg-b-20">
-                                                    <label>Answer</label>
-                                                    <textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
-                                                </div>
+                                                  <div class="control-group input-group" style="margin-top:10px">
+                                                    <div class="chosen-select-single mg-b-20">
+                                                        <label>Answer</label>
+                                                        <textarea class="form-control" rows="5" id="jawaban" name="jawaban[]" style="height: 150px;" name="answer" placeholder="Answer"></textarea>
+                                                    </div>
 
-                                                <div class="chosen-select-single mg-b-20">
-                                                    <label>Score</label>
-                                                    <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
-                                                </div>
+                                                    <div class="chosen-select-single mg-b-20">
+                                                        <label>Score</label>
+                                                        <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
+                                                    </div>
 
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-                                                </div>
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-danger remove" type="button" tabIndex="-1"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                                                    </div>
+                                                  </div>
                                               </div>
-                                              </div>
 
-                                              <button type="submit" id="btn_save" class="btn btn-primary">Save</button>
+                                              <div class="form-group">
+                                                <button type="submit" id="btn_save" class="btn btn-primary">Save</button>
+                                              </div>
 
                                           </div>
                                         </form>
@@ -412,24 +381,6 @@
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->
-    <script>
-        $(document).ready(function () {
-            $(".assesment_id").select2({
-                placeholder: "Please select type of assesment",
-                allowClear: true
-            });
-
-            $(".kompetensi_id").select2({
-                placeholder: "Please select competencie",
-                allowClear: true
-            });
-
-            $(".rowscore_id").select2({
-                placeholder: "Please select row score",
-                allowClear: true
-            });
-        });
-    </script>
 
     <script type="text/javascript">
       $(document).ready(function(){

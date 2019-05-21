@@ -137,26 +137,6 @@
                                           <a href="{{ url('backend/pages/questions/add') }}" class="btn btn-primary">
                                             Add New
                                           </a>
-
-
-                                          <select class="dynamic" name="assesment_id" id="assesment_id" data-dependent="kompetensi">
-                                            <option value=""></option>
-                                            @foreach($jenisAssessments as $vaSes)
-                                              <option value="{{Crypt::encrypt($vaSes->id)}}">{{$vaSes->nama}}</option>
-                                            @endforeach
-                                          </select>
-
-                                          <select class="dynamic" name="kompetensi_id" id="kompetensi_id" data-dependent="rawscore">
-                                            <option></option>
-                                          </select>
-
-                                          <select class="dynamic" name="rawscore_id" id="rawscore_id" data-dependent="pertanyaan">
-                                            <option></option>
-                                          </select>
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -182,26 +162,18 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Questions <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Questions <span class="table-project-n">Data</span> Tables</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
                                     <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
                                               <th>#</th>
                                               <th>Questions</th>
-                                              <th>Name of Assesments</th>
+                                              <th>Assessments Name</th>
                                               <th>Competencies</th>
-                                              <th>Raw Scores</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -218,9 +190,8 @@
                                             </td>
                                             <td>{{ $row->get_assesment->nama }}</td>
                                             <td>{{ $row->get_kompetensi->kompetensi }}</td>
-                                            <td>{{ $row->get_rowscore->nama_rowscore }}</td>
                                             <td>
-                                              <a href="{{ url('backend/pages/questions/'.Crypt::encrypt($row->id)) }}" class="btn btn-warning btn_edit" <?php foreach($row->data_jawabans as $key=>$row2): ;?>data-nilai<?php echo $key;?>="{{$row2->nilai}}" data-jawaban<?php echo $key;?>="{{$row2->jawaban}}" data-jawaban_id<?php echo $key;?>="{{Crypt::encrypt($row2->id)}}"<?php endforeach;?>data-pertanyaan="{{$row->pertanyaan}}" data-assesment_id="{{$row->assesment_id}}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-rowscore_id="{{$row->rowscore_id}}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                              <a href="{{ url('backend/pages/questions/'.Crypt::encrypt($row->id)) }}" class="btn btn-warning btn_edit"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                           <?php $no++;?>
@@ -228,12 +199,11 @@
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>#</th>
-                                            <th>Questions</th>
-                                            <th>Name of Assesments</th>
-                                            <th>Competencies</th>
-                                            <th>Raw Scores</th>
-                                            <th>Action</th>
+                                              <th>#</th>
+                                              <th>Questions</th>
+                                              <th>Assessments Name</th>
+                                              <th>Competencies</th>
+                                              <th>Action</th>
                                           </tr>
                                       </tfoot>
                                     </table>

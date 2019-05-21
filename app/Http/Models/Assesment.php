@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Assesment extends Model{
   use SoftDeletes;
-  protected $fillable = ['id','user_id','tanggal_akses','assesment_id','selesai','modal_info'];
-  protected $table = "assesments";
+  protected $fillable = ['id','user_id','jenis_assessment_id','selesai'];
+  protected $table = "assessments";
   protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
@@ -16,6 +16,6 @@ class Assesment extends Model{
   }
 
   public function get_jenis_assessment(){
-    return $this->belongsTo(JenisAssesment::class,"assesment_id");
+    return $this->belongsTo(JenisAssesment::class,"jenis_assessment_id");
   }
 }
