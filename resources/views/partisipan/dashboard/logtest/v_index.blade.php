@@ -313,24 +313,12 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="sparkline13-list">
-                            <!-- <div class="sparkline13-hd">
-                                <div class="main-sparkline13-hd">
-                                    <h1> <span class="table-project-n">Data</span> Table</h1>
-                                </div>
-                            </div> -->
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
                                     <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                         <tr>
-                                          <th>Participant</th>
+                                          <th>Name</th>
                                           <th>Competency</th>
                                           <th>Date</th>
                                           <th>Action</th>
@@ -346,7 +334,7 @@
                                               <?php
                                                 if($row->selesai == 0 || $row->selesai == "0"){
                                                   ?>
-                                                    <a class="btn btn-danger" href="{{ url('user/pages/assesments/'.Crypt::encrypt($row->assesment_id).'/'.Crypt::encrypt($row->id)) }}" tooltip="Please complete it"><i class="fa fa-forward"></i></a>
+                                                    <a class="btn btn-danger" href="{{ url('user/pages/assesments/'.Crypt::encrypt($row->jenis_assessment_id).'/'.Crypt::encrypt($row->id)) }}" tooltip="Please complete it"><i class="fa fa-forward"></i></a>
                                                   <?php
                                                 }else{
                                                   ?>
@@ -360,7 +348,7 @@
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>Participant</th>
+                                            <th>Name</th>
                                             <th>Competency</th>
                                             <th>Date</th>
                                             <th>Action</th>

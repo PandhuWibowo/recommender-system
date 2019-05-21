@@ -552,9 +552,7 @@
                                                                                               </label>
                                                                                           </div>
                                                                                             <!-- assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->pertanyaan_id}}" jawabanid="{{$row2->id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?> -->
-
                                                                                           @endforeach
-
                                                                                     </div>
                                                                                 </div>
                                                                             </div>

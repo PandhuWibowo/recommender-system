@@ -268,7 +268,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                   <label>Scores</label>
-                                                  <select class="js-example-basic" name="edit_keterangan_id" id="edit_keterangan_id" tabindex="-1">
+                                                  <select class="js-example-basic" name="edit_keterangan_id" id="edit_keterangan_id">
                                                     <option></option>
                                                     @foreach($keteranganNilai as $row)
                                                       <option value="{{$row->id}}">{{$row->range_score}}</option>
@@ -278,7 +278,7 @@
 
                                                 <div class="form-group">
                                                   <label>Competencies</label>
-                                                  <select class="js-example-basic" name="edit_kompetensi_id" id="edit_kompetensi_id" tabindex="-1">
+                                                  <select class="js-example-basic" name="edit_kompetensi_id" id="edit_kompetensi_id">
                                                     <option></option>
                                                     @foreach($kompetensi as $row)
                                                       <option value="{{$row->id}}">{{$row->kompetensi}}</option>

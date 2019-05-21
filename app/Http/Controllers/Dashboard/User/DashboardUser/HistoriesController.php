@@ -12,7 +12,6 @@ use App\Http\Models\KeteranganNilai;
 use App\Http\Models\AssessmentKompetensi;
 use App\Http\Models\HasilAssKom;
 use App\Http\Models\HasilKompetensi;
-use App\Http\Models\RowScore;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -20,9 +19,6 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use DB;
-use BrowserDetect;
-use App\Http\Models\ModelLogs\DirectPage;
-use App\Http\Models\ModelLogs\LogUserHistory;
 use PDF;
 /**
  * HistoriesController
@@ -30,16 +26,6 @@ use PDF;
 class HistoriesController extends Controller
 {
   public function index(Request $request){
-    $logPages = new DirectPage([
-      "user_id"     => Session::get("id"),
-      "ip_address"  => $request->ip(),
-      "browser"     => BrowserDetect::browserName(),
-      "action"      => "Menu Histories",
-      "data"        => Session::get("email")." mengunjungi halaman Histories",
-      "link"        => url()->current()
-    ]);
-
-    $logPages->save();
     $histories = Assesment::with("get_jenis_assessment")->where("user_id", Session::get("id"))->get();
     return view("partisipan.dashboard.logtest.v_index", compact("histories"));
   }
@@ -150,7 +136,7 @@ class HistoriesController extends Controller
 
     $pdf = PDF::loadView('partisipan.dashboard.report.v_print', compact("dataUser","cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan","id"))->setPaper('a4', 'portrait');
     // $pdf->render();
-    
+
     return $pdf->stream();
   }
 }

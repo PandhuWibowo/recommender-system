@@ -279,17 +279,14 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">Questions</span>
+                                            <li><span class="bread-blod">Assessments</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -352,11 +349,11 @@
                                                                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                                       <!-- i-checks -->
                                                                                                         <div class="pull-left">
-                                                                                                              <input type="hidden" value="{{$decryptAssId}}" class="assessmentid"  name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
+                                                                                                              <input type="hidden" value="{{$decryptAssessmentId}}" class="assessmentid"  name="assessmentid{{$x}}" id="assessmentid{{$x}}" required>
                                                                                                               <input type="hidden" value="{{$row2->pertanyaan_id}}" class="pertanyaanid" name="pertanyaanid{{$x}}" id="pertanyaanid{{$x}}" required>
                                                                                                               <input type="hidden" value="{{$row2->id}}" class="jawabanid" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
 
-                                                                                                              <input type="radio" value="{{$row2->nilai}}" class="nilai" name="nilai{{$x}}" id="nilai{{$x}}" assessmentid="{{$decryptAssId}}" pertanyaanid="{{$row2->pertanyaan_id}}" jawabanid="{{$row2->id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?>>
+                                                                                                              <input type="radio" value="{{$row2->nilai}}" class="nilai" name="nilai{{$x}}" id="nilai{{$x}}" assessmentid="{{$decryptAssessmentId}}" pertanyaanid="{{$row2->pertanyaan_id}}" jawabanid="{{$row2->id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?>>
 
                                                                                                         </div>
                                                                                                         <div class="jawaban">{{ucfirst($row2->jawaban)}}</div>
@@ -494,7 +491,7 @@
           "pagingType": "simple",
           // "sPaginationType": "full_numbers",
           "searching": false,
-          "pageLength": {{$limit}},
+          "pageLength": 4,
           "info":     false,
           dom: 'Bfrtip',
           "ordering": false,
@@ -518,10 +515,6 @@
           var varAssId         = table.$(this).attr("assessmentid");
           var varPertanyaanId  = table.$(this).attr("pertanyaanid");
           var varJawabanId     = table.$(this).attr("jawabanid");
-          // console.log("Nilai : "+varNilai);
-          // console.log("Assessment ID : "+varAssId);
-          // console.log("Pertanyaan ID : "+varPertanyaanId);
-          // console.log("Jawaban ID : "+varJawabanId);
 
           try {
             $.ajax({
@@ -531,7 +524,7 @@
               dataType  : "JSON",
               cache     : true,
               data      : {
-                ass_id        : varAssId,
+                assessment_id : varAssId,
                 nilai         : varNilai,
                 pertanyaan_id : varPertanyaanId,
                 jawaban_id    : varJawabanId
@@ -623,15 +616,8 @@
                     data      : {
                       id      : varJenisAssesmentId,
                       selesai : "1"
-                      // "pertanyaan_id[]" : arrPertanyaanId,
-                      // "jawaban_id[]"    : arrJawabanId,
-                      // "nilai[]"         : arrNilai
                     },
                     success:function(data){
-                      // if(data.response == "success"){
-                      //   window.location.href="{{ url('user/pages/results/final') }}"+"/"+data.assId;
-                      // }
-                      // console.log(data);
                       if(data.response == "success"){
                         swal({
                           type      : "success",

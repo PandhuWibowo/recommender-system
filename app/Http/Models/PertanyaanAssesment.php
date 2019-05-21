@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class PertanyaanAssesment extends Model{
   use SoftDeletes;
-  protected $fillable = ['assessment_id','pertanyaan_id','nilai'];
-  protected $table = "pertanyaan_assesments";
-  protected $primaryKey = 'id'; // or null
+  protected $fillable = ['assessment_id','pertanyaan_id','jawaban_id','nilai'];
+  protected $table = "detail_pertanyaans_assessments";
+  // protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
   public function getAssessment(){

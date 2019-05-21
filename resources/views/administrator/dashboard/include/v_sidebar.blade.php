@@ -54,28 +54,13 @@
                 <nav class="sidebar-nav left-sidebar-menu-pro">
                     <ul class="metismenu" id="menu1">
                         <li>
-                            <a class="has-arrow" href="{{ url('user/pages/home') }}">
-                               <span class="educate-icon educate-home icon-wrap"></span>
-                               <span class="mini-click-non">Home</span>
-                            </a>
-                            <ul class="submenu-angle" aria-expanded="true">
-                                <li><a title="Dashboard" href="{{ url('user/pages/home') }}"><span class="mini-sub-pro">Dashboard</span></a></li>
-                            </ul>
-                        </li>
-                        <!-- <li>
-                            <a title="Landing Page" href="events.html" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Event</span></a>
-                        </li> -->
-                        <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Assesments</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Assesments" href="{{ url('user/pages/assesments') }}"><span class="mini-sub-pro">Assesments</span></a></li>
-                            </ul>
+                            <a title="Home" href="{{ url('user/pages/home') }}" aria-expanded="false"><span class="educate-icon educate-home icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Home</span></a>
                         </li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap"></span> <span class="mini-click-non">Histories</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Histories" href="{{ url('user/pages/histories') }}"><span class="mini-sub-pro">Log Histories</span></a></li>
-                            </ul>
+                            <a title="Assessments" href="{{ url('user/pages/assesments') }}" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Assesments</span></a>
+                        </li>
+                        <li>
+                            <a title="Histories" href="{{ url('user/pages/histories') }}" aria-expanded="false"><span class="educate-icon educate-data-table icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Histories</span></a>
                         </li>
                     </ul>
                 </nav>

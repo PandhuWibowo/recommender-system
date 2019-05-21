@@ -22,169 +22,79 @@ use Illuminate\Support\Facades\Session;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Models\ModelLogs\DirectPage;
-use App\Http\Models\ModelLogs\LogUserAssessment;
-use BrowserDetect;
 /**
  * UserController
  */
 class AssesmentController extends Controller
 {
   public function index(Request $request){
-    $jenisAssesment   = UserAssessment::join("jenis_assesments as ja","user_assesments.assesment_id","=","ja.id")
-                                      ->where("user_assesments.user_id", Session::get('id'))
+    $jenisAssesment   = UserAssessment::join("jenis_assessments as ja","detail_users_jenis_assessments.jenis_assessment_id","=","ja.id")
+                                      ->where("detail_users_jenis_assessments.user_id", Session::get('id'))
                                       ->where("status", 0)
                                       ->get();
     $countAssessment = count($jenisAssesment);
-
-    // $continueAss = Assesment::where("user_id", Session::get("id"))->get();
-
-    $logPages = new DirectPage([
-      "user_id"     => Session::get("id"),
-      "ip_address"  => $request->ip(),
-      "browser"     => BrowserDetect::browserName(),
-      "action"      => "Menu Participants Assessments",
-      "data"        => Session::get("email")." mengunjungi halaman Participants Assessments",
-      "link"        => url()->current()
-    ]);
-
-    $logPages->save();
-
 
     return view("partisipan.dashboard.assesment.v_assesment", compact("jenisAssesment","countAssessment"));
   }
 
   public function store(Request $request){
     $assesment = new Assesment([
-      'id'            => Uuid::generate()->string,
-      'user_id'       => Session::get("id"),
-      'tanggal_akses' => Carbon::now()->format('Y-m-d'),
-      'assesment_id'  => Crypt::decrypt($request->id)
+      'id'                    => Uuid::generate()->string,
+      'user_id'               => Session::get("id"),
+      'jenis_assessment_id'   => Crypt::decrypt($request->jenis_assessment_id)
     ]);
 
     if($assesment->save()){
       $tampilAttempt = UserAssessment::select(["attempt"])->where("user_id", Session::get("id"))
-                                    ->where("assesment_id", Crypt::decrypt($request->id))
+                                    ->where("jenis_assessment_id", Crypt::decrypt($request->jenis_assessment_id))
                                     ->first()->attempt;
 
       $countAttempt = $tampilAttempt;
 
       $attemptUpdate = UserAssessment::where("user_id", Session::get("id"))
-                                    ->where("assesment_id", Crypt::decrypt($request->id))
+                                    ->where("jenis_assessment_id", Crypt::decrypt($request->jenis_assessment_id))
                                     ->update(["attempt" => $countAttempt+1]);
-
-      $logPages = new LogUserAssessment([
-        "user_id"     => Session::get("id"),
-        "ip_address"  => $request->ip(),
-        "browser"     => BrowserDetect::browserName(),
-        "action"      => "Assessment to Questions",
-        "data"        => Session::get("email")." memilih jenis assessment pada quis dengan ID : ".$assesment->id,
-        "link"        => url()->current()
-      ]);
-
-      $logPages->save();
-
       return response()->json(
           array(
-            'response'  => "success",
-            'id'        => $request->id,
-            'ass_id'    => Crypt::encrypt($assesment->id)
+            'response'            => "success",
+            'jenis_assessment_id' => $request->jenis_assessment_id,
+            'assessment_id'       => Crypt::encrypt($assesment->id)
           )
       );
     }else{
-      $logPages = new LogUserAssessment([
-        "user_id"     => Session::get("id"),
-        "ip_address"  => $request->ip(),
-        "browser"     => BrowserDetect::browserName(),
-        "action"      => "Assessment to Questions",
-        "data"        => Session::get("email")."gagal memilih jenis assessment pada quis dengan ID : ".$assesment->id,
-        "link"        => url()->current()
-      ]);
-
-      $logPages->save();
-
       return response()->json(
           array(
             'response'  => "failed"
           )
       );
     }
-
-
   }
 
-  public function show($id, $assId, Request $request){
-    $decryptId    = Crypt::decrypt($id); //TODO: Jenis Assessment ID
-    $decryptAssId = Crypt::decrypt($assId); //TODO: Assessment ID
+  public function show($varJenisAssessmentId, $varAssessmentId, Request $request){
+    $decryptJenisAssessmentId     = Crypt::decrypt($varJenisAssessmentId); //TODO: Jenis Assessment ID
+    $decryptAssessmentId          = Crypt::decrypt($varAssessmentId); //TODO: Assessment ID
 
-    // dd($decryptId);
-    $tablePertanyaan1 = Pertanyaan::where("assesment_id", $decryptId)->count();
-    $tablePertanyaan2 = SelfhoodPertanyaan::where("assessment_id", $decryptId)->count();
+    $tablePertanyaan1 = Pertanyaan::where("jenis_assessment_id", $decryptJenisAssessmentId)->count();
 
     if($tablePertanyaan1 > 0){
-      //Paginate total number
-      $limit = Configuration::pluck("konfigurasi")->first();
 
-      $questions    = Pertanyaan::with(['get_rowscore' => function ($q) {
-                                    $q->orderBy('no_urut_rowscore', 'desc');
-                                  }])
-                                ->with(['get_kompetensi' => function ($q) {
-                                    $q->orderBy('no_urut_kompetensi', 'ASC');
-                                  }])
-                                ->with("get_assesment")
-                                ->where("assesment_id", $decryptId)
-                                // ->orderBy("rowscores.no_urut_rowscore","asc")
-                                ->orderBy("no_urut_pertanyaan","asc")
+      $questions    = Pertanyaan::where("jenis_assessment_id", $decryptJenisAssessmentId)
                                 ->get();
       $countQuestions = count($questions);
 
-      $hasilJawaban = PertanyaanAssesment::where("ass_id", $decryptAssId)->pluck("jawaban_id");
+      $hasilJawaban = PertanyaanAssesment::where("assessment_id", $decryptAssessmentId)->pluck("jawaban_id");
       // dd($hasilJawaban);
 
       //Penentuan Assessment
-      $competencyType = Pertanyaan::where("assesment_id", $decryptId)
-                                  ->join("jenis_assesments as ja","pertanyaans.assesment_id","=","ja.id")
+      $competencyType = Pertanyaan::where("jenis_assessment_id", $decryptJenisAssessmentId)
+                                  ->join("jenis_assessments as ja","pertanyaans.jenis_assessment_id","=","ja.id")
                                   ->pluck("ja.nama")
                                   ->first();
 
-      $logPages = new DirectPage([
-        "user_id"     => Session::get("id"),
-        "ip_address"  => $request->ip(),
-        "browser"     => BrowserDetect::browserName(),
-        "action"      => "Quis",
-        "data"        => Session::get("email")." mengunjungi halaman Quis dengan detail Id Assessment : ".$decryptId,
-        "link"        => url()->current()
-      ]);
-
-      $logPages->save();
-
-      return view("partisipan.dashboard.assesment.v_question", compact("hasilJawaban","questions","decryptAssId","countQuestions","competencyType", "limit"));
+      return view("partisipan.dashboard.assesment.v_question", compact("hasilJawaban","questions","decryptAssessmentId","decryptJenisAssessmentId", "countQuestions","competencyType"));
 
     }
-    else if($tablePertanyaan2 > 0){
-      // TODO: Show limit isi page
-      $batas = ConfigurationTwo::pluck("konfigurasi2")->first();
-
-      //TODO: Show Questions by assessment_id dengan urutan berdasarkan nomer urut
-      $questions = SelfhoodPertanyaan::with("getJawabans")->where("assessment_id", $decryptId)->orderBy("no_urut_pertanyaan","asc")->get();
-
-      // TODO: Count all questions
-      $countQuestions = count($questions);
-
-      //TODO: Show Assessment Name
-      $competencyType = SelfhoodPertanyaan::where("assessment_id", $decryptId)
-                                  ->join("jenis_assesments as ja","pertanyaan_kepribadians.assessment_id","=","ja.id")
-                                  ->pluck("ja.nama")
-                                  ->first();
-      //TODO: Show answer result
-      $hasilJawaban = PertanyaanAssesment::where("ass_id", $decryptAssId)->pluck("jawaban_id");
-
-      //TODO: check cache
-      $updateAssessmentCache = Assesment::where("id", $decryptAssId)->pluck("modal_info");
-      // dd($updateAssessmentCache);
-      //TODO: Lempar halaman pertanyaan tipe dua
-      return view("partisipan.dashboard.assesment.v_question2", compact("batas","questions","countQuestions","competencyType","hasilJawaban","decryptAssId","updateAssessmentCache"));
-    }else{
+    else{
       echo noticePage();
     }
   }

@@ -250,7 +250,7 @@
 
                                                 <div class="chosen-select-single mg-b-20">
                                                     <label>Score</label>
-                                                    <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
+                                                    <input type="number" min="1" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
                                                 </div>
                                               </div>
 
@@ -263,7 +263,7 @@
 
                                                     <div class="chosen-select-single mg-b-20">
                                                         <label>Score</label>
-                                                        <input type="number" min="0" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
+                                                        <input type="number" min="1" class="form-control" id="nilai" name="nilai[]" placeholder="Score">
                                                     </div>
 
                                                     <div class="input-group-btn">

@@ -116,14 +116,11 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                          <a target="_blank" href="{{ url('user/pages/prints/'.$id.'/pdf/') }}" type="button" class="btn btn-primary">
+                                          <!-- <a target="_blank" href="{{ url('user/pages/prints/'.$id.'/pdf/') }}" type="button" class="btn btn-primary">
                                             <i class="fa fa-print"></i>
                                             Print
-                                          </a>
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
+                                          </a> -->
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -151,24 +148,24 @@
                             <ul class="basic-list">
                                 <li><span class="pull-left label-danger label-1 label">Competencies</span> <span class="pull-right label-danger label-1 label">Scores</span></li>
                                 <br>
-                                @foreach($resultAssKom as $row)
-                                  @if($row->pembulatan == 4 || $row->pembulatan == "4")
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-1 label">4</span></li>
-                                  @elseif($row->pembulatan == 3 || $row->pembulatan == "3")
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-success label-3 label">3</span></li>
-                                  @elseif($row->pembulatan == 2 || $row->pembulatan == "2")
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-yellow label-7 label" style="color:#000;">2</span></li>
-                                  @elseif($row->pembulatan == 1 || $row->pembulatan == "1")
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-2 label">1</span></li>
+                                @foreach($sql as $row)
+                                  @if($row->dpaNilai == 4 || $row->dpaNilai == "4")
+                                    <li>{{$row->kKom}} <span class="pull-right label-danger label-1 label">4</span></li>
+                                  @elseif($row->dpaNilai == 3 || $row->dpaNilai == "3")
+                                    <li>{{$row->kKom}} <span class="pull-right label-success label-3 label">3</span></li>
+                                  @elseif($row->dpaNilai == 2 || $row->dpaNilai == "2")
+                                    <li>{{$row->kKom}} <span class="pull-right label-yellow label-7 label" style="color:#000;">2</span></li>
+                                  @elseif($row->dpaNilai == 1 || $row->dpaNilai == "1")
+                                    <li>{{$row->kKom}} <span class="pull-right label-danger label-2 label">1</span></li>
                                   @else
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-2 label">1</span></li>
+                                    <li>{{$row->kKom}} <span class="pull-right label-danger label-2 label">1</span></li>
                                   @endif
                                 @endforeach
 
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
                           <h3 class="box-title">Strength Area</h3>
                           <table class="table table-striped" id="tableRange">
@@ -194,7 +191,7 @@
                             </tbody>
                           </table>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -229,7 +226,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
                             <h3 class="box-title">Suggestions</h3>
                             <table class="table table-striped" id="tableRange">
@@ -243,7 +240,7 @@
                               </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
