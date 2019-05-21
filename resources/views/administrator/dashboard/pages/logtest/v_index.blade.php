@@ -133,10 +133,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
+                                            
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -160,24 +157,12 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="sparkline13-list">
-                            <!-- <div class="sparkline13-hd">
-                                <div class="main-sparkline13-hd">
-                                    <h1> <span class="table-project-n">Data</span> Table</h1>
-                                </div>
-                            </div> -->
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
                                     <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                         <tr>
-                                          <th>Participant</th>
+                                          <th>Name</th>
                                           <th>Competency</th>
                                           <th>Date</th>
                                           <th>Action</th>
@@ -197,7 +182,7 @@
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>Participant</th>
+                                            <th>Name</th>
                                             <th>Competency</th>
                                             <th>Date</th>
                                             <th>Action</th>

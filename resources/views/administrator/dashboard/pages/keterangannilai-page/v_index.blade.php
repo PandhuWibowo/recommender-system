@@ -139,18 +139,13 @@
                                           <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
                                             Add New
                                           </a>
-
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">Score Description</span>
+                                            <li><span class="bread-blod">Scores</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -169,24 +164,16 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Score Description <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Scores <span class="table-project-n">Data</span> Tables</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
                                     <table id="myAssesments" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
                                               <th>Range Score</th>
                                               <th>Description</th>
-                                              <th>Description Type</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -195,9 +182,8 @@
                                           <tr>
                                             <td>{{ $row->range_score }}</td>
                                             <td>{!! $row->keterangan !!}</td>
-                                            <td>{!! $row->jenisketerangan !!}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-range_score="{{ $row->range_score }}" data-keterangan="{!! $row->keterangan !!}" data-jenisketerangan="{!! $row->jenisketerangan !!}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-range_score="{{ $row->range_score }}" data-keterangan="{!! $row->keterangan !!}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
@@ -206,7 +192,6 @@
                                           <tr>
                                             <th>Range Score</th>
                                             <th>Description</th>
-                                            <th>Description Type</th>
                                             <th>Action</th>
                                           </tr>
                                       </tfoot>
@@ -217,40 +202,27 @@
                                       <div class="modal-dialog">
 
                                         <!-- Modal content-->
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">New Score Description</h4>
-                                          </div>
-                                          <div class="modal-body">
-                                            <div class="form-group">
-                                              <label for="usr">Range Score</label>
-                                              <input type="number" min="1" class="form-control" autofocus="on" autocomplete="off" id="range_score" required>
+                                        <form class="" action="" method="post">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">New Score</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                <div class="form-group">
+                                                  <label for="usr">Range Score</label>
+                                                  <input type="number" min="1" class="form-control" autofocus="on" autocomplete="off" id="range_score" required>
+                                                </div>
+                                                <div class="form-group">
+                                                  <label for="usr">Description</label>
+                                                  <input type="text" class="form-control" autocomplete="off" id="description" required>
+                                                </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="submit" id="btn_save" class="btn btn-primary">Save</button>
+                                              </div>
                                             </div>
-                                            <div class="form-group">
-                                              <label for="usr">Description</label>
-                                              <input type="text" class="form-control" autocomplete="off" id="description" required>
-                                            </div>
-
-                                            <!-- <div class="form-group res-mg-t-15">
-                                              <label for="usr">Description Type</label>
-                                              <textarea name="jenisketerangan" id="jenisketerangan" placeholder="Description Type"></textarea>
-                                            </div> -->
-                                            <div class="chosen-select-single mg-b-20">
-                                              <label>Description Type</label>
-                                              <select data-placeholder="Choose Description Type" width="100%" id="jenis_keterangan" name="jenis_keterangan" class="jenis_keterangan">
-                                                <option value=""></option>
-                                                <option value="Kekuatan">Kekuatan</option>
-                                                <option value="Pengembangan">Pengembangan</option>
-                                              </select>
-                                            </div>
-
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                          </div>
-                                        </div>
-
+                                        </form>
                                       </div>
                                     </div>
 
@@ -262,7 +234,7 @@
                                         <div class="modal-content">
                                           <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Score Description</h4>
+                                            <h4 class="modal-title">Edit Score</h4>
                                             <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
                                           </div>
                                           <div class="modal-body">
@@ -278,27 +250,11 @@
                                               <label for="usr">Description</label>
                                               <input type="text" class="form-control" autocomplete="off" id="edit_description" required>
                                             </div>
-
-                                            <!-- <div class="form-group res-mg-t-15">
-                                              <label for="usr">Description Type</label>
-                                              <textarea name="edit_jenisketerangan" id="edit_jenisketerangan" placeholder="Description Type"></textarea>
-                                            </div> -->
-
-                                            <div class="chosen-select-single mg-b-20">
-                                              <label>Description Type</label>
-                                              <select data-placeholder="Choose Description Type" width="100%" id="edit_jenis_keterangan" name="edit_jenis_keterangan" class="edit_jenis_keterangan">
-                                                <option value=""></option>
-                                                <option value="Kekuatan">Kekuatan</option>
-                                                <option value="Pengembangan">Pengembangan</option>
-                                              </select>
-                                            </div>
-
                                           </div>
                                           <div class="modal-footer">
                                             <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
                                           </div>
                                         </div>
-
                                       </div>
                                     </div>
                                 </div>
@@ -402,19 +358,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" charset="utf-8"></script>
 
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function(){
-        $("#jenis_keterangan").select2({
-          width: '100%',
-          allowClear: true
-        });
 
-        $("#edit_jenis_keterangan").select2({
-          width: '100%',
-          allowClear: true
-        });
-      });
-    </script>
     <script>
       //Buat Insert Modal
       // CKEDITOR.replace( 'jenisketerangan' );
@@ -450,14 +394,12 @@
           var varId               = $(this).data("id");
           var varRangeScore       = $(this).data("range_score");
           var varKeterangan       = $(this).data("keterangan");
-          var varJenisKeterangan  = $(this).data("jenisketerangan");
           try {
             $("#id_jenis_keterangan").val(varId);
             $("#edit_range_score").val(varRangeScore);
             // $("#edit_description").val(varKeterangan);
             CKEDITOR.instances['edit_description'].setData(varKeterangan);
             // CKEDITOR.instances['edit_jenisketerangan'].setData(varJenisKeterangan);
-            $("#edit_jenis_keterangan").select2("val", varJenisKeterangan);
             // $("#editModal").modal("show");
             $("#editModal").modal({
               backdrop: 'static',
@@ -470,7 +412,8 @@
 
           }
         });
-        $("#btn_save").on("click", function(){
+        $("#btn_save").on("click", function(e){
+          e.preventDefault();
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -478,14 +421,12 @@
           });
           var varRangeScore     = $("#range_score").val();
           var varDescription    = CKEDITOR.instances["description"].getData();
-          // var varDescriptionType= CKEDITOR.instances["jenisketerangan"].getData();
-          var varDescriptionType= $("#jenis_keterangan").val();
 
           try {
             if(varRangeScore == ""){
               swal({
                 type    : "info",
-                title   : "Empty",
+                title   : "Required",
                 text    : "Range Score is required",
                 timer   : 3000
               });
@@ -493,16 +434,8 @@
             else if(varDescription == ""){
               swal({
                 type    : "info",
-                title   : "Empty",
+                title   : "Required",
                 text    : "Description is required",
-                timer   : 3000
-              });
-            }
-            else if (varDescriptionType == "") {
-              swal({
-                type    : "info",
-                title   : "Empty",
-                text    : "Description Type is required",
                 timer   : 3000
               });
             }
@@ -514,8 +447,7 @@
                 dataType: "JSON",
                 data    : {
                   range_score       : varRangeScore,
-                  keterangan        : varDescription,
-                  jenisketerangan   : varDescriptionType
+                  keterangan        : varDescription
                 },
                 success:function(data){
                   $("#myModal").modal("hide");
@@ -523,11 +455,19 @@
                     swal({
                       type : "success",
                       title: "Success",
-                      text : "Data's has been saved",
+                      text : "Data has been saved",
                       timer: 3000
                     }).then(function(){
                       window.location = "{{ url('backend/pages/scoredescriptions') }}";
                     })
+                  }
+                  else if (data.response == "errors") {
+                    swal({
+                      type : "info",
+                      title: "Required",
+                      text : data.errors,
+                      timer: 3000
+                    });
                   }else{
                     swal({
                       type : "error",
@@ -549,7 +489,8 @@
           }
         });
 
-        $("#btn_edit").on("click", function(){
+        $("#btn_edit").on("click", function(e){
+          e.preventDefault();
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -558,8 +499,6 @@
           var varId             = $("#id_jenis_keterangan").val();
           var varRangeScore     = $("#edit_range_score").val();
           var varDescription    = CKEDITOR.instances["edit_description"].getData();
-          // var varJenisKeterangan= CKEDITOR.instances["edit_jenisketerangan"].getData();
-          var varJenisKeterangan= $("#edit_jenis_keterangan").val();
           try {
             $.ajax({
               type    : "PUT",
@@ -569,21 +508,29 @@
               data    : {
                 id              : varId,
                 range_score     : varRangeScore,
-                keterangan      : varDescription,
-                jenisketerangan : varJenisKeterangan
+                keterangan      : varDescription
               },
               success:function(data){
-                $("#editModal").modal("hide");
                 if(data.response == "success"){
+                  $("#editModal").modal("hide");
                   swal({
                     type : "success",
                     title: "Success",
-                    text : "Data's has been updated",
+                    text : "Data has been updated",
                     timer: 3000
                   }).then(function(){
                     window.location = "{{ url('backend/pages/scoredescriptions') }}";
                   })
-                }else{
+                }
+                else if (data.response == "errors") {
+                  swal({
+                    type : "info",
+                    title: "Required",
+                    text : data.errors,
+                    timer: 3000
+                  });
+                }
+                else{
                   swal({
                     type : "error",
                     title: "Error",

@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class HasilKompetensi extends Model{
   use SoftDeletes;
-  protected $fillable = ['id','keterangan_id','kompetensi_id','hasil_kompetensi'];
-  protected $table = "keteranganhasils";
-  protected $primaryKey = 'id';
+  protected $fillable = ['keterangan_nilai_id','kompetensi_id','hasil_kompetensi'];
+  protected $table = "detail_kompetensis_keterangan_nilais";
+  // protected $primaryKey = 'id';
   public $incrementing = false;
 
   public function getKeteranganNilai(){
-      return $this->belongsTo(KeteranganNilai::class,'keterangan_id');
+      return $this->belongsTo(KeteranganNilai::class,'keterangan_nilai_id');
   }
 
   public function getKompetensi(){

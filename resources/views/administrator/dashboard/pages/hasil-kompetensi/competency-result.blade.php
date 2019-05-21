@@ -139,18 +139,13 @@
                                           <a href="" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary" data-backdrop="static" data-keyboard="false">
                                             Add New
                                           </a>
-
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
                                             </li>
-                                            <li><span class="bread-blod">Description Result</span>
+                                            <li><span class="bread-blod">Description Summary</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -169,24 +164,17 @@
                         <div class="sparkline13-list">
                             <div class="sparkline13-hd">
                                 <div class="main-sparkline13-hd">
-                                    <h1>Description Result <span class="table-project-n">Data</span> Table</h1>
+                                    <h1>Description Summary <span class="table-project-n">Data</span> Tables</h1>
                                 </div>
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
                                     <table id="myAssesments" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
-                                              <th>Description Scores</th>
+                                              <th>Scores</th>
                                               <th>Competencies</th>
-                                              <th>Description Results</th>
+                                              <th>Descriptions</th>
                                               <th>Action</th>
                                           </tr>
                                       </thead>
@@ -197,17 +185,17 @@
                                             <td>{{ $row->getKompetensi->kompetensi }}</td>
                                             <td>{!! trim(substr($row->hasil_kompetensi, 0, 50)."...") !!}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" data-keterangan_id="{{ $row->keterangan_id }}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-hasil_kompetensi="{!! $row->hasil_kompetensi !!}" data-id="{{Crypt::encrypt($row->id)}}"><i class="fa fa-edit"></i></a>
+                                                <a class="btn btn-warning btn_edit" data-keterangan_nilai_id="{{ $row->keterangan_nilai_id }}" data-kompetensi_id="{{ $row->kompetensi_id }}" data-hasil_kompetensi="{!! $row->hasil_kompetensi !!}"><i class="fa fa-edit"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
-                                            <th>Description Scores</th>
-                                            <th>Competencies</th>
-                                            <th>Description Results</th>
-                                            <th>Action</th>
+                                              <th>Scores</th>
+                                              <th>Competencies</th>
+                                              <th>Descriptions</th>
+                                              <th>Action</th>
                                           </tr>
                                       </tfoot>
                                     </table>
@@ -216,92 +204,99 @@
                                     <div id="myModal" class="modal fade" role="dialog">
                                       <div class="modal-dialog">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">New Description Result</h4>
-                                          </div>
-                                          <div class="modal-body">
-                                            <div class="form-group">
-                                              <label>Description Score</label>
-                                              <select class="form-control js-example-basic-multiple chosen-select" name="keterangan_id" id="keterangan_id" tabindex="-1">
-                                                <option></option>
-                                                @foreach($keteranganNilai as $row)
-                                                  <option value="{{$row->id}}">{{$row->range_score}}</option>
-                                                @endforeach
-                                              </select>
-                                            </div>
+                                        <form class="" action="" method="post">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">New Description Summary</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                <div class="form-group">
+                                                  <label>Scores</label>
+                                                  <select class="form-control js-example-basic-multiple chosen-select" name="keterangan_nilai_id" id="keterangan_nilai_id" tabindex="-1">
+                                                    <option></option>
+                                                    @foreach($keteranganNilai as $row)
+                                                      <option value="{{$row->id}}">{{$row->range_score}}</option>
+                                                    @endforeach
+                                                  </select>
+                                                </div>
 
-                                            <div class="form-group">
-                                              <label>Competency</label>
-                                              <select class="form-control js-example-basic-multiple chosen-select" name="kompetensi_id" id="kompetensi_id" tabindex="-1">
-                                                <option></option>
-                                                @foreach($kompetensi as $row)
-                                                  <option value="{{$row->id}}">{{$row->kompetensi}}</option>
-                                                @endforeach
-                                              </select>
-                                            </div>
+                                                <div class="form-group">
+                                                  <label>Competencies</label>
+                                                  <select class="form-control js-example-basic-multiple chosen-select" name="kompetensi_id" id="kompetensi_id" tabindex="-1">
+                                                    <option></option>
+                                                    @foreach($kompetensi as $row)
+                                                      <option value="{{$row->id}}">{{$row->kompetensi}}</option>
+                                                    @endforeach
+                                                  </select>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Competency Result</label>
-                                              <textarea name="hasil_kompetensi" id="hasil_kompetensi" placeholder="Competency Result"></textarea>
-                                            </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Descriptions</label>
+                                                  <textarea name="hasil_kompetensi" id="hasil_kompetensi" placeholder="Competency Result"></textarea>
+                                                </div>
 
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" id="btn_save" class="btn btn-primary">Save</button>
-                                          </div>
-                                        </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="submit" id="btn_save" class="btn btn-primary">Save</button>
+                                              </div>
+                                            </div>
+                                        </form>
 
                                       </div>
                                     </div>
-                                    
+
                                     <!-- Modal -->
                                     <div id="editModal" class="modal fade" role="dialog">
                                       <div class="modal-dialog">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Edit Description Result</h4>
-                                            <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
-                                          </div>
-                                          <div class="modal-body">
-                                            <div class="form-group">
-                                              <input type="hidden" name="edit_id" id="edit_id" readonly>
-                                            </div>
-                                            <div class="form-group">
-                                              <label>Description Score</label>
-                                              <select class="js-example-basic" name="edit_keterangan_id" id="edit_keterangan_id" tabindex="-1">
-                                                <option></option>
-                                                @foreach($keteranganNilai as $row)
-                                                  <option value="{{$row->id}}">{{$row->range_score}}</option>
-                                                @endforeach
-                                              </select>
-                                            </div>
+                                        <form class="" action="" method="post">
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Edit Description Summary</h4>
+                                                <button type="button" id="btn_hps" class="btn btn-danger">Remove</button>
+                                              </div>
+                                              <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input type="hidden" name="edit_kompetensi_id_old" id="edit_kompetensi_id_old">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="hidden" name="edit_keterangan_id_old" id="edit_keterangan_id_old">
+                                                </div>
+                                                <div class="form-group">
+                                                  <label>Scores</label>
+                                                  <select class="js-example-basic" name="edit_keterangan_id" id="edit_keterangan_id" tabindex="-1">
+                                                    <option></option>
+                                                    @foreach($keteranganNilai as $row)
+                                                      <option value="{{$row->id}}">{{$row->range_score}}</option>
+                                                    @endforeach
+                                                  </select>
+                                                </div>
 
-                                            <div class="form-group">
-                                              <label>Competency</label>
-                                              <select class="js-example-basic" name="edit_kompetensi_id" id="edit_kompetensi_id" tabindex="-1">
-                                                <option></option>
-                                                @foreach($kompetensi as $row)
-                                                  <option value="{{$row->id}}">{{$row->kompetensi}}</option>
-                                                @endforeach
-                                              </select>
-                                            </div>
+                                                <div class="form-group">
+                                                  <label>Competencies</label>
+                                                  <select class="js-example-basic" name="edit_kompetensi_id" id="edit_kompetensi_id" tabindex="-1">
+                                                    <option></option>
+                                                    @foreach($kompetensi as $row)
+                                                      <option value="{{$row->id}}">{{$row->kompetensi}}</option>
+                                                    @endforeach
+                                                  </select>
+                                                </div>
 
-                                            <div class="form-group res-mg-t-15">
-                                              <label for="usr">Competency Result</label>
-                                              <textarea name="hasil_kompetensi" id="edit_hasil_kompetensi" placeholder="Competency Result"></textarea>
-                                            </div>
+                                                <div class="form-group res-mg-t-15">
+                                                  <label for="usr">Descriptions</label>
+                                                  <textarea name="hasil_kompetensi" id="edit_hasil_kompetensi" placeholder="Competency Result"></textarea>
+                                                </div>
 
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" id="btn_edit" class="btn btn-primary">Save</button>
-                                          </div>
-                                        </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="submit" id="btn_edit" class="btn btn-primary">Save</button>
+                                              </div>
+                                            </div>
+                                        </form>
 
                                       </div>
                                     </div>
@@ -455,23 +450,16 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $("#myAssesments").on("click", ".btn_edit", function(){
-          var varId               = $(this).data("id");
-          var varKeteranganID     = $(this).data("keterangan_id");
-          var varKompetensiID     = $(this).data("kompetensi_id");
-          var varHasilKompetensi  = $(this).data("hasil_kompetensi");
+          var varKeteranganID       = $(this).data("keterangan_nilai_id");
+          var varKompetensiID       = $(this).data("kompetensi_id");
+          var varHasilKompetensi    = $(this).data("hasil_kompetensi");
 
-          // console.log(varId);
-          // console.log(varKeteranganID);
-          // console.log(varKompetensiID);
           try {
-            $("#edit_id").val(varId);
             $('#edit_keterangan_id').select2("val", varKeteranganID);
             $("#edit_kompetensi_id").select2("val", varKompetensiID);
-            // $("#edit_keterangan_id").val(varKeteranganID);
-            // $("#edit_description").val(varKeterangan);
-            // CKEDITOR.instances['edit_kompetensi_id'].setData(varKeterangan);
+            $("#edit_keterangan_id_old").val(varKeteranganID);
+            $("#edit_kompetensi_id_old").val(varKompetensiID);
             CKEDITOR.instances['edit_hasil_kompetensi'].setData(varHasilKompetensi);
-            // $("#editModal").modal("show");
             $("#editModal").modal({
               backdrop: 'static',
               keyboard: true,
@@ -483,30 +471,29 @@
 
           }
         });
-        $("#btn_save").on("click", function(){
+        $("#btn_save").on("click", function(e){
+          e.preventDefault();
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varKeteranganID   = $("#keterangan_id").val();
+          var varKeteranganID   = $("#keterangan_nilai_id").val();
           var varKompetensiID   = $("#kompetensi_id").val();
           var varHasilKompetensi= CKEDITOR.instances["hasil_kompetensi"].getData();
-          // var varDescriptionType= CKEDITOR.instances["jenisketerangan"].getData();
-
           try {
             if(varKeteranganID == ""){
               swal({
                 type    : "info",
-                title   : "Empty",
-                text    : "Description Score is required",
+                title   : "Required",
+                text    : "Scores is required",
                 timer   : 3000
               });
             }
             else if(varKompetensiID == ""){
               swal({
                 type    : "info",
-                title   : "Empty",
+                title   : "Required",
                 text    : "Competency is required",
                 timer   : 3000
               });
@@ -515,7 +502,7 @@
               swal({
                 type    : "info",
                 title   : "Empty",
-                text    : "Competency Result is required",
+                text    : "Descriptions is required",
                 timer   : 3000
               });
             }
@@ -526,22 +513,31 @@
                 async   : true,
                 dataType: "JSON",
                 data    : {
-                  keterangan_id     : varKeteranganID,
-                  kompetensi_id     : varKompetensiID,
-                  hasil_kompetensi  : varHasilKompetensi
+                  keterangan_nilai_id   : varKeteranganID,
+                  kompetensi_id         : varKompetensiID,
+                  hasil_kompetensi      : varHasilKompetensi
                 },
                 success:function(data){
-                  $("#myModal").modal("hide");
                   if(data.response == "success"){
+                    $("#myModal").modal("hide");
                     swal({
                       type : "success",
                       title: "Success",
-                      text : "Data's has been saved",
+                      text : "Data has been saved",
                       timer: 3000
                     }).then(function(){
                       window.location = "{{ url('backend/pages/descriptionresults') }}";
                     })
-                  }else{
+                  }
+                  else if (data.response == "errors") {
+                      swal({
+                        type : "info",
+                        title: "Required",
+                        text : data.errors,
+                        timer: 3000
+                      })
+                  }
+                  else{
                     swal({
                       type : "error",
                       title: "Error",
@@ -562,13 +558,15 @@
           }
         });
 
-        $("#btn_edit").on("click", function(){
+        $("#btn_edit").on("click", function(e){
+          e.preventDefault();
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               }
           });
-          var varId             = $("#edit_id").val();
+          var varKeteranganIDOld= $("#edit_keterangan_id_old").val();
+          var varKompetensiIDOld= $("#edit_kompetensi_id_old").val();
           var varKeteranganID   = $("#edit_keterangan_id").val();
           var varKompetensiID   = $("#edit_kompetensi_id").val();
           var varHasilKompetensi= CKEDITOR.instances["edit_hasil_kompetensi"].getData();
@@ -579,23 +577,25 @@
               async   : true,
               dataType: "JSON",
               data    : {
-                id              : varId,
-                keterangan_id   : varKeteranganID,
-                kompetensi_id   : varKompetensiID,
-                hasil_kompetensi: varHasilKompetensi
+                keterangan_nilai_id     : varKeteranganID,
+                kompetensi_id           : varKompetensiID,
+                hasil_kompetensi        : varHasilKompetensi,
+                keterangan_nilai_id_old : varKeteranganIDOld,
+                kompetensi_id_old       : varKompetensiIDOld
               },
               success:function(data){
-                $("#editModal").modal("hide");
                 if(data.response == "success"){
+                  $("#editModal").modal("hide");
                   swal({
                     type : "success",
                     title: "Success",
-                    text : "Data's has been updated",
+                    text : "Data has been updated",
                     timer: 3000
                   }).then(function(){
                     window.location = "{{ url('backend/pages/descriptionresults') }}";
                   })
-                }else{
+                }
+                else{
                   swal({
                     type : "error",
                     title: "Error",

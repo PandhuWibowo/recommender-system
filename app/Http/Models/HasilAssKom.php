@@ -6,29 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class HasilAssKom extends Model{
   use SoftDeletes;
-  protected $fillable = ['id','keteranganhasil_id','asskom_id'];
-  protected $table = "hasil_nilai_asskoms";
-  protected $primaryKey = 'id'; // or null
+  protected $fillable = ['keterangan_nilai_id','kompetensi_id','pertanyaan_id','assessment_id'];
+  protected $table = "detail_hasils";
+  // protected $primaryKey = 'id'; // or null
   public $incrementing = false;
 
-
-  public function getKeteranganHasil(){
-      return $this->belongsTo(HasilKompetensi::class,'keteranganhasil_id');
+  public function getKeteranganNilai(){
+    return $this->belongsTo(KeteranganNilai::class, 'keterangan_nilai_id');
   }
 
-  public function getAssessmentKompetensi(){
-    return $this->belongsTo(AssessmentKompetensi::class, 'asskom_id');
+  public function getKompetensi(){
+    return $this->belongsTo(Kompetensi::class, 'kompetensi_id');
   }
-  //
-  // public function get_rowscore(){
-  //   return $this->belongsTo(RowScore::class, 'rowscore_id');
-  // }
-  //
-  // public function data_jawabans(){
-  //   return $this->hasMany('App\Http\Models\Jawaban');
-  // }
-  //
-  // public function get_jawaban(){
-  //   return $this->hasMany(Jawaban::class);
-  // }
+
+  public function getPertanyaan(){
+      return $this->belongsTo(Pertanyaan::class,'pertanyaan_id');
+  }
+
+  public function getAssessment(){
+    return $this->belongsTo(Assesment::class, 'assessment_id');
+  }
 }
