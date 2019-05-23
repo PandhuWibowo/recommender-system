@@ -116,14 +116,11 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
-                                          <a target="_blank" href="{{ url('user/pages/prints/'.$id.'/pdf/') }}" type="button" class="btn btn-primary">
+                                          <!-- <a target="_blank" href="{{ url('user/pages/prints//pdf/') }}" type="button" class="btn btn-primary">
                                             <i class="fa fa-print"></i>
                                             Print
-                                          </a>
-                                            <!-- <form role="search" class="sr-input-func">
-                                                <input type="text" placeholder="Search..." class="search-int form-control">
-                                                <a href="#"><i class="fa fa-search"></i></a>
-                                            </form> -->
+                                          </a> -->
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -147,21 +144,21 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
-                            <h3 class="box-title">Score Tests</h3>
+                            <!-- <h3 class="box-title">Score Tests</h3> -->
                             <ul class="basic-list">
                                 <li><span class="pull-left label-danger label-1 label">Competencies</span> <span class="pull-right label-danger label-1 label">Scores</span></li>
                                 <br>
-                                @foreach($resultAssKom as $row)
-                                  @if($row->pembulatan == 4 || $row->pembulatan == "4")
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-1 label">4</span></li>
-                                  @elseif($row->pembulatan == 3 || $row->pembulatan == "3")
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-success label-3 label">3</span></li>
-                                  @elseif($row->pembulatan == 2 || $row->pembulatan == "2")
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-yellow label-7 label" style="color:#000;">2</span></li>
-                                  @elseif($row->pembulatan == 1 || $row->pembulatan == "1")
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-2 label">1</span></li>
+                                @foreach($sql as $row)
+                                  @if($row->dpaNilai == 4 || $row->dpaNilai == "4")
+                                    <li>{{$row->kKom}} <span class="pull-right label-danger label-1 label">4</span></li>
+                                  @elseif($row->dpaNilai == 3 || $row->dpaNilai == "3")
+                                    <li>{{$row->kKom}} <span class="pull-right label-success label-3 label">3</span></li>
+                                  @elseif($row->dpaNilai == 2 || $row->dpaNilai == "2")
+                                    <li>{{$row->kKom}} <span class="pull-right label-yellow label-7 label" style="color:#000;">2</span></li>
+                                  @elseif($row->dpaNilai == 1 || $row->dpaNilai == "1")
+                                    <li>{{$row->kKom}} <span class="pull-right label-danger label-2 label">1</span></li>
                                   @else
-                                    <li>{{$row->get_kompetensi->kompetensi}} <span class="pull-right label-danger label-2 label">1</span></li>
+                                    <li>{{$row->kKom}} <span class="pull-right label-danger label-2 label">1</span></li>
                                   @endif
                                 @endforeach
 
@@ -170,27 +167,10 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
-                          <h3 class="box-title">Strength Area</h3>
+                          <h3 class="box-title">Priority Suggestions</h3>
                           <table class="table table-striped" id="tableRange">
                             <tbody>
-                              @foreach($cetakHasilAsskomsKekuatan as $row)
-                                <tr>
-                                  <td style="text-align:center">&#x2605;</td>
-                                  <td style="text-align:justify">{!!$row->hasil_kompetensi!!}</td>
-                                </tr>
-                              @endforeach
-                            </tbody>
-                          </table>
 
-                          <h3 class="box-title">Development Area</h3>
-                          <table class="table table-striped" id="tableRange">
-                            <tbody>
-                              @foreach($cetakHasilAsskomsPengembangan as $row)
-                                <tr>
-                                  <td style="text-align:center">&#x26AB;</td>
-                                  <td style="text-align:justify">{!!$row->hasil_kompetensi!!}</td>
-                                </tr>
-                              @endforeach
                             </tbody>
                           </table>
                         </div>
@@ -198,6 +178,7 @@
                 </div>
             </div>
         </div>
+
         <div class="courses-area mg-b-15">
             <div class="container-fluid">
                 <div class="row">
@@ -225,22 +206,6 @@
                                   <th style="text-align:center">Description</th>
                                 </tr>
                               </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                        <div class="white-box">
-                            <h3 class="box-title">Suggestions</h3>
-                            <table class="table table-striped" id="tableRange">
-                              <tbody>
-                                @foreach($cetakSaran as $row)
-                                  <tr>
-                                    <td style="text-align:center">&#x26AB;</td>
-                                    <td style="text-align:center">{!!$row->p_mandiri!!}</td>
-                                  </tr>
-                                @endforeach
-                              </tbody>
-
                             </table>
                         </div>
                     </div>

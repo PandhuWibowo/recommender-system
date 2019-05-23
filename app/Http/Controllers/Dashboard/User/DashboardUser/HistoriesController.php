@@ -9,9 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\User;
 use App\Http\Models\Assesment;
 use App\Http\Models\KeteranganNilai;
-use App\Http\Models\AssessmentKompetensi;
 use App\Http\Models\HasilAssKom;
 use App\Http\Models\HasilKompetensi;
+use App\Http\Models\PertanyaanAssesment;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -31,71 +31,20 @@ class HistoriesController extends Controller
   }
 
   public function show($id, Request $request){
-    $decryptAssId = Crypt::decrypt($id);
+    $assessmentId  = Crypt::decrypt($id);
 
-    // $query  = DB::table("pertanyaan_assesments as pa")
-    //             ->select("k.id as kId","r.id as rId","r.nama_rowscore as namaRowScore","k.kompetensi as kKompetensi",DB::raw("SUM(pa.nilai) as sum_nilai"))
-    //             ->join("pertanyaans as p","pa.pertanyaan_id","=","p.id")
-    //             ->join("jawabans as j","pa.jawaban_id","=","j.id")
-    //             ->join("rowscores as r","p.rowscore_id","=","r.id")
-    //             ->join("kompetensis as k","p.kompetensi_id","=","k.id")
-    //             ->where("pa.ass_id", $decryptAssId)
-    //             ->where("r.nama_rowscore","Self Assessment")
-    //             ->groupBy("r.no_urut_rowscore","k.no_urut_kompetensi")
-    //             ->get();
-    //
-    // $query2   = DB::table("pertanyaan_assesments as pa")
-    //           ->select("k.id as kId","r.id as rId","r.nama_rowscore as namaRowScore","k.kompetensi as kKompetensi",DB::raw("SUM(pa.nilai) as sum_nilai"))
-    //           ->join("pertanyaans as p","pa.pertanyaan_id","=","p.id")
-    //           ->join("jawabans as j","pa.jawaban_id","=","j.id")
-    //           ->join("rowscores as r","p.rowscore_id","=","r.id")
-    //           ->join("kompetensis as k","p.kompetensi_id","=","k.id")
-    //           ->where("pa.ass_id", $decryptAssId)
-    //           ->where("r.nama_rowscore","SJQ")
-    //           ->groupBy("r.no_urut_rowscore","k.no_urut_kompetensi")
-    //           ->get();
+    // TODO: Menampilkan Nilai Jawaban dan Kompetensi Berdasarkan Assessment ID
+    $sql        = PertanyaanAssesment::where("assessment_id", $assessmentId)
+                                      ->select("k.kompetensi as kKom","detail_pertanyaans_assessments.nilai as dpaNilai","detail_pertanyaans_assessments.pertanyaan_id as dpaPertanyaanId","detail_pertanyaans_assessments.assessment_id as dpaAssessmentId","p.kompetensi_id as pKomId")
+                                      ->join("pertanyaans as p","p.id","=","detail_pertanyaans_assessments.pertanyaan_id")
+                                      ->join("kompetensis as k","k.id","=","p.kompetensi_id")
+                                      ->get();
 
-    $resultAssKom = AssessmentKompetensi::where("ass_id", $decryptAssId)->get();
 
+    // TODO: Menampilkan keterangan bobot nilai
     $rangeScore = KeteranganNilai::orderBy("range_score")->get();
 
-
-
-    $cetakHasilAsskomsKekuatan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
-                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
-                                    ->where("ak.ass_id", $decryptAssId)
-                                    ->whereIn("range_score",["3","4"])
-                                    ->get();
-
-    $cetakHasilAsskomsPengembangan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
-                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
-                                    ->where("ak.ass_id", $decryptAssId)
-                                    ->whereIn("range_score",["1","2"])
-                                    ->get();
-
-    $cetakSaran = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
-                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
-                                    ->join("kompetensis as k","kh.kompetensi_id","=","k.id")
-                                    ->where("ak.ass_id", $decryptAssId)
-                                    ->whereIn("range_score",["1","2"])
-                                    ->orderByDesc("pembulatan")
-                                    ->get();
-
-    $logPages = new LogUserHistory([
-      "user_id"     => Session::get("id"),
-      "ip_address"  => $request->ip(),
-      "browser"     => BrowserDetect::browserName(),
-      "action"      => "Menu Detail Histories",
-      "data"        => Session::get("email")." mengunjungi halaman Detail Histories dengan ID : ".$id,
-      "link"        => url()->current()
-    ]);
-
-    $logPages->save();
-
-    return view("partisipan.dashboard.logtest.v_detail", compact("cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan","id"));
+    return view("partisipan.dashboard.logtest.v_detail", compact("sql","rangeScore","id"));
 
   }
 

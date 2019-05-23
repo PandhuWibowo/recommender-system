@@ -27,7 +27,7 @@
                                   <li><a title="Competencies Types" href="{{ url('backend/pages/competencies') }}"><span class="mini-sub-pro">Competencies Types</span></a></li>
                                   <li><a title="Questions" href="{{ url('backend/pages/questions') }}"><span class="mini-sub-pro">Questions</span></a></li>
                                   <li><a title="Scores" href="{{ url('backend/pages/scoredescriptions') }}"><span class="mini-sub-pro">Scores</span></a></li>
-                                  <li><a title="Description Summary" href="{{ url("backend/pages/descriptionresults") }}"><span class="mini-sub-pro">Description Summary</span></a></li>
+                                  <!-- <li><a title="Description Summary" href="{{ url("backend/pages/descriptionresults") }}"><span class="mini-sub-pro">Description Summary</span></a></li> -->
                               </ul>
                           </li>
                           <li>

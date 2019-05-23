@@ -541,11 +541,7 @@
           } finally {
 
           }
-
-
         });
-
-
 
         $("#btn_save").on("click", function(){
           $.ajaxSetup({

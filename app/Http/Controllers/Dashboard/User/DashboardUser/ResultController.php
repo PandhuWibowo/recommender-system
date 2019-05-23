@@ -44,60 +44,30 @@ class ResultController extends Controller
                                   ->join("detail_kompetensis_keterangan_nilais as dkkn","keterangan_nilais.id","=","dkkn.keterangan_nilai_id")
                                   ->get();
 
-    foreach($sql as $r1){
-      foreach($query as $r2){
-        if($r1->pKomId == $r2->dkknKompetensiId && $r1->dpaNilai == $r2->knRangeScore){
-          $detailHasils = new HasilAssKom([
-            "keterangan_nilai_id" => $r2->dkknKeteranganNilaiId,
-            "kompetensi_id"       => $r2->dkknKompetensiId,
-            "pertanyaan_id"       => $r1->dpaPertanyaanId,
-            "assessment_id"       => $r1->dpaAssessmentId
-          ]);
-          $detailHasils->save();
+    if(count($sql) > 0){
+
+    }else{
+      foreach($sql as $r1){
+        foreach($query as $r2){
+          if($r1->pKomId == $r2->dkknKompetensiId && $r1->dpaNilai == $r2->knRangeScore){
+            $detailHasils = new HasilAssKom([
+              "keterangan_nilai_id" => $r2->dkknKeteranganNilaiId,
+              "kompetensi_id"       => $r2->dkknKompetensiId,
+              "pertanyaan_id"       => $r1->dpaPertanyaanId,
+              "assessment_id"       => $r1->dpaAssessmentId
+            ]);
+            $detailHasils->save();
+          }
         }
       }
     }
 
+    // TODO: Menampilkan bagian area kekuatan dan area pengembangan
 
-  // $queryKekuatan      = HasilKompetensi::join("keterangan_nilais","detail_kompetensis_keterangan_nilais.keterangan_nilai_id","=","keterangan_nilais.id")
-  //                                     ->select("detail_kompetensis_keterangan_nilais.kompetensi_id as dkknKompetensiId","detail_kompetensis_keterangan_nilais.keterangan_nilai_id as dkknKeteranganNilaiId, detail_kompetensis_keterangan_nilais.hasil_kompetensi as dkknHasilKompetensi")
-  //                                     ->whereIn("range_score",["1","2"])
-  //                                     ->get();
-  //
-  // $queryPengembangan  = HasilKompetensi::join("keterangan_nilais","detail_kompetensis_keterangan_nilais.keterangan_nilai_id","=","keterangan_nilais.id")
-  //                                     ->select("detail_kompetensis_keterangan_nilais.kompetensi_id as dkknKompetensiId","detail_kompetensis_keterangan_nilais.keterangan_nilai_id as dkknKeteranganNilaiId, detail_kompetensis_keterangan_nilais.hasil_kompetensi as dkknHasilKompetensi")
-  //                                     ->whereIn("range_score",["3","4"])
-  //                                     ->get();
-  //
-  //   // TODO: Bagian table keterangan nilai
+      //TODO: a. Menampilkan bagian area kekuatan
 
-  //
-  //   $cetakHasilAsskomsKekuatan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
-  //                                   ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-  //                                   ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
-  //                                   ->where("ak.ass_id", $assId)
-  //                                   ->whereIn("range_score",["3","4"])
-  //                                   ->get();
-  //
-  //   $cetakHasilAsskomsPengembangan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
-  //                                   ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-  //                                   ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
-  //                                   ->where("ak.ass_id", $assId)
-  //                                   ->whereIn("range_score",["1","2"])
-  //                                   ->get();
-  //
-  //   $resultAssKom = AssessmentKompetensi::where("ass_id", $assId)->get();
-  //
-  //
-  //   $cetakSaran = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
-  //                                   ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-  //                                   ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
-  //                                   ->join("kompetensis as k","kh.kompetensi_id","=","k.id")
-  //                                   ->where("ak.ass_id", $assId)
-  //                                   ->whereIn("range_score",["1","2"])
-  //                                   ->orderByDesc("pembulatan")
-  //                                   ->get();
+      //TODO: b. Menampilkan bagian area pengembangan
 
-    // return view("partisipan.dashboard.result.v_index", compact("sql","rangeScore"));
+    return view("partisipan.dashboard.result.v_index", compact("sql","rangeScore","id"));
   }
 }

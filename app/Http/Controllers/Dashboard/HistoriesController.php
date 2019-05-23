@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\User;
 use App\Http\Models\Assesment;
 use App\Http\Models\KeteranganNilai;
-use App\Http\Models\AssessmentKompetensi;
+use App\Http\Models\PertanyaanAssesment;
 use App\Http\Models\Kompetensi;
 use App\Http\Models\HasilAssKom;
 use Illuminate\Support\Facades\Crypt;
@@ -31,39 +31,19 @@ class HistoriesController extends Controller
 
   public function show($id, Request $request){
 
-    $decryptAssId = Crypt::decrypt($id);
+    $assessmentId  = Crypt::decrypt($id);
 
-    $resultAssKom = AssessmentKompetensi::where("ass_id", $decryptAssId)->get();
+    // TODO: Menampilkan Nilai Jawaban dan Kompetensi Berdasarkan Assessment ID
+    $sql        = PertanyaanAssesment::where("assessment_id", $assessmentId)
+                                      ->select("k.kompetensi as kKom","detail_pertanyaans_assessments.nilai as dpaNilai","detail_pertanyaans_assessments.pertanyaan_id as dpaPertanyaanId","detail_pertanyaans_assessments.assessment_id as dpaAssessmentId","p.kompetensi_id as pKomId")
+                                      ->join("pertanyaans as p","p.id","=","detail_pertanyaans_assessments.pertanyaan_id")
+                                      ->join("kompetensis as k","k.id","=","p.kompetensi_id")
+                                      ->get();
 
+
+    // TODO: Menampilkan keterangan bobot nilai
     $rangeScore = KeteranganNilai::orderBy("range_score")->get();
 
-
-
-    $cetakHasilAsskomsKekuatan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
-                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
-                                    ->where("ak.ass_id", $decryptAssId)
-                                    ->whereIn("range_score",["3","4"])
-                                    ->orderByDesc("pembulatan")
-                                    ->get();
-
-    $cetakHasilAsskomsPengembangan = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
-                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
-                                    ->where("ak.ass_id", $decryptAssId)
-                                    ->whereIn("range_score",["1","2"])
-                                    ->orderBy("pembulatan")
-                                    ->get();
-
-    $cetakSaran = HasilAssKom::join("keteranganhasils as kh","hasil_nilai_asskoms.keteranganhasil_id","=","kh.id")
-                                    ->join("assesment_kompetensis as ak","hasil_nilai_asskoms.asskom_id","=","ak.id")
-                                    ->join("keterangan_nilais as kn","kh.keterangan_id","=","kn.id")
-                                    ->join("kompetensis as k","kh.kompetensi_id","=","k.id")
-                                    ->where("ak.ass_id", $decryptAssId)
-                                    ->whereIn("range_score",["1","2"])
-                                    ->orderByDesc("pembulatan")
-                                    ->get();
-
-    return view("administrator.dashboard.pages.logtest.v_detail", compact("cetakSaran","resultAssKom","rangeScore","cetakHasilAsskomsPengembangan","cetakHasilAsskomsKekuatan","id"));
+    return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id"));
   }
 }
