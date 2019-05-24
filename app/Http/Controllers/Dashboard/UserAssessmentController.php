@@ -103,6 +103,7 @@ class UserAssessmentController extends Controller{
             'user_id'             => $userId[$i],
             'jenis_assessment_id' => $jenisAss[$j],
             'maxattempt'          => $maxAttempt,
+            'status'              => intval(0)
           ]);
           $userAssessments->save();
         }
