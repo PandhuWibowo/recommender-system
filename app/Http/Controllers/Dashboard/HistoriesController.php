@@ -49,6 +49,10 @@ class HistoriesController extends Controller
 
     $userAssessmentTraining = Assesment::where("selesai", "1")->orderBy("created_at","desc")->get();
     $nullMessage            = "";
+
+    //TODO: Array hasil similarity
+    $arrSim = array();
+
     //TODO: Cek jika datanya cuma satu - Cold Start - Tidak bisa merekomendasikan jika datanya cuma satu
     if(count($userAssessmentTraining) == 1){
       $nullMessage          = $this->thereIsNoData();
@@ -63,6 +67,7 @@ class HistoriesController extends Controller
 
       //TODO: Menampilkan hasil dari table detail_pertanyaans_assessments berdasarkan assessment_id
       $arrayOtherSiswa = array();
+
       for($i = 0; $i < count($arrayUserAssessmentTraining); $i++){
         $sqlOtherUser              = PertanyaanAssesment::where("assessment_id", $arrayUserAssessmentTraining[$i])
                                           ->select("detail_pertanyaans_assessments.nilai as dpaNilai")
@@ -76,29 +81,45 @@ class HistoriesController extends Controller
           $arraySiswaTarget[]       = $row->dpaNilai;
         }
 
-        //TODO: Array hasil similarity
-        $arrSim = array();
-
         //TODO: Count sql other user
         $arrayCountDpaNilai = array();
         foreach($sqlOtherUser as $row2){
           $arrayCountDpaNilai[] = $row2->dpaNilai;
           $tmpToArray="";
           if($countSiswaTarget == count($arrayCountDpaNilai)){
-            //TODO: Panggil fungsi similarity
-            $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrayCountDpaNilai, $countSiswaTarget);
 
-            // $arrSim[] = $tmpToArray;
-            // print_r($arrSim);
+            //TODO: Panggil fungsi similarity
+            $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrayCountDpaNilai, $countSiswaTarget); //TODO: Menampilkan hasil similarity
+
+            $arrSim[] = $tmpToArray;
+            rsort($arrSim);
           }
         }
       }
+
+      //TODO: Disini penempatannya
+      // Bagian memilih nilai terdekat dari hasil sorting hitung similarity
+      //Start
+      $total            = (count($arrSim) * 30)/100; //TODO: total * 30/100
+      $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
+
+      $no=1;
+      for($j=0;$j<count($arrSim);$j++){
+        if($no <= $pembulatanTotal){
+          echo $arrSim[$j];
+        }
+
+        $no++;
+      }
+      //End
+
+      
     }
 
     // return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","nullMessage"));
   }
 
-  // pearson correlation coefficient.
+  // TODO: pearson correlation coefficient.
   public function pearsonCorrelationCoefficient($X, $Y, $n)
   {
       $sum_X = 0;$sum_Y = 0; $sum_XY = 0;
