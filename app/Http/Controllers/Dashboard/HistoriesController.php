@@ -97,10 +97,14 @@ class HistoriesController extends Controller
         }
       }
 
+      //TODO: Menampilkan data keseluruhan
+      // echo print_r($arrSim);
+
       //TODO: Disini penempatannya
       // Bagian memilih nilai terdekat dari hasil sorting hitung similarity
       //Start
       $total            = (count($arrSim) * 30)/100; //TODO: total * 30/100
+
       $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
 
       $no=1;
@@ -113,7 +117,7 @@ class HistoriesController extends Controller
       }
       //End
 
-      
+
     }
 
     // return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","nullMessage"));

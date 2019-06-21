@@ -53,7 +53,7 @@ class PertanyaanController extends Controller
 
     if ($validator->fails()) {
       $messages = $validator->messages();
-      return Redirect::to('backend/pages/questions')
+      return Redirect::to('backend/pages/questions/add')
         ->withErrors($validator);
         exit();
     }

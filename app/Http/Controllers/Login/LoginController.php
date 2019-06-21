@@ -38,7 +38,7 @@ class LoginController extends Controller
     $txtPassword= trim($request->password);
 
     $data = LoginAuth::where('email', $txtEmail)->where('active', '1')->first();
-    if($data->count() > 0){
+    if(count($data) > 0){
       if(Hash::check($txtPassword,$data->password)){
         Session::put('first_name', $data->firstname);
         Session::put('last_name', $data->lastname);

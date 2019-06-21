@@ -414,22 +414,22 @@
                     }).then(function(){
                       window.location = "{{ url('backend/pages/assesments') }}";
                     })
-				  }else if(data.response == "errors"){
-					swal({
+				  				}else if(data.response == "errors"){
+										swal({
 	                    type : "error",
 	                    title: "Error",
 	                    text : data.errors,
 	                    timer: 3000
-					});
+										});
                   }
-				  else{
-					swal({
+				  				else{
+										swal({
   	                    type : "error",
   	                    title: "Error",
   	                    text : "Failed",
   	                    timer: 3000
-  					});
-				  }
+  									});
+				  				}
                 },
                 error:function(data){
                   console.log(data);
