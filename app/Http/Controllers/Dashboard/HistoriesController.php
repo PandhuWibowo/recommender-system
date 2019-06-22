@@ -89,7 +89,7 @@ class HistoriesController extends Controller
           $arrayCountDpaNilai[] = $row2->dpaNilai;
           $tmpToArray="";
           if($countSiswaTarget == count($arrayCountDpaNilai)){
-            
+
             //TODO: Panggil fungsi similarity
             $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrayCountDpaNilai, $countSiswaTarget); //TODO: Menampilkan hasil similarity
 
@@ -101,7 +101,7 @@ class HistoriesController extends Controller
       }
 
       //TODO: Menampilkan data keseluruhan
-      echo print_r($arrSim);
+      // echo print_r($arrSim);
 
       //TODO: Disini penempatannya
       // Bagian memilih nilai terdekat dari hasil sorting hitung similarity
@@ -109,20 +109,24 @@ class HistoriesController extends Controller
       $total            = (count($arrSim) * 30)/100; //TODO: total * 30/100
 
       $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
-
+      $tmpAssessmentId  = array();
       $no=1;
       for($j=0;$j<count($arrSim);$j++){
         if($no <= $pembulatanTotal){
-          // echo $arrSim[$j];
+
+          //Bagian Baru
+          //Mulai
+          if($arrSim[$j] > 0){
+            //TODO: Nampilin kompetensi dengan nilai
+            
+          }
+          //Akhir
         }
 
         $no++;
       }
       //End
-
-
     }
-
     // return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","nullMessage"));
   }
 
