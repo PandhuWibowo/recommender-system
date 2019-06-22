@@ -58,16 +58,16 @@ class HistoriesController extends Controller
       $nullMessage          = $this->thereIsNoData();
     }else{
       //TODO: Menampilkan dan filter jumlah assessment_id
-      $arrayUserAssessmentTraining = array();
+      $arrayUserAssessmentTraining = array(); //Collect Assessment Id
       foreach($userAssessmentTraining as $uat){
         if($uat->id != $assessmentId){
           $arrayUserAssessmentTraining[] = $uat->id;
         }
       }
 
-      //TODO: Menampilkan hasil dari table detail_pertanyaans_assessments berdasarkan assessment_id
       $arrayOtherSiswa = array();
 
+      //TODO: Menampilkan hasil dari table detail_pertanyaans_assessments berdasarkan assessment_id
       for($i = 0; $i < count($arrayUserAssessmentTraining); $i++){
         $sqlOtherUser              = PertanyaanAssesment::where("assessment_id", $arrayUserAssessmentTraining[$i])
                                           ->select("detail_pertanyaans_assessments.nilai as dpaNilai")
@@ -76,29 +76,32 @@ class HistoriesController extends Controller
                                           ->get();
 
         //TODO: Menampilkan list nilai siswa target
-        $arraySiswaTarget       = array();
+        $arraySiswaTarget       = array(); //Collect nilai siswa target atau session yang aktif sekarang
+
+        //Menampilkan nilai untuk dimasukkan ke dalam variable array $arraySiswaTarget
         foreach($sql as $row){
           $arraySiswaTarget[]       = $row->dpaNilai;
         }
 
         //TODO: Count sql other user
-        $arrayCountDpaNilai = array();
+        $arrayCountDpaNilai = array(); //Collect nilai siswa dari dataset
         foreach($sqlOtherUser as $row2){
           $arrayCountDpaNilai[] = $row2->dpaNilai;
           $tmpToArray="";
           if($countSiswaTarget == count($arrayCountDpaNilai)){
-
+            
             //TODO: Panggil fungsi similarity
             $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrayCountDpaNilai, $countSiswaTarget); //TODO: Menampilkan hasil similarity
 
             $arrSim[] = $tmpToArray;
-            rsort($arrSim);
+            array_multisort($arrSim, SORT_DESC);
+            // rsort($arrSim);
           }
         }
       }
 
       //TODO: Menampilkan data keseluruhan
-      // echo print_r($arrSim);
+      echo print_r($arrSim);
 
       //TODO: Disini penempatannya
       // Bagian memilih nilai terdekat dari hasil sorting hitung similarity
@@ -110,7 +113,7 @@ class HistoriesController extends Controller
       $no=1;
       for($j=0;$j<count($arrSim);$j++){
         if($no <= $pembulatanTotal){
-          echo $arrSim[$j];
+          // echo $arrSim[$j];
         }
 
         $no++;
@@ -123,7 +126,12 @@ class HistoriesController extends Controller
     // return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","nullMessage"));
   }
 
-  // TODO: pearson correlation coefficient.
+  //TODO: Pencocokan Users
+  // public function matchItems(){
+  //
+  // }
+
+  // TODO: pearson correlation coefficient. *Method*
   public function pearsonCorrelationCoefficient($X, $Y, $n)
   {
       $sum_X = 0;$sum_Y = 0; $sum_XY = 0;
