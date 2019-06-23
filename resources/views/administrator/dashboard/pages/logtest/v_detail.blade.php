@@ -170,8 +170,10 @@
                           <h3 class="box-title">Priority Suggestions</h3>
                           <table class="table table-striped" id="tableRange">
                             <tbody>
-                                @if(!empty($nullMessage))
-                                    {{$nullMessage}}
+                                @if($flag == 1 || $flag == "1")
+                                    {{$noRecommend}}
+                                @else
+                                    
                                 @endif
                             </tbody>
                           </table>

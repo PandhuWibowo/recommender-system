@@ -55,7 +55,10 @@ class HistoriesController extends Controller
 
     //TODO: Cek jika datanya cuma satu - Cold Start - Tidak bisa merekomendasikan jika datanya cuma satu
     if(count($userAssessmentTraining) == 1){
-      $nullMessage          = $this->thereIsNoData();
+      $flag         = "1";
+      $noRecommend  = $this->thereIsNoData();
+
+      echo $this->tanpaRekomendasi($sql, $rangeScore, $id, $noRecommend, $flag);
     }else{
       //TODO: Menampilkan dan filter jumlah assessment_id
       $arrayUserAssessmentTraining = array(); //Collect Assessment Id
@@ -113,21 +116,16 @@ class HistoriesController extends Controller
       $no=1;
       for($j=0;$j<count($arrSim);$j++){
         if($no <= $pembulatanTotal){
+          
 
-          //Bagian Baru
-          //Mulai
-          if($arrSim[$j] > 0){
-            //TODO: Nampilin kompetensi dengan nilai
-            
-          }
-          //Akhir
         }
-
         $no++;
       }
       //End
+
+      // return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","nullMessage"));
     }
-    // return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","nullMessage"));
+    //Bagian Akhir Else
   }
 
   //TODO: Pencocokan Users
@@ -166,6 +164,14 @@ class HistoriesController extends Controller
                 ($n * $squareSum_Y - $sum_Y * $sum_Y));
 
       return $corr;
+  }
+
+  // TODO: Jika assessment yang dihasilkan baru 1
+  public function tanpaRekomendasi($sql, $rangeScore, $id, $noRecommend, $flag){
+    $sql        = $sql;
+    $rangeScore = $rangeScore;
+    $id         = $id;
+    return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","noRecommend","flag"));
   }
 
   public function thereIsNoData(){
