@@ -173,7 +173,7 @@
                                 @if($flag == 1 || $flag == "1")
                                     {{$noRecommend}}
                                 @else
-
+                                    
                                 @endif
                             </tbody>
                           </table>
