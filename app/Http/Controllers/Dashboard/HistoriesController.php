@@ -174,14 +174,9 @@ class HistoriesController extends Controller
 
           if($countSiswaTarget == count($arrNilai2)){
             $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrNilai2, $countSiswaTarget); //TODO: Menampilkan hasil similarity
-
             $arrayHasilSqlOther[$arrayUserAssessmentTraining[$i]][$values->uF." ".$values->uL] = $tmpToArray;
           }
         }
-
-
-
-
 
         // if($countSiswaTarget == count($arrNilai2)){
         //   //TODO: Panggil fungsi similarity
@@ -200,24 +195,7 @@ class HistoriesController extends Controller
         //   //   }
         //   // }
         // }
-        
       }
-
-      echo print_r($arrayHasilSqlOther);
-
-        // $distinct = array_unique($arrayOtherAssId2);
-
-        // $arraySim2  = array();
-        // for($countAssId = 0; $countAssId < count($distinct); $countAssId++){
-        //   if($countSiswaTarget == count($arrNilai2)){
-        //     //TODO: Panggil fungsi similarity
-        //     $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrNilai2, $countSiswaTarget); //TODO: Menampilkan hasil similarity
-        //     $arraySim2[] = $tmpToArray;
-        //     array_multisort($arraySim2, SORT_DESC);
-        //   }
-        //
-        // }
-
 
       //TODO: Menampilkan data keseluruhan
       // echo print_r($arrSim);
@@ -227,21 +205,27 @@ class HistoriesController extends Controller
 
       //Mengambil 30% dari hasil keseluruhan
       //Start
-      // $total            = (count($orderByDescSim) * 30)/100; //TODO: total * 30/100
-      // $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
-      // $tmpAssessmentId  = array();
-      // $no=1;
-      // for($j=0;$j<count($arrSim);$j++){
-      //   if($no <= $pembulatanTotal){
-      //     // TODO: Menampilkan hasil kompetensi dengan nilai diambil dari pertanyaan
-      //     $sqlResult  = $this->showKompetensiQuery();
-      //
-      //     // TODO: Count Query Hasil
-      //     $countSqlResult = count($sqlResult);
-      //
-      //   }
-      //   $no++;
-      // }
+
+      $total            = (count($arrSim) * 30)/100; //TODO: total * 30/100
+
+      $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
+      $tmpAssessmentId  = array();
+      $no=1;
+      for($j=0;$j<count($pembulatanTotal);$j++){
+        // TODO: Menampilkan hasil kompetensi dengan nilai diambil dari pertanyaan
+        foreach($arrayHasilSqlOther as $otherPerson=>$values){
+          foreach($arrayHasilSqlOther[$otherPerson] as $key=>$value){
+            if($no <= $pembulatanTotal){
+              
+            }
+
+            $no++;
+          }
+        }
+
+
+      }
+
       //End
 
       // return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","nullMessage"));
