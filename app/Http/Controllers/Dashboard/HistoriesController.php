@@ -68,39 +68,71 @@ class HistoriesController extends Controller
         }
       }
 
-      $arrayOtherSiswa = array();
+      $arrayOtherSiswa            = array();
 
       //TODO: Menampilkan hasil dari table detail_pertanyaans_assessments berdasarkan assessment_id
       for($i = 0; $i < count($arrayUserAssessmentTraining); $i++){
         $sqlOtherUser              = PertanyaanAssesment::where("assessment_id", $arrayUserAssessmentTraining[$i])
-                                          ->select("detail_pertanyaans_assessments.nilai as dpaNilai")
+                                          ->select("detail_pertanyaans_assessments.nilai as dpaNilaiOther","k.kompetensi as kKomOther","u.firstname as uF","u.lastname as uL")
                                           ->join("pertanyaans as p","p.id","=","detail_pertanyaans_assessments.pertanyaan_id")
                                           ->join("kompetensis as k","k.id","=","p.kompetensi_id")
+                                          //Tambahin query ini
+                                          ->join("assessments as ass","detail_pertanyaans_assessments.assessment_id","=","ass.id")
+                                          ->join("users as u","ass.user_id","=","u.id")
                                           ->get();
 
         //TODO: Menampilkan list nilai siswa target
         $arraySiswaTarget       = array(); //Collect nilai siswa target atau session yang aktif sekarang
+        $arrayKompetensiOtherSiswa  = array();
 
         //Menampilkan nilai untuk dimasukkan ke dalam variable array $arraySiswaTarget
         foreach($sql as $row){
-          $arraySiswaTarget[]       = $row->dpaNilai;
+          $arraySiswaTarget[]           = $row->dpaNilai;
+          $arrayKompetensiSiswaTarget[] = $row->kKom;
         }
 
         //TODO: Count sql other user
-        $arrayCountDpaNilai = array(); //Collect nilai siswa dari dataset
-        foreach($sqlOtherUser as $row2){
-          $arrayCountDpaNilai[] = $row2->dpaNilai;
-          $tmpToArray="";
+        $arrayCountDpaNilai         = array(); //Collect nilai siswa dari dataset
+        $arrayKompetensiOtherSiswa  = array();
+        $arrayNamaOtherSiswa        = array();
+        // TODO: Menampilkan nilai daripada siswa lain
+        foreach($sqlOtherUser as $key=>$row2){
+          $arrayCountDpaNilai[]         = $row2->dpaNilaiOther;
+          $arrayKompetensiOtherSiswa[]  = $row2->kKomOther;
+          $arrayNamaOtherSiswa[]          = $row2->uF." ".$row2->uL;
+        }
+
+        for($countAssId = 0; $countAssId < count($arrayUserAssessmentTraining); $countAssId++){
+          $tmpHasil = array();
+
+          $tmpToArray=0;
           if($countSiswaTarget == count($arrayCountDpaNilai)){
 
             //TODO: Panggil fungsi similarity
             $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrayCountDpaNilai, $countSiswaTarget); //TODO: Menampilkan hasil similarity
+            $countOtherSiswa = count($arrayKompetensiOtherSiswa);
 
-            $arrSim[] = $tmpToArray;
-            array_multisort($arrSim, SORT_DESC);
+            $tmpHasil["assessment_id : ".$arrayUserAssessmentTraining[$countAssId]] = array(
+              "nama_siswa : ".$arrayNamaOtherSiswa[$countAssId] => $tmpToArray
+            );
+
+            // if($tmpToArray > 0){
+            //   for($countArray = 0; $countArray < $countOtherSiswa; $countArray++){
+            //     if($arrayKompetensiSiswaTarget[$countArray] == $arrayKompetensiOtherSiswa[$countArray] && $arrayCountDpaNilai[$countArray] > $arraySiswaTarget[$countArray]){
+            //       //Menampilkan hasil dari kompetensi siswa lain disini
+            //       echo "<br>";
+            //       echo $arrayKompetensiOtherSiswa[$countArray]."<br>";
+            //     }
+            //   }
+            // }
+
+            // $arrSim[] = $tmpToArray;
+            // array_multisort($arrSim, SORT_DESC);
             // rsort($arrSim);
           }
         }
+
+        echo print_r($tmpHasil);
       }
 
       //TODO: Menampilkan data keseluruhan
@@ -109,29 +141,28 @@ class HistoriesController extends Controller
       //TODO: Disini penempatannya
       // Bagian memilih nilai terdekat dari hasil sorting hitung similarity
       //Start
-      $total            = (count($arrSim) * 30)/100; //TODO: total * 30/100
-
-      $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
-      $tmpAssessmentId  = array();
-      $no=1;
-      for($j=0;$j<count($arrSim);$j++){
-        if($no <= $pembulatanTotal){
-          
-
-        }
-        $no++;
-      }
+      // $total            = (count($arrSim) * 30)/100; //TODO: total * 30/100
+      //
+      // $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
+      // $tmpAssessmentId  = array();
+      // $no=1;
+      // for($j=0;$j<count($arrSim);$j++){
+      //   if($no <= $pembulatanTotal){
+      //     // TODO: Menampilkan hasil kompetensi dengan nilai diambil dari pertanyaan
+      //     $sqlResult  = $this->showKompetensiQuery();
+      //
+      //     // TODO: Count Query Hasil
+      //     $countSqlResult = count($sqlResult);
+      //
+      //   }
+      //   $no++;
+      // }
       //End
 
       // return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","nullMessage"));
     }
     //Bagian Akhir Else
   }
-
-  //TODO: Pencocokan Users
-  // public function matchItems(){
-  //
-  // }
 
   // TODO: pearson correlation coefficient. *Method*
   public function pearsonCorrelationCoefficient($X, $Y, $n)
@@ -164,6 +195,15 @@ class HistoriesController extends Controller
                 ($n * $squareSum_Y - $sum_Y * $sum_Y));
 
       return $corr;
+  }
+
+  public function showKompetensiQuery(){
+    $sqlResult  = PertanyaanAssesment::select("k.kompetensi as kKomFinal","detail_pertanyaans_assessments.nilai as dpaNilaiFinal","k.id as kIdFinal","detail_pertanyaans_assessments.pertanyaan_id as dpaPIdFinal","p.id as pIdFinal","detail_pertanyaans_assessments.assessment_id as dpaAIdFinal")
+                              ->join("pertanyaans as p","detail_pertanyaans_assessments.pertanyaan_id","=","p.id")
+                              ->join("kompetensis as k","p.kompetensi_id","=","k.id")
+                              ->get();
+
+    return $sqlResult;
   }
 
   // TODO: Jika assessment yang dihasilkan baru 1
