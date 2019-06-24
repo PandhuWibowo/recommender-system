@@ -44,7 +44,6 @@ class HistoriesController extends Controller
     // TODO: Menampilkan keterangan bobot nilai
     $rangeScore             = KeteranganNilai::orderBy("range_score")->get();
 
-
     $countSiswaTarget       = count($sql);
 
     $userAssessmentTraining = Assesment::where("selesai", "1")->orderBy("created_at","desc")->get();
@@ -61,10 +60,10 @@ class HistoriesController extends Controller
       echo $this->tanpaRekomendasi($sql, $rangeScore, $id, $noRecommend, $flag);
     }else{
       //TODO: Menampilkan dan filter jumlah assessment_id
-      $arrayUserAssessmentTraining = array(); //Collect Assessment Id
+      $arrayUserAssessmentTraining  = array(); //Collect Assessment Id
       foreach($userAssessmentTraining as $uat){
         if($uat->id != $assessmentId){
-          $arrayUserAssessmentTraining[] = $uat->id;
+          $arrayUserAssessmentTraining[]  = $uat->id;
         }
       }
 
@@ -73,7 +72,7 @@ class HistoriesController extends Controller
       //TODO: Menampilkan hasil dari table detail_pertanyaans_assessments berdasarkan assessment_id
       for($i = 0; $i < count($arrayUserAssessmentTraining); $i++){
         $sqlOtherUser              = PertanyaanAssesment::where("assessment_id", $arrayUserAssessmentTraining[$i])
-                                          ->select("detail_pertanyaans_assessments.nilai as dpaNilaiOther","k.kompetensi as kKomOther","u.firstname as uF","u.lastname as uL")
+                                          ->select("detail_pertanyaans_assessments.assessment_id as dpaAssIdOther","detail_pertanyaans_assessments.nilai as dpaNilaiOther","k.kompetensi as kKomOther","u.firstname as uF","u.lastname as uL")
                                           ->join("pertanyaans as p","p.id","=","detail_pertanyaans_assessments.pertanyaan_id")
                                           ->join("kompetensis as k","k.id","=","p.kompetensi_id")
                                           //Tambahin query ini
@@ -82,7 +81,7 @@ class HistoriesController extends Controller
                                           ->get();
 
         //TODO: Menampilkan list nilai siswa target
-        $arraySiswaTarget       = array(); //Collect nilai siswa target atau session yang aktif sekarang
+        $arraySiswaTarget           = array(); //Collect nilai siswa target atau session yang aktif sekarang
         $arrayKompetensiOtherSiswa  = array();
 
         //Menampilkan nilai untuk dimasukkan ke dalam variable array $arraySiswaTarget
@@ -95,26 +94,30 @@ class HistoriesController extends Controller
         $arrayCountDpaNilai         = array(); //Collect nilai siswa dari dataset
         $arrayKompetensiOtherSiswa  = array();
         $arrayNamaOtherSiswa        = array();
+        $arrayOtherAssId            = array();
         // TODO: Menampilkan nilai daripada siswa lain
         foreach($sqlOtherUser as $key=>$row2){
           $arrayCountDpaNilai[]         = $row2->dpaNilaiOther;
           $arrayKompetensiOtherSiswa[]  = $row2->kKomOther;
-          $arrayNamaOtherSiswa[]          = $row2->uF." ".$row2->uL;
+          $arrayNamaOtherSiswa[]        = $row2->uF." ".$row2->uL;
+          $arrayOtherAssId[]            = $row2->dpaAssIdOther;
         }
+        $distinct = array_unique($arrayOtherAssId);
 
-        for($countAssId = 0; $countAssId < count($arrayUserAssessmentTraining); $countAssId++){
+        for($countAssId = 0; $countAssId < count($distinct); $countAssId++){
+
           $tmpHasil = array();
 
           $tmpToArray=0;
           if($countSiswaTarget == count($arrayCountDpaNilai)){
-
             //TODO: Panggil fungsi similarity
             $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrayCountDpaNilai, $countSiswaTarget); //TODO: Menampilkan hasil similarity
             $countOtherSiswa = count($arrayKompetensiOtherSiswa);
 
-            $tmpHasil["assessment_id : ".$arrayUserAssessmentTraining[$countAssId]] = array(
-              "nama_siswa : ".$arrayNamaOtherSiswa[$countAssId] => $tmpToArray
+            $tmpHasil[$arrayOtherAssId[$countAssId]] = array(
+              $arrayNamaOtherSiswa[$countAssId] => $tmpToArray
             );
+
 
             // if($tmpToArray > 0){
             //   for($countArray = 0; $countArray < $countOtherSiswa; $countArray++){
@@ -133,6 +136,11 @@ class HistoriesController extends Controller
         }
 
         echo print_r($tmpHasil);
+
+        // foreach($tmpHasil as $keyAssId=>$values){
+        //   echo "<br>";
+        //   echo $keyAssId."<br>";
+        // }
       }
 
       //TODO: Menampilkan data keseluruhan
