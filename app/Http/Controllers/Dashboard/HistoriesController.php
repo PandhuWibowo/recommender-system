@@ -67,9 +67,7 @@ class HistoriesController extends Controller
         }
       }
 
-      $arrayOtherSiswa            = array();
-
-      //TODO: Menampilkan hasil dari table detail_pertanyaans_assessments berdasarkan assessment_id
+      //TODO: Menampilkan nilai similarity terbesar
       for($i = 0; $i < count($arrayUserAssessmentTraining); $i++){
         $sqlOtherUser              = PertanyaanAssesment::where("assessment_id", $arrayUserAssessmentTraining[$i])
                                           ->select("detail_pertanyaans_assessments.assessment_id as dpaAssIdOther","detail_pertanyaans_assessments.nilai as dpaNilaiOther","k.kompetensi as kKomOther","u.firstname as uF","u.lastname as uL")
@@ -79,6 +77,79 @@ class HistoriesController extends Controller
                                           ->join("assessments as ass","detail_pertanyaans_assessments.assessment_id","=","ass.id")
                                           ->join("users as u","ass.user_id","=","u.id")
                                           ->get();
+
+
+        //TODO: Menampilkan list nilai siswa target
+        $arraySiswaTarget           = array(); //Collect nilai siswa target atau session yang aktif sekarang
+        // $arrayKompetensiOtherSiswa  = array();
+
+        //Menampilkan nilai untuk dimasukkan ke dalam variable array $arraySiswaTarget
+        foreach($sql as $row){
+          $arraySiswaTarget[]           = $row->dpaNilai;
+          $arrayKompetensiSiswaTarget[] = $row->kKom;
+        }
+
+        // //TODO: Count sql other user
+        $arrayCountDpaNilai         = array(); //Collect nilai siswa dari dataset
+
+        // TODO: Menampilkan nilai daripada siswa lain
+        foreach($sqlOtherUser as $key=>$row2){
+          $arrayCountDpaNilai[]         = $row2->dpaNilaiOther;
+        }
+        //
+        // $distinct = array_unique($arrayOtherAssId);
+        //
+        // for($countAssId = 0; $countAssId < count($distinct); $countAssId++){
+        //
+        //   $tmpHasil = array();
+        //
+          $tmpToArray=0;
+          if($countSiswaTarget == count($arrayCountDpaNilai)){
+            //TODO: Panggil fungsi similarity
+            $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrayCountDpaNilai, $countSiswaTarget); //TODO: Menampilkan hasil similarity
+        //     $countOtherSiswa = count($arrayKompetensiOtherSiswa);
+        //
+        //     $tmpHasil[$arrayOtherAssId[$countAssId]][$arrayNamaOtherSiswa[$countAssId]] = $tmpToArray;
+        //
+        //     //TODO: Cuma mau bikin sorting yang tertinggi
+        //     $orderByDescSim = array();
+        //     foreach($tmpHasil as $keyAssId => $values){
+        //       foreach($tmpHasil[$keyAssId] as $keySim => $value){
+        //         $orderByDescSim[] = $value;
+        //         array_multisort($orderByDescSim, SORT_DESC);
+        //       }
+        //     }
+        //
+        //     // if($tmpToArray > 0){
+        //     //   for($countArray = 0; $countArray < $countOtherSiswa; $countArray++){
+        //     //     if($arrayKompetensiSiswaTarget[$countArray] == $arrayKompetensiOtherSiswa[$countArray] && $arrayCountDpaNilai[$countArray] > $arraySiswaTarget[$countArray]){
+        //     //       //Menampilkan hasil dari kompetensi siswa lain disini
+        //     //       echo "<br>";
+        //     //       echo $arrayKompetensiOtherSiswa[$countArray]."<br>";
+        //     //     }
+        //     //   }
+        //     // }
+        //
+            $arrSim[] = $tmpToArray;
+            array_multisort($arrSim, SORT_DESC);
+            // rsort($arrSim);
+          }
+        // }
+      }
+
+      $arrayHasilSqlOther = array();
+      $tmpToArray=0;
+      //TODO: Menampilkan nilai similarity terbesar
+      for($i = 0; $i < count($arrayUserAssessmentTraining); $i++){
+        $sqlOtherUser              = PertanyaanAssesment::where("assessment_id", $arrayUserAssessmentTraining[$i])
+                                          ->select("detail_pertanyaans_assessments.assessment_id as dpaAssIdOther","detail_pertanyaans_assessments.nilai as dpaNilaiOther","k.kompetensi as kKomOther","u.firstname as uF","u.lastname as uL")
+                                          ->join("pertanyaans as p","p.id","=","detail_pertanyaans_assessments.pertanyaan_id")
+                                          ->join("kompetensis as k","k.id","=","p.kompetensi_id")
+                                          //Tambahin query ini
+                                          ->join("assessments as ass","detail_pertanyaans_assessments.assessment_id","=","ass.id")
+                                          ->join("users as u","ass.user_id","=","u.id")
+                                          ->get();
+
 
         //TODO: Menampilkan list nilai siswa target
         $arraySiswaTarget           = array(); //Collect nilai siswa target atau session yang aktif sekarang
@@ -90,76 +161,73 @@ class HistoriesController extends Controller
           $arrayKompetensiSiswaTarget[] = $row->kKom;
         }
 
-        //TODO: Count sql other user
-        $arrayCountDpaNilai         = array(); //Collect nilai siswa dari dataset
-        $arrayKompetensiOtherSiswa  = array();
-        $arrayNamaOtherSiswa        = array();
-        $arrayOtherAssId            = array();
-        // TODO: Menampilkan nilai daripada siswa lain
-        foreach($sqlOtherUser as $key=>$row2){
-          $arrayCountDpaNilai[]         = $row2->dpaNilaiOther;
-          $arrayKompetensiOtherSiswa[]  = $row2->kKomOther;
-          $arrayNamaOtherSiswa[]        = $row2->uF." ".$row2->uL;
-          $arrayOtherAssId[]            = $row2->dpaAssIdOther;
-        }
-        $distinct = array_unique($arrayOtherAssId);
+        $arrayKompetensiOtherSiswa2  = array();
+        $arrayNamaOtherSiswa2        = array();
+        $arrayOtherAssId2            = array();
+        $arrNilai2                   = array();
 
-        for($countAssId = 0; $countAssId < count($distinct); $countAssId++){
+        foreach($sqlOtherUser as $key=>$values){
+          $arrayKompetensiOtherSiswa2[] = $values->kKomOther;
+          $arrayNamaOtherSiswa2[]       = $values->uF." ".$values->uL;
+          $arrayOtherAssId2[]           = $values->dpaAssIdOther;
+          $arrNilai2[]                  = $values->dpaNilaiOther;
 
-          $tmpHasil = array();
+          if($countSiswaTarget == count($arrNilai2)){
+            $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrNilai2, $countSiswaTarget); //TODO: Menampilkan hasil similarity
 
-          $tmpToArray=0;
-          if($countSiswaTarget == count($arrayCountDpaNilai)){
-            //TODO: Panggil fungsi similarity
-            $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrayCountDpaNilai, $countSiswaTarget); //TODO: Menampilkan hasil similarity
-            $countOtherSiswa = count($arrayKompetensiOtherSiswa);
-
-            $tmpHasil[$arrayOtherAssId[$countAssId]] = array(
-              $arrayNamaOtherSiswa[$countAssId] => $tmpToArray
-            );
-
-            //TODO: Cuma mau bikin sorting yang tertinggi
-            $orderByDescSim = array();
-            foreach($tmpHasil as $keyAssId => $values){
-              foreach($tmpHasil[$keyAssId] as $keySim => $value){
-                $orderByDescSim[] = $value;
-                array_multisort($orderByDescSim, SORT_DESC);
-              }
-            }
-
-            
-            // if($tmpToArray > 0){
-            //   for($countArray = 0; $countArray < $countOtherSiswa; $countArray++){
-            //     if($arrayKompetensiSiswaTarget[$countArray] == $arrayKompetensiOtherSiswa[$countArray] && $arrayCountDpaNilai[$countArray] > $arraySiswaTarget[$countArray]){
-            //       //Menampilkan hasil dari kompetensi siswa lain disini
-            //       echo "<br>";
-            //       echo $arrayKompetensiOtherSiswa[$countArray]."<br>";
-            //     }
-            //   }
-            // }
-
-            // $arrSim[] = $tmpToArray;
-            // array_multisort($arrSim, SORT_DESC);
-            // rsort($arrSim);
+            $arrayHasilSqlOther[$arrayUserAssessmentTraining[$i]][$values->uF." ".$values->uL] = $tmpToArray;
           }
         }
-        echo print_r($orderByDescSim);
 
 
-        // foreach($tmpHasil as $keyAssId=>$values){
-        //   echo "<br>";
-        //   echo $keyAssId."<br>";
+
+
+
+        // if($countSiswaTarget == count($arrNilai2)){
+        //   //TODO: Panggil fungsi similarity
+        //   $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrNilai2, $countSiswaTarget); //TODO: Menampilkan hasil similarity
+        //   $countOtherSiswa = count($arrayKompetensiOtherSiswa);
+        //
+        //   $tmpHasil[$arrayOtherAssId2[$countAssId]][$arrayNamaOtherSiswa2[$countAssId]] = $tmpToArray;
+        //
+        //   // if($tmpToArray > 0){
+        //   //   for($countArray = 0; $countArray < $countOtherSiswa; $countArray++){
+        //   //     if($arrayKompetensiSiswaTarget[$countArray] == $arrayKompetensiOtherSiswa[$countArray] && $arrayCountDpaNilai[$countArray] > $arraySiswaTarget[$countArray]){
+        //   //       //Menampilkan hasil dari kompetensi siswa lain disini
+        //   //       echo "<br>";
+        //   //       echo $arrayKompetensiOtherSiswa[$countArray]."<br>";
+        //   //     }
+        //   //   }
+        //   // }
         // }
+        
       }
+
+      echo print_r($arrayHasilSqlOther);
+
+        // $distinct = array_unique($arrayOtherAssId2);
+
+        // $arraySim2  = array();
+        // for($countAssId = 0; $countAssId < count($distinct); $countAssId++){
+        //   if($countSiswaTarget == count($arrNilai2)){
+        //     //TODO: Panggil fungsi similarity
+        //     $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrNilai2, $countSiswaTarget); //TODO: Menampilkan hasil similarity
+        //     $arraySim2[] = $tmpToArray;
+        //     array_multisort($arraySim2, SORT_DESC);
+        //   }
+        //
+        // }
+
 
       //TODO: Menampilkan data keseluruhan
       // echo print_r($arrSim);
 
       //TODO: Disini penempatannya
       // Bagian memilih nilai terdekat dari hasil sorting hitung similarity
+
+      //Mengambil 30% dari hasil keseluruhan
       //Start
-      // $total            = (count($arrSim) * 30)/100; //TODO: total * 30/100
-      //
+      // $total            = (count($orderByDescSim) * 30)/100; //TODO: total * 30/100
       // $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
       // $tmpAssessmentId  = array();
       // $no=1;
