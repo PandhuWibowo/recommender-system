@@ -118,7 +118,16 @@ class HistoriesController extends Controller
               $arrayNamaOtherSiswa[$countAssId] => $tmpToArray
             );
 
+            //TODO: Cuma mau bikin sorting yang tertinggi
+            $orderByDescSim = array();
+            foreach($tmpHasil as $keyAssId => $values){
+              foreach($tmpHasil[$keyAssId] as $keySim => $value){
+                $orderByDescSim[] = $value;
+                array_multisort($orderByDescSim, SORT_DESC);
+              }
+            }
 
+            
             // if($tmpToArray > 0){
             //   for($countArray = 0; $countArray < $countOtherSiswa; $countArray++){
             //     if($arrayKompetensiSiswaTarget[$countArray] == $arrayKompetensiOtherSiswa[$countArray] && $arrayCountDpaNilai[$countArray] > $arraySiswaTarget[$countArray]){
@@ -134,8 +143,8 @@ class HistoriesController extends Controller
             // rsort($arrSim);
           }
         }
+        echo print_r($orderByDescSim);
 
-        echo print_r($tmpHasil);
 
         // foreach($tmpHasil as $keyAssId=>$values){
         //   echo "<br>";
