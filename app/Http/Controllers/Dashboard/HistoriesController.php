@@ -159,60 +159,78 @@ class HistoriesController extends Controller
       $no=1;
 
       $arrKompetensi  = array();
-        // TODO: Menampilkan hasil kompetensi dengan nilai diambil dari pertanyaan
-        foreach($arrayHasilSqlOther as $otherPerson=>$values){
-          foreach($arrayHasilSqlOther[$otherPerson] as $key=>$value){
-            if($no <= $pembulatanTotal){
+      $countArrKompetensi = array();
+      // TODO: Menampilkan hasil kompetensi dengan nilai diambil dari pertanyaan
+      foreach($arrayHasilSqlOther as $otherPerson=>$values){
+        foreach($arrayHasilSqlOther[$otherPerson] as $key=>$value){
+          if($no <= $pembulatanTotal){
+            $almostQueryDone              = PertanyaanAssesment::where("assessment_id", $otherPerson)
+                                              ->select("detail_pertanyaans_assessments.assessment_id as dpaAssIdOtherFinalResult","detail_pertanyaans_assessments.nilai as dpaNilaiOtherFinalResult","k.kompetensi as kKomOtherFinalResult","u.firstname as uFFinalResult","u.lastname as uLFinalResult")
+                                              ->join("pertanyaans as p","p.id","=","detail_pertanyaans_assessments.pertanyaan_id")
+                                              ->join("kompetensis as k","k.id","=","p.kompetensi_id")
+                                              //Tambahin query ini
+                                              ->join("assessments as ass","detail_pertanyaans_assessments.assessment_id","=","ass.id")
+                                              ->join("users as u","ass.user_id","=","u.id")
+                                              ->orderBy("kKomOtherFinalResult","asc")
+                                              ->get();
 
-              $almostQueryDone              = PertanyaanAssesment::where("assessment_id", $otherPerson)
-                                                ->select("detail_pertanyaans_assessments.assessment_id as dpaAssIdOtherFinalResult","detail_pertanyaans_assessments.nilai as dpaNilaiOtherFinalResult","k.kompetensi as kKomOtherFinalResult","u.firstname as uFFinalResult","u.lastname as uLFinalResult")
-                                                ->join("pertanyaans as p","p.id","=","detail_pertanyaans_assessments.pertanyaan_id")
-                                                ->join("kompetensis as k","k.id","=","p.kompetensi_id")
-                                                //Tambahin query ini
-                                                ->join("assessments as ass","detail_pertanyaans_assessments.assessment_id","=","ass.id")
-                                                ->join("users as u","ass.user_id","=","u.id")
-                                                ->orderBy("kKomOtherFinalResult","asc")
-                                                ->get();
+            //TODO: Menampilkan list nilai siswa target
+            $arraySiswaTarget3           = array(); //Collect nilai siswa target atau session yang aktif sekarang
+            $arrayKompetensiOtherSiswa3  = array();
 
-              //TODO: Menampilkan list nilai siswa target
-              $arraySiswaTarget3           = array(); //Collect nilai siswa target atau session yang aktif sekarang
-              $arrayKompetensiOtherSiswa3  = array();
-
-              //Menampilkan nilai untuk dimasukkan ke dalam variable array $arraySiswaTarget
-              foreach($sql as $row){
-                $arraySiswaTarget3[]          = $row->dpaNilai;
-                $arrayKompetensiSiswaTarget3[]= $row->kKom;
-              }
-
-              $arrayKompetensiOtherSiswa3  = array();
-              $arrayNamaOtherSiswa3        = array();
-              $arrayOtherAssId3            = array();
-              $arrNilai3                   = array();
-
-              foreach($almostQueryDone as $key=>$values){
-                $arrayKompetensiOtherSiswa3[] = $values->kKomOtherFinalResult;
-                $arrayNamaOtherSiswa3[]       = $values->uFFinalResult." ".$values->uLFinalResult;
-                $arrayOtherAssId3[]           = $values->dpaAssIdOtherFinalResult;
-                $arrNilai3[]                  = $values->dpaNilaiOtherFinalResult;
-
-
-              }
-
-              foreach($arrayKompetensiOtherSiswa3 as $q=>$v){
-
-                if($arrayKompetensiSiswaTarget3[$q] == $v && $arrNilai3[$q] > $arraySiswaTarget3[$q]){
-                  $arrKompetensi[$arrayKompetensiSiswaTarget3[$q]][$arrayOtherAssId3[$q]] = $arrNilai3[$q];
-                  array_multisort($arrKompetensi, SORT_DESC);
-                }
-              }
-
-
+            //Menampilkan nilai untuk dimasukkan ke dalam variable array $arraySiswaTarget
+            foreach($sql as $row){
+              $arraySiswaTarget3[]          = $row->dpaNilai;
+              $arrayKompetensiSiswaTarget3[]= $row->kKom;
             }
 
-            $no++;
+            $arrayKompetensiOtherSiswa3  = array();
+            $arrayNamaOtherSiswa3        = array();
+            $arrayOtherAssId3            = array();
+            $arrNilai3                   = array();
+
+            foreach($almostQueryDone as $key=>$values){
+              $arrayKompetensiOtherSiswa3[] = $values->kKomOtherFinalResult;
+              $arrayNamaOtherSiswa3[]       = $values->uFFinalResult." ".$values->uLFinalResult;
+              $arrayOtherAssId3[]           = $values->dpaAssIdOtherFinalResult;
+              $arrNilai3[]                  = $values->dpaNilaiOtherFinalResult;
+            }
+
+            foreach($arrayKompetensiOtherSiswa3 as $q=>$v){
+              if($arrayKompetensiSiswaTarget3[$q] == $v && $arrNilai3[$q] > $arraySiswaTarget3[$q]){
+                $arrKompetensi[$arrayKompetensiSiswaTarget3[$q]][$arrayOtherAssId3[$q]] = $arrNilai3[$q];
+                array_multisort($arrKompetensi, SORT_DESC);
+              }
+            }
+
           }
+
+          $no++;
         }
-        echo print_r($arrKompetensi);
+      }
+
+      // print_r($arrKompetensi);
+
+      // TODO: Count Values
+      $count = array_map('count', $arrKompetensi);
+
+      // Find Highest
+      // Kalau misalkan dicari yang terbesar (Valuenya) : $value = max($count);
+
+      //find value for highest
+      // Kalau misalkan dicari yang terbesar (Index) : $mostvalues = array_search($value, $count);
+
+      $hash = $this->array_flip_multiple($count);
+
+      // filter $hash based on your specs (2 or more)
+      $hash = array_filter($hash, function($items) {return count($items) > 1;});
+
+      // get all remaining keys
+      $keys = array_reduce($hash, 'array_merge', array());
+
+      // print_r($count);
+      print_r($hash);
+      // print_r($keys);
 
       //End
 
@@ -220,6 +238,13 @@ class HistoriesController extends Controller
     }
     //Bagian Akhir Else
   }
+
+public function array_flip_multiple(array $a) {
+  $result = array();
+  foreach($a as $k=>$v)
+      $result[$v][]=$k;
+  return $result;
+}
 
   // TODO: pearson correlation coefficient. *Method*
   public function pearsonCorrelationCoefficient($X, $Y, $n)
