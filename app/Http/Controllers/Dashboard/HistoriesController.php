@@ -142,20 +142,6 @@ class HistoriesController extends Controller
             array_multisort($arrayHasilSqlOther, SORT_DESC);
           }
         }
-
-        // if($countSiswaTarget == count($arrNilai2)){
-        //   $countOtherSiswa = count($arrayKompetensiOtherSiswa);
-        //
-        //   // if($tmpToArray > 0){
-        //   //   for($countArray = 0; $countArray < $countOtherSiswa; $countArray++){
-        //   //     if($arrayKompetensiSiswaTarget[$countArray] == $arrayKompetensiOtherSiswa[$countArray] && $arrayCountDpaNilai[$countArray] > $arraySiswaTarget[$countArray]){
-        //   //       //Menampilkan hasil dari kompetensi siswa lain disini
-        //   //       echo "<br>";
-        //   //       echo $arrayKompetensiOtherSiswa[$countArray]."<br>";
-        //   //     }
-        //   //   }
-        //   // }
-        // }
       }
 
       //TODO: Menampilkan data keseluruhan
@@ -226,7 +212,7 @@ class HistoriesController extends Controller
             $no++;
           }
         }
-  echo print_r($arrKompetensi);
+        echo print_r($arrKompetensi);
 
       //End
 
@@ -266,15 +252,6 @@ class HistoriesController extends Controller
                 ($n * $squareSum_Y - $sum_Y * $sum_Y));
 
       return $corr;
-  }
-
-  public function showKompetensiQuery(){
-    $sqlResult  = PertanyaanAssesment::select("k.kompetensi as kKomFinal","detail_pertanyaans_assessments.nilai as dpaNilaiFinal","k.id as kIdFinal","detail_pertanyaans_assessments.pertanyaan_id as dpaPIdFinal","p.id as pIdFinal","detail_pertanyaans_assessments.assessment_id as dpaAIdFinal")
-                              ->join("pertanyaans as p","detail_pertanyaans_assessments.pertanyaan_id","=","p.id")
-                              ->join("kompetensis as k","p.kompetensi_id","=","k.id")
-                              ->get();
-
-    return $sqlResult;
   }
 
   // TODO: Jika assessment yang dihasilkan baru 1
