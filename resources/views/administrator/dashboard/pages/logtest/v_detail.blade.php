@@ -67,6 +67,29 @@
       .btn {
          border-radius: 0px !important;
       }
+
+        .ticket {
+            font-family: Arial;
+            font-size: 12px;
+            font-weight: bold;
+            position: relative !important;
+            background: #e2725b;
+            float: left;
+            padding: 7px 3px;
+            margin: 0 5px 5px 0;
+            padding: 4px 10px 4px 10px;
+            text-decoration: none;
+            color:#F8F8FF;
+            white-space: nowrap;
+        }
+
+        .ticket a {
+            /* outline: 1px rgba(255,255,255,0.4) dashed; */
+            /* border: 1px rgba(0,0,0,0.3) dashed; */
+
+        }
+
+        /* .ticket a:hover {color: #fff;} */
     </style>
 </head>
 
@@ -167,27 +190,6 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
-                          <h3 class="box-title">Priority Suggestions</h3>
-                          <table class="table table-striped" id="tableRange">
-                            <tbody>
-                                @if($flag == 1 || $flag == "1")
-                                    {{$noRecommend}}
-                                @else
-                                    
-                                @endif
-                            </tbody>
-                          </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="courses-area mg-b-15">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                        <div class="white-box">
                             <!-- <h3 class="box-title">Range Score</h3> -->
                             <table class="table table-striped" id="tableRange">
                               <thead>
@@ -213,6 +215,32 @@
                             </table>
                         </div>
                     </div>
+                    &nbsp
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="white-box">
+                          <h3 class="box-title">Recommendation for Priority Improvements</h3>
+                          <table class="table table-striped" id="tableRange">
+                            <tbody>
+                                @if($flag == 1 || $flag == "1")
+                                    {{$noRecommend}}
+                                @else
+                                    @foreach($top5 as $kompetensi=>$v)
+                                        <div class="ticket"><span class="circle"></span>{{$kompetensi}}</div>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                          </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="courses-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+
                 </div>
             </div>
         </div>

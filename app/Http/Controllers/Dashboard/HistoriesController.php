@@ -60,6 +60,7 @@ class HistoriesController extends Controller
 
       echo $this->tanpaRekomendasi($sql, $rangeScore, $id, $noRecommend, $flag);
     }else{
+      $flag         = "0";
       //TODO: Menampilkan dan filter jumlah assessment_id
       $arrayUserAssessmentTraining  = array(); //Collect Assessment Id
       foreach($userAssessmentTraining as $uat){
@@ -211,6 +212,10 @@ class HistoriesController extends Controller
 
       // print_r($arrKompetensi);
 
+
+      //Mencari Lima Terbesar Rekomendasi
+      $top5 = array_slice($arrKompetensi, 0, 5);
+      // print_r($top5);
       // TODO: Count Values
       $count = array_map('count', $arrKompetensi);
 
@@ -229,12 +234,20 @@ class HistoriesController extends Controller
       $keys = array_reduce($hash, 'array_merge', array());
 
       // print_r($count);
-      print_r($hash);
+      // print_r($hash);
       // print_r($keys);
+
+      //Disimpen dulu bagian ini
+      // $arrSortValue = array();
+      // foreach($hash as $key=>$v){
+      //    $arrSortValue[] = $key;
+      // }
+      //
+      // print_r($arrSortValue);
 
       //End
 
-      // return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","id","nullMessage"));
+      return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","top5","flag"));
     }
     //Bagian Akhir Else
   }
