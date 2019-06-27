@@ -352,7 +352,90 @@
                 </div>
             </div>
         </div>
+        &nbsp
+        <div class="income-order-visit-user-area">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="income-dashone-total reso-mg-b-30">
+                            <div class="income-dashone-pro">
+                                <div class="income-rate-total">
+                                    <div class="price-edu-rate">
+                                        <h3>
+                                            <!-- <span>$</span> -->
+                                            <span class="counter">
+                                                {{$ratings}}
+                                            </span>
+                                        </h3>
+                                    </div>
+                                    <!-- <div class="price-graph">
+                                        <span id="sparkline1"></span>
+                                    </div> -->
+                                </div>
+                                <div class="income-range">
+                                    <p>Answers (Results)</p>
+                                    <!-- <span class="income-percentange bg-green"><span class="counter">95</span>% <i class="fa fa-bolt"></i>
+                                    </span> -->
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="income-dashone-total reso-mg-b-30">
+                            <div class="income-dashone-pro">
+                                <div class="income-rate-total">
+                                    <div class="price-edu-rate">
+                                        <h3>
+                                            <!-- <span>$</span> -->
+                                            <span class="counter">
+                                                {{$weight}}
+                                            </span>
+                                        </h3>
+                                    </div>
+                                    <!-- <div class="price-graph">
+                                        <span id="sparkline1"></span>
+                                    </div> -->
+                                </div>
+                                <div class="income-range">
+                                    <p>Scores (Weight)</p>
+                                    <!-- <span class="income-percentange bg-green"><span class="counter">95</span>% <i class="fa fa-bolt"></i>
+                                    </span> -->
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="income-dashone-total reso-mg-b-30">
+                            <div class="income-dashone-pro">
+                                <div class="income-rate-total">
+                                    <div class="price-edu-rate">
+                                        <h3>
+                                            <!-- <span>$</span> -->
+                                            <span class="counter">
+                                                {{$competencies}}
+                                            </span>
+                                        </h3>
+                                    </div>
+                                    <!-- <div class="price-graph">
+                                        <span id="sparkline1"></span>
+                                    </div> -->
+                                </div>
+                                <div class="income-range">
+                                    <p>Competencies</p>
+                                    <!-- <span class="income-percentange bg-green"><span class="counter">95</span>% <i class="fa fa-bolt"></i>
+                                    </span> -->
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal of users data -->
         <div class="modal fade fullwidth all-modals" id="all-users" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog fullwidth--box " role="document">

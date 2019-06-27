@@ -11,6 +11,9 @@ use App\Http\Models\User;
 use App\Http\Models\Assesment;
 use App\Http\Models\JenisAssesment;
 use App\Http\Models\Pertanyaan;
+use App\Http\Models\PertanyaanAssesment;
+use App\Http\Models\KeteranganNilai;
+use App\Http\Models\Kompetensi;
 /**
  *  HomeController
  */
@@ -39,7 +42,16 @@ class HomeController extends Controller
 
     //Questions
     $questions          = Pertanyaan::all()->count();
-    return view('administrator.dashboard.pages.v_index', compact("allUsers","verifiedUsers","disabledUsers","allTasks","finishedTasks","notYetFinishedTasks","allAssessmentsType","questions"));
+
+    //Detail Jawaban Assessment
+    $ratings            = PertanyaanAssesment::all()->count();
+
+    //Bobot
+    $weight             = KeteranganNilai::all()->count();
+
+    //Competencies
+    $competencies       = Kompetensi::all()->count();
+    return view('administrator.dashboard.pages.v_index', compact("allUsers","verifiedUsers","disabledUsers","allTasks","finishedTasks","notYetFinishedTasks","allAssessmentsType","questions","ratings","weight","competencies"));
   }
 
 }
