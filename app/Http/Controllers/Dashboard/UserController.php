@@ -14,6 +14,8 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Mail;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * AdministratorController
@@ -101,6 +103,34 @@ class UserController extends Controller
           }
         }
       }
+    }
+
+    //TODO: Import from Excel
+    public function importUsersData(Request $request){
+			if (empty($request->file('file')))
+	    {
+	        return back()->with('success','No file selected');
+	    }
+	    else{
+				// validasi
+				$this->validate($request, [
+					'file' => 'required|mimes:csv,xls,xlsx'
+				]);
+
+				// menangkap file excel
+				$file = $request->file('file');
+
+				// membuat nama file unik
+				$nama_file = rand().$file->getClientOriginalName();
+
+				// upload ke folder file_siswa di dalam folder public
+				$file->move(public_path('dataset'), $nama_file);
+
+				Excel::import(new UsersImport, public_path('/dataset/'.$nama_file));
+
+	      return back();
+			}
+
     }
 
     public function update(Request $request){

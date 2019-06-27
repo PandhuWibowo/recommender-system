@@ -16,6 +16,7 @@
         "hisorange/browser-detect": "2.*",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
+        "maatwebsite/excel": "^3.1",
         "unisharp/laravel-ckeditor": "^4.7",
         "webpatser/laravel-uuid": "^3.0"
     },

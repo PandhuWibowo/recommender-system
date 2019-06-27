@@ -43,6 +43,7 @@ Route::prefix('backend/pages')->group(function () {
     Route::match(array('PUT', 'PATCH'), 'users/update',"Dashboard\UserController@update");
     Route::delete('users/delete',"Dashboard\UserController@destroy");
     Route::post("users/store","Dashboard\UserController@store");
+    Route::post('import', 'Dashboard\UserController@importUsersData')->name('import');
 
     //Assesments Page
     // Route::get("assesments/add","Dashboard\JenisAssesmentController@add");

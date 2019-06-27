@@ -169,7 +169,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+         Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -231,6 +231,7 @@ return [
         'Uuid' => Webpatser\Uuid\Uuid::class,
         'BrowserDetect' => 'hisorange\BrowserDetect\Facade\Parser',
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];
