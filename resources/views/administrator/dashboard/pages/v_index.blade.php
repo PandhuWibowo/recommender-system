@@ -71,6 +71,111 @@
         width: 50%;
       }
     </style>
+    <style>
+        button a {
+         letter-spacing: 2px;
+        }
+
+        .modal-content {
+           position: relative;
+           background-color: #fff;
+           -webkit-background-clip: padding-box;
+           background-clip: padding-box;
+           border: 1px solid #999;
+           border: 1px solid rgba(0, 0, 0, .2);
+           border-radius: 0;
+           outline: 0;
+           -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+           box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+
+        .btn {
+           border-radius: 0px !important;
+        }
+
+        .all-modals.modal.fade .modal-dialog {
+
+         -moz-transform: scale(0.3) ;
+         -webkit-transform: scale(0.3) ;
+         -o-transform: scale(0.3) ;
+         -ms-transform: scale(0.3) ;
+         transform: scale(0.3) ;
+         opacity: 1;
+
+        }
+
+        .all-modals.modal.fade.in .modal-dialog {
+            -moz-transform: scale(1) ;
+           -webkit-transform: scale(1) ;
+           -o-transform: scale(1) ;
+           -ms-transform: scale(1) ;
+           transform: scale(1) ;
+           opacity: 1;
+
+        }
+
+
+        div.all-modals {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .modal-dialog.fullwidth--box {
+            width: 90%;
+            margin: 0 auto;
+            left: 5px;
+        }
+
+         .modal-content.no--shadow {
+            border: 0;
+            box-shadow: none !important;
+            /* width: 100%; */
+        }
+
+        .all-modals.modal.fade.in .modal-dialog {
+            -moz-transform: scale(1) ;
+           -webkit-transform: scale(1) ;
+           -o-transform: scale(1) ;
+           -ms-transform: scale(1) ;
+           transform: scale(1) ;
+           opacity: 1;
+
+        }
+
+
+        div.all-modals {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        /* The badge */
+        .message {
+          height: 13px;
+          font-family: Segoe UI;
+          font-size: 14px;
+        }
+
+        /* Badge message */
+        .message.badge {
+            background-color: #e2725b;
+            color: white;
+            padding: 0px 4px;
+            margin-left: 10px;
+        }
+
+        .done {
+          height: 13px;
+          font-family: Segoe UI;
+          font-size: 14px;
+        }
+
+        .done.badge{
+          background-color: #000;
+          color: white;
+          padding: 0px 4px;
+          margin-left: 10px;
+        }
+
+        .pointer {cursor: pointer;}
+    </style>
 </head>
 
 <body>
@@ -144,92 +249,212 @@
         </div>
         <!-- Single pro tab start-->
         <!-- income order visit user Start -->
-        <!-- <div class="income-order-visit-user-area">
+        <div class="income-order-visit-user-area">
             <div class="container-fluid">
-                <div class="row"> -->
-                    <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 pointer" data-toggle="modal" data-target="#all-users">
                         <div class="income-dashone-total reso-mg-b-30">
                             <div class="income-dashone-pro">
                                 <div class="income-rate-total">
                                     <div class="price-edu-rate">
-                                        <h3><span>$</span><span class="counter">7500</span></h3>
+                                        <h3>
+                                            <!-- <span>$</span> -->
+                                            <span class="counter">
+                                                {{$allUsers}}
+                                            </span>
+                                        </h3>
                                     </div>
-                                    <div class="price-graph">
+                                    <!-- <div class="price-graph">
                                         <span id="sparkline1"></span>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="income-range">
-                                    <p>Total Income</p>
-                                    <span class="income-percentange bg-green"><span class="counter">95</span>% <i class="fa fa-bolt"></i>
-                                    </span>
+                                    <p>All Users</p>
+                                    <!-- <span class="income-percentange bg-green"><span class="counter">95</span>% <i class="fa fa-bolt"></i>
+                                    </span> -->
                                 </div>
                                 <div class="clear"></div>
                             </div>
                         </div>
-                    </div> -->
-                    <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                        <div class="income-dashone-total">
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 pointer" data-toggle="modal" data-target="#all-tasks">
+                        <div class="income-dashone-total reso-mg-b-30">
                             <div class="income-dashone-pro">
                                 <div class="income-rate-total">
                                     <div class="price-edu-rate">
-                                        <h3><span class="counter">640</span></h3>
+                                        <h3>
+                                            <!-- <span>$</span> -->
+                                            <span class="counter">{{$allTasks}}</span>
+                                        </h3>
                                     </div>
-                                    <div class="price-graph">
-                                        <span id="sparkline6"></span>
-                                    </div>
+                                    <!-- <div class="price-graph">
+                                        <span id="sparkline1"></span>
+                                    </div> -->
                                 </div>
-                                <div class="income-range order-cl">
-                                    <p>New Adminsion</p>
-                                    <span class="income-percentange bg-red"><span class="counter">65</span>% <i class="fa fa-level-up"></i>
-                                    </span>
+                                <div class="income-range">
+                                    <p>Tasks</p>
+                                    <!-- <span class="income-percentange bg-green"><span class="counter">95</span>% <i class="fa fa-bolt"></i>
+                                    </span> -->
                                 </div>
                                 <div class="clear"></div>
                             </div>
                         </div>
-                    </div> -->
-                    <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                        <div class="income-dashone-total res-mg-t-30 res-tablet-mg-t-30 dk-res-t-pro-30">
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="income-dashone-total reso-mg-b-30">
                             <div class="income-dashone-pro">
                                 <div class="income-rate-total">
                                     <div class="price-edu-rate">
-                                        <h3><span class="counter">4500</span></h3>
+                                        <h3>
+                                            <!-- <span>$</span> -->
+                                            <span class="counter">{{$allAssessmentsType}}</span>
+                                        </h3>
                                     </div>
-                                    <div class="price-graph">
-                                        <span id="sparkline2"></span>
-                                    </div>
+                                    <!-- <div class="price-graph">
+                                        <span id="sparkline1"></span>
+                                    </div> -->
                                 </div>
-                                <div class="income-range visitor-cl">
-                                    <p>New Visitor</p>
-                                    <span class="income-percentange bg-blue"><span class="counter">75</span>% <i class="fa fa-level-up"></i>
-                                    </span>
+                                <div class="income-range">
+                                    <p>Assessments</p>
+                                    <!-- <span class="income-percentange bg-green"><span class="counter">95</span>% <i class="fa fa-bolt"></i>
+                                    </span> -->
                                 </div>
                                 <div class="clear"></div>
                             </div>
                         </div>
-                    </div> -->
-                    <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                        <div class="income-dashone-total res-mg-t-30 dk-res-t-pro-30">
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="income-dashone-total reso-mg-b-30">
                             <div class="income-dashone-pro">
                                 <div class="income-rate-total">
                                     <div class="price-edu-rate">
-                                        <h3><span class="counter">235400</span></h3>
+                                        <h3>
+                                            <!-- <span>$</span> -->
+                                            <span class="counter">{{$questions}}</span>
+                                        </h3>
                                     </div>
-                                    <div class="price-graph">
-                                        <span id="sparkline5"></span>
-                                    </div>
+                                    <!-- <div class="price-graph">
+                                        <span id="sparkline1"></span>
+                                    </div> -->
                                 </div>
-                                <div class="income-range low-value-cl">
-                                    <p>In first month</p>
-                                    <span class="income-percentange bg-purple"><span class="counter">35</span>% <i class="fa fa-level-down"></i>
-                                    </span>
+                                <div class="income-range">
+                                    <p>Questions</p>
+                                    <!-- <span class="income-percentange bg-green"><span class="counter">95</span>% <i class="fa fa-bolt"></i>
+                                    </span> -->
                                 </div>
                                 <div class="clear"></div>
                             </div>
                         </div>
-                    </div> -->
-                <!-- </div>
+                    </div>
+                </div>
             </div>
-        </div> -->
+        </div>
+
+        <!-- Modal of users data -->
+        <div class="modal fade fullwidth all-modals" id="all-users" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog fullwidth--box " role="document">
+             <div class="modal-content no--shadow">
+               <form class="" action="{{ url('backend/pages/features/store') }}" enctype="multipart/form-data" method="POST">
+                <div class="modal-header">
+                  <div class="alert alert-danger print-error-msg" style="display:none">
+                    <ul></ul>
+                  </div>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container text-center">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-10 pb-4 d-block m-auto">
+                                <div class="pricing-item" style="box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.29);">
+                                    <!-- Indicator of subscription type -->
+                                    <div class="pt-4 pb-3" style="letter-spacing: 2px">
+                                        <h4>The user has verified email</h4>
+                                    </div>
+                                    <!-- Price class -->
+                                    <div class="pricing-price pb-1 text-default color-primary-text">
+                                        <h1 style="font-weight: 1000; font-size: 3.5em;">
+                                            {{$verifiedUsers}}
+                                        </h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-10 pb-4 d-block m-auto">
+                                <div class="pricing-item" style="box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.29);">
+                                    <!-- Indicator of subscription type -->
+                                    <div class="pt-4 pb-3" style="letter-spacing: 2px">
+                                        <h4 style="color:red;">The user has not verified email</h4>
+                                    </div>
+                                    <!-- Price class -->
+                                    <div class="pricing-price pb-1 text-default color-primary-text">
+                                        <h1 style="font-weight: 1000; font-size: 3.5em;">
+                                            {{$disabledUsers}}
+                                        </h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+             </div>
+          </div>
+       </div>
+
+       <!-- Modal of tasks data -->
+       <div class="modal fade fullwidth all-modals" id="all-tasks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+         <div class="modal-dialog fullwidth--box " role="document">
+            <div class="modal-content no--shadow">
+              <form class="" action="{{ url('backend/pages/features/store') }}" enctype="multipart/form-data" method="POST">
+               <div class="modal-header">
+                 <div class="alert alert-danger print-error-msg" style="display:none">
+                   <ul></ul>
+                 </div>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel"></h4>
+               </div>
+               <div class="modal-body">
+                   <div class="container text-center">
+                       <div class="row">
+                           <div class="col-lg-4 col-md-6 col-sm-10 pb-4 d-block m-auto">
+                               <div class="pricing-item" style="box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.29);">
+                                   <!-- Indicator of subscription type -->
+                                   <div class="pt-4 pb-3" style="letter-spacing: 2px">
+                                       <h4>The user has completed the task</h4>
+                                   </div>
+                                   <!-- Price class -->
+                                   <div class="pricing-price pb-1 text-default color-primary-text">
+                                       <h1 style="font-weight: 1000; font-size: 3.5em;">
+                                           {{$finishedTasks}}
+                                       </h1>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-lg-4 col-md-6 col-sm-10 pb-4 d-block m-auto">
+                               <div class="pricing-item" style="box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.29);">
+                                   <!-- Indicator of subscription type -->
+                                   <div class="pt-4 pb-3" style="letter-spacing: 2px">
+                                       <h4 style="color:red;">The user has not completed the task</h4>
+                                   </div>
+                                   <!-- Price class -->
+                                   <div class="pricing-price pb-1 text-default color-primary-text">
+                                       <h1 style="font-weight: 1000; font-size: 3.5em;">
+                                           {{$notYetFinishedTasks}}
+                                       </h1>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               </form>
+            </div>
+         </div>
+      </div>
+
         <!-- income order visit user End -->
         <div class="dashtwo-order-area mg-tb-30">
             <div class="container-fluid">
