@@ -127,7 +127,6 @@ class UserController extends Controller
 				$file->move(public_path('dataset'), $nama_file);
 
 				Excel::import(new UsersImport, public_path('/dataset/'.$nama_file));
-
 	      return back();
 			}
 

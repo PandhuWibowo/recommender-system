@@ -31,7 +31,16 @@ class HistoriesController extends Controller
 
   public function show($id, Request $request){
 
+    // TODO: Menampilkan keterangan bobot nilai
+    $rangeScore             = KeteranganNilai::orderBy("range_score")->get();
+
     $assessmentId     = Crypt::decrypt($id);
+
+    //TODO: Memulai menghitung proses rekomendasi
+    $time = microtime();
+    $time = explode(' ', $time);
+    $time = $time[1] + $time[0];
+    $start = $time;
 
     // TODO: Menampilkan Nilai Jawaban dan Kompetensi Berdasarkan Assessment ID - Session
     $sql              = PertanyaanAssesment::where("assessment_id", $assessmentId)
@@ -40,10 +49,6 @@ class HistoriesController extends Controller
                                       ->join("kompetensis as k","k.id","=","p.kompetensi_id")
                                       ->orderBy("kKom","asc")
                                       ->get();
-
-
-    // TODO: Menampilkan keterangan bobot nilai
-    $rangeScore             = KeteranganNilai::orderBy("range_score")->get();
 
     $countSiswaTarget       = count($sql);
 
@@ -215,9 +220,22 @@ class HistoriesController extends Controller
 
       //Mencari Lima Terbesar Rekomendasi
       $top5 = array_slice($arrKompetensi, 0, 5);
+
+      //Total penghitungan waktu kecepatan rekomendasi
+      $time = microtime();
+      $time = explode(' ', $time);
+      $time = $time[1] + $time[0];
+      $finish = $time;
+      $total_time = round(($finish - $start), 4);
+      // echo "Selesai dalam ".$total_time." detik";
+      //TODO:Menghitung kecepatan rekomendasi
+      //Start
+
+
+      //End
       // print_r($top5);
       // TODO: Count Values
-      $count = array_map('count', $arrKompetensi);
+      // $count = array_map('count', $arrKompetensi);
 
       // Find Highest
       // Kalau misalkan dicari yang terbesar (Valuenya) : $value = max($count);
@@ -225,13 +243,13 @@ class HistoriesController extends Controller
       //find value for highest
       // Kalau misalkan dicari yang terbesar (Index) : $mostvalues = array_search($value, $count);
 
-      $hash = $this->array_flip_multiple($count);
+      // $hash = $this->array_flip_multiple($count);
 
       // filter $hash based on your specs (2 or more)
-      $hash = array_filter($hash, function($items) {return count($items) > 1;});
+      // $hash = array_filter($hash, function($items) {return count($items) > 1;});
 
       // get all remaining keys
-      $keys = array_reduce($hash, 'array_merge', array());
+      // $keys = array_reduce($hash, 'array_merge', array());
 
       // print_r($count);
       // print_r($hash);
