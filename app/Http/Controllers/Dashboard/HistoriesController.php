@@ -36,12 +36,6 @@ class HistoriesController extends Controller
 
     $assessmentId     = Crypt::decrypt($id);
 
-    //TODO: Memulai menghitung proses rekomendasi
-    $time = microtime();
-    $time = explode(' ', $time);
-    $time = $time[1] + $time[0];
-    $start = $time;
-
     // TODO: Menampilkan Nilai Jawaban dan Kompetensi Berdasarkan Assessment ID - Session
     $sql              = PertanyaanAssesment::where("assessment_id", $assessmentId)
                                       ->select("k.kompetensi as kKom","detail_pertanyaans_assessments.nilai as dpaNilai")
@@ -65,6 +59,12 @@ class HistoriesController extends Controller
 
       echo $this->tanpaRekomendasi($sql, $rangeScore, $id, $noRecommend, $flag);
     }else{
+      //TODO: Memulai menghitung proses rekomendasi
+      $time = microtime();
+      $time = explode(' ', $time);
+      $time = $time[1] + $time[0];
+      $start = $time;
+
       $flag         = "0";
       //TODO: Menampilkan dan filter jumlah assessment_id
       $arrayUserAssessmentTraining  = array(); //Collect Assessment Id
@@ -84,7 +84,6 @@ class HistoriesController extends Controller
                                           ->join("assessments as ass","detail_pertanyaans_assessments.assessment_id","=","ass.id")
                                           ->join("users as u","ass.user_id","=","u.id")
                                           ->get();
-
 
         //TODO: Menampilkan list nilai siswa target
         $arraySiswaTarget           = array(); //Collect nilai siswa target atau session yang aktif sekarang
