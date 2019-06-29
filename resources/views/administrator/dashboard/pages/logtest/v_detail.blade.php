@@ -63,6 +63,7 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/vendor/modernizr-2.8.3.min.js') !!}"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <style media="screen">
       .btn {
          border-radius: 0px !important;
@@ -237,13 +238,7 @@
             </div>
         </div>
 
-        <div class="courses-area mg-b-15">
-            <div class="container-fluid">
-                <div class="row">
 
-                </div>
-            </div>
-        </div>
         <div class="footer-copyright-area" style="text-align: center;bottom:0;width: 100%;left:0;">
             <div class="container-fluid">
                 <div class="row">
@@ -315,6 +310,7 @@
     <!-- main JS
 		============================================ -->
     <script src="{!! asset('assets/assets_admin/js/main.js') !!}"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" charset="utf-8"></script>
     <!-- tawk chat JS
 		============================================ -->
     <!-- <script src="js/tawk-chat.js"></script> -->

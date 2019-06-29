@@ -84,6 +84,7 @@ class HistoriesController extends Controller
                                           //Tambahin query ini
                                           ->join("assessments as ass","detail_pertanyaans_assessments.assessment_id","=","ass.id")
                                           ->join("users as u","ass.user_id","=","u.id")
+                                          ->orderBy("kKomOther","asc")
                                           ->get();
 
         //TODO: Menampilkan list nilai siswa target
@@ -125,6 +126,7 @@ class HistoriesController extends Controller
                                           //Tambahin query ini
                                           ->join("assessments as ass","detail_pertanyaans_assessments.assessment_id","=","ass.id")
                                           ->join("users as u","ass.user_id","=","u.id")
+                                          ->orderBy("kKomOther","asc")
                                           ->get();
 
 
@@ -143,21 +145,36 @@ class HistoriesController extends Controller
 
           if($countSiswaTarget == count($arrNilai2)){
             $tmpToArray = $this->pearsonCorrelationCoefficient($arraySiswaTarget, $arrNilai2, $countSiswaTarget); //TODO: Menampilkan hasil similarity
-            $arrayHasilSqlOther[$arrayUserAssessmentTraining[$i]][$values->uF." ".$values->uL] = $tmpToArray;
-            array_multisort($arrayHasilSqlOther, SORT_DESC);
+            $arrayHasilSqlOther[$arrayUserAssessmentTraining[$i]]["nilai_similarity"] = $tmpToArray;
+            // array_multisort($arrayHasilSqlOther, SORT_DESC);
           }
         }
       }
 
       //TODO: Menampilkan data keseluruhan
+      // Obtain a list of columns
+      // Sorting
+      foreach ($arrayHasilSqlOther as $key => $row) {
+          $mid[$key]  = $row['nilai_similarity'];
+      }
+
+      // Sort the data with mid descending
+      // Add $data as the last parameter, to sort by the common key
+      array_multisort($mid, SORT_DESC, $arrayHasilSqlOther);
       // echo print_r($arrayHasilSqlOther);
 
       //TODO: Disini penempatannya
       // Bagian memilih nilai terdekat dari hasil sorting hitung similarity
+      $arrDiatasNol = array();
+      foreach($arrSim as $ky=>$vl){
+        if($vl > 0){
+          $arrDiatasNol[] = $vl;
+        }
+      }
 
       //Mengambil 30% dari hasil keseluruhan
       //Start
-      $total            = (count($arrSim) * 30)/100; //TODO: total * 30/100
+      $total            = (count($arrDiatasNol) * 30)/100; //TODO: total * 30/100
       $almostQueryDone  = "";
       $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
       $tmpAssessmentId  = array();
