@@ -442,7 +442,6 @@
 									$("#confirm_password").val("");
 									$("#email").val("");
 									$("#phone").val("");
-
 									swal({
 										type      : "success",
 										title     : "Saved",

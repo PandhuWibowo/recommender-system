@@ -179,7 +179,7 @@ class ResultController extends Controller
       // Sort the data with mid descending
       // Add $data as the last parameter, to sort by the common key
       array_multisort($mid, SORT_DESC, $arrayHasilSqlOther);
-      
+
       // echo print_r($arrayHasilSqlOther);
 
       //TODO: Disini penempatannya
