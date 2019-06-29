@@ -62,7 +62,7 @@ class UserAssessmentController extends Controller{
     $maxAttempt = $request->maxattempt;
 
     $rules = array(
-      'user_id'             => 'required',
+      'user_id'             => 'required|unique:detail_users_jenis_assessments,user_id,NULL,id,jenis_assessment_id,'.$request->jenis_assessment_id[0],
       'jenis_assessment_id' => 'required',
       'maxattempt'          => 'required'
     );
