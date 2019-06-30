@@ -142,26 +142,7 @@
                                             </form> -->
                                         </div>
                                     </div>
-                                    <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
-                                        <div class="">
-                                            @if (session('success'))
-                                            <div class="alert alert-success">
-                                                {{ session('success') }}
-                                            </div>
-                                            @endif
-
-                                            @if (session('error'))
-                                                <div class="alert alert-success">
-                                                    {{ session('error') }}
-                                                </div>
-                                            @endif
-                                            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                <input type="file" name="file" class="form-control">
-                                                <button class="btn btn-success">Import</button>
-                                            </form>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>

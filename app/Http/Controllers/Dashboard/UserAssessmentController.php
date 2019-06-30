@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Models\User;
 use App\Http\Models\JenisAssesment;
 use App\Http\Models\UserAssessment;
+use App\Http\Models\Assesment;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -120,6 +121,18 @@ class UserAssessmentController extends Controller{
     }
   }
 
+  //Bikin User_id dan Jenis Assessment unik
+  public function super_unique($array,$key)
+  {
+     $temp_array = [];
+     foreach ($array as &$v) {
+         if (!isset($temp_array[$v[$key]]))
+         $temp_array[$v[$key]] =& $v;
+     }
+     $array = array_values($temp_array);
+     return $array;
+  }
+
   public function importUserDanJenis(Request $request){
     if (empty($request->file('file')))
     {
@@ -140,31 +153,43 @@ class UserAssessmentController extends Controller{
       // upload ke folder file_siswa di dalam folder public
       $file->move(public_path('dataset'), $nama_file);
       $rows = Excel::toArray(new AssessmentImport, public_path('/dataset/'.$nama_file));
+
+      // print_r($this->super_unique($v, 0));
+      $arrLastAssessmentId = array();
       foreach($rows as $k=>$v){
+        $superUnique  = $this->super_unique($v, 0);
+        $forAssessments = array_filter(array_map('array_filter', $superUnique));
+        foreach ($forAssessments as $key => $value) {
+          if(empty($value[0]) || empty($value[1])){
+            continue;
+          }else{
+            $assessments = new Assesment([
+              'id'                  => Uuid::generate()->string,
+              'user_id'             => $value[0],
+              'jenis_assessment_id' => $value[1],
+              'maxattempt'          => $value[2],
+              'selesai'             => "1"
+            ]);
+            $assessments->save();
 
-      }
-      //
-      // foreach($vl as $val){
-      //   // echo $val;
-      // }
-      print_r($v);
-
-      // for($i = 0; $i < count($v); $i++){
-        foreach($v as $key=>$vl){
-          foreach($vl as $ky=>$val){
-            echo "<br>";
-            echo $ky;
-            
-            // $userAssessments = new UserAssessment([
-            //   'user_id'             => $val,
-            //   'jenis_assessment_id' => $val,
-            //   'maxattempt'          => $val,
-            //   'status'              => intval(0)
-            // ]);
-            // $userAssessments->save();
+            $arrLastAssessmentId[] = $assessments->id;
           }
         }
-      // }
+
+        $arrayFilter = array_filter(array_map('array_filter', $v));
+        // print_r($arrLastAssessmentId);
+
+        foreach($arrLastAssessmentId as $kys=>$vv){
+          $assessments = Assesment::where("id", $vv)->select("user_id")->first();
+          if(count($assessments) > 0){
+            foreach($arrayFilter as $ks=>$vle){
+              
+            }
+          }
+        }
+
+      }
+
 
 
       // return response()->json(["rows"=>$rows]);
