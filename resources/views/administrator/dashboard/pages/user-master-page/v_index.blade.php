@@ -144,6 +144,17 @@
                                     </div>
                                     <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
                                         <div class="">
+                                            @if (session('success'))
+                                            <div class="alert alert-success">
+                                                {{ session('success') }}
+                                            </div>
+                                            @endif
+
+                                            @if (session('error'))
+                                                <div class="alert alert-success">
+                                                    {{ session('error') }}
+                                                </div>
+                                            @endif
                                             <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="file" name="file" class="form-control">
@@ -179,13 +190,10 @@
                             </div>
                             <div class="sparkline13-graph">
                                 <div class="datatable-dashv1-list custom-datatable-overright">
-                                    <!-- <div id="toolbar">
-                                        <select class="form-control dt-tb">
-                    											<option value="">Export Basic</option>
-                    											<option value="all">Export All</option>
-                    											<option value="selected">Export Selected</option>
-                    										</select>
-                                    </div> -->
+                                    <a href="{{ url('backend/pages/export/xlsx') }}"><button class="btn btn-success">Download Excel (xlsx)</button></a>
+                                    <a href="{{ url('backend/pages/export/xls') }}"><button class="btn btn-success">Download Excel (xls)</button></a>
+                                    <a href="{{ url('backend/pages/export/csv') }}"><button class="btn btn-success">Download CSV</button></a>
+
                                     <table id="myUser" class="table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
@@ -337,16 +345,16 @@
     <script type="text/javascript">
       $(document).ready( function () {
         $('#myUser').DataTable({
-            "dom": 'Bfrtip',
-            "buttons": {
-                "dom": {
-                    "button": {
-                        "tag": "button",
-                        "className": "waves-effect waves-light btn btn-info"
-                    }
-                },
-                "buttons": [ 'copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
-            }
+            // "dom": 'Bfrtip',
+            // "buttons": {
+            //     "dom": {
+            //         "button": {
+            //             "tag": "button",
+            //             "className": "waves-effect waves-light btn btn-info"
+            //         }
+            //     },
+            //     // "buttons": [ 'copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+            // }
         });
       } );
     </script>

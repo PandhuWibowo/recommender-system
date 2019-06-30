@@ -16,6 +16,9 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Response;
+use App\Imports\AssessmentImport;
+// use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserAssessmentController extends Controller{
 
@@ -114,6 +117,59 @@ class UserAssessmentController extends Controller{
           "response" => "success"
         )
       );
+    }
+  }
+
+  public function importUserDanJenis(Request $request){
+    if (empty($request->file('file')))
+    {
+        return back()->with('error','No file selected');
+    }
+    else{
+      // validasi
+      $this->validate($request, [
+        'file' => 'required|mimes:csv,xls,xlsx'
+      ]);
+
+      // menangkap file excel
+      $file = $request->file('file');
+
+      // membuat nama file unik
+      $nama_file = rand().$file->getClientOriginalName();
+
+      // upload ke folder file_siswa di dalam folder public
+      $file->move(public_path('dataset'), $nama_file);
+      $rows = Excel::toArray(new AssessmentImport, public_path('/dataset/'.$nama_file));
+      foreach($rows as $k=>$v){
+
+      }
+      //
+      // foreach($vl as $val){
+      //   // echo $val;
+      // }
+      print_r($v);
+
+      // for($i = 0; $i < count($v); $i++){
+        foreach($v as $key=>$vl){
+          foreach($vl as $ky=>$val){
+            echo "<br>";
+            echo $ky;
+            
+            // $userAssessments = new UserAssessment([
+            //   'user_id'             => $val,
+            //   'jenis_assessment_id' => $val,
+            //   'maxattempt'          => $val,
+            //   'status'              => intval(0)
+            // ]);
+            // $userAssessments->save();
+          }
+        }
+      // }
+
+
+      // return response()->json(["rows"=>$rows]);
+      // return back();
+      // return redirect()->back()->with(['success' => 'Has been uploaded']);
     }
   }
 

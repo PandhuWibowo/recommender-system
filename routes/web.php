@@ -44,6 +44,7 @@ Route::prefix('backend/pages')->group(function () {
     Route::delete('users/delete',"Dashboard\UserController@destroy");
     Route::post("users/store","Dashboard\UserController@store");
     Route::post('import', 'Dashboard\UserController@importUsersData')->name('import');
+    Route::get("export/{type}", "Dashboard\UserController@exportUsersData");
 
     //Assesments Page
     // Route::get("assesments/add","Dashboard\JenisAssesmentController@add");
@@ -104,7 +105,7 @@ Route::prefix('backend/pages')->group(function () {
     Route::post("userassessments/store","Dashboard\UserAssessmentController@store");
     Route::put("userassessments/update","Dashboard\UserAssessmentController@update");
     Route::delete("userassessments/delete","Dashboard\UserAssessmentController@destroy");
-
+    Route::post('userassessments/import',array('as'=>'import-csv-excel','uses'=>'Dashboard\UserAssessmentController@importUserDanJenis'));
     //Configurations
     Route::resource("configurations","Dashboard\ConfigurationController");
 

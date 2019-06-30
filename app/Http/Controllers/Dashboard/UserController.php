@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 use App\Imports\UsersImport;
+use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 /**
@@ -109,7 +110,7 @@ class UserController extends Controller
     public function importUsersData(Request $request){
 			if (empty($request->file('file')))
 	    {
-	        return back()->with('success','No file selected');
+	        return back()->with('error','No file selected');
 	    }
 	    else{
 				// validasi
@@ -127,9 +128,14 @@ class UserController extends Controller
 				$file->move(public_path('dataset'), $nama_file);
 
 				Excel::import(new UsersImport, public_path('/dataset/'.$nama_file));
-	      return back();
+	      // return back();
+				return redirect()->back()->with(['success' => 'Has been uploaded']);
 			}
     }
+
+		public function exportUsersData($type){
+			return Excel::download(new UsersExport, 'Master Users.'.$type);
+		}
 
     public function update(Request $request){
       $txtIdAdmin           = $request->id_admin;
