@@ -179,6 +179,7 @@
                                     <table id="myCompetencies" class="display nowrap table table-striped table-bordered" style="width:100%">
                                       <thead>
                                         <tr>
+                                          <th>#</th>
                                           <th>Name</th>
                                           <th>Competency</th>
                                           <th>Date</th>
@@ -188,17 +189,19 @@
                                       <tbody>
                                         @foreach($histories as $key=>$row)
                                           <tr>
+                                            <td>{{$key+1}}</td>
                                             <td>{{ $row->get_user->firstname }} {{ $row->get_user->lastname }}</td>
                                             <td>{{ $row->get_jenis_assessment->nama }}</td>
                                             <td>{{Carbon::parse($row->created_at)->formatLocalized('%A, %d %B %Y')}}</td>
                                             <td>
-                                                <a class="btn btn-warning btn_edit" href="{{ url('backend/pages/histories/'.Crypt::encrypt($row->id)) }}"><i class="fa fa-table"></i></a>
+                                                    <a class="btn btn-warning btn_edit" href="{{ url('backend/pages/histories/'.Crypt::encrypt($row->id)) }}"><i class="fa fa-table"></i></a>
                                             </td>
                                           </tr>
                                         @endforeach
                                       </tbody>
                                       <tfoot>
                                           <tr>
+                                            <th>#</th>
                                             <th>Name</th>
                                             <th>Competency</th>
                                             <th>Date</th>

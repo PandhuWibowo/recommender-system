@@ -20,8 +20,8 @@ class UsersImport implements ToModel, WithStartRow
             'id'        => Uuid::generate()->string,
             'email'     => strtolower(trim($row[0])),
             'password'  => \Hash::make("123456789"),
-            'firstname' => ucfirst(trim($row[1])),
-            'lastname'  => ucfirst(trim($row[2])),
+            'firstname' => ucwords(trim($row[1])),
+            'lastname'  => ucwords(trim($row[2])),
             'phone'     => $row[3],
             'level'     => "Participant",
             'active'    => '1'

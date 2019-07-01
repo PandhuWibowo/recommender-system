@@ -142,7 +142,26 @@
                                             </form> -->
                                         </div>
                                     </div>
-                                    
+                                    <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="">
+                                            @if (session('success'))
+                                            <div class="alert alert-success">
+                                                {{ session('success') }}
+                                            </div>
+                                            @endif
+
+                                            @if (session('error'))
+                                                <div class="alert alert-success">
+                                                    {{ session('error') }}
+                                                </div>
+                                            @endif
+                                            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="file" name="file" class="form-control">
+                                                <button class="btn btn-success">Import</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <ul class="breadcome-menu">
                                             <li><a href="#">Home</a> <span class="bread-slash">/</span>
@@ -178,6 +197,8 @@
                                     <table id="myUser" class="table table-striped table-bordered" style="width:100%">
                                       <thead>
                                           <tr>
+                                              <th>#</th>
+                                              <th>User Id</th>
                                               <th>First Name</th>
                                               <th>Last Name</th>
                                               <th>Email</th>
@@ -188,9 +209,11 @@
                                       <tbody>
                                           @foreach($dataUsers as $key=>$row)
                                             <tr>
-                                              <td>{{ $row->firstname }}</td>
-                                              <td>{{ $row->lastname }}</td>
-                                              <td>{{ $row->email }}</td>
+                                              <td>{{$key+1}}</td>
+                                              <td>{{ $row->id }}</td>
+                                              <td>{{ ucwords($row->firstname) }}</td>
+                                              <td>{{ ucwords($row->lastname) }}</td>
+                                              <td>{{ strtolower($row->email) }}</td>
                                               <td>
                                                 @if($row->active == 0)
                                                 <div class="alert alert-warning alert-st-three" role="alert">
@@ -218,6 +241,8 @@
                                       </tbody>
                                       <tfoot>
                                           <tr>
+                                            <th>#</th>
+                                            <th>User Id</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
                                             <th>Email</th>

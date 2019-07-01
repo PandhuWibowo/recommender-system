@@ -17,6 +17,7 @@ use Mail;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 
 /**
  * AdministratorController
