@@ -179,16 +179,16 @@ class UserAssessmentController extends Controller{
         $arrayFilter = array_filter(array_map('array_filter', $v));
         // print_r($arrLastAssessmentId);
 
-        foreach($arrLastAssessmentId as $kys=>$vv){
-          $assessments = Assesment::where("id", $vv)->select("user_id")->first();
-          if(count($assessments) > 0){
-            foreach($arrayFilter as $ks=>$vle){
-              
-            }
-
-
-          }
-        }
+        // foreach($arrLastAssessmentId as $kys=>$vv){
+        //   $assessments = Assesment::where("id", $vv)->select("user_id")->first();
+        //   if(count($assessments) > 0){
+        //     foreach($arrayFilter as $ks=>$vle){
+        //
+        //     }
+        //
+        //
+        //   }
+        // }
 
       }
 
@@ -196,7 +196,7 @@ class UserAssessmentController extends Controller{
 
       // return response()->json(["rows"=>$rows]);
       // return back();
-      // return redirect()->back()->with(['success' => 'Has been uploaded']);
+      return redirect()->back()->with(['success' => 'Has been uploaded']);
     }
   }
 

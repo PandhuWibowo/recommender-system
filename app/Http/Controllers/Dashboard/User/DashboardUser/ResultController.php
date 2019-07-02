@@ -253,6 +253,8 @@ class ResultController extends Controller
 
 
       //Mencari Lima Terbesar Rekomendasi
+      // $importanceLevel = array("1" => "Compliance", "2" => "Communication");
+
       $top5 = array_slice($arrKompetensi, 0, 5);
 
       //Total penghitungan waktu kecepatan rekomendasi

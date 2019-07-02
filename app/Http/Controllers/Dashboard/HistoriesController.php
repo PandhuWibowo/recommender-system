@@ -30,6 +30,20 @@ class HistoriesController extends Controller
   }
 
   public function show($id, Request $request){
+    $importanceLevel = array(
+      "1" => "Compliance",
+      "2" => "Communication",
+      "3" => "Result Oriented",
+      "4" => "Managing Work",
+      "5" => "Planning & Execution",
+      "6" => "Influencing",
+      "7" => "Customer Service Orientation",
+      "8" => "Stress Resilience",
+      "9" => "Self Control",
+      "10"=> "Collaboration",
+      "11"=> "Initiating Action (Proactive)",
+      "12"=> "Leading Team"
+    );
 
     // TODO: Menampilkan keterangan bobot nilai
     $rangeScore             = KeteranganNilai::orderBy("range_score")->get();
@@ -230,14 +244,30 @@ class HistoriesController extends Controller
               }
             }
           }
-
           $no++;
         }
       }
 
-      // print_r($arrKompetensi);
+      // $sortingKompetensi = array();
+      // foreach($arrKompetensi as $ky => $vl){
+      //   $sortingKompetensi[] = $ky;
+      // }
+      //
+      // $afterSort = array();
+      // foreach($sortingKompetensi as $kori=> $v){
+      //   foreach($importanceLevel as $cKey=> $val){
+      //     if($v == $val){
+      //       $afterSort[$cKey] = $val;
+      //       ksort($afterSort, SORT_NUMERIC);
+      //     }
+      //   }
+      // }
 
-
+      // print_r($sortingKompetensi);
+      //
+      // print_r($importanceLevel);
+      //
+      // print_r($afterSort);
       //Mencari Lima Terbesar Rekomendasi
       $top5 = array_slice($arrKompetensi, 0, 5);
 

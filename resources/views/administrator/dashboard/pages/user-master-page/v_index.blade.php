@@ -145,9 +145,9 @@
                                     <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
                                         <div class="">
                                             @if (session('success'))
-                                            <div class="alert alert-success">
-                                                {{ session('success') }}
-                                            </div>
+                                              <div class="alert alert-success">
+                                                  {{ session('success') }}
+                                              </div>
                                             @endif
 
                                             @if (session('error'))
@@ -198,7 +198,6 @@
                                       <thead>
                                           <tr>
                                               <th>#</th>
-                                              <th>User Id</th>
                                               <th>First Name</th>
                                               <th>Last Name</th>
                                               <th>Email</th>
@@ -210,7 +209,6 @@
                                           @foreach($dataUsers as $key=>$row)
                                             <tr>
                                               <td>{{$key+1}}</td>
-                                              <td>{{ $row->id }}</td>
                                               <td>{{ ucwords($row->firstname) }}</td>
                                               <td>{{ ucwords($row->lastname) }}</td>
                                               <td>{{ strtolower($row->email) }}</td>
@@ -242,7 +240,6 @@
                                       <tfoot>
                                           <tr>
                                             <th>#</th>
-                                            <th>User Id</th>
                                             <th>First Name</th>
                                             <th>Last Name</th>
                                             <th>Email</th>

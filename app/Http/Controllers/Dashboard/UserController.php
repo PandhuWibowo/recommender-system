@@ -17,7 +17,6 @@ use Mail;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Str;
 
 /**
  * AdministratorController
@@ -129,7 +128,7 @@ class UserController extends Controller
 				$file->move(public_path('dataset'), $nama_file);
 
 				Excel::import(new UsersImport, public_path('/dataset/'.$nama_file));
-	      // return back();
+	      
 				return redirect()->back()->with(['success' => 'Has been uploaded']);
 			}
     }

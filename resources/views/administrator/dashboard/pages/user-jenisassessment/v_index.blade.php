@@ -376,22 +376,6 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="breadcome-heading">
                                           <!-- //TODO: Tidak Diisi apa-apa -->
-                                          <form action="{{ route('import-csv-excel') }}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            @if (session('success'))
-                                            <div class="alert alert-success">
-                                                {{ session('success') }}
-                                            </div>
-                                            @endif
-
-                                            @if (session('error'))
-                                                <div class="alert alert-success">
-                                                    {{ session('error') }}
-                                                </div>
-                                            @endif
-                                            <input type="file" name="file" class="form-control">
-                                            <button class="btn btn-success">Import</button>
-                                          </form>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
