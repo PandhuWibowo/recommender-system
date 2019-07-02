@@ -267,7 +267,6 @@ class ResultController extends Controller
       //TODO:Menghitung kecepatan rekomendasi
       //Start
 
-
       //End
       // print_r($top5);
       // TODO: Count Values
