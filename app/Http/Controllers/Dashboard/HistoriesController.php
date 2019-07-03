@@ -199,6 +199,7 @@ class HistoriesController extends Controller
       $tmpAssessmentId  = array();
       $no=1;
 
+      // print_r($pembulatanTotal);
       $arrKompetensi  = array();
       $countArrKompetensi = array();
       // TODO: Menampilkan hasil kompetensi dengan nilai diambil dari pertanyaan
