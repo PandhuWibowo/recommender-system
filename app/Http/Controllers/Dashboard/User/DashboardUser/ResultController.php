@@ -13,6 +13,7 @@ use App\Http\Models\Assesment;
 use App\Http\Models\KeteranganNilai;
 use App\Http\Models\HasilAssKom;
 use App\Http\Models\PertanyaanAssesment;
+use App\Http\Models\Kompetensi;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -39,6 +40,8 @@ class ResultController extends Controller
 
     // TODO: Menampilkan keterangan bobot nilai
     $rangeScore = KeteranganNilai::orderBy("range_score")->get();
+
+    $kompetensiMaster   = Kompetensi::all();
 
     // TODO: Menampilkan nilai dari table keterangan_nilais dengan detail_kompetensis_keterangan_nilais
     $query      = KeteranganNilai::select("dkkn.keterangan_nilai_id as dkknKeteranganNilaiId","keterangan_nilais.range_score as knRangeScore","dkkn.kompetensi_id as dkknKompetensiId")
@@ -301,7 +304,7 @@ class ResultController extends Controller
       //End
 
 
-      return view("partisipan.dashboard.result.v_index", compact("sql","rangeScore","top5","flag"));
+      return view("partisipan.dashboard.result.v_index", compact("sql","rangeScore","top5","flag","kompetensiMaster"));
     }
     //Bagian Akhir Else
   }

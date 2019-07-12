@@ -354,7 +354,6 @@
                                                                                                               <input type="hidden" value="{{$row2->id}}" class="jawabanid" name="jawabanid{{$x}}" id="jawabanid{{$x}}" required>
 
                                                                                                               <input type="radio" value="{{$row2->nilai}}" class="nilai" name="nilai{{$x}}" id="nilai{{$x}}" assessmentid="{{$decryptAssessmentId}}" pertanyaanid="{{$row2->pertanyaan_id}}" jawabanid="{{$row2->id}}" <?php foreach($hasilJawaban as $key=>$vale) echo ($vale == $row2->id) ? 'checked' : '';?>>
-                                                                                                              {{$row2->nilai}}
                                                                                                         </div>
                                                                                                         <div class="jawaban">{{ucfirst($row2->jawaban)}}</div>
 

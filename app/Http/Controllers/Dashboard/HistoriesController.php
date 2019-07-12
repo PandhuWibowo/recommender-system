@@ -30,23 +30,26 @@ class HistoriesController extends Controller
   }
 
   public function show($id, Request $request){
-    $importanceLevel = array(
-      "1" => "Compliance",
-      "2" => "Communication",
-      "3" => "Result Oriented",
-      "4" => "Managing Work",
-      "5" => "Planning & Execution",
-      "6" => "Influencing",
-      "7" => "Customer Service Orientation",
-      "8" => "Stress Resilience",
-      "9" => "Self Control",
-      "10"=> "Collaboration",
-      "11"=> "Initiating Action (Proactive)",
-      "12"=> "Leading Team"
-    );
+    // $importanceLevel = array(
+    //   "1" => "Compliance",
+    //   "2" => "Communication",
+    //   "3" => "Result Oriented",
+    //   "4" => "Managing Work",
+    //   "5" => "Planning & Execution",
+    //   "6" => "Influencing",
+    //   "7" => "Customer Service Orientation",
+    //   "8" => "Stress Resilience",
+    //   "9" => "Self Control",
+    //   "10"=> "Collaboration",
+    //   "11"=> "Initiating Action (Proactive)",
+    //   "12"=> "Leading Team"
+    // );
 
     // TODO: Menampilkan keterangan bobot nilai
     $rangeScore             = KeteranganNilai::orderBy("range_score")->get();
+
+    // TODO: Menampilkan kompetensi
+    $kompetensiMaster   = Kompetensi::all();
 
     $assessmentId     = Crypt::decrypt($id);
 
@@ -315,7 +318,7 @@ class HistoriesController extends Controller
       // print_r($arrSortValue);
 
       //End
-      return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","top5","flag"));
+      return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","top5","flag","kompetensiMaster"));
     }
     //Bagian Akhir Else
   }

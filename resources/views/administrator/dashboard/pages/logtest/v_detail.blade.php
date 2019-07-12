@@ -91,6 +91,33 @@
         }
 
         /* .ticket a:hover {color: #fff;} */
+
+      .accordion-group{margin-bottom:10px;border-radius:0;}
+      .accordion-toggle{
+          background:rgb(248, 251, 252);
+
+      }
+
+      .accordion-toggle:hover{
+          text-decoration: none;
+
+      }
+
+      .accordion-heading .accordion-toggle {
+          display: block;
+          padding: 8px 15px;
+      }
+
+
+
+      .selectStyle{
+          width:46%; float: left; margin-right: 8%;
+      }
+
+
+      .accordion-group{
+          margin-bottom:20px;
+      }
     </style>
 </head>
 
@@ -189,6 +216,7 @@
                             </ul>
                         </div>
                     </div>
+
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
                             <!-- <h3 class="box-title">Range Score</h3> -->
@@ -231,10 +259,141 @@
                                 @endif
                             </tbody>
                           </table>
+
+                          <div class="accordion-group">
+                               <div class="accordion-heading">
+                                 <a class="accordion-toggle"  data-toggle="collapse" data-parent="toggle" href="#collapseThree">
+                                  <h3 class="box-title">Details of Recommendation (Self Directed Development)</h3>
+                                 </a>
+                               </div>
+                               <div id="collapseThree" class="accordion-body collapse">
+                                 <div class="accordion-inner">
+                                     <table class="table table-striped" id="tableRange">
+                                       <tbody>
+                                           @if($flag == 1 || $flag == "1")
+                                               {{$noRecommend}}
+                                           @else
+                                               @foreach($top5 as $kompetensi=>$v)
+                                                   @foreach($kompetensiMaster as $row)
+                                                     @if($kompetensi == $row->kompetensi)
+                                                         <tr>
+                                                           <td style="text-align:center">&#x26AB;</td>
+                                                           <td style="text-align:justify">
+                                                               {!!$row->p_mandiri!!}
+                                                           </td>
+                                                         </tr>
+                                                     @endif
+                                                   @endforeach
+                                               @endforeach
+                                           @endif
+
+                                       </tbody>
+                                     </table>
+                                 </div>
+                               </div>
+                          </div>
+
+                          <div class="accordion-group">
+                                 <div class="accordion-heading">
+                                   <a class="accordion-toggle"  data-toggle="collapse" data-parent="toggle" href="#collapseFour">
+                                    <h3 class="box-title">Details of Recommendation (Partnership Development Activity)</h3>
+                                   </a>
+                                 </div>
+                                 <div id="collapseFour" class="accordion-body collapse">
+                                   <div class="accordion-inner">
+                                       <table class="table table-striped" id="tableRange">
+                                         <tbody>
+                                             @if($flag == 1 || $flag == "1")
+                                                 {{$noRecommend}}
+                                             @else
+                                                 @foreach($top5 as $kompetensi=>$v)
+                                                     @foreach($kompetensiMaster as $row)
+                                                       @if($kompetensi == $row->kompetensi)
+                                                           <tr>
+                                                             <td style="text-align:center">&#x26AB;</td>
+                                                             <td style="text-align:justify">
+                                                                 {!!$row->p_bermitra!!}
+                                                             </td>
+                                                           </tr>
+                                                       @endif
+                                                     @endforeach
+                                                 @endforeach
+                                             @endif
+                                         </tbody>
+                                       </table>
+                                   </div>
+                                 </div>
+                            </div>
+
+                            <div class="accordion-group">
+                                 <div class="accordion-heading">
+                                   <a class="accordion-toggle"  data-toggle="collapse" data-parent="toggle" href="#collapseFive">
+                                    <h3 class="box-title">Details of Recommendation (Training Theme)</h3>
+                                   </a>
+                                 </div>
+                                 <div id="collapseFive" class="accordion-body collapse">
+                                   <div class="accordion-inner">
+                                       <table class="table table-striped" id="tableRange">
+                                         <tbody>
+                                             @if($flag == 1 || $flag == "1")
+                                                 {{$noRecommend}}
+                                             @else
+                                                 @foreach($top5 as $kompetensi=>$v)
+                                                     @foreach($kompetensiMaster as $row)
+                                                       @if($kompetensi == $row->kompetensi)
+                                                           <tr>
+                                                             <td style="text-align:center">&#x26AB;</td>
+                                                             <td style="text-align:justify">
+                                                                 {!!$row->t_pelatihan!!}
+                                                             </td>
+                                                           </tr>
+                                                       @endif
+                                                     @endforeach
+                                                 @endforeach
+                                             @endif
+                                         </tbody>
+                                       </table>
+                                   </div>
+                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+        <div class="courses-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <div class="white-box">
+                            <!-- <h3 class="box-title">Range Score</h3> -->
+                            <table class="table table-striped" id="tableRange">
+                              <thead>
+                                <tr>
+                                  <th style="text-align:center">Competency</th>
+                                  <th style="text-align:center">Description</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach($kompetensiMaster as $row)
+                                  <tr>
+                                    <td style="text-align:left">{{$row->kompetensi}}</td>
+                                    <td style="text-align:justify">{!!$row->definisi!!}</td>
+                                  </tr>
+                                @endforeach
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <th style="text-align:center;">Range Score</th>
+                                  <th style="text-align:center;">Description</th>
+                                </tr>
+                              </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

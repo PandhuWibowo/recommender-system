@@ -11,6 +11,7 @@ use App\Http\Models\Assesment;
 use App\Http\Models\KeteranganNilai;
 use App\Http\Models\HasilAssKom;
 use App\Http\Models\HasilKompetensi;
+use App\Http\Models\Kompetensi;
 use App\Http\Models\PertanyaanAssesment;
 use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
@@ -34,6 +35,7 @@ class HistoriesController extends Controller
 
     // TODO: Menampilkan keterangan bobot nilai
     $rangeScore             = KeteranganNilai::orderBy("range_score")->get();
+    $kompetensiMaster   = Kompetensi::all();
 
     $assessmentId     = Crypt::decrypt($id);
 
@@ -281,7 +283,7 @@ class HistoriesController extends Controller
 
       //End
 
-      return view("partisipan.dashboard.logtest.v_detail", compact("sql","rangeScore","top5","flag"));
+      return view("partisipan.dashboard.logtest.v_detail", compact("sql","rangeScore","top5","flag","kompetensiMaster"));
     }
     //Bagian Akhir Else
   }
