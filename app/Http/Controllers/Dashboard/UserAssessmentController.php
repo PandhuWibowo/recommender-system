@@ -20,18 +20,13 @@ use Illuminate\Http\Response;
 use App\Imports\AssessmentImport;
 // use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
-use DB;
+
 class UserAssessmentController extends Controller{
 
   public function index(Request $request){
     $users            = User::where("level","Participant")->get();
-    // $users            = DB::select( DB::raw("SELECT * FROM users WHERE level = 'Participant'") );
     $jenisAssessments = JenisAssesment::all();
-
-    $userAssessments  = UserAssessment::select("jenis_assessment_id","user_id","maxattempt","attempt")->get();
-    // return $userAssessments;
-    // $jenisAssessments = DB::select(DB::raw("SELECT * FROM jenis_assessments"));
-
+    $userAssessments  = UserAssessment::all();
     return view("administrator/dashboard/pages/user-jenisassessment/v_index", compact("users","jenisAssessments","userAssessments"));
   }
 
