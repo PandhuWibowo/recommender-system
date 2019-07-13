@@ -42,7 +42,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', 'http://loopinc.herokuapp.com'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'db_ta_sistem_rekomendasi'),
             'username' => env('DB_USERNAME', 'root'),
@@ -54,6 +54,8 @@ return [
             'prefix_indexes' => true,
             'strict' => false,
             'engine' => null,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
         ],
 
         // 'mysql' => [
