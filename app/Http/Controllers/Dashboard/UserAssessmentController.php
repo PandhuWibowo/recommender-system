@@ -24,13 +24,13 @@ use DB;
 class UserAssessmentController extends Controller{
 
   public function index(Request $request){
-    // $users            = User::where("level","Participant")->get();
-    $users            = DB::select( DB::raw("SELECT * FROM users WHERE level = 'Participant'") );
-    // $jenisAssessments = JenisAssesment::all();
+    $users            = User::where("level","Participant")->get();
+    // $users            = DB::select( DB::raw("SELECT * FROM users WHERE level = 'Participant'") );
+    $jenisAssessments = JenisAssesment::all();
     $userAssessments  = UserAssessment::all();
 
-    $jenisAssessments = DB::select(DB::raw("SELECT * FROM jenis_assessments"));
-    // $userAssessments  = DB::select(DB::raw("SELECT * FROM u"))
+    // $jenisAssessments = DB::select(DB::raw("SELECT * FROM jenis_assessments"));
+
     return view("administrator/dashboard/pages/user-jenisassessment/v_index", compact("users","jenisAssessments","userAssessments"));
   }
 
