@@ -367,7 +367,7 @@
         <div class="courses-area mg-b-15">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="col-lg-12 col-md-6 col-sm-6 col-xs-6">
                         <div class="white-box">
                             <!-- <h3 class="box-title">Range Score</h3> -->
                             <table class="table table-striped" id="tableRange">
@@ -392,6 +392,35 @@
                                 </tr>
                               </tfoot>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="courses-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-6 col-sm-6 col-xs-6">
+                        <div class="white-box">
+                            <h3 class="box-title">Detailed Answer</h3>
+
+                            <div class="accordion-group">
+                                 @foreach($detilJawabans as $ky=>$vl)
+                                 <div class="accordion-heading">
+                                   <a class="accordion-toggle"  data-toggle="collapse" data-parent="toggle" href="#jawaban<?php echo $ky+1;?>">
+                                    <h3 class="box-title" style="text-align:justify;">{{$vl->pertanyaan}}</h3>
+                                   </a>
+                                 </div>
+                                 <div id="jawaban<?php echo $ky+1;?>" class="accordion-body collapse">
+                                   <div class="accordion-inner">
+                                       <div class="container">
+                                           <p style="text-align:justify;">{{$vl->hasil_jawaban}}</p>
+                                       </div>
+                                   </div>
+                                 </div>
+                                 @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>

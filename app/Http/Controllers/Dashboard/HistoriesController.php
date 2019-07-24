@@ -315,7 +315,15 @@ class HistoriesController extends Controller
       // print_r($arrSortValue);
 
       //End
-      return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","top5","flag","kompetensiMaster"));
+
+      // TODO: Detil Jawaban
+      $detilJawabans = PertanyaanAssesment::where("assessment_id", $assessmentId)
+                                        ->join("pertanyaans as p","detail_pertanyaans_assessments.pertanyaan_id","=","p.id")
+                                        ->join("jawabans as j","detail_pertanyaans_assessments.jawaban_id","=","j.id")
+                                        ->select("p.pertanyaan as pertanyaan","j.jawaban as hasil_jawaban")
+                                        ->get();
+
+      return view("administrator.dashboard.pages.logtest.v_detail", compact("sql","rangeScore","top5","flag","kompetensiMaster","detilJawabans"));
     }
     //Bagian Akhir Else
   }
