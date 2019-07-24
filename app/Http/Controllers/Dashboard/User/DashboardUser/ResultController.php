@@ -82,10 +82,10 @@ class ResultController extends Controller
       echo $this->tanpaRekomendasi($sql, $rangeScore, $id, $noRecommend, $flag);
     }else{
       //TODO: Memulai menghitung proses rekomendasi
-      $time = microtime();
-      $time = explode(' ', $time);
-      $time = $time[1] + $time[0];
-      $start = $time;
+      // $time = microtime();
+      // $time = explode(' ', $time);
+      // $time = $time[1] + $time[0];
+      // $start = $time;
 
       $flag         = "0";
       //TODO: Menampilkan dan filter jumlah assessment_id
@@ -195,7 +195,8 @@ class ResultController extends Controller
       }
       //Mengambil 30% dari hasil keseluruhan
       //Start
-      $total            = (count($arrDiatasNol) * 30)/100; //TODO: total * 30/100
+      // $total            = (count($arrDiatasNol) * 30)/100; //TODO: total * 30/100
+      $total            = count($arrDiatasNol) / 20; //TODO: total /20
       $almostQueryDone  = "";
       $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
       $tmpAssessmentId  = array();
@@ -261,16 +262,13 @@ class ResultController extends Controller
       $top5 = array_slice($arrKompetensi, 0, 5);
 
       //Total penghitungan waktu kecepatan rekomendasi
-      $time = microtime();
-      $time = explode(' ', $time);
-      $time = $time[1] + $time[0];
-      $finish = $time;
-      $total_time = round(($finish - $start), 4);
+      // $time = microtime();
+      // $time = explode(' ', $time);
+      // $time = $time[1] + $time[0];
+      // $finish = $time;
+      // $total_time = round(($finish - $start), 4);
       // echo "Selesai dalam ".$total_time." detik";
-      //TODO:Menghitung kecepatan rekomendasi
-      //Start
 
-      //End
       // print_r($top5);
       // TODO: Count Values
       // $count = array_map('count', $arrKompetensi);

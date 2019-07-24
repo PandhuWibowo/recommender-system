@@ -65,7 +65,7 @@
 					<span class="login100-form-title p-b-49">
 						Sign In Loopinc.id
 					</span>
-
+					
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
 						<span class="label-input100">Email</span>
 						<input class="input100" type="email" required="" value="" name="email" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Type your email">

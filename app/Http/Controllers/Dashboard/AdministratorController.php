@@ -84,7 +84,7 @@ class AdministratorController extends Controller
           if($users->save()){
             request()->image->move(public_path('images/images-admin'), $txtImageName);
             Session::flash("success","Anda berhasil menyimpan data administrator yang baru");
-            return redirect("backend/pages/administrator");
+            return redirect("backend/pages/administrator/add");
           }else{
             Session::flash("error","Anda gagal menyimpan data administrator yang baru");
             return redirect("backend/pages/administrator/add");

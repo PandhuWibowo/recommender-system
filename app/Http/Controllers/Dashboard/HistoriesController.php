@@ -77,10 +77,10 @@ class HistoriesController extends Controller
       echo $this->tanpaRekomendasi($sql, $rangeScore, $id, $noRecommend, $flag);
     }else{
       //TODO: Memulai menghitung proses rekomendasi
-      $time = microtime();
-      $time = explode(' ', $time);
-      $time = $time[1] + $time[0];
-      $start = $time;
+      // $time = microtime();
+      // $time = explode(' ', $time);
+      // $time = $time[1] + $time[0];
+      // $start = $time;
 
       $flag         = "0";
       //TODO: Menampilkan dan filter jumlah assessment_id
@@ -132,7 +132,6 @@ class HistoriesController extends Controller
           array_multisort($arrSim, SORT_DESC);
           // rsort($arrSim);
         }
-
       }
       // print_r($arrSim);
       $arrayHasilSqlOther = array();
@@ -196,7 +195,8 @@ class HistoriesController extends Controller
       // print_r($arrDiatasNol);
       //Mengambil 30% dari hasil keseluruhan
       //Start
-      $total            = (count($arrDiatasNol) * 30)/100; //TODO: total * 30/100
+      // $total            = (count($arrDiatasNol) * 30)/100; //TODO: total * 30/100
+      $total            = count($arrDiatasNol) / 20; //TODO: total / 20
       $almostQueryDone  = "";
       $pembulatanTotal  = ceil($total); //TODO: Pembulatan keatas
       $tmpAssessmentId  = array();
@@ -272,21 +272,18 @@ class HistoriesController extends Controller
       // print_r($importanceLevel);
       //
       // print_r($afterSort);
+
       //Mencari Lima Terbesar Rekomendasi
       $top5 = array_slice($arrKompetensi, 0, 5);
 
       //Total penghitungan waktu kecepatan rekomendasi
-      $time = microtime();
-      $time = explode(' ', $time);
-      $time = $time[1] + $time[0];
-      $finish = $time;
-      $total_time = round(($finish - $start), 4);
+      // $time = microtime();
+      // $time = explode(' ', $time);
+      // $time = $time[1] + $time[0];
+      // $finish = $time;
+      // $total_time = round(($finish - $start), 4);
       // echo "Selesai dalam ".$total_time." detik";
-      //TODO:Menghitung kecepatan rekomendasi
-      //Start
 
-
-      //End
       // print_r($top5);
       // TODO: Count Values
       // $count = array_map('count', $arrKompetensi);
@@ -330,7 +327,7 @@ public function array_flip_multiple(array $a) {
   return $result;
 }
 
-  // TODO: pearson correlation coefficient. *Method*
+  // TODO: pearson correlation coefficient. *Function*
   public function pearsonCorrelationCoefficient($X, $Y, $n)
   {
       $sum_X = 0;$sum_Y = 0; $sum_XY = 0;
